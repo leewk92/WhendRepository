@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:id="@+id/user_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/notice_on"
+            />
+        <TextView
+            android:id="@+id/user_fullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이원경"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="영화 인사이드아웃 개봉"
+        android:textSize="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/notice_on"/>
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7월9일"
+                android:textSize="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/notice_on"/>
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11:00 - 22:00"
+                android:textSize="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/notice_on"/>
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="연세대학교"
+                android:textSize="10dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/memo"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="감정이들 보러가야지\n#영화개봉일 #애니매이션 #인사이드아웃"
+        android:background="@drawable/upload_full"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/like_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/notice_on"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/follow_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/notice_on"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/comment_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/notice_on"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp">
+        <TextView
+            android:id="@+id/like_count"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="15"
+            android:textSize="10dp"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="2"
+            >
+            <TextView
+                android:id="@+id/best_friend_username"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="김민수"
+                android:textSize="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="님"
+                android:textSize="10dp"
+                />
+            <TextView
+                android:id="@+id/follow_count"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="외 15명"
+                android:textSize="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="이 일정에 추가했습니다."
+                android:textSize="10dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp">
+        <TextView
+            android:id="@+id/comment_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="김민수"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/comment_content"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="헐 픽사"
+            android:layout_marginLeft="10dp"
+
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

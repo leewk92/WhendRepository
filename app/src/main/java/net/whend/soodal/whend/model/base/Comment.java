@@ -1,4 +1,4 @@
-package net.whend.soodal.whend.model;
+package net.whend.soodal.whend.model.base;
 
 /**
  * Definition : 댓글 모델

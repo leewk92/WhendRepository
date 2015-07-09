@@ -7,8 +7,14 @@ import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
+import net.whend.soodal.whend.model.base.Schedule;
+import net.whend.soodal.whend.model.top.Concise_Schedule;
+
+import java.util.ArrayList;
 
 
 public class F1_Wall extends Fragment {
@@ -16,15 +22,21 @@ public class F1_Wall extends Fragment {
 
     private FragmentTabHost mTabHost;
     private View rootView;
+    private ListView listview;
+    private ArrayList<Schedule> arraySchedule = new ArrayList<Schedule>();
+    private Concise_Schedule_Adapter concise_schedule_adapter;
 
-        public F1_Wall() {
+    public F1_Wall() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Schedule a = new Schedule();
+        arraySchedule.add(a);
+        arraySchedule.add(a);
+        arraySchedule.add(a);
     }
 
     @Override
@@ -35,9 +47,10 @@ public class F1_Wall extends Fragment {
 
         rootView = inflater.inflate(R.layout.f1_wall_layout, container, false);
 
+        listview = (ListView)rootView.findViewById(R.id.listview_concise_schedule);
+        listview.setAdapter(new Concise_Schedule_Adapter(getActivity(),R.layout.item_concise_schedule,arraySchedule));
+
         return rootView;
-
-
     }
 
     //

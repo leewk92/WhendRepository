@@ -1,4 +1,4 @@
-package net.whend.soodal.whend.model;
+package net.whend.soodal.whend.model.base;
 
 /**
  * Created by wonkyung on 15. 7. 9.

@@ -1,4 +1,4 @@
-package net.whend.soodal.whend.model;
+package net.whend.soodal.whend.model.base;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
