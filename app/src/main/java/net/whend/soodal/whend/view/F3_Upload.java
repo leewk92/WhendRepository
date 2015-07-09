@@ -1,5 +1,6 @@
 package net.whend.soodal.whend.view;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ public class F3_Upload extends Fragment {
 
     public F3_Upload() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -35,9 +37,25 @@ public class F3_Upload extends Fragment {
 
         rootView = inflater.inflate(R.layout.f3_upload_layout, container, false);
 
+        Intent intent = new Intent(getActivity(),A1_UploadActivity.class);
+        startActivityForResult(intent, 1);
+        getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+
         return rootView;
 
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        setCurrentTab(0);
+    }
+
+
+    public void setCurrentTab(int tab_index){
+        mTabHost = (FragmentTabHost)getActivity().findViewById(android.R.id.tabhost);
+        mTabHost.setCurrentTab(tab_index);
+    }
+
 
     //
     /**
@@ -54,5 +72,7 @@ public class F3_Upload extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+
 
 }
