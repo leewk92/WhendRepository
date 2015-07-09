@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.form.Upload_Schedule_Adapter;
 import net.whend.soodal.whend.model.top.Upload_Schedule;
 
 import java.util.ArrayList;
@@ -17,16 +18,26 @@ public class A1_UploadActivity extends AppCompatActivity {
 
     private ListView listview;
     private ArrayList<Upload_Schedule> arraySchedule = new ArrayList<Upload_Schedule>();
-    //private Concise_Schedule_Adapter concise_schedule_adapter;
+    private Upload_Schedule_Adapter upload_schedule_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a1_upload);
 
+        Upload_Schedule a = new Upload_Schedule();
+        arraySchedule.add(a);
+        arraySchedule.add(a);
+        arraySchedule.add(a);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
         toolbar.setTitle("일정 올리기");
         setSupportActionBar(toolbar);
+
+        listview = (ListView)findViewById(R.id.listView_upload);
+        listview.setAdapter(new Upload_Schedule_Adapter(this ,R.layout.item_upload_schedule,arraySchedule));
+
+
 
     }
 

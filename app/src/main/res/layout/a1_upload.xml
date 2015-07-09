@@ -12,19 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:textAlignment="center" />
+        android:background="?attr/colorPrimary" />
 
-    <ScrollView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView" >
-
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView_upload" />
-    </ScrollView>
+        android:id="@+id/listView_upload"
+        android:padding="10dp" />
 
 
 </LinearLayout>
