@@ -6,10 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.model.top.Upload_Schedule;
+
+import java.util.ArrayList;
 
 public class A1_UploadActivity extends AppCompatActivity {
+
+    private ListView listview;
+    private ArrayList<Upload_Schedule> arraySchedule = new ArrayList<Upload_Schedule>();
+    //private Concise_Schedule_Adapter concise_schedule_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
