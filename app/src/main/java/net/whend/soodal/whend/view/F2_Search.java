@@ -1,5 +1,6 @@
 package net.whend.soodal.whend.view;
 
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,12 +12,20 @@ import android.view.ViewGroup;
 import net.whend.soodal.whend.R;
 
 
-public class Fragment3 extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link F2_Search#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class F2_Search extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private FragmentTabHost mTabHost;
 
-    public Fragment3() {
+        public F2_Search() {
         // Required empty public constructor
     }
 
@@ -30,7 +39,7 @@ public class Fragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment3, container, false);
+        return inflater.inflate(R.layout.F2_Search_layout, container, false);
 
     }
 

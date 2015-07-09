@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import net.whend.soodal.whend.R;
 
 
-public class Fragment5 extends Fragment {
+public class F4_Notify extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private FragmentTabHost mTabHost;
 
-    public Fragment5() {
+    public F4_Notify() {
         // Required empty public constructor
     }
 
@@ -30,7 +30,7 @@ public class Fragment5 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment5, container, false);
+        return inflater.inflate(R.layout.F4_Notify_layout, container, false);
 
     }
 

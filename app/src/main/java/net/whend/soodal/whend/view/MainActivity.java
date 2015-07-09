@@ -21,15 +21,15 @@ public class MainActivity extends FragmentActivity {
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
         mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("", getApplicationContext().getResources().getDrawable(R.drawable.tab1_selector)),
-                Fragment1.class, null);
+                F1_Wall.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("", getApplicationContext().getResources().getDrawable(R.drawable.tab2_selector)),
-                Fragment2.class, null);
+                F2_Search.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("", getApplicationContext().getResources().getDrawable(R.drawable.upload_full)),
-                Fragment3.class, null);
+                F3_Upload.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("tab4").setIndicator("", getApplicationContext().getResources().getDrawable(R.drawable.tab3_selector)),
-                Fragment4.class, null);
+                F4_Notify.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("tab5").setIndicator("", getApplicationContext().getResources().getDrawable(R.drawable.tab4_selector)),
-                Fragment5.class, null);
+                F5_Mypage.class, null);
 
     }
 

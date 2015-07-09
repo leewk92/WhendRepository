@@ -6,7 +6,7 @@ package net.whend.soodal.whend.model;
  */
 public class Comment {
 
-    // References : The Schedule Model on Server (WK)
+    // References : The Comment Model on Server (WK)
     /*
     title = models.CharField(max_length=80)
     contents = models.CharField(max_length=400)
@@ -19,6 +19,6 @@ public class Comment {
     private String title;
     private String contents;            // 댓글 내용 (WK)
     private String schedule_id;         // 댓글을 소유하고 있는 스케줄의 고유 아이디 (WK)
-
+    private int write_user;             // 나중에 User class 상속 받을 예정 (WK)
 
 }

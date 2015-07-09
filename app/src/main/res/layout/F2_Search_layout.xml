@@ -3,13 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.whend.soodal.whend.view.Fragment5">
+    tools:context="net.whend.soodal.whend.view.F2_Search"
+    android:clickable="true"
+    android:background="#ffffa348">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="hello_blank_fragment"
-        android:background="#0002ff4b" />
+        android:background="#ffffb82c" />
 
 </FrameLayout>
