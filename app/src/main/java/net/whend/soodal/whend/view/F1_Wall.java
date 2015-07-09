@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
-import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class F1_Wall extends Fragment {
     private FragmentTabHost mTabHost;
     private View rootView;
     private ListView listview;
-    private ArrayList<Schedule> arraySchedule = new ArrayList<Schedule>();
+    private ArrayList<Concise_Schedule> arraySchedule = new ArrayList<Concise_Schedule>();
     private Concise_Schedule_Adapter concise_schedule_adapter;
 
     public F1_Wall() {
@@ -33,7 +32,7 @@ public class F1_Wall extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Schedule a = new Schedule();
+        Concise_Schedule a = new Concise_Schedule();
         arraySchedule.add(a);
         arraySchedule.add(a);
         arraySchedule.add(a);

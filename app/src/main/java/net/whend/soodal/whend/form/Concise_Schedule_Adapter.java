@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import net.whend.soodal.whend.R;
-import net.whend.soodal.whend.model.base.Schedule;
+import net.whend.soodal.whend.model.top.Concise_Schedule;
 
 import java.util.ArrayList;
 
@@ -15,12 +15,12 @@ import java.util.ArrayList;
  * Wall 에서 일정을 간단한 카드 형식 리스트로 보여주기 위한 어답터
  * Created by wonkyung on 15. 7. 9.
  */
-public class Concise_Schedule_Adapter extends ArrayAdapter<Schedule> {
+public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
-    private ArrayList<Schedule> Schedule_list;
+    private ArrayList<Concise_Schedule> Schedule_list;
     private Context context;
 
-    public Concise_Schedule_Adapter(Context context, int textViewResourceId, ArrayList<Schedule> lists){
+    public Concise_Schedule_Adapter(Context context, int textViewResourceId, ArrayList<Concise_Schedule> lists){
         super(context, textViewResourceId, lists);
         this.Schedule_list = lists;
         this.context = context;
