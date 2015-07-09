@@ -17,7 +17,7 @@
             android:id="@+id/user_photo"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/notice_on"
+            android:src="@drawable/UserImage_Default"
             />
         <TextView
             android:id="@+id/user_fullname"
@@ -25,7 +25,9 @@
             android:layout_height="wrap_content"
             android:text="이원경"
             android:textStyle="bold"
+            android:textSize="15dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
             />
     </LinearLayout>
 
@@ -53,14 +55,16 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/notice_on"/>
+                android:src="@drawable/date"/>
 
             <TextView
                 android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="7월9일"
-                android:textSize="10dp"/>
+                android:textSize="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"/>
 
         </LinearLayout>
 
@@ -71,13 +75,15 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/notice_on"/>
+                android:src="@drawable/time"/>
             <TextView
                 android:id="@+id/time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="11:00 - 22:00"
-                android:textSize="10dp"/>
+                android:textSize="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"/>
 
         </LinearLayout>
 
@@ -88,13 +94,15 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/notice_on"/>
+                android:src="@drawable/location"/>
             <TextView
                 android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="연세대학교"
-                android:textSize="10dp"/>
+                android:textSize="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -105,7 +113,10 @@
         android:layout_height="120dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="감정이들 보러가야지\n#영화개봉일 #애니매이션 #인사이드아웃"
-        android:background="@drawable/upload_full"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:background="@drawable/exo"
+        android:layout_marginTop="5dp"
         />
 
     <LinearLayout
@@ -124,7 +135,7 @@
                 android:id="@+id/like_button"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/notice_on"/>
+                android:src="@drawable/like"/>
         </LinearLayout>
 
         <LinearLayout
@@ -135,7 +146,7 @@
                 android:id="@+id/follow_button"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/notice_on"/>
+                android:src="@drawable/ExportToCalendar"/>
 
         </LinearLayout>
 
@@ -147,7 +158,7 @@
                 android:id="@+id/comment_button"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/notice_on"/>
+                android:src="@drawable/comment"/>
         </LinearLayout>
     </LinearLayout>
 
