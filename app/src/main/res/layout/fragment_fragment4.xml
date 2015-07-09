@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.whend.soodal.whend.template.Fragment4">
+    tools:context="net.whend.soodal.whend.view.Fragment4">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

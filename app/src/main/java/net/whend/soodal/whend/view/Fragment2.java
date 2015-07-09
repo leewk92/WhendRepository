@@ -1,4 +1,4 @@
-package net.whend.soodal.whend.template;
+package net.whend.soodal.whend.view;
 
 
 import android.net.Uri;

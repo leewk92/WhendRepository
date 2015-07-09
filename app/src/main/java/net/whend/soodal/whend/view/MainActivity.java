@@ -7,11 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import net.whend.soodal.whend.R;
-import net.whend.soodal.whend.template.Fragment1;
-import net.whend.soodal.whend.template.Fragment2;
-import net.whend.soodal.whend.template.Fragment3;
-import net.whend.soodal.whend.template.Fragment4;
-import net.whend.soodal.whend.template.Fragment5;
 
 
 public class MainActivity extends FragmentActivity {
