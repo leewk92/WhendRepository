@@ -1,4 +1,4 @@
-package net.whend.soodal.whend;
+package net.whend.soodal.whend.view;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTabHost;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.template.Fragment1;
 import net.whend.soodal.whend.template.Fragment2;
 import net.whend.soodal.whend.template.Fragment3;
