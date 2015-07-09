@@ -15,6 +15,7 @@ public class F4_Notify extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private FragmentTabHost mTabHost;
+    private View rootView;
 
     public F4_Notify() {
         // Required empty public constructor
@@ -29,8 +30,12 @@ public class F4_Notify extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.F4_Notify_layout, container, false);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("활동");
+
+        rootView = inflater.inflate(R.layout.f4_notify_layout, container, false);
+
+        return rootView;
 
     }
 

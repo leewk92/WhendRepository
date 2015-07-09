@@ -15,6 +15,7 @@ public class F3_Upload extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private FragmentTabHost mTabHost;
+    private View rootView;
 
     public F3_Upload() {
         // Required empty public constructor
@@ -29,8 +30,12 @@ public class F3_Upload extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.F3_Upload_layout, container, false);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("업로드");
+
+        rootView = inflater.inflate(R.layout.f3_upload_layout, container, false);
+
+        return rootView;
 
     }
 

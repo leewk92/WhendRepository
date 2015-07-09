@@ -17,13 +17,18 @@ import net.whend.soodal.whend.R;
  * Activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
+<<<<<<< HEAD:app/src/main/java/net/whend/soodal/whend/view/F2_Search.java
  * Use the {@link F2_Search#newInstance} factory method to
+=======
+
+>>>>>>> origin/JB:app/src/main/java/net/whend/soodal/whend/view/Fragment2.java
  * create an instance of this fragment.
  */
 public class F2_Search extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private FragmentTabHost mTabHost;
+    private View rootView;
 
         public F2_Search() {
         // Required empty public constructor
@@ -38,9 +43,12 @@ public class F2_Search extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.F2_Search_layout, container, false);
 
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("검색");
+
+        rootView = inflater.inflate(R.layout.f2_search_layout, container, false);
+
+        return rootView;
     }
 
     //

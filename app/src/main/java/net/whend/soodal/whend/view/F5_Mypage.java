@@ -15,6 +15,7 @@ public class F5_Mypage extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private FragmentTabHost mTabHost;
+    private View rootView;
 
     public F5_Mypage() {
         // Required empty public constructor
@@ -30,8 +31,10 @@ public class F5_Mypage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.F5_Mypage_layout, container, false);
 
+        rootView = inflater.inflate(R.layout.f5_mypage_layout, container, false);
+
+        return rootView;
     }
 
     //
