@@ -32,6 +32,7 @@ public class F5_Mypage extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("마이 페이지");
         rootView = inflater.inflate(R.layout.f5_mypage_layout, container, false);
 
         return rootView;
