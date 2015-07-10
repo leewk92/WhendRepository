@@ -5,6 +5,11 @@ package net.whend.soodal.whend.model.top;
  */
 public class Upload_Schedule {
 
+    private Long date;
+    private String content;
+    private String time;
+    private String location;
+
     public Upload_Schedule(){
 
     }

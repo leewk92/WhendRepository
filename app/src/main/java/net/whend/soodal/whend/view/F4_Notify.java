@@ -31,7 +31,7 @@ public class F4_Notify extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("활동");
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("알림");
 
         rootView = inflater.inflate(R.layout.f4_notify_layout, container, false);
 
