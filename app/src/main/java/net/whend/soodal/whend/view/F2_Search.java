@@ -44,6 +44,7 @@ public class F2_Search extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(false);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("검색");
 
         rootView = inflater.inflate(R.layout.f2_search_layout, container, false);

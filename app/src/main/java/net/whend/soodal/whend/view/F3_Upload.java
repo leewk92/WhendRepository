@@ -33,6 +33,7 @@ public class F3_Upload extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(false);
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("업로드");
 
         rootView = inflater.inflate(R.layout.f3_upload_layout, container, false);

@@ -8,11 +8,14 @@
     tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:minHeight="?attr/actionBarSize"
-    android:background="?attr/colorPrimary" />
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="#ff03a8f3"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        />
 
     <FrameLayout
         android:id="@+id/realtabcontent"
@@ -31,6 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="0" />
+
     </android.support.v4.app.FragmentTabHost>
 </LinearLayout>
 

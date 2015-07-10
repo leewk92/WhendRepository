@@ -1,9 +1,15 @@
 package net.whend.soodal.whend.view;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +48,34 @@ public class F1_Wall extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("WhenD");
+        // 로고 사이즈 조정 및 로고 삽입
+
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.whend_actionbar);
+        Toolbar toolbar = (Toolbar) container.findViewById(R.id.toolbar);
+
+        int actionBarHeight=0;
+
+        TypedValue tv = new TypedValue();
+        if (getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
+        {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+        }
+
+        int height = (int) (actionBarHeight * 0.8);
+
+
+        int width = (bmp.getWidth()*height/bmp.getHeight());
+
+
+        Bitmap resizedbmp = Bitmap.createScaledBitmap(bmp, width, height, true);
+        Drawable logo = new BitmapDrawable(getResources(), resizedbmp);
+
+        // 사이즈변경
+
+
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(true); // 로고사용
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(""); // 타이틀미사용
+        ((MainActivity)getActivity()).getSupportActionBar().setLogo(logo); //  로고박기
 
         rootView = inflater.inflate(R.layout.f1_wall_layout, container, false);
 
