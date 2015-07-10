@@ -1,16 +1,19 @@
 package net.whend.soodal.whend.form;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.Upload_Schedule;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedule_Adapter.Upload_ViewHolder> {
 
@@ -54,13 +57,50 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
     @Override
     public void onBindViewHolder(Upload_ViewHolder holder, int position) {
         Upload_Schedule schedule = Schedule_list.get(position);
+        holder.vDate.setText(schedule.getDate());
+        holder.vContent.setText(schedule.getContent());
+        holder.vTime.setText(schedule.getTime());
+        holder.vLocation.setText(schedule.getLocation());
+
+
+        Random random = new Random();
+        int color = random.nextInt(4);
+        switch (color){
+            case 0:
+                holder.vColor.setBackgroundColor(Color.parseColor("#FFC671"));
+                break;
+            case 1:
+                holder.vColor.setBackgroundColor(Color.parseColor("#B4FF27"));
+                break;
+            case 2:
+                holder.vColor.setBackgroundColor(Color.parseColor("#F191FF"));
+                break;
+            case 3:
+                holder.vColor.setBackgroundColor(Color.parseColor("#699DFF"));
+                break;
+            case 4:
+                holder.vColor.setBackgroundColor(Color.parseColor("#6BFFBA"));
+                break;
+        };
 
     }
 
     public static class Upload_ViewHolder extends RecyclerView.ViewHolder {
 
-        public Upload_ViewHolder(View itemView) {
-            super(itemView);
+        protected TextView vDate;
+        protected TextView vContent;
+        protected TextView vTime;
+        protected TextView vLocation;
+        protected LinearLayout vColor;
+
+
+        public Upload_ViewHolder(View v){
+            super(v);
+            vDate = (TextView) v.findViewById(R.id.Date_card);
+            vContent = (TextView) v.findViewById(R.id.Content_card) ;
+            vTime = (TextView) v.findViewById(R.id.Time_card);
+            vLocation = (TextView) v.findViewById(R.id.Location_card);
+            vColor = (LinearLayout) v.findViewById(R.id.color);
         }
     }
 
@@ -72,3 +112,5 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
         return Schedule_list.size();
     }
 }
+
+

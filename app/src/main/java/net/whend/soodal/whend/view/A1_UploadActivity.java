@@ -28,10 +28,9 @@ public class A1_UploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a1_upload);
 
-        Upload_Schedule a = new Upload_Schedule();
-        arraySchedule.add(a);
-        arraySchedule.add(a);
-        arraySchedule.add(a);
+        arraySchedule.add(new Upload_Schedule("2015년 2월 7일", "준삐 생일", "하루 종일", "내 방"));
+        arraySchedule.add(new Upload_Schedule("2015년 6월 15일","민수 생일","하루 종일","민수 방"));
+        arraySchedule.add(new Upload_Schedule("2015년 12월 23일","원경 생일","하루 종일","원경 방"));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
         toolbar.setTitle("");

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="#ff4b4b4b"
         android:layout_gravity="right">
 
         <TextView
@@ -21,7 +21,8 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/toolbar_textview"
             android:text="test"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:textColor="@android:color/white" />
 
     </android.support.v7.widget.Toolbar>
 
