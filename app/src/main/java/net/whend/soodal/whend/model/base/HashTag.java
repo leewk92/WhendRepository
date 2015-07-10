@@ -21,6 +21,6 @@ public class HashTag {
     private String photo;               // 대표사진 : Download photo on cache directory (WK)
     private int follower_count;         // 댓글을 소유하고 있는 스케줄의 고유 아이디 (WK)
     private String content;             // 안에 무슨 일정들이 있는지 대충 보여주는 용도
-    private int follow_user;            // 나중에 User class 상속 받을 예정 (WK)
+    private int follow_user[];            // 나중에 User class 상속 받을 예정 (WK)
 
 }

@@ -22,7 +22,7 @@ public class F1_Wall extends Fragment {
     private FragmentTabHost mTabHost;
     private View rootView;
     private ListView listview;
-    private ArrayList<Concise_Schedule> arraySchedule = new ArrayList<Concise_Schedule>();
+    private ArrayList<Concise_Schedule> arrayCSchedule = new ArrayList<Concise_Schedule>();
     private Concise_Schedule_Adapter concise_schedule_adapter;
 
     public F1_Wall() {
@@ -33,9 +33,9 @@ public class F1_Wall extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Concise_Schedule a = new Concise_Schedule();
-        arraySchedule.add(a);
-        arraySchedule.add(a);
-        arraySchedule.add(a);
+        arrayCSchedule.add(a);
+        arrayCSchedule.add(a);
+        arrayCSchedule.add(a);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class F1_Wall extends Fragment {
         rootView = inflater.inflate(R.layout.f1_wall_layout, container, false);
 
         listview = (ListView)rootView.findViewById(R.id.listview_concise_schedule);
-        listview.setAdapter(new Concise_Schedule_Adapter(getActivity(),R.layout.item_concise_schedule,arraySchedule));
+        listview.setAdapter(new Concise_Schedule_Adapter(getActivity(),R.layout.item_concise_schedule,arrayCSchedule));
 
         return rootView;
     }

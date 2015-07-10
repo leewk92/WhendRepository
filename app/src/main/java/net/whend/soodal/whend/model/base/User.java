@@ -47,6 +47,61 @@ public class User {
     private int following_hashtag_count;    // 받아보고 있는 hashtag 수 (WK)
     private int follower_count;             // 몇명이 나를 follow 하고 있는지, follower수 (WK)
 
+    // Accessors
+    public String getUsername() {
+        return username;
+    }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public int getSchedule_count() {
+        return schedule_count;
+    }
+
+    public int getFollowing_people_count() {
+        return following_people_count;
+    }
+
+    public int getFollowing_hashtag_count() {
+        return following_hashtag_count;
+    }
+
+    public int getFollower_count() {
+        return follower_count;
+    }
+
+    // Mutators
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public void setSchedule_count(int schedule_count) {
+        this.schedule_count = schedule_count;
+    }
+
+    public void setFollowing_people_count(int following_people_count) {
+        this.following_people_count = following_people_count;
+    }
+
+    public void setFollowing_hashtag_count(int following_hashtag_count) {
+        this.following_hashtag_count = following_hashtag_count;
+    }
+
+    public void setFollower_count(int follower_count) {
+        this.follower_count = follower_count;
+    }
 }
