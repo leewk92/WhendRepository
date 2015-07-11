@@ -1,6 +1,7 @@
 package net.whend.soodal.whend.form;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.Upload_Schedule;
+import net.whend.soodal.whend.view.A4_MakeScheduleActivity;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,6 +21,11 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
 
     private ArrayList<Upload_Schedule> Schedule_list;
     private Context context;
+
+
+    public interface ItemClickListener {
+        void onClick(View view, int position, boolean isLongClick);
+    }
 
     public Upload_Schedule_Adapter(Context context, int textViewResourceId, ArrayList<Upload_Schedule> lists){
 
@@ -31,14 +38,6 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
     // 뷰 홀더는 데이터 아이템에 대한 모든 뷰들에 접근하는 방법을 제공함
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        // 이 경우에는 각 데이터 아이템은 단지 문자열
-        public TextView mTextView;
-        public ViewHolder(TextView v) {
-            super(v);
-            mTextView = v;
-        }
-    }
 
     // 새로운 뷰 생성 (레이아웃 매니저에 의해 호출됨)
     @Override
@@ -47,6 +46,8 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
         // 새로운 뷰 생성
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_upload_schedule, parent, false);
+
+
         // 뷰의 사이즈, 마진, 패딩 및 레이아웃 파라미터 설정
 
         return new Upload_ViewHolder(v);
@@ -56,13 +57,29 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
     // 뷰의 컨텐츠를 교체함 (레이아웃 매니저에 의해 호출됨)
     @Override
     public void onBindViewHolder(Upload_ViewHolder holder, int position) {
-        Upload_Schedule schedule = Schedule_list.get(position);
+        final Upload_Schedule schedule = Schedule_list.get(position);
         holder.vDate.setText(schedule.getDate());
         holder.vContent.setText(schedule.getContent());
         holder.vTime.setText(schedule.getTime());
         holder.vLocation.setText(schedule.getLocation());
 
+        holder.setClickListener(new ItemClickListener(){
 
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+                Intent intent = new Intent(context, A4_MakeScheduleActivity.class);
+                intent.putExtra("date", schedule.getDate().toString());
+                intent.putExtra("content", schedule.getContent().toString());
+                intent.putExtra("time",schedule.getDate().toString());
+                intent.putExtra("location",schedule.getLocation().toString());
+                intent.putExtra("text", String.valueOf("URL")); // 아마 유저정보...?
+                context.startActivity(intent);
+            }
+        });
+
+
+
+        // 아직 색깔 랜덤
         Random random = new Random();
         int color = random.nextInt(4);
         switch (color){
@@ -85,13 +102,14 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
 
     }
 
-    public static class Upload_ViewHolder extends RecyclerView.ViewHolder {
+    public static class Upload_ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         protected TextView vDate;
         protected TextView vContent;
         protected TextView vTime;
         protected TextView vLocation;
         protected LinearLayout vColor;
+        private ItemClickListener clickListener;
 
 
         public Upload_ViewHolder(View v){
@@ -101,6 +119,18 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
             vTime = (TextView) v.findViewById(R.id.Time_card);
             vLocation = (TextView) v.findViewById(R.id.Location_card);
             vColor = (LinearLayout) v.findViewById(R.id.color);
+
+            v.setOnClickListener(this);
+
+        }
+
+        public void setClickListener(ItemClickListener itemClickListener) {
+            this.clickListener = itemClickListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            clickListener.onClick(v, getPosition(), false);
         }
     }
 
@@ -111,6 +141,7 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
 
         return Schedule_list.size();
     }
+
 }
 
 

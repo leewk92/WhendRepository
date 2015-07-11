@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+    tools:context="net.whend.soodal.whend.view.A1_UploadActivity">
+
+    <android.support.v7.widget.Toolbar
+
+        android:id="@+id/toolbar_upload"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="#ff4b4b4b"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:layout_gravity="right">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="1dp"
+            android:layout_height="34dp"
+            android:background="#ff7c7c7d"
+            android:layout_marginRight="5dp"></LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/toolbar_textview"
+            android:text="test"
+
+            android:textColor="@android:color/white" />
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+    <!-- <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView_upload"
+        android:padding="10dp" /> -->
+
+    <!-- 일반적으로 사용하는 속성을 가진 RecyclerView -->
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_upload"
+            android:padding="10dp"
+            android:scrollbars="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:id="@+id/fab_image_button"
+            android:layout_width="@dimen/fab_button_diameter"
+            android:layout_height="@dimen/fab_button_diameter"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/fab_button_margin_bottom"
+            android:layout_marginRight="@dimen/fab_button_margin_right"
+            android:background="@drawable/fab_shape"
+            android:src="@drawable/fab_ic_add"
+            android:tint="@android:color/white"
+            android:layout_gravity="right" />
+    </RelativeLayout>
+
+
+</LinearLayout>

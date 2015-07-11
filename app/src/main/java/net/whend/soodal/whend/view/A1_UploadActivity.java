@@ -1,12 +1,16 @@
 package net.whend.soodal.whend.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
@@ -26,11 +30,11 @@ public class A1_UploadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.a1_upload);
+        setContentView(R.layout.a1_upload_layout);
 
         arraySchedule.add(new Upload_Schedule("2015년 2월 7일", "준삐 생일", "하루 종일", "내 방"));
-        arraySchedule.add(new Upload_Schedule("2015년 6월 15일","민수 생일","하루 종일","민수 방"));
-        arraySchedule.add(new Upload_Schedule("2015년 12월 23일","원경 생일","하루 종일","원경 방"));
+        arraySchedule.add(new Upload_Schedule("2015년 6월 15일", "민수 생일", "하루 종일", "민수 방"));
+        arraySchedule.add(new Upload_Schedule("2015년 12월 23일", "원경 생일", "하루 종일", "원경 방"));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
         toolbar.setTitle("");
@@ -38,15 +42,40 @@ public class A1_UploadActivity extends AppCompatActivity {
         toolbartext.setText("일정 올리기");
 
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.cancel);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+        //Recycler View 설정
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new Upload_Schedule_Adapter(this, R.layout.item_upload_schedule, arraySchedule);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_upload);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setHasFixedSize(true);
-
-        mLayoutManager = new LinearLayoutManager(this);
-
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(new Upload_Schedule_Adapter(this, R.layout.item_upload_schedule, arraySchedule));
+        mRecyclerView.setAdapter(mAdapter);
 
+
+        // FAB
+
+        ImageButton fabImageButton = (ImageButton) findViewById(R.id.fab_image_button);
+
+        fabImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(A1_UploadActivity.this, A4_MakeScheduleActivity.class);
+                startActivity(intent);
+
+
+            }
+        });
 
     }
 
