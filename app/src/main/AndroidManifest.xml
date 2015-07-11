@@ -20,6 +20,16 @@
             android:name=".view.A1_UploadActivity"
             android:label="@string/title_activity_a1__upload">
         </activity>
+        <activity
+            android:name=".view.A2_UserProfileActivity"
+            android:label="@string/title_activity_a2__userprofile">
+
+        </activity>
+        <activity
+            android:name=".view.A3_SpecificScheduleActivity"
+            android:label="@string/title_activity_a3__specificschedule">
+
+        </activity>
     </application>
 
 </manifest>

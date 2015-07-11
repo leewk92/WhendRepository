@@ -25,19 +25,15 @@ public class Comment {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
-
     public String getContents() {
         return contents;
     }
@@ -46,19 +42,15 @@ public class Comment {
     public void setContents(String contents) {
         this.contents = contents;
     }
-
     public String getSchedule_id() {
         return schedule_id;
     }
-
     public void setSchedule_id(String schedule_id) {
         this.schedule_id = schedule_id;
     }
-
     public User getWrite_user() {
         return write_user;
     }
-
     public void setWrite_user(User write_user) {
         this.write_user = write_user;
     }

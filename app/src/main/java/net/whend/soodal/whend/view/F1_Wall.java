@@ -1,5 +1,6 @@
 package net.whend.soodal.whend.view;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +14,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import net.whend.soodal.whend.R;
@@ -26,7 +28,7 @@ public class F1_Wall extends Fragment {
 
 
     private FragmentTabHost mTabHost;
-    private View rootView;
+    private View rootview;
     private ListView listview;
     private ArrayList<Concise_Schedule> arrayCSchedule = new ArrayList<Concise_Schedule>();
     private Concise_Schedule_Adapter concise_schedule_adapter;
@@ -77,13 +79,25 @@ public class F1_Wall extends Fragment {
         ((MainActivity)getActivity()).getSupportActionBar().setTitle(""); // 타이틀미사용
         ((MainActivity)getActivity()).getSupportActionBar().setLogo(logo); //  로고박기
 
-        rootView = inflater.inflate(R.layout.f1_wall_layout, container, false);
+        // View 할당
+        rootview = inflater.inflate(R.layout.f1_wall_layout, container, false);
+        listview = (ListView)rootview.findViewById(R.id.listview_concise_schedule);
 
-        listview = (ListView)rootView.findViewById(R.id.listview_concise_schedule);
-        listview.setAdapter(new Concise_Schedule_Adapter(getActivity(),R.layout.item_concise_schedule,arrayCSchedule));
+        listview.setAdapter(new Concise_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayCSchedule));
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-        return rootView;
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int position, long arg3) {
+                // TODO Auto-generated method stub
+
+                Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
+                startActivity(intent);
+            }
+        });
+        return rootview;
     }
+
 
     //
     /**
