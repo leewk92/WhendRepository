@@ -48,8 +48,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ImageView follow_button = (ImageView)v.findViewById(R.id.follow_button);
         UserProfileClickListener(user, position);
         UserProfileClickListener(comment_writer,position);
-        LikeButtonClickListener(like_button,position);
-        FollowButtonClickListener(follow_button,position);
+        LikeButtonClickListener(like_button, position);
+        FollowButtonClickListener(follow_button, position);
         return v;
     }
 

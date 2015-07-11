@@ -23,7 +23,7 @@ import net.whend.soodal.whend.model.top.Concise_Schedule;
 
 import java.util.ArrayList;
 
-
+// ToolBar 숨기기 Reference : https://mzgreen.github.io/2015/02/15/How-to-hideshow-Toolbar-when-list-is-scroling%28part1%29/
 public class F1_Wall extends Fragment {
 
 
