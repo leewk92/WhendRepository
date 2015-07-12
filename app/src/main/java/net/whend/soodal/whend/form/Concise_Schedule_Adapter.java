@@ -1,19 +1,17 @@
 package net.whend.soodal.whend.form;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
+import net.whend.soodal.whend.view.A5_WhoFollowsScheduleActivity;
 
 import java.util.ArrayList;
 
@@ -42,23 +40,39 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
 
         // 리스너 함수들
-        View user = (View)v.findViewById(R.id.user_clickableLayout);
+        View user_clickableLayout = (View)v.findViewById(R.id.user_clickableLayout);
         View comment_writer = (View)v.findViewById(R.id.comment_writer);
         ImageView like_button = (ImageView)v.findViewById(R.id.like_button);
         ImageView follow_button = (ImageView)v.findViewById(R.id.follow_button);
-        UserProfileClickListener(user, position);
+        View schedulefollow_user_clickablelayout = (View)v.findViewById(R.id.schedulefollow_user_clickablelayout);
+
+        UserProfileClickListener(user_clickableLayout, position);
         UserProfileClickListener(comment_writer,position);
         LikeButtonClickListener(like_button, position);
         FollowButtonClickListener(follow_button, position);
+        WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout, position);
         return v;
     }
 
-    // 유저 이름 누를때 리스너
+    // 유저 이름 누를 때 리스너
     public void UserProfileClickListener(View userview,int position){
         userview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, A2_UserProfileActivity.class);
+                intent.putExtra("text", String.valueOf("URL"));
+                context.startActivity(intent);
+            }
+        });
+
+    }
+
+    // 외 15명 누를 때 리스너
+    public void WhoFollowsScheduleClickListener(View schedulefollow_user_clickablelayout,int position){
+        schedulefollow_user_clickablelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, A5_WhoFollowsScheduleActivity.class);
                 intent.putExtra("text", String.valueOf("URL"));
                 context.startActivity(intent);
             }

@@ -32,6 +32,12 @@
             android:name=".view.A4_MakeScheduleActivity"
             android:label="@string/title_activity_a4__make_schedule" >
         </activity>
+        <activity
+            android:name=".view.A5_WhoFollowsScheduleActivity"
+            android:label="@string/title_activity_a5__whofollowsschedule">
+
+        </activity>
+
     </application>
 
 </manifest>
