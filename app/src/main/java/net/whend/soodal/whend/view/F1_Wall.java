@@ -37,7 +37,7 @@ public class F1_Wall extends Fragment {
     private Concise_Schedule_Adapter concise_schedule_adapter;
 
     private TextView mainactivity_title;
-    ImageView search_btn;
+    ImageView search_btn, back_btn;
     EditText search_text;
 
     public F1_Wall() {
@@ -91,6 +91,9 @@ public class F1_Wall extends Fragment {
 
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
+        back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
+
+        back_btn.setVisibility(View.GONE);
 
         search_btn.setVisibility(View.INVISIBLE);
         search_text.setVisibility(View.INVISIBLE);

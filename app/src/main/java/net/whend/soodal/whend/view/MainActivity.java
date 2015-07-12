@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTabHost mTabHost;
     private EditText search_text;
     private ImageView search_btn;
+    private ImageView back_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         search_text = (EditText) findViewById(R.id.search_text);
         search_btn = (ImageView) findViewById(R.id.search_btn);
+        back_btn = (ImageView) findViewById(R.id.back_btn);
 
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         search_text.setVisibility(View.INVISIBLE);
         search_btn.setVisibility(View.INVISIBLE);
+        back_btn.setVisibility(View.GONE);
 
         setSupportActionBar(toolbar);
 

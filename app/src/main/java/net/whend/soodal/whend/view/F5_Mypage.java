@@ -20,7 +20,7 @@ public class F5_Mypage extends Fragment {
     private FragmentTabHost mTabHost;
 
     TextView mainactivity_title;
-    ImageView search_btn;
+    ImageView search_btn, back_btn;
     EditText search_text;
 
     private View rootView;
@@ -48,9 +48,11 @@ public class F5_Mypage extends Fragment {
 
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
+        back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
 
         search_btn.setVisibility(View.INVISIBLE);
         search_text.setVisibility(View.INVISIBLE);
+        back_btn.setVisibility(View.GONE);
 
         return rootView;
     }

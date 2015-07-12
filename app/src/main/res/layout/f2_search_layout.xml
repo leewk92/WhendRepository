@@ -8,17 +8,18 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <GridLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/search_grid">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="그리드뷰"
-            android:id="@+id/textView" />
-    </GridLayout>
+        <GridView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:numColumns="3"
+            android:id="@+id/search_gridview" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"

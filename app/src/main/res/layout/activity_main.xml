@@ -16,6 +16,13 @@
         android:background="#ff03a8f3"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/back_btn"
+            android:src="@drawable/back"
+            android:layout_marginRight="3dp"
+            android:focusable="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +35,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/search_btn"
-            android:src="@drawable/menu_search" />
+            android:layout_marginRight="3dp"
+            android:src="@drawable/menu_search"
+            android:focusable="true"/>
 
         <EditText
             android:layout_width="match_parent"

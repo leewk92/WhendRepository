@@ -1,6 +1,7 @@
 package net.whend.soodal.whend.view;
 
 
+import android.content.Context;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,15 +14,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.form.Grid_Search_Adapter;
+import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
+
+import java.util.ArrayList;
 
 
 /**
@@ -38,13 +45,17 @@ public class F2_Search extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private FragmentTabHost mTabHost;
-    TextView mainactivity_title;
-    ImageView search_btn;
-    EditText search_text;
-    GridLayout search_grid;
-    LinearLayout search_linear;
-    FrameLayout root_layout;
-    Toolbar toolbar;
+    ArrayList<Grid_Search_Schedule> arrayGSchedule = new ArrayList<Grid_Search_Schedule>();
+    private Grid_Search_Adapter grid_search_adapter;
+
+
+    private TextView mainactivity_title;
+    private ImageView search_btn, back_btn;
+    private GridView search_gridview;
+    private EditText search_text;
+    private LinearLayout search_grid, search_linear;
+    private FrameLayout root_layout;
+    private Toolbar toolbar;
 
     private View rootView;
 
@@ -55,6 +66,13 @@ public class F2_Search extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Grid_Search_Schedule a = new Grid_Search_Schedule();
+        arrayGSchedule.add(a);
+        arrayGSchedule.add(a);
+        arrayGSchedule.add(a);
+        arrayGSchedule.add(a);
+        arrayGSchedule.add(a);
 
     }
 
@@ -67,12 +85,10 @@ public class F2_Search extends Fragment {
 
         rootView = inflater.inflate(R.layout.f2_search_layout, container, false);
 
-        search_grid = (GridLayout) rootView.findViewById(R.id.search_grid);
+        search_grid = (LinearLayout) rootView.findViewById(R.id.search_grid);
         search_linear = (LinearLayout) rootView.findViewById(R.id.search_linear);
         root_layout = (FrameLayout) rootView.findViewById(R.id.search_rootlayout);
-
-        search_grid.setVisibility(View.VISIBLE);
-        search_linear.setVisibility(View.INVISIBLE);
+        search_gridview = (GridView) rootView.findViewById(R.id.search_gridview);
 
 
         // 툴바 커스터마이징
@@ -83,10 +99,27 @@ public class F2_Search extends Fragment {
 
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
+        back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
+
 
         search_btn.setVisibility(View.VISIBLE);
         search_text.setVisibility(View.VISIBLE);
 
+
+
+        // 기본 frame layout 설정
+        search_grid.setVisibility(View.VISIBLE);
+        search_linear.setVisibility(View.INVISIBLE);
+
+
+        //GridLayout 설정
+
+
+
+        search_gridview.setAdapter(new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule));
+
+
+        // search_text 검색시 이벤트
         search_text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -98,42 +131,56 @@ public class F2_Search extends Fragment {
             }
         });
 
+        // 포커스 받았을 시, 클릭됐을 시
+
         search_text.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    search_grid.setVisibility(View.INVISIBLE);
+                    search_linear.setVisibility(View.VISIBLE);
+                    back_btn.setVisibility(View.VISIBLE);
+                }
 
+            }
+        });
+
+        search_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 search_grid.setVisibility(View.INVISIBLE);
                 search_linear.setVisibility(View.VISIBLE);
-                toolbar.setNavigationIcon(R.drawable.cancel);
-
-                if (hasFocus) {
-
-                } else {
-                    search_grid.setVisibility(View.VISIBLE);
-                    search_linear.setVisibility(View.INVISIBLE);
-
-
-                }
+                back_btn.setVisibility(View.VISIBLE);
             }
         });
 
-        root_layout.setOnTouchListener(new View.OnTouchListener(){
+        back_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    search_grid.setVisibility(View.VISIBLE);
-                    search_linear.setVisibility(View.INVISIBLE);
-                    ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    return true;
-                }
-                return false;
+            public void onClick(View v) {
+
+                search_text.clearFocus();
+
+                search_grid.setVisibility(View.VISIBLE);
+                search_linear.setVisibility(View.INVISIBLE);
+                back_btn.setVisibility(View.GONE);
+
+                //hide keyboard
+                InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
-
 
 
         return rootView;
+    }
+
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("back_btn_gone", back_btn.getVisibility() == View.GONE);
+        super.onSaveInstanceState(outState);
     }
 
 
@@ -154,5 +201,6 @@ public class F2_Search extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
 
 }
