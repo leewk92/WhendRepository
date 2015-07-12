@@ -1,0 +1,81 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+    tools:context="net.whend.soodal.whend.view.A6_WriteCommentActivity">
+    <!-- android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"-->
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_whofollowsschedule"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="#ff4b4b4b"
+        android:layout_gravity="right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="댓글입력"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/seemore_button"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="16dp"
+        android:text="더보기 .."
+        android:textColor="#727272"
+        android:textSize="12dp" />
+
+    <ListView
+        android:id="@+id/listview_comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/comment_content_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:background="#727272"
+            android:gravity="bottom">
+            <EditText
+                android:id="@+id/comment_content"
+                android:layout_width="280dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:background="#FFFFFF"
+                />
+            <Button
+                android:id="@+id/comment_write_button"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_marginTop = "3dp"
+                android:layout_marginLeft="1dp"
+                android:text="입력"
+                android:layout_alignParentRight="true"/>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -9,6 +9,7 @@
     <string name="title_activity_a3__specificschedule">A3_SpecificScheduleActivity</string>
     <string name="title_activity_a4__make_schedule">A4_MakeScheduleActivity</string>
     <string name="title_activity_a5__whofollowsschedule">A5_WhoFollowsScheduleActivity</string>
+    <string name="title_activity_a6__writecommentactivity">A6_WriteCommentActivity</string>
 
 
 </resources>

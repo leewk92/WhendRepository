@@ -40,6 +40,7 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
         // 리스너 함수들
         View user = (View)v.findViewById(R.id.user_clickableLayout);
         ImageView like_button = (ImageView)v.findViewById(R.id.like_button);
+
         UserProfileClickListener(user, position);
         LikeButtonClickListener(like_button, position);
 

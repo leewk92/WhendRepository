@@ -37,7 +37,13 @@
             android:label="@string/title_activity_a5__whofollowsschedule">
 
         </activity>
+        <activity
+            android:name=".view.A6_WriteCommentActivity"
+            android:label="@string/title_activity_a6__writecommentactivity"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"
+            >
 
+        </activity>
     </application>
 
 </manifest>
