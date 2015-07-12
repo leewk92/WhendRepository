@@ -27,12 +27,10 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
         String sDate, sContent, sLocation, sTime;
 
-        EditText date = (EditText) findViewById(R.id.date_upload);
-        EditText content = (EditText) findViewById(R.id.content_upload);
-        EditText location = (EditText) findViewById(R.id.location_upload);
-        LinearLayout click_location = (LinearLayout) findViewById(R.id.upload_location_clickable);
-
-
+        EditText date = (EditText) findViewById(R.id.date);
+        EditText time = (EditText) findViewById(R.id.time);
+        EditText title = (EditText) findViewById(R.id.title);
+        EditText location = (EditText) findViewById(R.id.location);
 
         Intent intent=new Intent(this.getIntent());
         sDate = intent.getStringExtra("date");
@@ -47,16 +45,9 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             location.setText(sLocation);
 
         if(sContent != null)
-            content.setText(sContent);
-
-        click_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(), "장소 입력을 합니다", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
-
+            title.setText(sContent);
+        if(sTime !=null)
+            time.setText(sTime);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
         toolbar.setTitle("");

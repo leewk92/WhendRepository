@@ -38,8 +38,8 @@
         android:layout_height="20dp"
         android:text="영화 인사이드아웃 개봉"
         android:textSize="12dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="5dp"
         />
     <LinearLayout
