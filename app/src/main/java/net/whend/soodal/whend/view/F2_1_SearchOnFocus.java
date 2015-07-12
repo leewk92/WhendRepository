@@ -13,9 +13,10 @@ import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
 
-
-public class F5_Mypage extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+/**
+ * Created by wonkyung on 2015-07-12.
+ */
+public class F2_1_SearchOnFocus extends Fragment {
 
     private FragmentTabHost mTabHost;
 
@@ -25,7 +26,7 @@ public class F5_Mypage extends Fragment {
 
     private View rootView;
 
-    public F5_Mypage() {
+    public F2_1_SearchOnFocus() {
         // Required empty public constructor
     }
 
@@ -43,26 +44,16 @@ public class F5_Mypage extends Fragment {
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(false);
 
         rootView = inflater.inflate(R.layout.f5_mypage_layout, container, false);
-        mainactivity_title = (TextView) getActivity().findViewById(R.id.mainactivity_title);
-        mainactivity_title.setText("마이 페이지");
-
-        search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
-        search_text = (EditText) getActivity().findViewById(R.id.search_text);
-        back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
-
-        search_btn.setVisibility(View.INVISIBLE);
-        search_text.setVisibility(View.INVISIBLE);
-        back_btn.setVisibility(View.GONE);
 
         mTabHost = (FragmentTabHost)rootView.findViewById(android.R.id.tabhost);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("Fragment B"),
-                F1_Wall.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("Fragment C"),
-                F2_Search.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("Fragment D"),
-                F4_Notify.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("searchschedule").setIndicator("일정"),
+                F2_1_1_SearchSchedule.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("searchhashtag").setIndicator("태그"),
+                F2_1_2_SearchHashtag.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("searchuser").setIndicator("유저"),
+                F2_1_3_SearchUser.class, null);
 
         return rootView;
     }
@@ -82,5 +73,4 @@ public class F5_Mypage extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-
 }

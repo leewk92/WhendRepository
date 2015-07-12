@@ -97,7 +97,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
                     toast1.show();
                     CSchedule_list.get(pos).clickLike();
-                    iv.setImageResource(R.drawable.notice_on);          // 바꿔야됨 나중에
+                    iv.setImageResource(R.drawable.like_on);
                 }
                 else if(CSchedule_list.get(pos).getIsLike() == true){
                     Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);

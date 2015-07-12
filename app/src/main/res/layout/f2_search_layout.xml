@@ -21,16 +21,12 @@
             android:id="@+id/search_gridview" />
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/search_linear">
+        android:id="@+id/search_linear"
+        >
+    </FrameLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="리니어레이아웃"
-            android:id="@+id/textView2" />
-    </LinearLayout>
 </FrameLayout>

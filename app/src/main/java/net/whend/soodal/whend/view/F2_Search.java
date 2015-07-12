@@ -2,22 +2,20 @@ package net.whend.soodal.whend.view;
 
 
 import android.content.Context;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +28,7 @@ import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
 
 import java.util.ArrayList;
 
-
+// Nested Fragment Ref : http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -53,7 +51,8 @@ public class F2_Search extends Fragment {
     private ImageView search_btn, back_btn;
     private GridView search_gridview;
     private EditText search_text;
-    private LinearLayout search_grid, search_linear;
+    private LinearLayout search_grid;
+    private FrameLayout search_linear;
     private FrameLayout root_layout;
     private Toolbar toolbar;
 
@@ -78,15 +77,18 @@ public class F2_Search extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        final Fragment temp = new F2_1_SearchOnFocus();
+
+
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(false);
 
 
         rootView = inflater.inflate(R.layout.f2_search_layout, container, false);
 
         search_grid = (LinearLayout) rootView.findViewById(R.id.search_grid);
-        search_linear = (LinearLayout) rootView.findViewById(R.id.search_linear);
+        search_linear = (FrameLayout) rootView.findViewById(R.id.search_linear);
         root_layout = (FrameLayout) rootView.findViewById(R.id.search_rootlayout);
         search_gridview = (GridView) rootView.findViewById(R.id.search_gridview);
 
@@ -110,7 +112,11 @@ public class F2_Search extends Fragment {
         // 기본 frame layout 설정
         search_grid.setVisibility(View.VISIBLE);
         search_linear.setVisibility(View.INVISIBLE);
-
+/*
+        Fragment temp = new F5_Mypage();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.search_linear, temp).commit();
+        */
 
         //GridLayout 설정
 
@@ -140,6 +146,16 @@ public class F2_Search extends Fragment {
                     search_grid.setVisibility(View.INVISIBLE);
                     search_linear.setVisibility(View.VISIBLE);
                     back_btn.setVisibility(View.VISIBLE);
+                    // temp 가 탭호스트, 프래그먼트 안에 탭호스트 하는 법
+
+                    FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                    try {
+                        transaction.replace(R.id.search_linear, temp);
+                        transaction.addToBackStack(null);
+                        transaction.commitAllowingStateLoss();
+                    }catch (Exception e) {
+                        transaction.show(temp).commit();
+                    }
                 }
 
             }
@@ -159,7 +175,12 @@ public class F2_Search extends Fragment {
             @Override
             public void onClick(View v) {
 
-                search_text.clearFocus();
+                // search_text.clearFocus();
+                search_text.setFocusableInTouchMode(false);
+                search_text.setFocusable(false);
+                search_text.setFocusableInTouchMode(true);
+                search_text.setFocusable(true);
+
 
                 search_grid.setVisibility(View.VISIBLE);
                 search_linear.setVisibility(View.INVISIBLE);
@@ -168,6 +189,9 @@ public class F2_Search extends Fragment {
                 //hide keyboard
                 InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                transaction.remove(temp).commit();
             }
         });
 
