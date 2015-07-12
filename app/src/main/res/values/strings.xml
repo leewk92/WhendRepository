@@ -3,10 +3,12 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_upload">Upload</string>
     <string name="title_activity_a1__upload">A1_UploadActivity</string>
     <string name="title_activity_a2__userprofile">A2_UserProfileActivity</string>
     <string name="title_activity_a3__specificschedule">A3_SpecificScheduleActivity</string>
     <string name="title_activity_a4__make_schedule">A4_MakeScheduleActivity</string>
     <string name="title_activity_a5__whofollowsschedule">A5_WhoFollowsScheduleActivity</string>
+
 
 </resources>

@@ -79,7 +79,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_a1_upload, menu);
+        getMenuInflater().inflate(R.menu.menu_a4_make_schedule, menu);
         return true;
     }
 
@@ -91,7 +91,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_upload) {
+            Toast.makeText(this,"업로드합니다",Toast.LENGTH_SHORT).show();
             return true;
         }
 

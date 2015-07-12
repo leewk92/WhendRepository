@@ -7,6 +7,9 @@ import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
 
@@ -15,6 +18,11 @@ public class F4_Notify extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private FragmentTabHost mTabHost;
+
+    TextView mainactivity_title;
+    ImageView search_btn;
+    EditText search_text;
+
     private View rootView;
 
     public F4_Notify() {
@@ -33,9 +41,17 @@ public class F4_Notify extends Fragment {
 
 
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(false);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle("알림");
 
         rootView = inflater.inflate(R.layout.f4_notify_layout, container, false);
+
+        mainactivity_title = (TextView) getActivity().findViewById(R.id.mainactivity_title);
+        mainactivity_title.setText("알림");
+
+        search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
+        search_text = (EditText) getActivity().findViewById(R.id.search_text);
+
+        search_btn.setVisibility(View.INVISIBLE);
+        search_text.setVisibility(View.INVISIBLE);
 
         return rootView;
 

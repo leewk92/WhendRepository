@@ -37,11 +37,11 @@ public class A1_UploadActivity extends AppCompatActivity {
         arraySchedule.add(new Upload_Schedule("2015년 12월 23일", "원경 생일", "하루 종일", "원경 방"));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
-        toolbar.setTitle("");
-        TextView toolbartext = (TextView) findViewById(R.id.toolbar_textview);
-        toolbartext.setText("일정 올리기");
+        TextView uploadactivity_title = (TextView) findViewById(R.id.uploadactivity_title);
+        uploadactivity_title.setText("일정 올리기");
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setNavigationIcon(R.drawable.cancel);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

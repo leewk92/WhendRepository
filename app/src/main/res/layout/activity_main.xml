@@ -10,12 +10,37 @@
     <android.support.v7.widget.Toolbar
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
         android:background="#ff03a8f3"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        />
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainactivity_title"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="title"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_btn"
+            android:src="@drawable/menu_search" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_text"
+            android:hint="검색"
+            android:imeOptions="actionSearch"
+            android:inputType="text"/>
+
+
+
+        </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/realtabcontent"
@@ -28,6 +53,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+
+        <TabWidget
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+
+            android:orientation="horizontal" />
 
         <FrameLayout
             android:id="@+id/tabcontent"

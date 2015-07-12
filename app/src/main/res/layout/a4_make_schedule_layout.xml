@@ -31,6 +31,14 @@
 
             android:textColor="@android:color/white" />
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="1dp"
+            android:layout_height="34dp"
+            android:layout_gravity="right"
+            android:background="#ff7c7c7d"
+            android:layout_marginRight="3dp"></LinearLayout>
+
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout

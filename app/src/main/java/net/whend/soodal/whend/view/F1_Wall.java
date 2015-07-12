@@ -15,7 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
@@ -32,6 +35,10 @@ public class F1_Wall extends Fragment {
     private ListView listview;
     private ArrayList<Concise_Schedule> arrayCSchedule = new ArrayList<Concise_Schedule>();
     private Concise_Schedule_Adapter concise_schedule_adapter;
+
+    private TextView mainactivity_title;
+    ImageView search_btn;
+    EditText search_text;
 
     public F1_Wall() {
         // Required empty public constructor
@@ -76,8 +83,17 @@ public class F1_Wall extends Fragment {
 
 
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(true); // 로고사용
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(""); // 타이틀미사용
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false); // 타이틀미사용
         ((MainActivity)getActivity()).getSupportActionBar().setLogo(logo); //  로고박기
+
+        mainactivity_title = (TextView) getActivity().findViewById(R.id.mainactivity_title);
+        mainactivity_title.setText("");
+
+        search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
+        search_text = (EditText) getActivity().findViewById(R.id.search_text);
+
+        search_btn.setVisibility(View.INVISIBLE);
+        search_text.setVisibility(View.INVISIBLE);
 
         // View 할당
         rootview = inflater.inflate(R.layout.f1_wall_layout, container, false);

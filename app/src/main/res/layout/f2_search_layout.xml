@@ -3,19 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.whend.soodal.whend.view.F2_Search"
-    android:clickable="true"
-    android:background="#ffffa348">
+    tools:context="net.whend.soodal.whend.view.F3_Upload"
+    android:id="@+id/search_rootlayout">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hello_blank_fragment"
-        android:background="#ffffb82c" />
+        android:id="@+id/search_grid">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="그리드뷰"
+            android:id="@+id/textView" />
+    </GridLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/search_linear">
 
-
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="리니어레이아웃"
+            android:id="@+id/textView2" />
+    </LinearLayout>
 </FrameLayout>
