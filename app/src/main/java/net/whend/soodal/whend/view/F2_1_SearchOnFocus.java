@@ -43,7 +43,7 @@ public class F2_1_SearchOnFocus extends Fragment {
 
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(false);
 
-        rootView = inflater.inflate(R.layout.f5_mypage_layout, container, false);
+        rootView = inflater.inflate(R.layout.f2_1_frametabhost_layout, container, false);
 
         mTabHost = (FragmentTabHost)rootView.findViewById(android.R.id.tabhost);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
