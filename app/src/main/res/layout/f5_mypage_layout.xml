@@ -15,22 +15,158 @@
 
 </FrameLayout>
     -->
-<android.support.v4.app.FragmentTabHost
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/tabhost"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/user_photo"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/userimage_default"
+                />
+            <LinearLayout
+                android:id="@+id/user_clickableLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation = "vertical">
+
+                <TextView
+                    android:id="@+id/comment_writer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="김민수"
+                    android:textSize="12dp"
+                    android:textColor="#212121"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/follow_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/setting_off"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="7.5dp" />
+    </RelativeLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop = "5dp">
 
-        <FrameLayout
-            android:id="@+id/realtabcontent"
+        <LinearLayout
+            android:id= "@+id/schedule_count_clickablelayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id= "@+id/schedule_count"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="12"
+                android:textSize="20dp"
+                android:textColor="#03A9F4"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="게시물"
+                android:textSize="15dp"
+                android:textColor="#727272"
+                android:gravity="center"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id= "@+id/follower_count_clickablelayout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id= "@+id/follower_count"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="62"
+                android:textSize="20dp"
+                android:textColor="#03A9F4"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="팔로워"
+                android:textSize="15dp"
+                android:textColor="#727272"
+                android:gravity="center"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id= "@+id/following_count_clickablelayout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id= "@+id/following_count"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="23"
+                android:textSize="20dp"
+                android:textColor="#03A9F4"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="팔로잉"
+                android:textSize="15dp"
+                android:textColor="#727272"
+                android:gravity="center"/>
+
+        </LinearLayout>
 
     </LinearLayout>
-</android.support.v4.app.FragmentTabHost>
+
+    <android.support.v4.app.FragmentTabHost
+
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp">
+            <FrameLayout
+
+                android:id="@+id/realtabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            </LinearLayout>
+    </android.support.v4.app.FragmentTabHost>
+</LinearLayout>

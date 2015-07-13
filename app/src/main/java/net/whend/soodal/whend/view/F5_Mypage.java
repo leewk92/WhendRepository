@@ -55,10 +55,11 @@ public class F5_Mypage extends Fragment {
         back_btn.setVisibility(View.GONE);
 
         mTabHost = (FragmentTabHost)rootView.findViewById(android.R.id.tabhost);
+        mTabHost.setTop(120);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("Fragment B"),
-                F1_Wall.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("MY"),
+                F5_1_MyTimeline.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("Fragment C"),
                 F2_Search.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("Fragment D"),

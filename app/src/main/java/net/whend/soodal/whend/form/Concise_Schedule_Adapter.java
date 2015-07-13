@@ -1,6 +1,8 @@
 package net.whend.soodal.whend.form;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
 import net.whend.soodal.whend.view.A5_WhoFollowsScheduleActivity;
 import net.whend.soodal.whend.view.A6_WriteCommentActivity;
+import net.whend.soodal.whend.view.F5_Mypage;
 
 import java.util.ArrayList;
 
@@ -62,6 +65,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         userview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(context, A2_UserProfileActivity.class);
                 intent.putExtra("text", String.valueOf("URL"));
                 context.startActivity(intent);
