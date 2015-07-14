@@ -24,7 +24,8 @@
                 android:layout_marginRight="10dp"
                 android:padding="8dp"
                 android:text="아이디"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                />
             <EditText
                 android:id="@+id/signup_username"
                 android:layout_width="wrap_content"
@@ -32,6 +33,7 @@
                 android:layout_weight="1"
                 android:ems="30"
                 android:textSize="13sp"
+                android:inputType="text"
                 />
 
         </LinearLayout>
@@ -95,7 +97,9 @@
                 android:layout_weight="1"
                 android:ems="30"
                 android:textSize="13sp"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:imeOptions="actionDone"
+                />
 
         </LinearLayout>
 

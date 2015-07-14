@@ -1,0 +1,144 @@
+<!--
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.whend.soodal.whend.view.F5_Mypage">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="hello_blank_fragment"
+        android:background="#0002ff4b" />
+
+</FrameLayout>
+    -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/user_clickableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            >
+
+            <TextView
+                android:id="@+id/comment_writer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="#공채일정"
+                android:textSize="20dp"
+                android:textColor="#212121"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop = "5dp">
+
+        <LinearLayout
+            android:id= "@+id/schedule_count_clickablelayout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id= "@+id/schedule_count"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="60"
+                android:textSize="20dp"
+                android:textColor="#03A9F4"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="총 일정"
+                android:textSize="15dp"
+                android:textColor="#727272"
+                android:gravity="center"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id= "@+id/follower_count_clickablelayout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id= "@+id/follower_count"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="42"
+                android:textSize="20dp"
+                android:textColor="#03A9F4"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="다가오는 일정"
+                android:textSize="15dp"
+                android:textColor="#727272"
+                android:gravity="center"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id= "@+id/following_count_clickablelayout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id= "@+id/following_count"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="1053"
+                android:textSize="20dp"
+                android:textColor="#03A9F4"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="팔로워"
+                android:textSize="15dp"
+                android:textColor="#727272"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listview_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    </ListView>
+
+</LinearLayout>

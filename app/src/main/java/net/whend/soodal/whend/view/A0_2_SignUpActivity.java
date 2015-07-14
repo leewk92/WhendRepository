@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -44,6 +46,23 @@ public class A0_2_SignUpActivity extends Activity {
         signupButton_view = (Button) findViewById(R.id.signup_button);
         signupButton_view.setOnClickListener(buttonListener);
         result_view = (TextView) findViewById(R.id.result);
+
+        password2_view.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                switch(actionId) {
+                    case EditorInfo.IME_ACTION_DONE:
+
+                        signupButton_view.performClick();
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+
+            }
+        });
+
     }
 
     public View.OnClickListener buttonListener = new View.OnClickListener() {
