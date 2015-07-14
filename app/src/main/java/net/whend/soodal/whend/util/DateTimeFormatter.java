@@ -40,7 +40,7 @@ public class DateTimeFormatter {
     }
 
     public void Parse(){
-        this.date = cal.get(Calendar.MONTH)+"월"+cal.get(Calendar.DAY_OF_MONTH)+"일";
+        this.date = cal.get(Calendar.MONTH)+"월 "+cal.get(Calendar.DAY_OF_MONTH)+"일";
         this.time = cal.get(Calendar.HOUR)+":"+cal.get(Calendar.MINUTE);
 
     }

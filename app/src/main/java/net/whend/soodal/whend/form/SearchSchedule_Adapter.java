@@ -36,10 +36,10 @@ public class SearchSchedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.item_searchschedule, null);
         }
-
+        AdjustDataToLayout(v,position);
 
         // 리스너 함수들
-        TextView username = (TextView) v.findViewById(R.id.username);
+        TextView username = (TextView) v.findViewById(R.id.user_fullname);
 
         UserProfileClickListener(username, position);
 
@@ -58,5 +58,15 @@ public class SearchSchedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             }
         });
 
+    }
+
+    public void AdjustDataToLayout(View v,int position){
+
+        ((TextView)v.findViewById(R.id.user_fullname)).setText(CSchedule_list.get(position).getUsername());
+        ((TextView)v.findViewById(R.id.title)).setText(CSchedule_list.get(position).getTitle());
+        ((TextView)v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
+        ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
+        ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
+        //((TextView)v.findViewById(R.id.like_count)).setText(CSchedule_list.get(position).getLike_count());
     }
 }

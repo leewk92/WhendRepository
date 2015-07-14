@@ -1,6 +1,8 @@
 package net.whend.soodal.whend.view;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
@@ -22,21 +24,23 @@ import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
  * Created by wonkyung on 15. 7. 13.
  */
 public class A0_2_SignUpActivity extends Activity {
-
+    private EditText username_view;
     private EditText email_view;
-    private EditText password_view;
+    private EditText password1_view, password2_view;
     private Button signupButton_view;
     private TextView result_view;
     private String email;
     private String password;
-
+    private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a0_2_signup_layout);
-
+        mContext = this.getApplicationContext();
+        username_view = (EditText) findViewById(R.id.signup_username);
         email_view = (EditText) findViewById(R.id.signup_email);
-        password_view = (EditText) findViewById(R.id.signup_password);
+        password1_view = (EditText) findViewById(R.id.signup_password1);
+        password2_view = (EditText) findViewById(R.id.signup_password2);
         signupButton_view = (Button) findViewById(R.id.signup_button);
         signupButton_view.setOnClickListener(buttonListener);
         result_view = (TextView) findViewById(R.id.result);
@@ -47,12 +51,15 @@ public class A0_2_SignUpActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-            Bundle inputBundle = new Bundle();
-            inputBundle.putCharSequence("Username","soodal");
-            inputBundle.putCharSequence("Password","Soodal2014!");
 
-            String signupurl = "http://119.81.176.245/api-auth/login/";
-            String url = "http://119.81.176.245/schedules/";
+            Bundle inputBundle = new Bundle();
+            inputBundle.putCharSequence("username",username_view.getText());
+            inputBundle.putCharSequence("email",email_view.getText());
+            inputBundle.putCharSequence("password1",password1_view.getText());
+            inputBundle.putCharSequence("password2",password2_view.getText());
+
+            String url = "http://119.81.176.245/rest-auth/registration/";
+            //String url = "http://119.81.176.245/schedules/";
 
             /*// 이렇게 하면 받아오기전에 setText해서 안뜸
              HTTPRestfulUtilizer a = new HTTPRestfulUtilizer(url, "GET");
@@ -61,7 +68,7 @@ public class A0_2_SignUpActivity extends Activity {
             */
 
             // 이렇게 해야 동기화 끝나고 행동을 함.
-            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(url,"GET");
+            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(url,"POST",inputBundle);
             a.doExecution();
 
 
@@ -90,7 +97,7 @@ public class A0_2_SignUpActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
+/*
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer{
 
         // Constructor for GET
@@ -123,11 +130,11 @@ public class A0_2_SignUpActivity extends Activity {
             }
         }
     }
-
-    class HTTPRestfulUtilizerExtender2 extends HTTPRestfulUtilizer{
+*/
+    class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer{
 
         // Constructor for GET
-        public HTTPRestfulUtilizerExtender2(String url, String HTTPRestType, Bundle inputBundle) {
+        public HTTPRestfulUtilizerExtender(String url, String HTTPRestType, Bundle inputBundle) {
 
             setUrl(url);
             setHTTPRestType(HTTPRestType);
@@ -154,6 +161,10 @@ public class A0_2_SignUpActivity extends Activity {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 result_view.setText(result);
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra("text", String.valueOf("URL"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
             }
         }
     }
