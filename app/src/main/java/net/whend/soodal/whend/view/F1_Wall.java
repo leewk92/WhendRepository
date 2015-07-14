@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,12 @@ import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
+import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -36,10 +42,11 @@ public class F1_Wall extends Fragment {
     private ListView listview;
     private ArrayList<Concise_Schedule> arrayCSchedule = new ArrayList<Concise_Schedule>();
     private Concise_Schedule_Adapter concise_schedule_adapter;
-
     private TextView mainactivity_title;
     ImageView search_btn, back_btn;
     EditText search_text;
+
+    private static JSONObject outputSchedulesJson;
 
     public F1_Wall() {
         // Required empty public constructor
@@ -48,10 +55,17 @@ public class F1_Wall extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Concise_Schedule a = new Concise_Schedule();
-        arrayCSchedule.add(a);
-        arrayCSchedule.add(a);
-        arrayCSchedule.add(a);
+
+        String url = "http://119.81.176.245/schedules/";
+
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(url,"GET");
+        a.doExecution();
+
+
+        //Concise_Schedule cs = new Concise_Schedule();
+        //arrayCSchedule.add(cs);
+        //arrayCSchedule.add(cs);
+        //arrayCSchedule.add(cs);
     }
 
     @Override
@@ -116,6 +130,61 @@ public class F1_Wall extends Fragment {
             }
         });
         return rootview;
+    }
+
+    class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
+
+        // Constructor for GET
+        public HTTPRestfulUtilizerExtender(String url, String HTTPRestType) {
+
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(),getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try{
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray tmp_results = outputSchedulesJson.getJSONArray("results");
+                    JSONObject tmp_ith;
+                    for(int i=0; i< outputSchedulesJson.getInt("count");i++){
+                        Schedule s = new Schedule();
+                        tmp_ith = tmp_results.getJSONObject(i);
+                        s.setTitle(tmp_ith.getString("title"));
+                        s.setStarttime(tmp_ith.getString("starttime"));
+                        s.setEndtime(tmp_ith.getString("endtime"));
+                        s.setStarttime_ms(tmp_ith.getInt("starttime_ms"));
+                        s.setEndtime_ms(tmp_ith.getInt("endtime_ms"));
+                        s.setMemo(tmp_ith.getString("memo"));
+                        s.setUploaded_username(tmp_ith.getString("user"));
+                        Concise_Schedule cs = new Concise_Schedule(s);
+                        arrayCSchedule.add(cs);
+                    }
+                    concise_schedule_adapter.notifyDataSetChanged();
+                }catch(Exception e){
+
+                }
+
+            }
+        }
     }
 
     //

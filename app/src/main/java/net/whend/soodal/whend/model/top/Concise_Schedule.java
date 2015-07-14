@@ -33,6 +33,19 @@ public class Concise_Schedule {
         this.isFollow=false;
     }
 
+    public Concise_Schedule(Schedule s){
+        this.username = s.getUploaded_username();
+        this.title = s.getTitle();
+        this.date = s.getStarttime();         // 나중에 해결
+        this.time = s.getEndtime();         //
+        //this.location = s.getLocation();
+        //this.photo_dir = s.getPhoto_dir();
+        this.memo = s.getMemo();
+        this.like_count = 0;
+        this.follow_count = 0;
+        this.isLike=false;
+        this.isFollow=false;
+    }
     public Concise_Schedule(Schedule s, User best_friend_forLike, Comment best_friend_forComment){
         this.username = s.getUploaded_user().getUsername();
         this.title = s.getTitle();

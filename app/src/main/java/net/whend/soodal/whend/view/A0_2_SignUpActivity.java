@@ -52,7 +52,7 @@ public class A0_2_SignUpActivity extends Activity {
             inputBundle.putCharSequence("Password","Soodal2014!");
 
             String signupurl = "http://119.81.176.245/api-auth/login/";
-            String url = "http://119.81.176.245/users/";
+            String url = "http://119.81.176.245/schedules/";
 
             /*// 이렇게 하면 받아오기전에 setText해서 안뜸
              HTTPRestfulUtilizer a = new HTTPRestfulUtilizer(url, "GET");

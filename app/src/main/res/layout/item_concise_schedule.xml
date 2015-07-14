@@ -34,6 +34,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:text="영화 인사이드아웃 개봉"

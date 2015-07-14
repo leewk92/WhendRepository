@@ -26,9 +26,10 @@ public class HTTPRestfulUtilizer {
 
     private String url;
     private static Bundle inputBundle;
-    private static Bundle outputBundle;
+    private static JSONObject outputJsonObject;
     private String HTTPRestType;
     private static String outputString;
+
     public HttpAsyncTask task;
     // Constructors
     public HTTPRestfulUtilizer(){
@@ -112,6 +113,13 @@ public class HTTPRestfulUtilizer {
         }
 
         // 11. return result
+        outputString = result;
+        try {
+            outputJsonObject = new JSONObject(outputString);
+
+        }catch (Exception e){
+            outputJsonObject = new JSONObject();
+        }
         return result;
     }
 
@@ -152,6 +160,14 @@ public class HTTPRestfulUtilizer {
         }
 
         // 11. return result
+        outputString = result;
+        try {
+            outputJsonObject = new JSONObject(outputString);
+
+        }catch (Exception e){
+            outputJsonObject = new JSONObject();
+        }
+
         return result;
     }
 
@@ -176,6 +192,12 @@ public class HTTPRestfulUtilizer {
             String sHTTPRestType = strings[1];
             if(sHTTPRestType == "POST") {
                 outputString = POST(url, inputBundle);
+                try {
+                    outputJsonObject = new JSONObject(outputString);
+
+                }catch (Exception e){
+                    outputJsonObject = new JSONObject();
+                }
                 return outputString;
             }
             else if(sHTTPRestType == "GET") {
@@ -212,12 +234,12 @@ public class HTTPRestfulUtilizer {
         this.inputBundle = inputBundle;
     }
 
-    public Bundle getOutputBundle() {
-        return outputBundle;
+    public JSONObject getOutputJsonObject() {
+        return outputJsonObject;
     }
 
-    public void setOutputBundle(Bundle outputBundle) {
-        this.outputBundle = outputBundle;
+    public void setOutputJsonObject(JSONObject outputJsonObject) {
+        this.outputJsonObject = outputJsonObject;
     }
 
     public String getHTTPRestType() {

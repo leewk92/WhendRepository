@@ -47,6 +47,7 @@ public class Schedule {
     private HashTag hashtag;            // 나중에 생
     private int follow_user;            // 캘린더에 넣은사람 (WK)
     private User uploaded_user;          // 올린사람 (WK)
+    private String uploaded_username;       // 올린사람 이름
 
 
 
@@ -101,7 +102,9 @@ public class Schedule {
     public User getUploaded_user(){
         return uploaded_user;
     }
-
+    public String getUploaded_username(){
+        return uploaded_username;
+    }
     // Mutators
     public void setId(int id){
         this.id = id;
@@ -151,5 +154,7 @@ public class Schedule {
     public void setUploaded_user(User uploaded_user){
         this.uploaded_user = uploaded_user;
     }
-
+    public void setUploaded_username(String uploaded_username){
+        this.uploaded_username = uploaded_username;
+    }
 }

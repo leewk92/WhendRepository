@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
@@ -41,8 +42,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.item_concise_schedule, null);
         }
-
-
+        AdjustDataToLayout(v,position);
         // 리스너 함수들
         View user_clickableLayout = (View)v.findViewById(R.id.user_clickableLayout);
         View comment_writer = (View)v.findViewById(R.id.comment_writer);
@@ -155,5 +155,15 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
     }
 
+    // 레이아웃에 데이터 적용
+    public void AdjustDataToLayout(View v,int position){
+
+        ((TextView)v.findViewById(R.id.user_fullname)).setText(CSchedule_list.get(position).getUsername());
+        ((TextView)v.findViewById(R.id.title)).setText(CSchedule_list.get(position).getTitle());
+        ((TextView)v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
+        ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
+        ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
+        //((TextView)v.findViewById(R.id.like_count)).setText(CSchedule_list.get(position).getLike_count());
+    }
 
 }
