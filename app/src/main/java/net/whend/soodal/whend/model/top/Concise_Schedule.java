@@ -1,9 +1,12 @@
 package net.whend.soodal.whend.model.top;
 
+import android.util.Log;
+
 import net.whend.soodal.whend.model.base.Comment;
 import net.whend.soodal.whend.model.base.HashTag;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.base.User;
+import net.whend.soodal.whend.util.DateTimeFormatter;
 
 /**
  * Created by wonkyung on 15. 7. 9.
@@ -36,8 +39,6 @@ public class Concise_Schedule {
     public Concise_Schedule(Schedule s){
         this.username = s.getUploaded_username();
         this.title = s.getTitle();
-        this.date = s.getStarttime();         // 나중에 해결
-        this.time = s.getEndtime();         //
         //this.location = s.getLocation();
         //this.photo_dir = s.getPhoto_dir();
         this.memo = s.getMemo();
@@ -45,12 +46,11 @@ public class Concise_Schedule {
         this.follow_count = 0;
         this.isLike=false;
         this.isFollow=false;
+        DateParse(s);
     }
     public Concise_Schedule(Schedule s, User best_friend_forLike, Comment best_friend_forComment){
         this.username = s.getUploaded_user().getUsername();
         this.title = s.getTitle();
-    //    this.date = s.getStarttime();         // 나중에 해결
-    //    this.time = s.getStarttime();         //
         this.location = s.getLocation();
         this.photo_dir = s.getPhoto_dir();
         this.memo = s.getMemo();
@@ -62,8 +62,15 @@ public class Concise_Schedule {
 
         this.isLike=false;
         this.isFollow=false;
+        DateParse(s);
     }
 
+    public void DateParse(Schedule s){
+        Log.d("DateTimeFormatter", s.getStarttime());
+        DateTimeFormatter df = new DateTimeFormatter(s.getStarttime());
+        this.date = df.getDate();
+        this.time = df.getTime();
+    }
     // like 전환 함수
     public void clickLike(){
         if(isLike==true)
