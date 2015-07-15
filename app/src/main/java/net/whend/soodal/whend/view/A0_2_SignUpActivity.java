@@ -20,6 +20,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 /** 이 클래스는 마치 서버와 데이터 주고받기 튜토리얼
@@ -180,10 +181,21 @@ public class A0_2_SignUpActivity extends Activity {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 result_view.setText(result);
+                AppPrefs appPrefs = new AppPrefs(mContext);
+                String username = appPrefs.getUsername();
+                try{
+
+                    String token = getOutputJsonObject().getString("token");
+                    appPrefs.setUser_password(token);
+                }catch(Exception e){
+
+                }
+
                 Intent intent = new Intent(mContext, MainActivity.class);
                 intent.putExtra("text", String.valueOf("URL"));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
+                finish();
             }
         }
     }

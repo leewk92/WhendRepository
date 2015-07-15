@@ -171,8 +171,8 @@ public class F1_Wall extends Fragment {
                         s.setTitle(tmp_ith.getString("title"));
                         s.setStarttime(tmp_ith.getString("starttime"));
                         s.setEndtime(tmp_ith.getString("endtime"));
-                        s.setStarttime_ms(tmp_ith.getInt("starttime_ms"));
-                        s.setEndtime_ms(tmp_ith.getInt("endtime_ms"));
+                        s.setStarttime_ms(tmp_ith.getLong("starttime_ms"));
+                        s.setEndtime_ms(tmp_ith.getLong("endtime_ms"));
                         s.setMemo(tmp_ith.getString("memo"));
                         s.setUploaded_username(tmp_ith.getString("user"));
                         Concise_Schedule cs = new Concise_Schedule(s);

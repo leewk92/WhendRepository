@@ -33,8 +33,8 @@ public class Schedule {
     private String title;
     private String starttime;           // in String (DateTime Type, must be parsed by using Calendar Class) (WK)
     private String endtime;             //      "
-    private int starttime_ms;           // in milliseconds (WK)
-    private int endtime_ms;             //      "
+    private long starttime_ms;           // in milliseconds (WK)
+    private long endtime_ms;             //      "
     private String memo;                // Contains HashTags and memo (WK)
     private String location;            // It'll be adjusted to Google(or Daum) Map API soon (WK)
     private String photo_dir;           // Download photo on cache directory (WK)
@@ -49,7 +49,20 @@ public class Schedule {
     private User uploaded_user;          // 올린사람 (WK)
     private String uploaded_username;       // 올린사람 이름
 
+    public Schedule(){
+        this.title="";
+        this.starttime="";
+        this.endtime="";
+        this.starttime_ms=0;
+        this.endtime_ms=0;
+        this.memo="";
+        this.location="";
+        this.photo_dir="";
+        this.allday=true;
+        this.timezone="";
+        this.uploaded_username="";
 
+    }
 
 
 
@@ -66,10 +79,10 @@ public class Schedule {
     public String getEndtime(){
         return endtime;
     }
-    public int getStarttime_ms(){
+    public Long getStarttime_ms(){
         return starttime_ms;
     }
-    public int getEndtime_ms(){
+    public Long getEndtime_ms(){
         return endtime_ms;
     }
     public String getMemo(){
@@ -118,10 +131,10 @@ public class Schedule {
     public void setEndtime(String endtime){
         this.endtime=endtime;
     }
-    public void setStarttime_ms(int starttime_ms){
+    public void setStarttime_ms(Long starttime_ms){
         this.starttime_ms = starttime_ms;
     }
-    public void setEndtime_ms(int endtime_ms){
+    public void setEndtime_ms(Long endtime_ms){
         this.endtime_ms = endtime_ms;
     }
     public void setMemo(String memo){

@@ -16,6 +16,7 @@ public class DateTimeFormatter {
     private String parsePattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     private String inputString;
     private String outputString;
+    private String year;
     private String date;
     private String time;
     Calendar cal;
@@ -25,7 +26,14 @@ public class DateTimeFormatter {
     public DateTimeFormatter() {
 //"MM월 dd일/HH:mm"
     }
+    public DateTimeFormatter(Long datetime_ms){
+        cal = Calendar.getInstance();
+        outputString = odf.format(new Date(datetime_ms));
+        Log.d("outputStringFormatter",outputString);
 
+        cal.setTime(odf.getCalendar().getTime());
+        Parse();
+    }
     public DateTimeFormatter(String inputString){
         this.inputString = inputString;
         cal = Calendar.getInstance();
@@ -40,6 +48,7 @@ public class DateTimeFormatter {
     }
 
     public void Parse(){
+        this.year = cal.get(Calendar.YEAR)+"년 ";
         this.date = cal.get(Calendar.MONTH)+"월 "+cal.get(Calendar.DAY_OF_MONTH)+"일";
         this.time = cal.get(Calendar.HOUR)+":"+cal.get(Calendar.MINUTE);
 
@@ -85,5 +94,13 @@ public class DateTimeFormatter {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 }

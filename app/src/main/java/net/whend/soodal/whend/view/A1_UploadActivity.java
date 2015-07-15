@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Upload_Schedule_Adapter;
+import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Upload_Schedule;
+import net.whend.soodal.whend.util.CalendarProviderUtil;
 
 import java.util.ArrayList;
 
@@ -31,10 +33,12 @@ public class A1_UploadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a1_upload_layout);
-
+/*
         arraySchedule.add(new Upload_Schedule("2015년 2월 7일", "준삐 생일", "하루 종일", "내 방"));
         arraySchedule.add(new Upload_Schedule("2015년 6월 15일", "민수 생일", "하루 종일", "민수 방"));
         arraySchedule.add(new Upload_Schedule("2015년 12월 23일", "원경 생일", "하루 종일", "원경 방"));
+*/
+        getDataFromInnerCalendar();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
         TextView uploadactivity_title = (TextView) findViewById(R.id.uploadactivity_title);
@@ -79,6 +83,16 @@ public class A1_UploadActivity extends AppCompatActivity {
 
     }
 
+    public void getDataFromInnerCalendar(){
+        CalendarProviderUtil cpu = new CalendarProviderUtil(this);
+
+        ArrayList<Schedule> innerScheduleList= cpu.getInnerScheduleList();
+        for(int i =0; i<innerScheduleList.size(); i++){
+
+            Upload_Schedule us = new Upload_Schedule(innerScheduleList.get(i));
+            arraySchedule.add(us);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

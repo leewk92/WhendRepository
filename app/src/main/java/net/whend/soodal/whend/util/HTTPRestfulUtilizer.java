@@ -29,6 +29,7 @@ public class HTTPRestfulUtilizer {
     private static JSONObject outputJsonObject;
     private String HTTPRestType;
     private static String outputString;
+    private String token;
 
     public HttpAsyncTask task;
     // Constructors
@@ -37,6 +38,7 @@ public class HTTPRestfulUtilizer {
     }
     // Constructor for POST
     public HTTPRestfulUtilizer(String url, String HTTPRestType, Bundle inputBundle) {
+
         this.url = url;
         this.HTTPRestType = HTTPRestType;
         this.inputBundle = inputBundle;
