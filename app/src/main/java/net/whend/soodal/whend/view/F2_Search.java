@@ -79,8 +79,16 @@ public class F2_Search extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        // search_linear 에 F2_1_SearchOnFocus 프래그먼트 심기
         final Fragment temp = new F2_1_SearchOnFocus();
-
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        try {
+            transaction.replace(R.id.search_linear, temp);
+            transaction.addToBackStack(null);
+            transaction.commitAllowingStateLoss();
+        }catch (Exception e) {
+            transaction.show(temp).commit();
+        }
 
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(false);
 
@@ -148,19 +156,12 @@ public class F2_Search extends Fragment {
                     back_btn.setVisibility(View.VISIBLE);
                     // temp 가 탭호스트, 프래그먼트 안에 탭호스트 하는 법
 
-                    FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                    try {
-                        transaction.replace(R.id.search_linear, temp);
-                        transaction.addToBackStack(null);
-                        transaction.commitAllowingStateLoss();
-                    }catch (Exception e) {
-                        transaction.show(temp).commit();
-                    }
+
                 }
 
             }
         });
-
+/*
         search_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,29 +170,21 @@ public class F2_Search extends Fragment {
                 back_btn.setVisibility(View.VISIBLE);
             }
         });
-
+*/
         back_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                // search_text.clearFocus();
-                search_text.setFocusableInTouchMode(false);
-                search_text.setFocusable(false);
-                search_text.setFocusableInTouchMode(true);
-                search_text.setFocusable(true);
-
-
-                search_grid.setVisibility(View.VISIBLE);
                 search_linear.setVisibility(View.INVISIBLE);
+                search_grid.setVisibility(View.VISIBLE);
+                search_grid.requestFocus();
                 back_btn.setVisibility(View.GONE);
 
                 //hide keyboard
                 InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
-                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                transaction.remove(temp).commit();
             }
         });
 
