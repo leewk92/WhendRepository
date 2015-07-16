@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.util.AppPrefs;
@@ -79,6 +80,7 @@ public class A0_2_SignUpActivity extends Activity {
             inputBundle.putCharSequence("password2",password2_view.getText());
 
             String url = "http://119.81.176.245/rest-auth/registration/";
+            //String url = "http://119.81.176.245/rest-auth/login/";
             //String url = "http://119.81.176.245/schedules/";
 
             /*// 이렇게 하면 받아오기전에 setText해서 안뜸
@@ -88,7 +90,7 @@ public class A0_2_SignUpActivity extends Activity {
             */
 
             // 이렇게 해야 동기화 끝나고 행동을 함.
-            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(url,"POST",inputBundle);
+            HTTPRestfulUtilizerExtender_login a = new HTTPRestfulUtilizerExtender_login(mContext, url,"POST",inputBundle);
             a.doExecution();
 
 
@@ -151,11 +153,12 @@ public class A0_2_SignUpActivity extends Activity {
         }
     }
 */
-    class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer{
+// 회원가입하고 그 아이디로 로그인 시도.
+    class HTTPRestfulUtilizerExtender_login extends HTTPRestfulUtilizer{
 
-        // Constructor for GET
-        public HTTPRestfulUtilizerExtender(String url, String HTTPRestType, Bundle inputBundle) {
-
+        // Constructor for POST
+        public HTTPRestfulUtilizerExtender_login(Context mContext, String url, String HTTPRestType, Bundle inputBundle) {
+            setmContext(mContext);
             setUrl(url);
             setHTTPRestType(HTTPRestType);
             setInputBundle(inputBundle);
@@ -181,21 +184,82 @@ public class A0_2_SignUpActivity extends Activity {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 result_view.setText(result);
-                AppPrefs appPrefs = new AppPrefs(mContext);
-                String username = appPrefs.getUsername();
+
                 try{
+                    String token = getOutputJsonObject().getString("email");
+                    if(token == null){
+                        Toast toast1 = Toast.makeText(mContext, "회원가입을 할 수 없습니당 유유", Toast.LENGTH_SHORT);
+                        toast1.show();
+                    }
+                    else {
+                        Bundle loginBundle = new Bundle();
+                        loginBundle.putCharSequence("username",getInputBundle().getCharSequence("username"));
+                        loginBundle.putCharSequence("password",getInputBundle().getCharSequence("password1"));
+                        String loginUrl =  "http://119.81.176.245/rest-auth/login/";
 
-                    String token = getOutputJsonObject().getString("token");
-                    appPrefs.setUser_password(token);
-                }catch(Exception e){
+                        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, loginUrl,"POST",loginBundle);
+                        a.doExecution();
+                    }
 
-                }
+                }catch(Exception e){}
 
-                Intent intent = new Intent(mContext, MainActivity.class);
-                intent.putExtra("text", String.valueOf("URL"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-                finish();
+
+            }
+        }
+    }
+
+
+    class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer{
+
+        // Constructor for POST
+        public HTTPRestfulUtilizerExtender(Context mContext, String url, String HTTPRestType, Bundle inputBundle) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            setInputBundle(inputBundle);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(POST(url, getInputBundle()));
+                return getOutputString();
+
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                result_view.setText(result);
+
+                try{
+                    String token = getOutputJsonObject().getString("key");
+                    if(token == null){
+                        Toast toast1 = Toast.makeText(mContext, "로그인을 할 수 없습니당 유유", Toast.LENGTH_SHORT);
+                        toast1.show();
+                    }
+                    else {
+                        // 유저네임과 토큰을 저장.
+                        AppPrefs appPrefs = new AppPrefs(mContext);
+                        appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
+                        appPrefs.setToken(token);
+                        Intent intent = new Intent(mContext, MainActivity.class);
+                        intent.putExtra("text", String.valueOf("URL"));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        finish();
+                    }
+
+                }catch(Exception e){}
+
             }
         }
     }

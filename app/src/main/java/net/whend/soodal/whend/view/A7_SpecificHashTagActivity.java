@@ -25,7 +25,7 @@ public class A7_SpecificHashTagActivity extends Activity {
 
     ArrayList<Concise_Schedule> CSchedule_list;
     ListView listview;
-    private static JSONObject outputSchedulesJson;
+    private static JSONArray outputSchedulesJson;
     private Concise_Schedule_Adapter adapter;
 
     @Override
@@ -81,19 +81,18 @@ public class A7_SpecificHashTagActivity extends Activity {
                 super.onPostExecute(result);
 
                 try{
-                    outputSchedulesJson = getOutputJsonObject();
-                    JSONArray tmp_results = outputSchedulesJson.getJSONArray("results");
+                    outputSchedulesJson = getOutputJsonArray();
                     JSONObject tmp_ith;
-                    for(int i=0; i< outputSchedulesJson.getInt("count");i++){
+                    Log.d("resultslegnth",String.valueOf(outputSchedulesJson.length()));
+                    for(int i=0; i<outputSchedulesJson.length() ;i++){
                         Schedule s = new Schedule();
-                        tmp_ith = tmp_results.getJSONObject(i);
+                        tmp_ith = outputSchedulesJson.getJSONObject(i);
+                        s.setId(tmp_ith.getInt("id"));
                         s.setTitle(tmp_ith.getString("title"));
-                        s.setStarttime(tmp_ith.getString("starttime"));
-                        s.setEndtime(tmp_ith.getString("endtime"));
-                        s.setStarttime_ms(tmp_ith.getLong("starttime_ms"));
-                        s.setEndtime_ms(tmp_ith.getLong("endtime_ms"));
+                        s.setStarttime(tmp_ith.getString("start_time"));
+                        s.setEndtime(tmp_ith.getString("end_time"));
                         s.setMemo(tmp_ith.getString("memo"));
-                        s.setUploaded_username(tmp_ith.getString("user"));
+                        s.setUploaded_username(tmp_ith.getString("user_name"));
                         Concise_Schedule cs = new Concise_Schedule(s);
                         CSchedule_list.add(cs);
                     }
@@ -101,6 +100,8 @@ public class A7_SpecificHashTagActivity extends Activity {
                 }catch(Exception e){
 
                 }
+
+                
 
             }
         }

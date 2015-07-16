@@ -8,7 +8,7 @@ public class AppPrefs {
  private static final String USER_PREFS = "net.whend.soodal.whend";
  private SharedPreferences appSharedPrefs;
  private Editor prefsEditor;
- private String password = "password";
+ private String token = "token";
  private String username = "username";
  private String mostRecentInnerCalendarEventId="mostRecentInnerCalendarEventId";
  private String whendCalendarAccountId="whendCalendarAccountId";
@@ -33,10 +33,10 @@ public void setPrimary(int _primary){
 	prefsEditor.putInt(primary, _primary).commit();
 }
 
-public String getUser_password() {
- return appSharedPrefs.getString(password, "");
+public String getToken() {
+ return appSharedPrefs.getString(token, "");
  }
- public void setUser_password( String _password) { prefsEditor.putString(password, _password).commit(); }
+ public void setToken(String _token) { prefsEditor.putString(token, _token).commit(); }
 
  public int getMostRecentInnerCalendarEventId(){
   return appSharedPrefs.getInt(mostRecentInnerCalendarEventId, 0);

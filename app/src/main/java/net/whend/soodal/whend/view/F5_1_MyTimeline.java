@@ -1,5 +1,6 @@
 package net.whend.soodal.whend.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,7 +46,7 @@ public class F5_1_MyTimeline extends Fragment {
     private TextView mainactivity_title;
     ImageView search_btn, back_btn;
     EditText search_text;
-    private static JSONObject outputSchedulesJson;
+    private static JSONArray outputSchedulesJson;
 
     public F5_1_MyTimeline() {
         // Required empty public constructor
@@ -57,7 +58,7 @@ public class F5_1_MyTimeline extends Fragment {
 
         String url = "http://119.81.176.245/schedules/";
 
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(url,"GET");
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
         a.doExecution();
 
     }
@@ -90,8 +91,8 @@ public class F5_1_MyTimeline extends Fragment {
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
 
         // Constructor for GET
-        public HTTPRestfulUtilizerExtender(String url, String HTTPRestType) {
-
+        public HTTPRestfulUtilizerExtender(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
             setUrl(url);
             setHTTPRestType(HTTPRestType);
             task = new HttpAsyncTaskExtenders();
@@ -117,19 +118,18 @@ public class F5_1_MyTimeline extends Fragment {
                 super.onPostExecute(result);
 
                 try{
-                    outputSchedulesJson = getOutputJsonObject();
-                    JSONArray tmp_results = outputSchedulesJson.getJSONArray("results");
+                    outputSchedulesJson = getOutputJsonArray();
                     JSONObject tmp_ith;
-                    for(int i=0; i< outputSchedulesJson.getInt("count");i++){
+                    Log.d("resultslegnth",String.valueOf(outputSchedulesJson.length()));
+                    for(int i=0; i<outputSchedulesJson.length() ;i++){
                         Schedule s = new Schedule();
-                        tmp_ith = tmp_results.getJSONObject(i);
+                        tmp_ith = outputSchedulesJson.getJSONObject(i);
+                        s.setId(tmp_ith.getInt("id"));
                         s.setTitle(tmp_ith.getString("title"));
-                        s.setStarttime(tmp_ith.getString("starttime"));
-                        s.setEndtime(tmp_ith.getString("endtime"));
-                        s.setStarttime_ms(tmp_ith.getLong("starttime_ms"));
-                        s.setEndtime_ms(tmp_ith.getLong("endtime_ms"));
+                        s.setStarttime(tmp_ith.getString("start_time"));
+                        s.setEndtime(tmp_ith.getString("end_time"));
                         s.setMemo(tmp_ith.getString("memo"));
-                        s.setUploaded_username(tmp_ith.getString("user"));
+                        s.setUploaded_username(tmp_ith.getString("user_name"));
                         Concise_Schedule cs = new Concise_Schedule(s);
                         arrayCSchedule.add(cs);
                     }

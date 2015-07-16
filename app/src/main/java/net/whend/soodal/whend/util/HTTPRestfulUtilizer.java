@@ -1,5 +1,6 @@
 package net.whend.soodal.whend.util;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -26,16 +28,54 @@ public class HTTPRestfulUtilizer {
 
     private String url;
     private static Bundle inputBundle;
+    private static JSONArray outputJsonArray;
     private static JSONObject outputJsonObject;
     private String HTTPRestType;
     private static String outputString;
     private String token;
-
+    private Context mContext;
     public HttpAsyncTask task;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Context getmContext() {
+        return mContext;
+    }
+
+    public void setmContext(Context mContext) {
+        this.mContext = mContext;
+    }
+
     // Constructors
     public HTTPRestfulUtilizer(){
 
     }
+    // Constructor for POST with Context
+    public HTTPRestfulUtilizer(Context mContext, String url, String HTTPRestType, Bundle inputBundle) {
+        this.mContext = mContext;
+        this.url = url;
+        this.HTTPRestType = HTTPRestType;
+        this.inputBundle = inputBundle;
+        Log.d("HTTP Constructor url", url);
+        task = new HttpAsyncTask();
+        // new HttpAsyncTask().execute(url,HTTPRestType);
+    }
+    // Constructor for GET
+    public HTTPRestfulUtilizer(Context mContext, String url, String HTTPRestType) {
+        this.mContext = mContext;
+        this.url = url;
+        this.HTTPRestType = HTTPRestType;
+        task = new HttpAsyncTask();
+        Log.d("HTTP Constructor url",url);
+        // new HttpAsyncTask().execute(url,HTTPRestType);
+    }
+ /*
     // Constructor for POST
     public HTTPRestfulUtilizer(String url, String HTTPRestType, Bundle inputBundle) {
 
@@ -54,13 +94,13 @@ public class HTTPRestfulUtilizer {
         Log.d("HTTP Constructor url",url);
        // new HttpAsyncTask().execute(url,HTTPRestType);
     }
-
+*/
     public void doExecution(){
 
         task.execute(url,HTTPRestType);
     }
 
-    public static String POST(String url, Bundle bundle){
+    public String POST(String url, Bundle bundle){
         InputStream inputStream = null;
         String result = "";
         try {
@@ -95,7 +135,11 @@ public class HTTPRestfulUtilizer {
             // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
-
+            AppPrefs appPrefs = new AppPrefs(mContext);
+            token = appPrefs.getToken();
+            if( token != ""){
+                httpPost.setHeader("Authorization","Token "+token);
+            }
             // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
 
@@ -118,15 +162,21 @@ public class HTTPRestfulUtilizer {
         outputString = result;
         try {
             outputJsonObject = new JSONObject(outputString);
-
         }catch (Exception e){
             outputJsonObject = new JSONObject();
+        }
+
+        try {
+            outputJsonArray = new JSONArray(outputString);
+
+        }catch (Exception e){
+            outputJsonArray = new JSONArray();
         }
         return result;
     }
 
 
-    public static String GET(String url){
+    public String GET(String url){
         InputStream inputStream = null;
         String result = "";
         try {
@@ -141,7 +191,11 @@ public class HTTPRestfulUtilizer {
             // 7. Set some headers to inform server about the type of the content
             httpGet.setHeader("Accept", "application/json");
             httpGet.setHeader("Content-type", "application/json");
-
+            AppPrefs appPrefs = new AppPrefs(mContext);
+            token = appPrefs.getToken();
+            if( token != ""){
+                httpGet.setHeader("Authorization","Token "+token);
+            }
             // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpGet);
 
@@ -165,9 +219,15 @@ public class HTTPRestfulUtilizer {
         outputString = result;
         try {
             outputJsonObject = new JSONObject(outputString);
-
         }catch (Exception e){
             outputJsonObject = new JSONObject();
+        }
+
+        try {
+            outputJsonArray = new JSONArray(outputString);
+
+        }catch (Exception e){
+            outputJsonArray = new JSONArray();
         }
 
         return result;
@@ -196,9 +256,11 @@ public class HTTPRestfulUtilizer {
                 outputString = POST(url, inputBundle);
                 try {
                     outputJsonObject = new JSONObject(outputString);
+                    outputJsonArray = new JSONArray(outputString);
 
                 }catch (Exception e){
                     outputJsonObject = new JSONObject();
+                    outputJsonArray = new JSONArray();
                 }
                 return outputString;
             }
@@ -236,6 +298,13 @@ public class HTTPRestfulUtilizer {
         this.inputBundle = inputBundle;
     }
 
+    public JSONArray getOutputJsonArray() {
+        return outputJsonArray;
+    }
+
+    public void setOutputJsonArray(JSONArray outputJsonArray) {
+        this.outputJsonArray = outputJsonArray;
+    }
     public JSONObject getOutputJsonObject() {
         return outputJsonObject;
     }
