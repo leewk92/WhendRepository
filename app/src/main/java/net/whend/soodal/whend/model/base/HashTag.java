@@ -23,4 +23,51 @@ public class HashTag {
     private String content;             // 안에 무슨 일정들이 있는지 대충 보여주는 용도
     private int follow_user[];            // 나중에 User class 상속 받을 예정 (WK)
 
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public int getFollower_count() {
+        return follower_count;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public int[] getFollow_user() {
+        return follow_user;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public void setFollower_count(int follower_count) {
+        this.follower_count = follower_count;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setFollow_user(int[] follow_user) {
+        this.follow_user = follow_user;
+    }
 }

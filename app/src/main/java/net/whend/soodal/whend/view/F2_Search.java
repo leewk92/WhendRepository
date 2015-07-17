@@ -21,10 +21,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView.ScaleType;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Grid_Search_Adapter;
 import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
+import net.whend.soodal.whend.util.quitview.QuiltView;
 
 import java.util.ArrayList;
 
@@ -55,6 +57,9 @@ public class F2_Search extends Fragment {
     private FrameLayout search_linear;
     private FrameLayout root_layout;
     private Toolbar toolbar;
+
+    public QuiltView quiltView;
+
 
     private View rootView;
 
@@ -100,6 +105,9 @@ public class F2_Search extends Fragment {
         root_layout = (FrameLayout) rootView.findViewById(R.id.search_rootlayout);
         search_gridview = (GridView) rootView.findViewById(R.id.search_gridview);
 
+        quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
+        quiltView.setChildPadding(5);
+
 
         // 툴바 커스터마이징
 
@@ -128,8 +136,9 @@ public class F2_Search extends Fragment {
 
         //GridLayout 설정
 
+        addTestQuilts(200);
 
-
+        //quiltView.setAdapter(new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule));
         search_gridview.setAdapter(new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule));
 
 
@@ -199,6 +208,21 @@ public class F2_Search extends Fragment {
         outState.putBoolean("back_btn_gone", back_btn.getVisibility() == View.GONE);
         super.onSaveInstanceState(outState);
     }
+
+    public void addTestQuilts(int num){
+        ArrayList<ImageView> images = new ArrayList<ImageView>();
+        for(int i = 0; i < num; i++){
+            ImageView image = new ImageView(this.getActivity());
+            image.setScaleType(ScaleType.CENTER_CROP);
+            if(i % 2 == 0)
+                image.setImageResource(R.drawable.mayer);
+            else
+                image.setImageResource(R.drawable.mayer1);
+            images.add(image);
+        }
+        quiltView.addPatchImages(images);
+    }
+
 
 
 

@@ -1,26 +1,18 @@
 package net.whend.soodal.whend.form;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
-import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
-import net.whend.soodal.whend.view.A2_UserProfileActivity;
-import net.whend.soodal.whend.view.A5_WhoFollowsScheduleActivity;
 
 import java.util.ArrayList;
 
-/**
- * Wall 에서 일정을 간단한 카드 형식 리스트로 보여주기 위한 어답터
- * Created by wonkyung on 15. 7. 9.
- */
+
 public class Grid_Search_Adapter extends ArrayAdapter<Grid_Search_Schedule> {
 
     private ArrayList<Grid_Search_Schedule> GS_Schedule_list;
@@ -40,10 +32,17 @@ public class Grid_Search_Adapter extends ArrayAdapter<Grid_Search_Schedule> {
             v = li.inflate(R.layout.item_gridsearch_schedule, null);
         }
 
+        Grid_Search_Schedule grid_search_schedule = GS_Schedule_list.get(position);
 
-        // 리스너 함수들
         ImageView grid_image = (ImageView)v.findViewById(R.id.gridsearch_image);
+        String grid_image_string;
         TextView grid_text = (TextView)v.findViewById(R.id.gridsearch_text);
+
+        if (grid_search_schedule.getTag() != null){
+            grid_image_string = grid_search_schedule.getTag().getPhoto();
+            grid_text.setText("#"+grid_search_schedule.getTag().getTitle());
+        }
+
 
         return v;
     }
