@@ -9,9 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.form.Notify_Schedule_Adapter;
+import net.whend.soodal.whend.model.top.Notify_Schedule;
+
+import java.util.ArrayList;
 
 
 public class F4_Notify extends Fragment {
@@ -22,6 +27,9 @@ public class F4_Notify extends Fragment {
     TextView mainactivity_title;
     ImageView search_btn, back_btn;
     EditText search_text;
+    ListView notify_listview;
+
+    private ArrayList<Notify_Schedule> arrayNTchedule = new ArrayList<Notify_Schedule>();
 
     private View rootView;
 
@@ -32,6 +40,14 @@ public class F4_Notify extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Notify_Schedule temp1 = new Notify_Schedule();
+        Notify_Schedule temp2 = new Notify_Schedule();
+        Notify_Schedule temp3 = new Notify_Schedule();
+
+        arrayNTchedule.add(temp1);
+        arrayNTchedule.add(temp2);
+        arrayNTchedule.add(temp3);
 
     }
 
@@ -50,10 +66,18 @@ public class F4_Notify extends Fragment {
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
+        notify_listview = (ListView) rootView.findViewById(R.id.listview_notify_schedule);
+
+        Notify_Schedule_Adapter notify_schedule_adapter = new Notify_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayNTchedule);
+        notify_listview.setAdapter(notify_schedule_adapter);
+
 
         search_btn.setVisibility(View.INVISIBLE);
         search_text.setVisibility(View.INVISIBLE);
         back_btn.setVisibility(View.GONE);
+
+
+
 
         return rootView;
 

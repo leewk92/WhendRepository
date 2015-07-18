@@ -211,19 +211,6 @@ public class F2_Search extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    public void addTestQuilts(int num){
-        ArrayList<ImageView> images = new ArrayList<ImageView>();
-        for(int i = 0; i < num; i++){
-            ImageView image = new ImageView(this.getActivity());
-            image.setScaleType(ScaleType.CENTER_CROP);
-            if(i % 2 == 0)
-                image.setImageResource(R.drawable.mayer);
-            else
-                image.setImageResource(R.drawable.mayer1);
-            images.add(image);
-        }
-        quiltView.addPatchImages(images);
-    }
 
 
 
