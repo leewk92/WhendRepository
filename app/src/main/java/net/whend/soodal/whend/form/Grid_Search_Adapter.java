@@ -39,7 +39,7 @@ public class Grid_Search_Adapter extends ArrayAdapter<Grid_Search_Schedule> {
         TextView grid_text = (TextView)v.findViewById(R.id.gridsearch_text);
 
         if (grid_search_schedule.getTag() != null){
-            grid_image_string = grid_search_schedule.getTag().getPhoto();
+            //grid_image_string = grid_search_schedule.getTag().getPhoto();
             grid_text.setText("#"+grid_search_schedule.getTag().getTitle());
         }
 

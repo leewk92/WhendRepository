@@ -4,6 +4,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/net/whend/soodal/whend/model/top/Concise_Schedule.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/net/whend/soodal/whend/model/top/Grid_Search_Schedule.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/net/whend/soodal/whend/model/top/Upload_Schedule.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/net/whend/soodal/whend/util/quitview/QuiltViewBase.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/net/whend/soodal/whend/view/A4_MakeScheduleActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/net/whend/soodal/whend/view/F1_Wall.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/net/whend/soodal/whend/view/F5_Mypage.java" charset="UTF-8" />

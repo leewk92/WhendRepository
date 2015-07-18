@@ -6,6 +6,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import net.whend.soodal.whend.R;
 
 import java.util.ArrayList;
 
@@ -64,8 +67,8 @@ public class QuiltViewBase extends GridLayout {
 		
 		int count = this.getChildCount();
 
-		Log.d("AddPatch Count", "" + count);
-		
+
+
 		QuiltViewPatch child = QuiltViewPatch.init(count, columns);
 		
 		GridLayout.LayoutParams params = new GridLayout.LayoutParams();
@@ -74,6 +77,8 @@ public class QuiltViewBase extends GridLayout {
 		params.rowSpec = GridLayout.spec(Integer.MIN_VALUE, child.height_ratio);
 		params.columnSpec = GridLayout.spec(Integer.MIN_VALUE, child.width_ratio);
 		view.setLayoutParams(params);
+
+
 		addView(view);
 		views.add(view);
 	}

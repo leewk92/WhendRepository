@@ -14,6 +14,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
 
@@ -61,9 +62,9 @@ public class QuiltView extends FrameLayout implements OnGlobalLayoutListener {
 		quilt = new QuiltViewBase(getContext(), isVertical);
 		scroll.addView(quilt);
 		this.addView(scroll);
-		
+
 	}
-	
+
 	private DataSetObserver adapterObserver = new DataSetObserver(){
 		public void onChanged(){
 			super.onChanged();
@@ -84,17 +85,24 @@ public class QuiltView extends FrameLayout implements OnGlobalLayoutListener {
 		this.adapter = adapter;
 		adapter.registerDataSetObserver(adapterObserver);
 
-		setViewsFromAdapter(adapter);
-	}
+		//setViewsFromAdapter(adapter);
 
-	private void setViewsFromAdapter(Adapter adapter) {
 		this.removeAllViews();
 		Log.d("과연 제대로?", adapter.getCount() + "");
-		for(int i = 0; i < adapter.getCount(); i++){
-			quilt.addPatch(adapter.getView(i, null, quilt));
+		for(int i = 0; i < adapter.getCount(); i++) {
+			View temp_view = adapter.getView(i, null, null);
+			TextView temp_txt = (TextView) temp_view.findViewById(R.id.gridsearch_text);
+			Log.d("텍스트체크", temp_txt.getText() + "");
 
+			quilt.addPatch(temp_view);
 
 		}
+
+	}
+
+		private void setViewsFromAdapter(Adapter adapter) {
+
+
 	}
 	
 	public void addPatchImages(ArrayList<ImageView> images){

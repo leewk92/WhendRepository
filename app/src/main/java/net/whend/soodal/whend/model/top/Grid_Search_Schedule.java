@@ -12,8 +12,7 @@ public class Grid_Search_Schedule {
 
     // Constructor
     public Grid_Search_Schedule(){
-        //this.tag.setTitle("테스트지롱");
-        //this.tag.setPhoto("이것도테스트지롱");
+
 
     }
     public Grid_Search_Schedule(HashTag tag) {

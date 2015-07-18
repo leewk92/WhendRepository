@@ -25,6 +25,7 @@ import android.widget.ImageView.ScaleType;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Grid_Search_Adapter;
+import net.whend.soodal.whend.model.base.HashTag;
 import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
 import net.whend.soodal.whend.util.quitview.QuiltView;
 
@@ -71,12 +72,18 @@ public class F2_Search extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Grid_Search_Schedule a = new Grid_Search_Schedule();
-        arrayGSchedule.add(a);
-        arrayGSchedule.add(a);
-        arrayGSchedule.add(a);
-        arrayGSchedule.add(a);
-        arrayGSchedule.add(a);
+        HashTag tag1, tag2, tag3, tag4;
+
+        tag1 = new HashTag(0,"가","",0,"가");
+        tag2 = new HashTag(0,"나","",0,"가");
+        tag3 = new HashTag(0,"다","",0,"가");
+        tag4 = new HashTag(0,"라","",0,"가");
+
+        arrayGSchedule.add(new Grid_Search_Schedule(tag1));
+        arrayGSchedule.add(new Grid_Search_Schedule(tag2));
+        arrayGSchedule.add(new Grid_Search_Schedule(tag3));
+        arrayGSchedule.add(new Grid_Search_Schedule(tag4));
+
 
     }
 
@@ -86,6 +93,7 @@ public class F2_Search extends Fragment {
 
         // search_linear 에 F2_1_SearchOnFocus 프래그먼트 심기
         final Fragment temp = new F2_1_SearchOnFocus();
+
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         try {
             transaction.replace(R.id.search_linear, temp);
@@ -103,7 +111,6 @@ public class F2_Search extends Fragment {
         search_grid = (LinearLayout) rootView.findViewById(R.id.search_grid);
         search_linear = (FrameLayout) rootView.findViewById(R.id.search_linear);
         root_layout = (FrameLayout) rootView.findViewById(R.id.search_rootlayout);
-        search_gridview = (GridView) rootView.findViewById(R.id.search_gridview);
 
         quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
         quiltView.setChildPadding(5);
@@ -119,10 +126,8 @@ public class F2_Search extends Fragment {
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
 
-
         search_btn.setVisibility(View.VISIBLE);
         search_text.setVisibility(View.VISIBLE);
-
 
 
         // 기본 frame layout 설정
@@ -134,13 +139,10 @@ public class F2_Search extends Fragment {
         transaction.add(R.id.search_linear, temp).commit();
         */
 
-        //GridLayout 설정
+        Grid_Search_Adapter mgrid_search_adapter = new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule);
 
-        //addTestQuilts(200);
-
-        quiltView.setAdapter(new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule));
-        search_gridview.setAdapter(new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule));
-
+        for(int i=0; i< mgrid_search_adapter.getCount(); i++)
+            quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
 
         // search_text 검색시 이벤트
         search_text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -170,7 +172,7 @@ public class F2_Search extends Fragment {
 
             }
         });
-/*
+
         search_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +181,7 @@ public class F2_Search extends Fragment {
                 back_btn.setVisibility(View.VISIBLE);
             }
         });
-*/
+
         back_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override

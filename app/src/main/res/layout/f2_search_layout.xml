@@ -14,20 +14,6 @@
         android:layout_height="match_parent"
         android:id="@+id/search_grid">
 
-        <GridView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:horizontalSpacing="1dp"
-            android:verticalSpacing="1dp"
-            android:numColumns="3"
-            android:id="@+id/search_gridview" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView" />
-
         <net.whend.soodal.whend.util.quitview.QuiltView
             android:id="@+id/quilt"
             android:layout_width="match_parent"
