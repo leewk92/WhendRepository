@@ -136,9 +136,9 @@ public class F2_Search extends Fragment {
 
         //GridLayout 설정
 
-        addTestQuilts(200);
+        //addTestQuilts(200);
 
-        //quiltView.setAdapter(new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule));
+        quiltView.setAdapter(new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule));
         search_gridview.setAdapter(new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule));
 
 

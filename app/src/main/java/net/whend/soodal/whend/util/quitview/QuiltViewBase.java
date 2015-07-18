@@ -3,6 +3,7 @@ package net.whend.soodal.whend.util.quitview;
 import android.content.Context;
 import android.support.v7.widget.GridLayout;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -44,7 +45,7 @@ public class QuiltViewBase extends GridLayout {
 	public void setupVertical(){
 		size = getBaseSizeVertical();
 		this.setColumnCount(columns);
-		this.setRowCount(4);
+		this.setRowCount(10);
 		this.setOrientation(this.HORIZONTAL);
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 		this.setLayoutParams(params);
@@ -53,7 +54,7 @@ public class QuiltViewBase extends GridLayout {
 	public void setupHorizontal(){
 		size = getBaseSizeHorizontal();
 		this.setRowCount(rows);
-		this.setColumnCount(4);
+		this.setColumnCount(3);
 		this.setOrientation(this.VERTICAL);
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 		this.setLayoutParams(params);
@@ -62,6 +63,8 @@ public class QuiltViewBase extends GridLayout {
 	public void addPatch(View view){
 		
 		int count = this.getChildCount();
+
+		Log.d("AddPatch Count", "" + count);
 		
 		QuiltViewPatch child = QuiltViewPatch.init(count, columns);
 		

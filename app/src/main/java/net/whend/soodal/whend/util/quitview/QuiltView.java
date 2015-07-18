@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -78,17 +79,21 @@ public class QuiltView extends FrameLayout implements OnGlobalLayoutListener {
 			setViewsFromAdapter(adapter);
 		}
 	};
-	
+
 	public void setAdapter(Adapter adapter){
 		this.adapter = adapter;
 		adapter.registerDataSetObserver(adapterObserver);
+
 		setViewsFromAdapter(adapter);
 	}
 
 	private void setViewsFromAdapter(Adapter adapter) {
 		this.removeAllViews();
+		Log.d("과연 제대로?", adapter.getCount() + "");
 		for(int i = 0; i < adapter.getCount(); i++){
 			quilt.addPatch(adapter.getView(i, null, quilt));
+
+
 		}
 	}
 	
