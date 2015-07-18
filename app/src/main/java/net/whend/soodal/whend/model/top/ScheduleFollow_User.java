@@ -11,6 +11,7 @@ public class ScheduleFollow_User {
 
     private String username;
     private String photo_dir;
+    private String photo_dir_fromweb;
     private boolean isFollow;
 
     // Constructors

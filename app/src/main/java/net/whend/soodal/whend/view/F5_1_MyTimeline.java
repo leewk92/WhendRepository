@@ -130,6 +130,7 @@ public class F5_1_MyTimeline extends Fragment {
                         s.setEndtime(tmp_ith.getString("end_time"));
                         s.setMemo(tmp_ith.getString("memo"));
                         s.setUploaded_username(tmp_ith.getString("user_name"));
+                        s.setPhoto_dir_fromweb(tmp_ith.getString("photo"));
                         Concise_Schedule cs = new Concise_Schedule(s);
                         arrayCSchedule.add(cs);
                     }

@@ -1,8 +1,13 @@
 package net.whend.soodal.whend.form;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.ComposeShader;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +16,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.util.PicassoImageTool;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
 import net.whend.soodal.whend.view.A5_WhoFollowsScheduleActivity;
 import net.whend.soodal.whend.view.A6_WriteCommentActivity;
 import net.whend.soodal.whend.view.F5_Mypage;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.channels.SelectableChannel;
 import java.util.ArrayList;
 
 /**
@@ -156,14 +168,53 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     }
 
     // 레이아웃에 데이터 적용
-    public void AdjustDataToLayout(View v,int position){
+    public void AdjustDataToLayout(final View v,int position){
 
         ((TextView)v.findViewById(R.id.user_fullname)).setText(CSchedule_list.get(position).getUsername());
         ((TextView)v.findViewById(R.id.title)).setText(CSchedule_list.get(position).getTitle());
         ((TextView)v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
         ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
         ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
-        //((TextView)v.findViewById(R.id.like_count)).setText(CSchedule_list.get(position).getLike_count());
+
+        if(CSchedule_list.get(position).getPhoto_dir_fromweb()!=null) {
+            com.squareup.picasso.Target target = new com.squareup.picasso.Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
+                    v.findViewById(R.id.memo).setBackground(drawable);
+
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                }
+            };
+            Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into(target);
+        }
+
+
+/*
+        PicassoImageToolExtender a = new PicassoImageToolExtender(context,
+
+                CSchedule_list.get(position).getPhoto_dir_fromweb(),
+                CSchedule_list.get(position).getPhoto_dir());
+        a.doSomething();
+        ((TextView)v.findViewById(R.id.memo)).setBackgroundResource(a.getGeneratedId());
+*/
+    }
+
+
+    class PicassoImageToolExtender extends PicassoImageTool{
+        public PicassoImageToolExtender(Context context, String photo_dir_fromweb, String photo_dir){
+            setmContext(context);
+            setPhoto_dir_fromweb(photo_dir_fromweb);
+            setPhoto_dir(photo_dir);
+        }
+
     }
 
 }

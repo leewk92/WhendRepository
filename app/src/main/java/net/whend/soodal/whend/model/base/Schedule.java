@@ -38,6 +38,7 @@ public class Schedule {
     private String memo;                // Contains HashTags and memo (WK)
     private String location;            // It'll be adjusted to Google(or Daum) Map API soon (WK)
     private String photo_dir;           // Download photo on cache directory (WK)
+    private String photo_dir_fromweb;
     private boolean allday;
     private String timezone;
 //    private String created_at;        // Client doesn't need this field (WK)각
@@ -48,6 +49,7 @@ public class Schedule {
     private int follow_user;            // 캘린더에 넣은사람 (WK)
     private User uploaded_user;          // 올린사람 (WK)
     private String uploaded_username;       // 올린사람 이름
+
 
     public Schedule(){
         this.title="";
@@ -61,6 +63,7 @@ public class Schedule {
         this.allday=true;
         this.timezone="";
         this.uploaded_username="";
+        this.photo_dir_fromweb="";
 
     }
 
@@ -106,6 +109,19 @@ public class Schedule {
     public int getFollow_count(){
         return follow_count;
     }
+
+    public String getPhoto_dir_fromweb() {
+        return photo_dir_fromweb;
+    }
+
+    public void setPhoto_dir_fromweb(String photo_dir_fromweb) {
+        this.photo_dir_fromweb = photo_dir_fromweb;
+    }
+
+    public boolean isAllday() {
+        return allday;
+    }
+
     public HashTag getHashtag(){
         return hashtag;
     }
