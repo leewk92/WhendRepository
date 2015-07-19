@@ -20,12 +20,16 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.PicassoImageTool;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
 import net.whend.soodal.whend.view.A5_WhoFollowsScheduleActivity;
 import net.whend.soodal.whend.view.A6_WriteCommentActivity;
 import net.whend.soodal.whend.view.F5_Mypage;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -62,12 +66,15 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ImageView follow_button = (ImageView)v.findViewById(R.id.follow_button);
         ImageView comment_button = (ImageView)v.findViewById(R.id.comment_button);
         View schedulefollow_user_clickablelayout = (View)v.findViewById(R.id.schedulefollow_user_clickablelayout);
+        TextView like_count = (TextView)v.findViewById(R.id.like_count);
+        TextView follow_count = (TextView)v.findViewById(R.id.follow_count);
+
 
         UserProfileClickListener(user_clickableLayout, position);
         UserProfileClickListener(comment_writer,position);
-        LikeButtonClickListener(like_button, position);
+        LikeButtonClickListener(like_button, like_count,position);
         WriteCommentClickListener(comment_button,position);
-        FollowButtonClickListener(follow_button, position);
+        FollowButtonClickListener(follow_button, follow_count, position);
         WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout, position);
         return v;
     }
@@ -101,10 +108,11 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
 
     // 좋아요 누를 때 리스너
-    public void LikeButtonClickListener(ImageView likebutton, int position){
+    public void LikeButtonClickListener(ImageView likebutton,TextView like_count, int position){
 
         final int pos = position;
         final ImageView iv = likebutton;
+        final TextView lcv = like_count;
         likebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,13 +120,21 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                 if(CSchedule_list.get(pos).getIsLike() == false){
                     Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
                     toast1.show();
+                    String url = "http://119.81.176.245/schedules/"+CSchedule_list.get(pos).getId()+"/like/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url,"PUT");
+                    a.doExecution();
                     CSchedule_list.get(pos).clickLike();
+                    lcv.setText(String.valueOf(CSchedule_list.get(pos).getLike_count()));
                     iv.setImageResource(R.drawable.like_on);
                 }
                 else if(CSchedule_list.get(pos).getIsLike() == true){
                     Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
                     toast2.show();
+                    String url = "http://119.81.176.245/schedules/"+CSchedule_list.get(pos).getId()+"/like/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url,"PUT");
+                    a.doExecution();
                     CSchedule_list.get(pos).clickLike();
+                    lcv.setText(String.valueOf(CSchedule_list.get(pos).getLike_count()));
                     iv.setImageResource(R.drawable.like);
                 }
 
@@ -128,10 +144,11 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     }
 
     // 받아보기 누를 때 리스너
-    public void FollowButtonClickListener(ImageView followbutton, int position){
+    public void FollowButtonClickListener(ImageView followbutton, TextView follow_count, int position){
 
         final int pos = position;
         final ImageView iv = followbutton;
+        final TextView fcv = follow_count;
         followbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,13 +156,21 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                 if(CSchedule_list.get(pos).getIsFollow() == false){
                     Toast toast1 = Toast.makeText(context, "Follow Button Clicked", Toast.LENGTH_SHORT);
                     toast1.show();
+                    String url = "http://119.81.176.245/schedules/"+CSchedule_list.get(pos).getId()+"/follow/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url,"PUT");
+                    a.doExecution();
                     CSchedule_list.get(pos).clickFollow();
-                    iv.setImageResource(R.drawable.notice_on);          // 바꿔야됨 나중에
+                    fcv.setText(String.valueOf(CSchedule_list.get(pos).getFollow_count()));
+                    iv.setImageResource(R.drawable.export_to_calendar_onclick);          // 바꿔야됨 나중에
                 }
                 else if(CSchedule_list.get(pos).getIsFollow() == true){
                     Toast toast2 = Toast.makeText(context, "Follow Button Unclicked", Toast.LENGTH_SHORT);
                     toast2.show();
+                    String url = "http://119.81.176.245/schedules/"+CSchedule_list.get(pos).getId()+"/follow/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url,"PUT");
+                    a.doExecution();
                     CSchedule_list.get(pos).clickFollow();
+                    fcv.setText(String.valueOf(CSchedule_list.get(pos).getFollow_count()));
                     iv.setImageResource(R.drawable.exporttocalendar);
                 }
 
@@ -175,6 +200,19 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ((TextView)v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
         ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
         ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
+        ((TextView)v.findViewById(R.id.like_count)).setText(String.valueOf(CSchedule_list.get(position).getLike_count()));
+        ((TextView)v.findViewById(R.id.follow_count)).setText(String.valueOf(CSchedule_list.get(position).getFollow_count()));
+        Log.d("like",String.valueOf(CSchedule_list.get(position).getIsLike()));
+        if(CSchedule_list.get(position).getIsLike() == true)
+            ((ImageView)v.findViewById(R.id.like_button)).setImageResource(R.drawable.like_on);
+        else
+            ((ImageView)v.findViewById(R.id.like_button)).setImageResource(R.drawable.like);
+
+        if(CSchedule_list.get(position).getIsFollow() == true)
+            ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.export_to_calendar_onclick);
+        else
+            ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.exporttocalendar);
+
 
         if(CSchedule_list.get(position).getPhoto_dir_fromweb()!=null) {
 
@@ -223,6 +261,38 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             setPhoto_dir(photo_dir);
         }
 
+    }
+
+    class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
+
+        public HTTPRestfulUtilizerExtender(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(PUT(url, getInputBundle()));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+            }
+        }
     }
 
 }

@@ -46,8 +46,8 @@ public class Concise_Schedule {
         this.photo_dir = "";
         this.photo_dir_fromweb = s.getPhoto_dir_fromweb();
         this.memo = s.getMemo();
-        this.like_count = 0;
-        this.follow_count = 0;
+        this.like_count = s.getLike_count();
+        this.follow_count = s.getFollow_count();
         this.isLike=false;
         this.isFollow=false;
         DateParse(s);
@@ -78,15 +78,25 @@ public class Concise_Schedule {
     }
     // like 전환 함수
     public void clickLike(){
-        if(isLike==true)
-            isLike=false;
-        else isLike=true;
+        if(isLike==true) {
+            like_count--;
+            isLike = false;
+        }
+        else{
+            like_count++;
+            isLike=true;
+        }
     }
     // follow 전환 함수
     public void clickFollow(){
-        if(isFollow==true)
-            isFollow=false;
-        else isFollow=true;
+        if(isFollow==true) {
+            follow_count--;
+            isFollow = false;
+        }
+        else {
+            follow_count++;
+            isFollow=true;
+        }
     }
 
     // Accessors

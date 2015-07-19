@@ -11,6 +11,7 @@
     <string name="title_activity_a4__make_schedule">A4_MakeScheduleActivity</string>
     <string name="title_activity_a5__whofollowsschedule">A5_WhoFollowsScheduleActivity</string>
     <string name="title_activity_a6__writecommentactivity">A6_WriteCommentActivity</string>
+    <string name="title_activity_a7__specifichashtagactivity">A7_SpecificHashTagActivity</string>
     <string name="title_activity_a0__2__signupactivity">A0_2_SignUpActivity</string>
     <string name="title_activity_a0__1__loginactivity">A0_1_LoginActivity</string>
 

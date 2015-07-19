@@ -185,6 +185,16 @@ public class A0_1_LoginActivity extends Activity {
             task.execute(getUrl(), getHTTPRestType());
         }
         class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+
+            @Override
+            protected void onPreExecute() {
+                AppPrefs appPrefs = new AppPrefs(mContext);
+                appPrefs.setToken("");
+
+                super.onPreExecute();
+            }
+
+
             @Override
             protected String doInBackground(String... strings) {
                 String url = strings[0];

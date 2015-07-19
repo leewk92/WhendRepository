@@ -54,6 +54,11 @@
             >
 
         </activity>
+        <activity
+            android:name=".view.A7_SpecificHashTagActivity"
+            android:label="@string/title_activity_a7__specifichashtagactivity">
+
+        </activity>
     </application>
 
 

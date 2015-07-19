@@ -22,6 +22,7 @@ import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -59,10 +60,12 @@ public class Specific_Schedule_Adapter extends Concise_Schedule_Adapter{
         ImageView follow_button = (ImageView)v.findViewById(R.id.follow_button);
         ImageView comment_button = (ImageView)v.findViewById(R.id.comment_button);
         View schedulefollow_user_clickablelayout = (View)v.findViewById(R.id.schedulefollow_user_clickablelayout);
+        TextView like_count = (TextView)v.findViewById(R.id.like_count);
+        TextView follow_count = (TextView)v.findViewById(R.id.follow_count);
 
         UserProfileClickListener(user_clickableLayout, position);
-        LikeButtonClickListener(like_button, position);
-        FollowButtonClickListener(follow_button, position);
+        LikeButtonClickListener(like_button, like_count,position);
+        FollowButtonClickListener(follow_button,follow_count, position);
         WriteCommentClickListener(comment_button, position);
         WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout, position);
 
@@ -96,14 +99,14 @@ public class Specific_Schedule_Adapter extends Concise_Schedule_Adapter{
 
     // 좋아요 누를 때 리스너
     @Override
-    public void LikeButtonClickListener(ImageView likebutton, int position){
-        super.LikeButtonClickListener(likebutton, position);
+    public void LikeButtonClickListener(ImageView likebutton, TextView like_count, int position){
+        super.LikeButtonClickListener(likebutton, like_count, position);
     }
 
     // 받아보기 누를 때 리스너
     @Override
-    public void FollowButtonClickListener(ImageView followbutton, int position){
-        super.FollowButtonClickListener(followbutton, position);
+    public void FollowButtonClickListener(ImageView followbutton,TextView follow_count, int position){
+        super.FollowButtonClickListener(followbutton,follow_count, position);
     }
     // 댓글달기 누를 때 리스너
     @Override
@@ -120,6 +123,17 @@ public class Specific_Schedule_Adapter extends Concise_Schedule_Adapter{
         ((TextView) v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
         ((TextView) v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
         ((TextView) v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
+        ((TextView)v.findViewById(R.id.like_count)).setText(String.valueOf(CSchedule_list.get(position).getLike_count()));
+        ((TextView)v.findViewById(R.id.follow_count)).setText(String.valueOf(CSchedule_list.get(position).getFollow_count()));
+        if(CSchedule_list.get(position).getIsLike() == true)
+            ((ImageView)v.findViewById(R.id.like_button)).setImageResource(R.drawable.like_on);
+        else
+            ((ImageView)v.findViewById(R.id.like_button)).setImageResource(R.drawable.like);
+
+        if(CSchedule_list.get(position).getIsFollow() == true)
+            ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.export_to_calendar_onclick);
+        else
+            ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.exporttocalendar);
 
         if (CSchedule_list.get(position).getPhoto_dir_fromweb() != null) {
             com.squareup.picasso.Target target = new com.squareup.picasso.Target() {

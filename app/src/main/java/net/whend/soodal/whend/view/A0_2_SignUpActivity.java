@@ -156,6 +156,7 @@ public class A0_2_SignUpActivity extends Activity {
 // 회원가입하고 그 아이디로 로그인 시도.
     class HTTPRestfulUtilizerExtender_login extends HTTPRestfulUtilizer{
 
+
         // Constructor for POST
         public HTTPRestfulUtilizerExtender_login(Context mContext, String url, String HTTPRestType, Bundle inputBundle) {
             setmContext(mContext);
@@ -172,6 +173,14 @@ public class A0_2_SignUpActivity extends Activity {
             task.execute(getUrl(), getHTTPRestType());
         }
         class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected void onPreExecute() {
+                AppPrefs appPrefs = new AppPrefs(mContext);
+                appPrefs.setToken("");
+
+                super.onPreExecute();
+            }
+
             @Override
             protected String doInBackground(String... strings) {
                 String url = strings[0];

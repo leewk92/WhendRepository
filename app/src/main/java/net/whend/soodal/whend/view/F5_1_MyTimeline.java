@@ -131,7 +131,12 @@ public class F5_1_MyTimeline extends Fragment {
                         s.setMemo(tmp_ith.getString("memo"));
                         s.setUploaded_username(tmp_ith.getString("user_name"));
                         s.setPhoto_dir_fromweb(tmp_ith.getString("photo"));
+                        s.setFollow_count((tmp_ith.getInt("count_follow")));
+                        s.setLike_count((tmp_ith.getInt("count_like")));
+
                         Concise_Schedule cs = new Concise_Schedule(s);
+                        cs.setIsLike(tmp_ith.getInt("like") == 1 ? true : false);
+                        cs.setIsFollow(tmp_ith.getInt("follow") == 1 ? true : false);
                         arrayCSchedule.add(cs);
                     }
                     concise_schedule_adapter.notifyDataSetChanged();
