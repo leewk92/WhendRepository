@@ -177,6 +177,11 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
 
         if(CSchedule_list.get(position).getPhoto_dir_fromweb()!=null) {
+
+
+            // textview의 배경으로 그림을 넣기위한 원경의 사투 but 안쓰임
+
+            /*
             com.squareup.picasso.Target target = new com.squareup.picasso.Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -193,7 +198,10 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                 public void onPrepareLoad(Drawable placeHolderDrawable) {
                 }
             };
-            Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into(target);
+            */
+
+            Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into((ImageView)v.findViewById(R.id.memo_photo));
+
         }
 
 

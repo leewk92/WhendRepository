@@ -9,7 +9,7 @@ import net.whend.soodal.whend.model.base.User;
 import java.util.Random;
 
 /**
- * Created by ±èÇü¼º on 2015-07-19.
+ * Created by ê¹€í˜•ì„± on 2015-07-19.
  */
 
 

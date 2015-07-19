@@ -3,262 +3,292 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    >
 
     <LinearLayout
-        android:id="@+id/user_clickableLayout"
-        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp"
-        android:clickable="true">
+        android:layout_marginTop="5dp">
 
-        <ImageView
-            android:id="@+id/user_photo"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/userimage_default"
-            />
-        <TextView
-            android:id="@+id/user_fullname"
+        <LinearLayout
+            android:id="@+id/user_clickableLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이원경"
-            android:textStyle="bold"
-            android:textSize="12dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            />
-    </LinearLayout>
+            android:orientation="horizontal"
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="영화 인사이드아웃 개봉"
-        android:textSize="12dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp">
+            android:clickable="true">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/date"/>
-
+                android:id="@+id/user_photo"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/userimage_default"
+                />
             <TextView
-                android:id="@+id/date"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="7월9일"
+                android:id="@+id/user_fullname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이원경"
+                android:textStyle="bold"
                 android:textSize="12dp"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"
 
+                />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/time"/>
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="11:00 - 22:00"
-                android:textSize="12dp"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="5dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/location"/>
-            <TextView
-                android:id="@+id/location"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="연세대학교"
-                android:textSize="12dp"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="5dp"/>
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/memo"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="감정이들 보러가야지\n#영화개봉일 #애니매이션 #인사이드아웃"
-        android:textColor="#FFF"
-        android:textStyle="bold"
-        android:background="@drawable/exo"
-        android:layout_marginTop="5dp"
-        android:textSize="12dp"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <ImageView
-                android:id="@+id/like_button"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/like"
-                android:clickable="true"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <ImageView
-                android:id="@+id/follow_button"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/exporttocalendar"
-                android:clickable="true"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <ImageView
-                android:id="@+id/comment_button"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/comment"
-                android:clickable="true"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp">
         <TextView
-            android:id="@+id/like_count"
-            android:layout_width="0dp"
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_weight="1"
-            android:text="15"
+            android:text="영화 인사이드아웃 개봉"
+            android:textSize="12dp"
+
+            android:layout_marginTop="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/date"/>
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="7월9일"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/time"/>
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="11:00 - 22:00"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/location"/>
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="연세대학교"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:id="@+id/memo_photo"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/exo"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/memo"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="감정이들 보러가야지\n#영화개봉일 #애니매이션 #인사이드아웃"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
             android:textSize="12dp"
             />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="20dp"
-            android:layout_weight="2"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/like_button"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/like"
+                    android:clickable="true"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/follow_button"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/exporttocalendar"
+                    android:clickable="true"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/comment_button"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/comment"
+                    android:clickable="true"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="3dp"
+            android:background="#B6B6B6"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <TextView
-                android:id="@+id/best_friend_username"
+                android:id="@+id/like_count"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:text="15"
+                android:textSize="12dp"
+                />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="2"
+                >
+                <TextView
+                    android:id="@+id/best_friend_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="김민수"
+                    android:textSize="12dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="님"
+                    android:textSize="12dp"
+                    />
+                <LinearLayout
+                    android:id="@+id/schedulefollow_user_clickablelayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text=" 외"
+                        android:textSize="12dp"
+                        />
+                    <TextView
+                        android:id="@+id/follow_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="15"
+                        android:textSize="12dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="명"
+                        android:textSize="12dp"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="이 일정에 추가했습니다."
+                    android:textSize="12dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="30dp">
+            <TextView
+                android:id="@+id/comment_writer"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:text="김민수"
                 android:textSize="12dp"
-                />
+                android:textColor="#212121" />
             <TextView
+                android:id="@+id/comment_content"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:text="님"
+                android:text="헐 픽사"
+                android:layout_marginLeft="10dp"
                 android:textSize="12dp"
-                />
-            <LinearLayout
-                android:id="@+id/schedulefollow_user_clickablelayout"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text=" 외"
-                    android:textSize="12dp"
-                    />
-                <TextView
-                    android:id="@+id/follow_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="15"
-                    android:textSize="12dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="명"
-                    android:textSize="12dp"
-                    />
-            </LinearLayout>
+                android:textColor="#727272" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:text="이 일정에 추가했습니다."
-                android:textSize="12dp"
-                />
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp">
-        <TextView
-            android:id="@+id/comment_writer"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:text="김민수"
-            android:textSize="12dp"
-            android:textColor="#212121"
-            />
-        <TextView
-            android:id="@+id/comment_content"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:text="헐 픽사"
-            android:layout_marginLeft="10dp"
-            android:textSize="12dp"
-            android:textColor="#727272"
-            />
-
     </LinearLayout>
 
 </LinearLayout>
