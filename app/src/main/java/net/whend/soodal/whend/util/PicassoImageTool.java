@@ -91,6 +91,7 @@ public class PicassoImageTool {
                     try {
                         file.createNewFile();
                         FileOutputStream ostream = new FileOutputStream(file);
+
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, ostream);
                         ostream.close();
                     }catch(Exception e){

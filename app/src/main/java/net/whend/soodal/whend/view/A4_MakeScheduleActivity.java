@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -119,8 +120,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                             float ratio = width_dpi/height_dpi;
 
                             intent.putExtra("crop", "true");
-                            intent.putExtra("aspectX", 0);
-                            intent.putExtra("aspectY", 0);
+                            intent.putExtra("aspectX", ratio);
+                            intent.putExtra("aspectY", 1);
                             intent.putExtra("outputX", 200);
                             intent.putExtra("outputY", 150);
 
@@ -141,22 +142,23 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             // 잘라내기 셋팅
 
-                            float width_dp = (float) getResources().getDisplayMetrics().densityDpi;
+                            float density  = getResources().getDisplayMetrics().density;
+
+                            float width_dp = (float) getResources().getDisplayMetrics().widthPixels / density;
                             float height_dp = 120f;
-
-                            System.out.println("너비 : " + width_dp);
-                            System.out.println("높이 : " + height_dp);
-
                             float ratio = width_dp/height_dp;
 
-                            System.out.println("비율 : " + ratio);
-
+                            System.out.println("witdhdp " + width_dp);
+                            System.out.println("heightdp " + height_dp);
+                            System.out.println("ratio " + ratio);
 
                             intent.putExtra("crop", "true");
-                            intent.putExtra("aspectX", 1);
-                            intent.putExtra("aspectY", ratio);
-                            intent.putExtra("outputX", 200);
-                            intent.putExtra("outputY", 150);
+                            intent.putExtra("aspectX", (int) (ratio * 100));
+                            intent.putExtra("aspectY", 100);
+
+                            intent.putExtra("outputX", (int)(ratio*100));
+                            intent.putExtra("outputY",  100);
+
                             try {
                                 intent.putExtra("return-data", true);
                                 startActivityForResult(Intent.createChooser(intent,
@@ -188,7 +190,6 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
                 if (extras != null) {
                     Bitmap photo = extras.getParcelable("data");
-                    System.out.println(photo==null? "null":"nonull");
                     schedule_photo.setImageBitmap(photo);
                 }
             }else if (requestCode == TAKE_FROM_CAMERA) {
