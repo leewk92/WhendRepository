@@ -17,10 +17,9 @@ import net.whend.soodal.whend.view.A3_SpecificScheduleActivity;
 import java.util.ArrayList;
 
 /**
- * Created by ±èÇü¼º on 2015-07-19.
+ * Created by ï¿½ï¿½ï¿½ï¿½ on 2015-07-19.
  */
 public class Notify_Schedule_Adapter extends ArrayAdapter<Notify_Schedule> {
-
 
         private ArrayList<Notify_Schedule> NT_Schedule_list;
         private Context context;

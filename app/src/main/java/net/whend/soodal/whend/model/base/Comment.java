@@ -20,7 +20,32 @@ public class Comment {
     private String contents;            // 댓글 내용 (WK)
     private String schedule_id;         // 댓글을 소유하고 있는 스케줄의 고유 아이디 (WK)
     private User write_user;             // 나중에 User class 상속 받을 예정 (WK)
+    private String write_username;
+    private int write_userid;
 
+    public int getWrite_userid() {
+        return write_userid;
+    }
+
+    public void setWrite_userid(int write_userid) {
+        this.write_userid = write_userid;
+    }
+
+    public String getWrite_username() {
+        return write_username;
+    }
+
+    public void setWrite_username(String write_username) {
+        this.write_username = write_username;
+    }
+
+    public Comment(){
+
+    }
+    public Comment(String write_username, String contents){
+        this.write_username = write_username;
+        this.contents = contents;
+    }
     // Accessors
     public int getId() {
         return id;

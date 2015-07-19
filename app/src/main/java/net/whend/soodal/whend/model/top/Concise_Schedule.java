@@ -13,6 +13,7 @@ import net.whend.soodal.whend.util.DateTimeFormatter;
  */
 public class Concise_Schedule {
 
+    private int id;
     private String username;
     private String title;
     private String date;
@@ -38,6 +39,7 @@ public class Concise_Schedule {
     }
 
     public Concise_Schedule(Schedule s){
+        this.id = s.getId();
         this.username = s.getUploaded_username();
         this.title = s.getTitle();
         //this.location = s.getLocation();
@@ -137,6 +139,14 @@ public class Concise_Schedule {
 
     public void setPhoto_dir_fromweb(String photo_dir_fromweb) {
         this.photo_dir_fromweb = photo_dir_fromweb;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isLike() {

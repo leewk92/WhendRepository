@@ -127,6 +127,7 @@ public class F1_Wall extends Fragment {
                 // TODO Auto-generated method stub
 
                 Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
+                intent.putExtra("id",arrayCSchedule.get(position).getId());
                 startActivity(intent);
             }
         });

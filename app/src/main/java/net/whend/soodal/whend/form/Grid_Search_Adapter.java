@@ -53,7 +53,7 @@ public class Grid_Search_Adapter extends ArrayAdapter<Grid_Search_Schedule> {
             grid_search_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, A3_SpecificScheduleActivity.class);
+                    Intent intent = new Intent(context, A7_SpecificHashTagActivity.class);
                     context.startActivity(intent);
                 }
             });
