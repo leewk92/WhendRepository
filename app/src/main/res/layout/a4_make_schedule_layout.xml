@@ -7,9 +7,9 @@
     <android.support.v7.widget.Toolbar
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar_upload"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:minHeight="?attr/actionBarSize"
+        android:minHeight="50dp"
         android:background="#ff4b4b4b"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         android:layout_gravity="right"

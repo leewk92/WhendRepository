@@ -135,25 +135,9 @@ public class Specific_Schedule_Adapter extends Concise_Schedule_Adapter{
         else
             ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.exporttocalendar);
 
-        if (CSchedule_list.get(position).getPhoto_dir_fromweb() != null) {
-            com.squareup.picasso.Target target = new com.squareup.picasso.Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
-                    v.findViewById(R.id.memo).setBackground(drawable);
 
-                }
+        Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into((ImageView) v.findViewById(R.id.memo_photo));
 
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-                }
-            };
-            Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into(target);
-        }
     }
 
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
