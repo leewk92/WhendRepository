@@ -40,7 +40,8 @@
         </activity>
         <activity
             android:name=".view.A4_MakeScheduleActivity"
-            android:label="@string/title_activity_a4__make_schedule" >
+            android:label="@string/title_activity_a4__make_schedule"
+            >
         </activity>
         <activity
             android:name=".view.A5_WhoFollowsScheduleActivity"
@@ -65,7 +66,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 
 </manifest>

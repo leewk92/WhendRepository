@@ -42,128 +42,150 @@
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
-        android:id="@+id/user_clickableLayout"
-        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp"
-        android:clickable="true">
+        android:layout_marginRight="16dp">
 
-        <ImageView
-            android:id="@+id/user_photo"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/userimage_default"
-            />
-        <TextView
-            android:id="@+id/user_fullname"
+        <LinearLayout
+            android:id="@+id/user_clickableLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이원경"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/user_photo"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/userimage_default"
+                />
+            <TextView
+                android:id="@+id/user_fullname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이원경"
+                android:textStyle="bold"
+                android:textSize="12dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:hint="아카라카"
+            android:textSize="12dp"
+            android:layout_marginTop="5dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/date"
+                    android:layout_gravity="center_vertical"/>
+
+                <EditText
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="날짜 입력"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/time"
+                    android:layout_gravity="center_vertical"/>
+                <EditText
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="시간 입력"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/location"
+                    android:layout_gravity="center_vertical"/>
+                <EditText
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="장소 입력"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:id="@+id/schedule_photo"
+            android:background="#b6b6b6"
+            android:clickable="true" />
+
+        <EditText
+            android:id="@+id/memo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="예시) 기다리고 기다리던 아카라카! \n #연세대학교 #아카라카"
+            android:textColorHint="#FFF"
+            android:textColor="#FFF"
             android:textStyle="bold"
             android:textSize="12dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            />
-    </LinearLayout>
+            android:gravity="center_vertical|center_horizontal" />
 
-    <EditText
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:hint="아카라카"
-        android:textSize="12dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp"
-        >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/date"
-                android:layout_gravity="center_vertical"/>
-
-            <EditText
-                android:id="@+id/date"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:hint="날짜 입력"
-                android:textSize="12dp"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="5dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/time"
-                android:layout_gravity="center_vertical"/>
-            <EditText
-                android:id="@+id/time"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:hint="시간 입력"
-                android:textSize="12dp"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="5dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/location"
-                android:layout_gravity="center_vertical"/>
-            <EditText
-                android:id="@+id/location"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:hint="장소 입력"
-                android:textSize="12dp"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="5dp"/>
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/memo"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:hint="예시) 기다리고 기다리던 아카라카! \n #연세대학교 #아카라카"
-        android:textColorHint="#FFF"
-        android:textColor="#FFF"
-        android:textStyle="bold"
-        android:background="@drawable/exo"
-        android:layout_marginTop="5dp"
-        android:textSize="12dp"
-        />
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/schedule_photo_add"
+            android:src="@drawable/abc_ic_menu_selectall_mtrl_alpha"
+            android:padding="3dp"
+            android:layout_gravity="right" />
+    </FrameLayout>
 
 
 </LinearLayout>
