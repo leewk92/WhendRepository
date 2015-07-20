@@ -220,18 +220,17 @@ public class A0_1_LoginActivity extends Activity {
                         toast1.show();
                     }
                     else {
-                        Log.d("whywhy2","whyehwye");
+                        Log.d("whywhy2", "whyehwye");
                         result_view.setText(result);
 
                         // 유저네임과 토큰을 저장.
                         AppPrefs appPrefs = new AppPrefs(mContext);
                         appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
                         appPrefs.setToken(token);
-                        Intent intent = new Intent(mContext, MainActivity.class);
-                        intent.putExtra("text", String.valueOf("URL"));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mContext.startActivity(intent);
-                        finish();
+                        String getUserIdUrl = "http://119.81.176.245/userinfos/";
+                        // save user id
+                        HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(mContext,getUserIdUrl,"GET");
+                        a.doExecution();
                     }
 
                 }catch(Exception e){}
@@ -240,4 +239,61 @@ public class A0_1_LoginActivity extends Activity {
         }
     }
 
+    class HTTPRestfulUtilizerExtender2 extends HTTPRestfulUtilizer{
+
+        // Constructor for GET
+        public HTTPRestfulUtilizerExtender2(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+
+            @Override
+            protected void onPreExecute() {
+
+                super.onPreExecute();
+            }
+
+
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try{
+                    int user_id = getOutputJsonObject().getInt("user_id");
+
+                    // save user id .
+                    AppPrefs appPrefs = new AppPrefs(mContext);
+                    appPrefs.setUser_id(user_id);
+
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    intent.putExtra("text", String.valueOf("URL"));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                    finish();
+
+
+                }catch(Exception e){}
+
+            }
+        }
+    }
 }

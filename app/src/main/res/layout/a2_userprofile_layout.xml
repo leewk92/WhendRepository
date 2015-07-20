@@ -5,7 +5,13 @@
     android:layout_height="match_parent"
     >
 
-
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_userprofile"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:minHeight="50dp"
+        android:background="#ff4b4b4b"
+        android:layout_gravity="right">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="40dp"
@@ -152,5 +158,7 @@
                 />
         </LinearLayout>
     </android.support.v4.app.FragmentTabHost>
+    </android.support.v7.widget.Toolbar>
+
 
 </LinearLayout>

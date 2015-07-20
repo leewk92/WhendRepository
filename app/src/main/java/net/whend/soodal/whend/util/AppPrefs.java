@@ -14,7 +14,8 @@ public class AppPrefs {
  private String whendCalendarAccountId="whendCalendarAccountId";
  private String caljson_str = null;
  private String primary = "primary";
- 
+ private String user_id = "user_id";
+
 public AppPrefs(Context context){
  this.appSharedPrefs = context.getSharedPreferences(USER_PREFS, Activity.MODE_PRIVATE);
  this.prefsEditor = appSharedPrefs.edit();
@@ -52,6 +53,12 @@ public String getToken() {
   prefsEditor.putInt(whendCalendarAccountId, _whendCalendarAccountId).commit();
  }
 
+ public int getUser_id(){
+  return appSharedPrefs.getInt(user_id, 0);
+ }
+ public void setUser_id(int _user_id){
+  prefsEditor.putInt(user_id, _user_id).commit();
+ }
 
 
  public String getCaljson_str (){

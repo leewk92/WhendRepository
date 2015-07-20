@@ -94,12 +94,12 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     }
 
     // 외 15명 누를 때 리스너
-    public void WhoFollowsScheduleClickListener(View schedulefollow_user_clickablelayout,int position){
+    public void WhoFollowsScheduleClickListener(View schedulefollow_user_clickablelayout,final int position){
         schedulefollow_user_clickablelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, A5_WhoFollowsScheduleActivity.class);
-                intent.putExtra("text", String.valueOf("URL"));
+                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/"+ CSchedule_list.get(position).getId()+"/followers/"));       // 나중에 해결
                 context.startActivity(intent);
             }
         });

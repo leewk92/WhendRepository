@@ -1,5 +1,9 @@
 package net.whend.soodal.whend.model.base;
 
+import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
+
+import java.util.ArrayList;
+
 /**
  * Definition : 사용자 정보 모델
  * Created by wonkyung on 15. 7. 9.
@@ -31,77 +35,124 @@ public class User {
     follower_count = models.PositiveIntegerField(default=0)
     */
 
-    private String username;                // user 이름 (WK)
-//    private String first_name;
+    private String username; // user 이름 (WK)
+    private int id;
+    //    private String first_name;
 //    private String last_name;
     private String email;                   // user email (WK)
-//    private boolean is_staff;
+    //    private boolean is_staff;
 //    private boolean is_active;
 //    private String date_joined;
     private String photo;                   // Download photo on cache directory (WK)
-//    private String created_at;
+    //    private String created_at;
 //    private String updated_at;
 //    private String login_at;
     private int schedule_count;             // 올린 일정 개수 (WK)
-    private int following_people_count;     // 받아보고 있는 사람 수 (WK)
-    private int following_hashtag_count;    // 받아보고 있는 hashtag 수 (WK)
-    private int follower_count;             // 몇명이 나를 follow 하고 있는지, follower수 (WK)
+    private int count_following_user;     // 받아보고 있는 사람 수 (WK)
+    private int count_following_hashtag;    // 받아보고 있는 hashtag 수 (WK)
+    private int count_follower;             // 몇명이 나를 follow 하고 있는지, follower수 (WK)
+    private int[] following_user;
+    private int[] following_hashtag;
+    private int[] following_schedule;
+    private int[] like_schedule;
 
-    // Accessors
+    public int[] getLike_schedule() {
+        return like_schedule;
+    }
+
+    public void setLike_schedule(int[] like_schedule) {
+        this.like_schedule = like_schedule;
+    }
+
+    public User(){
+
+    }
+
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public int getSchedule_count() {
-        return schedule_count;
-    }
-
-    public int getFollowing_people_count() {
-        return following_people_count;
-    }
-
-    public int getFollowing_hashtag_count() {
-        return following_hashtag_count;
-    }
-
-    public int getFollower_count() {
-        return follower_count;
-    }
-
-    // Mutators
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoto() {
+        return photo;
     }
 
     public void setPhoto(String photo) {
         this.photo = photo;
     }
 
+    public int getSchedule_count() {
+        return schedule_count;
+    }
+
     public void setSchedule_count(int schedule_count) {
         this.schedule_count = schedule_count;
     }
 
-    public void setFollowing_people_count(int following_people_count) {
-        this.following_people_count = following_people_count;
+    public int getCount_following_user() {
+        return count_following_user;
     }
 
-    public void setFollowing_hashtag_count(int following_hashtag_count) {
-        this.following_hashtag_count = following_hashtag_count;
+    public void setCount_following_user(int count_following_user) {
+        this.count_following_user = count_following_user;
     }
 
-    public void setFollower_count(int follower_count) {
-        this.follower_count = follower_count;
+    public int getCount_following_hashtag() {
+        return count_following_hashtag;
+    }
+
+    public void setCount_following_hashtag(int count_following_hashtag) {
+        this.count_following_hashtag = count_following_hashtag;
+    }
+
+    public int getCount_follower() {
+        return count_follower;
+    }
+
+    public void setCount_follower(int count_follower) {
+        this.count_follower = count_follower;
+    }
+
+    public int[] getFollowing_user() {
+        return following_user;
+    }
+
+    public void setFollowing_user(int[] following_user) {
+        this.following_user = following_user;
+    }
+
+    public int[] getFollowing_hashtag() {
+        return following_hashtag;
+    }
+
+    public void setFollowing_hashtag(int[] following_hashtag) {
+        this.following_hashtag = following_hashtag;
+    }
+
+    public int[] getFollowing_schedule() {
+        return following_schedule;
+    }
+
+    public void setFollowing_schedule(int[] following_schedule) {
+        this.following_schedule = following_schedule;
     }
 }

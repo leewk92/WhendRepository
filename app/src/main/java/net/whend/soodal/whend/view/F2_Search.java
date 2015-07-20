@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +27,14 @@ import android.widget.ImageView.ScaleType;
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Grid_Search_Adapter;
 import net.whend.soodal.whend.model.base.HashTag;
+import net.whend.soodal.whend.model.base.Schedule;
+import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
+import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.quitview.QuiltView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -60,8 +67,8 @@ public class F2_Search extends Fragment {
     private Toolbar toolbar;
 
     public QuiltView quiltView;
-
-
+    private JSONArray outputSchedulesJson;
+    Grid_Search_Adapter mgrid_search_adapter;
     private View rootView;
 
         public F2_Search() {
@@ -70,20 +77,12 @@ public class F2_Search extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
-        HashTag tag1, tag2, tag3, tag4;
-
-        tag1 = new HashTag(0,"가","",0,"가");
-        tag2 = new HashTag(0,"나","",0,"가");
-        tag3 = new HashTag(0,"다","",0,"가");
-        tag4 = new HashTag(0,"라","",0,"가");
-
-        arrayGSchedule.add(new Grid_Search_Schedule(tag1));
-        arrayGSchedule.add(new Grid_Search_Schedule(tag2));
-        arrayGSchedule.add(new Grid_Search_Schedule(tag3));
-        arrayGSchedule.add(new Grid_Search_Schedule(tag4));
-
+        String url = "http://119.81.176.245/hashtags/";
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
+        a.doExecution();
 
     }
 
@@ -139,7 +138,7 @@ public class F2_Search extends Fragment {
         transaction.add(R.id.search_linear, temp).commit();
         */
 
-        Grid_Search_Adapter mgrid_search_adapter = new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule);
+        mgrid_search_adapter = new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule);
 
         for(int i=0; i< mgrid_search_adapter.getCount(); i++)
             quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
@@ -203,6 +202,61 @@ public class F2_Search extends Fragment {
         return rootView;
     }
 
+
+    class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
+
+        // Constructor for GET
+        public HTTPRestfulUtilizerExtender(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(),getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try{
+                    outputSchedulesJson = getOutputJsonArray();
+                    JSONObject tmp_ith;
+                    Log.d("resultslegnth",String.valueOf(outputSchedulesJson.length()));
+                    for(int i=0; i<outputSchedulesJson.length() ;i++){
+                        HashTag h = new HashTag();
+                        tmp_ith = outputSchedulesJson.getJSONObject(i);
+
+                        h.setId(tmp_ith.getInt("id"));
+                        h.setTitle(tmp_ith.getString("title"));
+                        h.setPhoto((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
+                        h.setFollower_count(tmp_ith.getInt("follower_count"));
+                        Grid_Search_Schedule gs = new Grid_Search_Schedule(h);
+                        arrayGSchedule.add(gs);
+                    }
+                    mgrid_search_adapter.notifyDataSetChanged();
+                    for(int i=0; i< mgrid_search_adapter.getCount(); i++)
+                        quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
+                }catch(Exception e){
+
+                }
+
+            }
+        }
+    }
 
 
     @Override

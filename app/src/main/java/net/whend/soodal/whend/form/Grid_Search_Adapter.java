@@ -1,6 +1,7 @@
 package net.whend.soodal.whend.form;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
@@ -36,14 +39,14 @@ public class Grid_Search_Adapter extends ArrayAdapter<Grid_Search_Schedule> {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.item_gridsearch_schedule, null);
         }
+        AdjustDataToLayout(v,position);
+        final Grid_Search_Schedule grid_search_schedule = GS_Schedule_list.get(position);
 
-        Grid_Search_Schedule grid_search_schedule = GS_Schedule_list.get(position);
-
-        LinearLayout grid_search_layout = (LinearLayout) v.findViewById(R.id.grid_search_layout);
+        final LinearLayout grid_search_layout = (LinearLayout) v.findViewById(R.id.grid_search_layout);
 
 
         ImageView grid_image = (ImageView)v.findViewById(R.id.gridsearch_image);
-        String grid_image_string;
+        final String grid_image_string;
         TextView grid_text = (TextView)v.findViewById(R.id.gridsearch_text);
 
 
@@ -54,6 +57,9 @@ public class Grid_Search_Adapter extends ArrayAdapter<Grid_Search_Schedule> {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, A7_SpecificHashTagActivity.class);
+                    intent.putExtra("id", grid_search_schedule.getTag().getId());
+                    intent.putExtra("title",grid_search_schedule.getTag().getTitle());
+                    intent.putExtra("follower_count",grid_search_schedule.getTag().getFollower_count());
                     context.startActivity(intent);
                 }
             });
@@ -62,5 +68,19 @@ public class Grid_Search_Adapter extends ArrayAdapter<Grid_Search_Schedule> {
 
 
         return v;
+    }
+
+    public void AdjustDataToLayout(View v,int position) {
+
+        Log.d("whatthe", "#" + GS_Schedule_list.get(position).getTag().getTitle());
+        ((TextView) v.findViewById(R.id.gridsearch_text)).setText("#" + GS_Schedule_list.get(position).getTag().getTitle());
+
+        if(GS_Schedule_list.get(position).getTag().getPhoto()!="null") {
+            Log.d("photoDir",GS_Schedule_list.get(position).getTag().getPhoto());
+            Picasso.with(context).load(GS_Schedule_list.get(position).getTag().getPhoto()).into((ImageView)v.findViewById(R.id.gridsearch_image));
+
+        }else
+            ((ImageView)v.findViewById(R.id.gridsearch_image)).setImageResource(R.drawable.exo);
+        notifyDataSetChanged();
     }
 }

@@ -14,13 +14,13 @@ import net.whend.soodal.whend.R;
 public class A2_UserProfileActivity extends AppCompatActivity {
 
     private FragmentTabHost mTabHost;
-
+    private int user_id;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.f5_mypage_layout);
 
         Intent intent=new Intent(this.getIntent());
-        String s=intent.getStringExtra("text");                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
+        user_id=intent.getIntExtra("id",0);                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
     //    TextView textView=(TextView)findViewById(R.id.textview);
     //    textView.setText(s);
 

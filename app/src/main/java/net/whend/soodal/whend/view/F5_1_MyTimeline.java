@@ -26,6 +26,7 @@ import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
@@ -46,6 +47,7 @@ public class F5_1_MyTimeline extends Fragment {
     private TextView mainactivity_title;
     ImageView search_btn, back_btn;
     EditText search_text;
+    private int user_id;
     private static JSONArray outputSchedulesJson;
 
     public F5_1_MyTimeline() {
@@ -55,12 +57,17 @@ public class F5_1_MyTimeline extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppPrefs appPrefs = new AppPrefs(getActivity());
+        user_id = appPrefs.getUser_id();
 
-        String url = "http://119.81.176.245/schedules/";
-
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
-        a.doExecution();
-
+        // 내가 올린 일정
+        // String url1 = "http://119.81.176.245/userinfos/" +user_id+"/schedules/";
+        // HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url1,"GET");
+        // a.doExecution();
+        // 내가 받아보기 하는 일정
+        String url2 = "http://119.81.176.245/userinfos/" +user_id+"/following_schedules/";
+        HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(getActivity(),url2,"GET");
+        b.doExecution();
     }
 
     @Override
@@ -81,6 +88,7 @@ public class F5_1_MyTimeline extends Fragment {
                 // TODO Auto-generated method stub
 
                 Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
+                intent.putExtra("id",arrayCSchedule.get(position).getId());
                 startActivity(intent);
             }
         });

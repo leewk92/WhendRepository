@@ -23,6 +23,9 @@ public class HashTag {
     private String content;             // 안에 무슨 일정들이 있는지 대충 보여주는 용도
     private int follow_user[];            // 나중에 User class 상속 받을 예정 (WK)
 
+    public HashTag(){
+
+    }
     public HashTag(int id, String title, String photo, int follower_count, String content){
         this.id = id;
         this.title = title;
