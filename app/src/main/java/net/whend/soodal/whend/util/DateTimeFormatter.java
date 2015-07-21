@@ -25,6 +25,10 @@ public class DateTimeFormatter {
 
     // Constructors
     public DateTimeFormatter() {
+        cal = Calendar.getInstance();
+        datetime_ms = cal.getTimeInMillis();
+        outputString = odf.format(new Date(datetime_ms));
+        Parse();
 //"MM월 dd일/HH:mm"
     }
     public DateTimeFormatter(Long datetime_ms){
@@ -50,13 +54,21 @@ public class DateTimeFormatter {
 
     public void Parse(){
         this.year = cal.get(Calendar.YEAR)+"년 ";
-        this.date = cal.get(Calendar.MONTH)+"월 "+cal.get(Calendar.DAY_OF_MONTH)+"일";
-        this.time = cal.get(Calendar.HOUR)+":"+cal.get(Calendar.MINUTE);
+        this.date = String.format("%d", cal.get(Calendar.MONTH) + 1) + "월"+  String.format("%d", cal.get(Calendar.DAY_OF_MONTH))+"일";
+        this.time =  String.format("%02d", cal.get(Calendar.HOUR))+":" +String.format("%02d", cal.get(Calendar.MINUTE));
         this.datetime_ms = cal.getTimeInMillis();
     }
 
     //Getters and Setters
 
+
+    public Calendar getCalendar() {
+        return cal;
+    }
+
+    public void setCalendar(Calendar cal) {
+        this.cal = cal;
+    }
 
     public long getDatetime_ms() {
         return datetime_ms;

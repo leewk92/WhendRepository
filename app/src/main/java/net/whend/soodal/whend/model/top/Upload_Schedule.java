@@ -12,13 +12,14 @@ public class Upload_Schedule {
     private String content;
     private String time;
     private String location;
-
+    private Schedule s;
     public Upload_Schedule(Schedule s){
         this.content = s.getTitle();
         DateTimeFormatter dtf = new DateTimeFormatter(s.getStarttime());
-        this.date = dtf.getYear() + dtf.getDate();
+        this.date = dtf.getDate();
         this.time = dtf.getTime();
         this.location = s.getLocation();
+        this.s = s;
     }
 
     public Upload_Schedule(String date, String content, String time, String location){
@@ -26,6 +27,30 @@ public class Upload_Schedule {
         this.content = content;
         this.time = time;
         this.location = location;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Schedule getSchedule() {
+        return s;
+    }
+
+    public void setSchedule(Schedule s) {
+        this.s = s;
     }
 
     public String getDate(){ return date; }

@@ -107,7 +107,8 @@
                     android:hint="날짜 입력"
                     android:textSize="12dp"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                   />
 
             </LinearLayout>
 
@@ -127,7 +128,8 @@
                     android:hint="시간 입력"
                     android:textSize="12dp"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    />
 
             </LinearLayout>
 

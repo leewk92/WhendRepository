@@ -1,6 +1,8 @@
 package net.whend.soodal.whend.view;
 
+import android.app.DatePickerDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AlertDialog;
@@ -20,6 +23,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +31,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.util.AppPrefs;
+import net.whend.soodal.whend.util.DateTimeFormatter;
+
+import java.util.Calendar;
 
 
 public class A4_MakeScheduleActivity extends AppCompatActivity {
@@ -40,16 +48,22 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
     private ImageView schedule_photo;
     private ImageView schedule_photo_add;
-
+    private static int MONTH,DAY,HOUR,MINUTE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String sDate, sContent, sLocation, sTime, sStarttime;
+        View.OnClickListener photo_add;
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a4_make_schedule_layout);
 
-        String sDate, sContent, sLocation, sTime;
 
-        View.OnClickListener photo_add;
+        AppPrefs appPrefs = new AppPrefs(this);
+        TextView username = (TextView)findViewById(R.id.user_fullname);
+        username.setText(appPrefs.getUsername());
+
 
         EditText date = (EditText) findViewById(R.id.date);
         EditText time = (EditText) findViewById(R.id.time);
@@ -65,7 +79,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         sContent = intent.getStringExtra("content");
         sLocation = intent.getStringExtra("location");
         sTime = intent.getStringExtra("time");
-
+        sStarttime = intent.getStringExtra("datetime");
         if(sDate != null)
             date.setText(sDate);
 
@@ -76,7 +90,10 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             title.setText(sContent);
         if(sTime !=null)
             time.setText(sTime);
-
+        if(sStarttime== null){
+            DateTimeFormatter dtf = new DateTimeFormatter();        // 현재시간
+            sStarttime = dtf.getOutputString();
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
         toolbar.setTitle("");
         TextView toolbartext = (TextView) findViewById(R.id.toolbar_textview);
@@ -179,6 +196,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         schedule_photo.setOnClickListener(photo_add);
         schedule_photo_add.setOnClickListener(photo_add);
 
+        DatePickerEditviewListener(this, date, sStarttime);
+        TimePickerEditviewListener(this, time, sStarttime);
     }
 
 
@@ -202,6 +221,52 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         }
     }
 
+    public void DatePickerEditviewListener(Context context, EditText date, String datetime){
+        final Context mContext = context;
+        final EditText dateview = date;
+        final DateTimeFormatter dtf = new DateTimeFormatter(datetime);
+
+        dateview.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    DialogFragment newFragment = new F6_DatePickerFrgment();
+                    newFragment.show(getSupportFragmentManager(), "DatePicker");
+                }else{
+                    try {
+                        String[] array = dateview.getText().toString().split("월");
+                        MONTH = Integer.getInteger(array[0]);
+                        String[] array2 = array[1].split("일");
+                        DAY = Integer.getInteger(array2[0]);
+                    }
+                    catch(Exception e){}
+                }
+            }
+        });
+    }
+
+
+    public void TimePickerEditviewListener(Context context, EditText time, String datetime){
+        final Context mContext = context;
+        final EditText timeview = time;
+        final DateTimeFormatter dtf = new DateTimeFormatter(datetime);
+
+        timeview.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v,boolean hasFocus) {
+                if (hasFocus) {
+                    DialogFragment newFragment = new F7_TimePickerFragment();
+                    newFragment.show(getSupportFragmentManager(),"TimePicker");
+                }else {
+                    try {
+                        String[] array = timeview.getText().toString().split(":");
+                        HOUR = Integer.getInteger(array[0]);
+                        MINUTE = Integer.getInteger(array[1]);
+                    }catch(Exception e){}
+                }
+            }
+        });
+    }
 
 
 

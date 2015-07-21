@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 /** 내부 일정 리스트를 가져오거나 일정을 캘린더에 넣기 기능을 구현하기 위함.
  * Created by wonkyung on 15. 7. 15.
@@ -182,7 +183,7 @@ public class CalendarProviderUtil {
             values.put(CalendarContract.Events.TITLE, cs.getTitle());
             values.put(CalendarContract.Events.DESCRIPTION, cs.getMemo());
             values.put(CalendarContract.Events.CALENDAR_ID, calID);
-            values.put(CalendarContract.Events.EVENT_TIMEZONE,"Korea/Seoul");
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().toString());
 
             // Uri creationUri = asSyncAdapter(CalendarContract.Events.CONTENT_URI, account.name, account.type);
             // Uri uri = mContext.getContentResolver().insert(creationUri, values);

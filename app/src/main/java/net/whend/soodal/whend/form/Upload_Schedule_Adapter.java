@@ -70,9 +70,10 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
                 Intent intent = new Intent(context, A4_MakeScheduleActivity.class);
                 intent.putExtra("date", schedule.getDate().toString());
                 intent.putExtra("content", schedule.getContent().toString());
-                intent.putExtra("time",schedule.getDate().toString());
+                intent.putExtra("time",schedule.getTime().toString());
                 intent.putExtra("location",schedule.getLocation().toString());
                 intent.putExtra("text", String.valueOf("URL")); // 아마 유저정보...?
+                intent.putExtra("datetime",schedule.getSchedule().getStarttime());
                 context.startActivity(intent);
             }
         });
