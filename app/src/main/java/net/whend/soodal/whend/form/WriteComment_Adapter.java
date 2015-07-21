@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.Comment;
@@ -32,13 +33,16 @@ public class WriteComment_Adapter extends Comment_Adapter {
         if (v == null) {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.item_writecomments, null);
+
         }
 
+        AdjustDataToLayout(v,position);
 
         // 리스너 함수들
 
-        View user_clickableLayout = (View)v.findViewById(R.id.user_clickableLayout);
-
+        View user_clickableLayout = (View) v.findViewById(R.id.user_clickableLayout);
+        TextView username = (TextView)v.findViewById(R.id.comment_writer);
+        TextView content = (TextView)v.findViewById(R.id.comment_content);
         UserProfileClickListener(user_clickableLayout, position);
 
         return v;

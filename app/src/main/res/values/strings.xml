@@ -14,6 +14,7 @@
     <string name="title_activity_a7__specifichashtagactivity">A7_SpecificHashTagActivity</string>
     <string name="title_activity_a0__2__signupactivity">A0_2_SignUpActivity</string>
     <string name="title_activity_a0__1__loginactivity">A0_1_LoginActivity</string>
-
+    <string name="my_custom_account">WhenD</string>
+    <string name="activity_title_setup">WhendSetup</string>
 
 </resources>

@@ -13,6 +13,7 @@ import net.whend.soodal.whend.util.DateTimeFormatter;
  */
 public class Concise_Schedule {
 
+    Schedule s;
     private int id;
     private String username;
     private String title;
@@ -39,6 +40,7 @@ public class Concise_Schedule {
     }
 
     public Concise_Schedule(Schedule s){
+        this.s = s;
         this.id = s.getId();
         this.username = s.getUploaded_username();
         this.title = s.getTitle();
@@ -75,6 +77,8 @@ public class Concise_Schedule {
         DateTimeFormatter df = new DateTimeFormatter(s.getStarttime());
         this.date = df.getDate();
         this.time = df.getTime();
+        this.s.setStarttime_ms(df.getDatetime_ms());
+        this.s.setEndtime_ms(df.getDatetime_ms());
     }
     // like 전환 함수
     public void clickLike(){
@@ -215,5 +219,13 @@ public class Concise_Schedule {
     }
     public void setIsFollow(boolean isFollow){
         this.isFollow = isFollow;
+    }
+
+    public Schedule getSchedule() {
+        return s;
+    }
+
+    public void setSchedule(Schedule s) {
+        this.s = s;
     }
 }

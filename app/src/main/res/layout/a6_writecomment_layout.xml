@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:id="@+id/a6_writecomment"
     android:orientation="vertical"
     android:layout_height="fill_parent"
     tools:context="net.whend.soodal.whend.view.A6_WriteCommentActivity">
@@ -36,13 +37,20 @@
         android:textColor="#727272"
         android:textSize="12dp" />
 
-    <ListView
-        android:id="@+id/listview_comments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
-    </ListView>
+    <LinearLayout
+        android:id="@+id/linear_listview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/listview_comments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+        </ListView>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/comment_content_layout"

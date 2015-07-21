@@ -47,8 +47,9 @@ public String getToken() {
  }
 
  public int getWhendCalendarAccountId(){
-  return appSharedPrefs.getInt(mostRecentInnerCalendarEventId, 0);
+  return appSharedPrefs.getInt(whendCalendarAccountId, 0);
  }
+
  public void setWhendCalendarAccountId(int _whendCalendarAccountId){
   prefsEditor.putInt(whendCalendarAccountId, _whendCalendarAccountId).commit();
  }

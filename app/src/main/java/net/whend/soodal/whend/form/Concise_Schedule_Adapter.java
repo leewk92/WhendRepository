@@ -22,6 +22,7 @@ import com.squareup.picasso.Target;
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.util.CalendarProviderUtil;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.PicassoImageTool;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
@@ -150,6 +151,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         final ImageView iv = followbutton;
         final TextView fcv = follow_count;
         followbutton.setOnClickListener(new View.OnClickListener() {
+
+            CalendarProviderUtil cpu = new CalendarProviderUtil(context);
             @Override
             public void onClick(View v) {
 
@@ -162,6 +165,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     CSchedule_list.get(pos).clickFollow();
                     fcv.setText(String.valueOf(CSchedule_list.get(pos).getFollow_count()));
                     iv.setImageResource(R.drawable.export_to_calendar_onclick);          // 바꿔야됨 나중에
+                    cpu.addScheduleToInnerCalendar(CSchedule_list.get(pos));
                 }
                 else if(CSchedule_list.get(pos).getIsFollow() == true){
                     Toast toast2 = Toast.makeText(context, "Follow Button Unclicked", Toast.LENGTH_SHORT);
@@ -172,6 +176,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     CSchedule_list.get(pos).clickFollow();
                     fcv.setText(String.valueOf(CSchedule_list.get(pos).getFollow_count()));
                     iv.setImageResource(R.drawable.exporttocalendar);
+
+                    cpu.deleteScheduleFromInnerCalendar(CSchedule_list.get(pos));
                 }
 
             }
@@ -181,11 +187,13 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
     // 댓글달기 아이콘 누를 때 리스너
     public void WriteCommentClickListener(ImageView comment_button,int position){
+        final int pos = position;
+
         comment_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, A6_WriteCommentActivity.class);
-                intent.putExtra("text", String.valueOf("URL"));
+                intent.putExtra("id", CSchedule_list.get(pos).getId());
                 context.startActivity(intent);
             }
         });

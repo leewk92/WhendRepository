@@ -19,6 +19,7 @@ public class DateTimeFormatter {
     private String year;
     private String date;
     private String time;
+    private long datetime_ms;
     Calendar cal;
     SimpleDateFormat odf = new SimpleDateFormat(parsePattern, Locale.KOREA);
 
@@ -51,10 +52,19 @@ public class DateTimeFormatter {
         this.year = cal.get(Calendar.YEAR)+"년 ";
         this.date = cal.get(Calendar.MONTH)+"월 "+cal.get(Calendar.DAY_OF_MONTH)+"일";
         this.time = cal.get(Calendar.HOUR)+":"+cal.get(Calendar.MINUTE);
-
+        this.datetime_ms = cal.getTimeInMillis();
     }
 
     //Getters and Setters
+
+
+    public long getDatetime_ms() {
+        return datetime_ms;
+    }
+
+    public void setDatetime_ms(long datetime_ms) {
+        this.datetime_ms = datetime_ms;
+    }
 
     public String getParsePattern() {
         return parsePattern;

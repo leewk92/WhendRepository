@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
+                   android:accountType="net.whend.soodal.account.DEMOACCOUNT"
+                   android:icon="@drawable/like_on"
+                   android:smallIcon="@drawable/like_on"
+                   android:label="@string/my_custom_account"/>

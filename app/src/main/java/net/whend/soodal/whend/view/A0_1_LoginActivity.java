@@ -25,7 +25,7 @@ import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONObject;
-
+import net.whend.soodal.whend.util.CalendarProviderUtil;
 /** 이 클래스는 마치 서버와 데이터 주고받기 튜토리얼
  * Created by wonkyung on 15. 7. 13.
  */
@@ -284,6 +284,10 @@ public class A0_1_LoginActivity extends Activity {
                     AppPrefs appPrefs = new AppPrefs(mContext);
                     appPrefs.setUser_id(user_id);
 
+                    // creating account
+                    CalendarProviderUtil cpu = new CalendarProviderUtil(getmContext());
+                    cpu.addAccountOfCalendar();
+
                     Intent intent = new Intent(mContext, MainActivity.class);
                     intent.putExtra("text", String.valueOf("URL"));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -296,4 +300,6 @@ public class A0_1_LoginActivity extends Activity {
             }
         }
     }
+
+
 }

@@ -1,8 +1,13 @@
 package net.whend.soodal.whend.util;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.util.Log;
@@ -24,6 +29,7 @@ public class CalendarProviderUtil {
 
     private ArrayList<Schedule> innerScheduleList = new ArrayList<Schedule>();
     private Context mContext;
+    private long whendCalendarId;
     private int amount=10;     // 가져올 일정 개수
     public static final String[] CALENDAR_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0
@@ -123,7 +129,7 @@ public class CalendarProviderUtil {
 
         Uri uri = CalendarContract.Events.CONTENT_URI;
         ContentResolver cr = mContext.getContentResolver();
-        Cursor cursor = cr.query(uri, new String [] {"MAX(_id) as max_id"}, null, null, "_id");
+        Cursor cursor = cr.query(uri, new String[]{"MAX(_id) as max_id"}, null, null, "_id");
         cursor.moveToFirst();
 
         long max_val = cursor.getLong(cursor.getColumnIndex("max_id"));
@@ -147,7 +153,128 @@ public class CalendarProviderUtil {
         this.innerScheduleList = innerScheduleList;
     }
 
+    public void addScheduleToInnerCalendar(Concise_Schedule cs){
+        AppPrefs appPrefs = new AppPrefs(mContext);
+        long calID = appPrefs.getWhendCalendarAccountId();
+        Log.d("calID",String.valueOf(calID));
 
+        // 중복 처리
+        Uri uri_event = CalendarContract.Events.CONTENT_URI;
+        ContentResolver cr_event = mContext.getContentResolver();
+
+        String selection = "((" + CalendarContract.Events.CALENDAR_ID + " = ?) AND ("
+                + CalendarContract.Events.TITLE + " = ?) AND ("
+                + CalendarContract.Events.DTSTART + " = ?))";
+        String[] selectionArgs = new String[] {appPrefs.getWhendCalendarAccountId()+""
+                , cs.getTitle()
+                , cs.getSchedule().getStarttime_ms()+""};
+
+        Cursor cur_event = cr_event.query(uri_event, EVENT_PROJECTION, selection,selectionArgs, null);
+
+        if(cur_event.moveToNext() == false ){
+            AccountManager accountManager = AccountManager.get(mContext); //this is Activity
+            Account account = accountManager.getAccounts()[0];
+
+            ContentResolver cr = mContext.getApplicationContext().getContentResolver();
+            ContentValues values = new ContentValues();
+            values.put(CalendarContract.Events.DTSTART, cs.getSchedule().getStarttime_ms());
+            values.put(CalendarContract.Events.DTEND, cs.getSchedule().getEndtime_ms());
+            values.put(CalendarContract.Events.TITLE, cs.getTitle());
+            values.put(CalendarContract.Events.DESCRIPTION, cs.getMemo());
+            values.put(CalendarContract.Events.CALENDAR_ID, calID);
+            values.put(CalendarContract.Events.EVENT_TIMEZONE,"Korea/Seoul");
+
+            // Uri creationUri = asSyncAdapter(CalendarContract.Events.CONTENT_URI, account.name, account.type);
+            // Uri uri = mContext.getContentResolver().insert(creationUri, values);
+
+            Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+            long id = Long.parseLong(uri.getLastPathSegment());
+
+            Log.d("added schedule id", id + "");
+        }else{
+            Log.d("repeated event","true");
+        }
+    }
+
+    public void deleteScheduleFromInnerCalendar(Concise_Schedule cs){
+        AppPrefs appPrefs = new AppPrefs(mContext);
+        Uri uri_event = CalendarContract.Events.CONTENT_URI;
+        ContentResolver cr_event = mContext.getContentResolver();
+
+        String selection = "((" + CalendarContract.Events.CALENDAR_ID + " = ?) AND ("
+                + CalendarContract.Events.TITLE + " = ?) AND ("
+                + CalendarContract.Events.DTSTART + " = ?))";
+        String[] selectionArgs = new String[] {appPrefs.getWhendCalendarAccountId()+""
+                , cs.getTitle()
+                , cs.getSchedule().getStarttime_ms()+""};
+
+        Cursor cur_event = cr_event.query(uri_event, EVENT_PROJECTION, selection,selectionArgs, null);
+
+        if(cur_event.moveToNext()==true ){
+
+            long eventID = cur_event.getLong(0);
+
+            ContentResolver cr = mContext.getContentResolver();
+            ContentValues values = new ContentValues();
+            Uri deleteUri = null;
+            deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
+            int rows = cr.delete(deleteUri, null, null);
+
+        }else{
+            Log.d("no schedule for deletin","true");
+        }
+    }
+    public void addAccountOfCalendar(){
+        AppPrefs appPrefs = new AppPrefs(mContext);
+        appPrefs.setWhendCalendarAccountId(0);
+        AccountManager accountManager = AccountManager.get(mContext); //this is Activity
+        Account account = new Account("Whend","net.whend.soodal.account.DEMOACCOUNT");
+        boolean success = accountManager.addAccountExplicitly(account, "password", null);
+        if(success){
+            Log.d("Account","Account created");
+        }else{
+            Log.d("Account","Account creation failed. Look at previous logs to investigate");
+        }
+        createCalendar(mContext,account);
+    }
+
+    void createCalendar(Context mContext, Account account)
+    {
+        AppPrefs appPrefs = new AppPrefs(mContext);
+
+
+        if(appPrefs.getWhendCalendarAccountId()==0) {
+            final ContentValues v = new ContentValues();
+            v.put(CalendarContract.Calendars.NAME, account.name);
+            v.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, account.name);
+            v.put(CalendarContract.Calendars.ACCOUNT_NAME, account.name);
+            v.put(CalendarContract.Calendars.ACCOUNT_TYPE, account.type);
+            v.put(CalendarContract.Calendars.CALENDAR_COLOR, Color.GREEN);
+            v.put(CalendarContract.Calendars.OWNER_ACCOUNT, account.name);
+            v.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_OWNER);
+            v.put(CalendarContract.Calendars._ID, obtainLatestCalendarId() + 1);// u can give any id there and use same id any where u need to create event
+            v.put(CalendarContract.Calendars.SYNC_EVENTS, 1);
+            v.put(CalendarContract.Calendars.VISIBLE, 1);
+            Uri creationUri = asSyncAdapter(CalendarContract.Calendars.CONTENT_URI, account.name, account.type);
+            Uri calendarData = mContext.getContentResolver().insert(creationUri, v);
+            long id = Long.parseLong(calendarData.getLastPathSegment());
+            whendCalendarId = id;
+            appPrefs.setWhendCalendarAccountId((int)Long.parseLong(calendarData.getLastPathSegment()));        // 왜 안되는지 모르겠음
+            Log.d("whendCalendar_last", id + "");
+
+            Log.d("whendCalendarAccountId",appPrefs.getWhendCalendarAccountId()+"");
+        }else {
+
+            Log.d("whendCalendarAccountId_", appPrefs.getWhendCalendarAccountId() + "");
+        }
+    }
+    private Uri asSyncAdapter(Uri uri, String account, String accountType)
+    {
+        return uri.buildUpon().appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
+                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, account)
+                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, accountType)
+                .build();
+    }
     /*
     private void syncDeviceCalendar() throws JSONException {
 

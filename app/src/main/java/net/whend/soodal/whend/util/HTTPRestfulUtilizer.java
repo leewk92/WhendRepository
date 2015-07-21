@@ -265,7 +265,7 @@ public class HTTPRestfulUtilizer {
 
 
             // 7. Set some headers to inform server about the type of the content
-            httpGet.setHeader("Accept", "application/json");
+            httpGet.setHeader("Accept", "application/json;charset=utf-8");
             httpGet.setHeader("Content-type", "application/json");
             AppPrefs appPrefs = new AppPrefs(mContext);
             token = appPrefs.getToken();
