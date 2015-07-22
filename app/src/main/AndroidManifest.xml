@@ -55,6 +55,7 @@
         <activity
             android:name=".view.A4_MakeScheduleActivity"
             android:label="@string/title_activity_a4__make_schedule"
+
             >
         </activity>
         <activity

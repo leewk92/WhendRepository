@@ -15,9 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
-import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.base.User;
-import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
@@ -30,7 +28,7 @@ public class F5_Mypage extends Fragment {
     private FragmentTabHost mTabHost;
 
     TextView mainactivity_title;
-    ImageView search_btn, back_btn;
+    ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
     JSONObject outputSchedulesJson;
     private View rootView;
@@ -59,10 +57,12 @@ public class F5_Mypage extends Fragment {
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
+        setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
         search_btn.setVisibility(View.INVISIBLE);
         search_text.setVisibility(View.INVISIBLE);
         back_btn.setVisibility(View.GONE);
+        setting_btn.setVisibility(View.VISIBLE);
 
         mTabHost = (FragmentTabHost)rootView.findViewById(android.R.id.tabhost);
         mTabHost.setTop(120);

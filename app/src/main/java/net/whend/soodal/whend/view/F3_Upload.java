@@ -21,7 +21,7 @@ public class F3_Upload extends Fragment {
     private FragmentTabHost mTabHost;
 
     TextView mainactivity_title;
-    ImageView search_btn, back_btn;
+    ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
 
     private View rootView;
@@ -51,10 +51,12 @@ public class F3_Upload extends Fragment {
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
+        setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
         search_btn.setVisibility(View.INVISIBLE);
         search_text.setVisibility(View.INVISIBLE);
         back_btn.setVisibility(View.GONE);
+        setting_btn.setVisibility(View.GONE);
 
         Intent intent = new Intent(getActivity(),A1_UploadActivity.class);
         startActivityForResult(intent, 1);

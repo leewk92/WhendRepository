@@ -22,13 +22,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ImageView.ScaleType;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Grid_Search_Adapter;
 import net.whend.soodal.whend.model.base.HashTag;
-import net.whend.soodal.whend.model.base.Schedule;
-import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.quitview.QuiltView;
@@ -58,7 +55,7 @@ public class F2_Search extends Fragment {
 
 
     private TextView mainactivity_title;
-    private ImageView search_btn, back_btn;
+    private ImageView search_btn, back_btn, setting_btn;
     private GridView search_gridview;
     private EditText search_text;
     private LinearLayout search_grid;
@@ -124,9 +121,12 @@ public class F2_Search extends Fragment {
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
+        setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
         search_btn.setVisibility(View.VISIBLE);
         search_text.setVisibility(View.VISIBLE);
+        setting_btn.setVisibility(View.GONE);
+
 
 
         // 기본 frame layout 설정

@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
@@ -44,7 +43,7 @@ public class F1_Wall extends Fragment {
     private ArrayList<Concise_Schedule> arrayCSchedule = new ArrayList<Concise_Schedule>();
     private Concise_Schedule_Adapter concise_schedule_adapter;
     private TextView mainactivity_title;
-    ImageView search_btn, back_btn;
+    ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
     static String nextURL;
     private static JSONObject outputSchedulesJson;
@@ -108,11 +107,13 @@ public class F1_Wall extends Fragment {
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
+        setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
         back_btn.setVisibility(View.GONE);
 
         search_btn.setVisibility(View.INVISIBLE);
         search_text.setVisibility(View.INVISIBLE);
+        setting_btn.setVisibility(View.GONE);
 
         // View 할당
         rootview = inflater.inflate(R.layout.f1_wall_layout, container, false);

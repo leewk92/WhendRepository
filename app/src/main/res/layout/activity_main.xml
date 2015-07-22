@@ -16,13 +16,20 @@
         android:background="#ff03a8f3"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         >
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
         <ImageView
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/back_btn"
-            android:src="@drawable/back"
+            android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
             android:layout_marginRight="3dp"
             android:focusable="true"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,21 +38,50 @@
             android:text="title"
             android:textColor="@android:color/white" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/search_btn"
-            android:layout_marginRight="3dp"
-            android:src="@drawable/menu_search"
-            android:focusable="true"/>
-
-        <EditText
+        <LinearLayout
+            android:layout_gravity="center"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/search_text"
-            android:hint="검색"
-            android:imeOptions="actionSearch"
-            android:inputType="text"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/search_btn"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/abc_ic_search_api_mtrl_alpha"
+                android:focusable="true"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/search_text"
+                android:hint="검색"
+                android:imeOptions="actionSearch"
+                android:inputType="text"/>
+
+            </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/setting_btn"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/menu_setting_s"
+                android:focusable="true"/>
+
+         </LinearLayout>
+        </LinearLayout>
 
 
 

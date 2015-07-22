@@ -3,12 +3,8 @@ package net.whend.soodal.whend.util.quitview;
 import android.content.Context;
 import android.support.v7.widget.GridLayout;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
-
-import net.whend.soodal.whend.R;
 
 import java.util.ArrayList;
 
@@ -62,19 +58,19 @@ public class QuiltViewBase extends GridLayout {
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 		this.setLayoutParams(params);
 	}
-	
-	public void addPatch(View view){
-		
-		int count = this.getChildCount();
+
+		public void addPatch(View view){
+
+			int count = this.getChildCount();
 
 
 
-		QuiltViewPatch child = QuiltViewPatch.init(count, columns);
-		
-		GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-		params.width = size[0]*child.width_ratio;
-		params.height = size[1]*child.height_ratio;
-		params.rowSpec = GridLayout.spec(Integer.MIN_VALUE, child.height_ratio);
+			QuiltViewPatch child = QuiltViewPatch.init(count, columns);
+
+			GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+			params.width = size[0]*child.width_ratio;
+			params.height = size[1]*child.height_ratio;
+			params.rowSpec = GridLayout.spec(Integer.MIN_VALUE, child.height_ratio);
 		params.columnSpec = GridLayout.spec(Integer.MIN_VALUE, child.width_ratio);
 		view.setLayoutParams(params);
 

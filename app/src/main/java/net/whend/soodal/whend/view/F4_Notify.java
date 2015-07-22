@@ -25,7 +25,7 @@ public class F4_Notify extends Fragment {
     private FragmentTabHost mTabHost;
 
     TextView mainactivity_title;
-    ImageView search_btn, back_btn;
+    ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
     ListView notify_listview;
 
@@ -66,6 +66,8 @@ public class F4_Notify extends Fragment {
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
+        setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
+
         notify_listview = (ListView) rootView.findViewById(R.id.listview_notify_schedule);
 
         Notify_Schedule_Adapter notify_schedule_adapter = new Notify_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayNTchedule);
@@ -75,6 +77,7 @@ public class F4_Notify extends Fragment {
         search_btn.setVisibility(View.INVISIBLE);
         search_text.setVisibility(View.INVISIBLE);
         back_btn.setVisibility(View.GONE);
+        setting_btn.setVisibility(View.GONE);
 
 
 
