@@ -2,18 +2,11 @@ package net.whend.soodal.whend.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +20,7 @@ import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
@@ -34,8 +28,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-// ToolBar 숨기기 Reference : https://mzgreen.github.io/2015/02/15/How-to-hideshow-Toolbar-when-list-is-scroling%28part1%29/
-public class F1_Wall extends Fragment {
+/**
+ * Created by wonkyung on 15. 7. 22.
+ */
+public class F5_2_MyLikeSchedules extends Fragment {
 
 
     private FragmentTabHost mTabHost;
@@ -43,13 +39,14 @@ public class F1_Wall extends Fragment {
     private ListView listview;
     private ArrayList<Concise_Schedule> arrayCSchedule = new ArrayList<Concise_Schedule>();
     private Concise_Schedule_Adapter concise_schedule_adapter;
+
     private TextView mainactivity_title;
     ImageView search_btn, back_btn;
     EditText search_text;
-    static String nextURL;
+    private int user_id;
     private static JSONObject outputSchedulesJson;
-
-    public F1_Wall() {
+    static String nextURL;
+    public F5_2_MyLikeSchedules() {
         // Required empty public constructor
     }
 
@@ -57,16 +54,23 @@ public class F1_Wall extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String url = "http://119.81.176.245/schedules/";
+        Bundle inputBundle = getArguments();
+        if(inputBundle.isEmpty()){
+            AppPrefs appPrefs = new AppPrefs(getActivity());
+            user_id = appPrefs.getUser_id();
+        }else{
+            user_id = inputBundle.getInt("id");
+        }
 
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
-        a.doExecution();
 
-
-        //Concise_Schedule cs = new Concise_Schedule();
-        //arrayCSchedule.add(cs);
-        //arrayCSchedule.add(cs);
-        //arrayCSchedule.add(cs);
+        // 내가 올린 일정
+        // String url1 = "http://119.81.176.245/userinfos/" +user_id+"/schedules/";
+        // HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url1,"GET");
+        // a.doExecution();
+        // 내가 받아보기 하는 일정
+        String url2 = "http://119.81.176.245/userinfos/" +user_id+"/like_schedules/";
+        HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(getActivity(),url2,"GET");
+        b.doExecution();
     }
 
     @Override
@@ -74,48 +78,8 @@ public class F1_Wall extends Fragment {
                              Bundle savedInstanceState) {
 
         // 로고 사이즈 조정 및 로고 삽입
-
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.whend_actionbar);
-        Toolbar toolbar = (Toolbar) container.findViewById(R.id.toolbar);
-
-        int actionBarHeight=0;
-
-        TypedValue tv = new TypedValue();
-        if (getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
-        {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
-        }
-
-        int height = (int) (actionBarHeight * 0.8);
-
-
-        int width = (bmp.getWidth()*height/bmp.getHeight());
-
-
-        Bitmap resizedbmp = Bitmap.createScaledBitmap(bmp, width, height, true);
-        Drawable logo = new BitmapDrawable(getResources(), resizedbmp);
-
-        // 사이즈변경
-
-
-        ((MainActivity)getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(true); // 로고사용
-        ((MainActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false); // 타이틀미사용
-        ((MainActivity)getActivity()).getSupportActionBar().setLogo(logo); //  로고박기
-
-        mainactivity_title = (TextView) getActivity().findViewById(R.id.mainactivity_title);
-        mainactivity_title.setText("");
-
-        search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
-        search_text = (EditText) getActivity().findViewById(R.id.search_text);
-        back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
-
-        back_btn.setVisibility(View.GONE);
-
-        search_btn.setVisibility(View.INVISIBLE);
-        search_text.setVisibility(View.INVISIBLE);
-
         // View 할당
-        rootview = inflater.inflate(R.layout.f1_wall_layout, container, false);
+        rootview = inflater.inflate(R.layout.f5_1_mytimeline_layout, container, false);
         listview = (ListView)rootview.findViewById(R.id.listview_concise_schedule);
         concise_schedule_adapter = new Concise_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayCSchedule);
         listview.setAdapter(concise_schedule_adapter);
@@ -133,6 +97,7 @@ public class F1_Wall extends Fragment {
         });
         return rootview;
     }
+
 
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
 
@@ -178,14 +143,13 @@ public class F1_Wall extends Fragment {
                         s.setEndtime(tmp_ith.getString("end_time"));
                         s.setMemo(tmp_ith.getString("memo"));
                         s.setUploaded_username(tmp_ith.getString("user_name"));
-                        s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
+                        s.setPhoto_dir_fromweb(tmp_ith.getString("photo"));
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
 
                         Concise_Schedule cs = new Concise_Schedule(s);
-                        cs.setIsLike((tmp_ith.getInt("like")==1)?true:false);
-                        cs.setIsFollow((tmp_ith.getInt("follow")==1)?true:false);
-
+                        cs.setIsLike(tmp_ith.getInt("like") == 1 ? true : false);
+                        cs.setIsFollow(tmp_ith.getInt("follow") == 1 ? true : false);
                         arrayCSchedule.add(cs);
                     }
                     concise_schedule_adapter.notifyDataSetChanged();

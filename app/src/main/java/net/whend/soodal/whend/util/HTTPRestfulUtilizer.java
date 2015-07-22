@@ -134,7 +134,7 @@ public class HTTPRestfulUtilizer {
             httpPut.setEntity(se);
 
             // 7. Set some headers to inform server about the type of the content
-            httpPut.setHeader("Accept", "application/json");
+            httpPut.setHeader("Accept", "application/json;charset=utf-8");
             httpPut.setHeader("Content-type", "application/json");
             AppPrefs appPrefs = new AppPrefs(mContext);
             token = appPrefs.getToken();
@@ -209,7 +209,7 @@ public class HTTPRestfulUtilizer {
             httpPost.setEntity(se);
 
             // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Accept", "application/json;charset=utf-8");
             httpPost.setHeader("Content-type", "application/json");
             AppPrefs appPrefs = new AppPrefs(mContext);
             token = appPrefs.getToken();

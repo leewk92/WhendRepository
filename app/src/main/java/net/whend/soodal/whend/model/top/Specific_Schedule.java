@@ -9,17 +9,13 @@ import net.whend.soodal.whend.model.base.User;
 import net.whend.soodal.whend.util.DateTimeFormatter;
 
 /**
- * Created by wonkyung on 15. 7. 9.
+ * Created by wonkyung on 15. 7. 22.
  */
-public class Concise_Schedule {
-
+public class Specific_Schedule {
     private Schedule s;
     private int id;
     private String username;
     private String title;
-    private String date;
-    private String time;
-
     private String date_start;
     private String time_start;
     private String date_end;
@@ -39,13 +35,13 @@ public class Concise_Schedule {
     private boolean isFollow;       // 받아보기 상태 표시
 
     // Constructor
-    public Concise_Schedule() {
+    public Specific_Schedule() {
 
         this.isLike=false;
         this.isFollow=false;
     }
 
-    public Concise_Schedule(Schedule s){
+    public Specific_Schedule(Schedule s){
         this.s = s;
         this.id = s.getId();
         this.username = s.getUploaded_username();
@@ -60,7 +56,7 @@ public class Concise_Schedule {
         this.isFollow=false;
         DateParse(s);
     }
-    public Concise_Schedule(Schedule s, User best_friend_forLike, Comment best_friend_forComment){
+    public Specific_Schedule(Schedule s, User best_friend_forLike, Comment best_friend_forComment){
         this.username = s.getUploaded_user().getUsername();
         this.title = s.getTitle();
         this.location = s.getLocation();
@@ -83,8 +79,6 @@ public class Concise_Schedule {
         DateTimeFormatter df = new DateTimeFormatter(s.getStarttime());
         this.date_start = df.getDate();
         this.time_start = df.getTime();
-        this.date = df.getDate();
-        this.time = df.getTime();
 
         df = new DateTimeFormatter(s.getEndtime());
         this.date_end = df.getDate();
@@ -123,23 +117,6 @@ public class Concise_Schedule {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getTitle() {
         return title;
     }

@@ -33,10 +33,10 @@ public class A6_WriteCommentActivity extends Activity {
     ArrayList<Comment> Comment_list = new ArrayList<Comment>();
     ListView listview;
     WriteComment_Adapter adapter;
-    JSONArray outputSchedulesJson;
+    JSONObject outputSchedulesJson;
     private int id;
     String url;
-
+    static String nextURL;
     EditText comment_content;
     Button comment_write_button;
     Bundle inputBundle;
@@ -141,12 +141,13 @@ public class A6_WriteCommentActivity extends Activity {
                 super.onPostExecute(result);
 
                 try{
-                    outputSchedulesJson = getOutputJsonArray();
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
-                    Log.d("resultslegnth",String.valueOf(outputSchedulesJson.length()));
-                    for(int i=0; i<outputSchedulesJson.length() ;i++){
+                    nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
                         Comment s = new Comment();
-                        tmp_ith = outputSchedulesJson.getJSONObject(i);
+                        tmp_ith = results.getJSONObject(i);
                         s.setContents(tmp_ith.getString("content"));
                         s.setWrite_username(tmp_ith.getString("user_name"));
                         s.setWrite_userid(tmp_ith.getInt("user_id"));

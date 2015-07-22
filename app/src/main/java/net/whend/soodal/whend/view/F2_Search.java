@@ -65,9 +65,9 @@ public class F2_Search extends Fragment {
     private FrameLayout search_linear;
     private FrameLayout root_layout;
     private Toolbar toolbar;
-
+    static String nextURL;
     public QuiltView quiltView;
-    private JSONArray outputSchedulesJson;
+    private JSONObject outputSchedulesJson;
     Grid_Search_Adapter mgrid_search_adapter;
     private View rootView;
 
@@ -233,12 +233,13 @@ public class F2_Search extends Fragment {
                 super.onPostExecute(result);
 
                 try{
-                    outputSchedulesJson = getOutputJsonArray();
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
-                    Log.d("resultslegnth",String.valueOf(outputSchedulesJson.length()));
-                    for(int i=0; i<outputSchedulesJson.length() ;i++){
+                    nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
                         HashTag h = new HashTag();
-                        tmp_ith = outputSchedulesJson.getJSONObject(i);
+                        tmp_ith = results.getJSONObject(i);
 
                         h.setId(tmp_ith.getInt("id"));
                         h.setTitle(tmp_ith.getString("title"));

@@ -106,7 +106,7 @@ public class CalendarProviderUtil {
             DateTimeFormatter dtf_starttime = new DateTimeFormatter(tmpSchedule.getStarttime_ms());
             tmpSchedule.setStarttime(dtf_starttime.getOutputString());
 
-            DateTimeFormatter dtf_endtime = new DateTimeFormatter(tmpSchedule.getStarttime_ms());
+            DateTimeFormatter dtf_endtime = new DateTimeFormatter(tmpSchedule.getEndtime_ms());
             tmpSchedule.setEndtime(dtf_endtime.getOutputString());
             innerScheduleList.add(tmpSchedule);
         }

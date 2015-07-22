@@ -42,8 +42,8 @@ public class F2_1_1_SearchSchedule extends Fragment {
     private ListView listview;
     private ArrayList<Concise_Schedule> arrayCSchedule = new ArrayList<Concise_Schedule>();
     private SearchSchedule_Adapter searchSchedule_adapter;
-    private static JSONArray outputSchedulesJson;
-
+    private static JSONObject outputSchedulesJson;
+    static String nextURL;
     public F2_1_1_SearchSchedule() {
         // Required empty public constructor
     }
@@ -52,7 +52,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String url = "http://119.81.176.245/schedules/";
+        String url = "http://119.81.176.245/schedules/all/?search=";
 
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
         a.doExecution();
@@ -111,12 +111,13 @@ public class F2_1_1_SearchSchedule extends Fragment {
                 super.onPostExecute(result);
 
                 try{
-                    outputSchedulesJson = getOutputJsonArray();
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
-                    Log.d("resultslegnth",String.valueOf(outputSchedulesJson.length()));
-                    for(int i=0; i<outputSchedulesJson.length() ;i++){
+                    nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
                         Schedule s = new Schedule();
-                        tmp_ith = outputSchedulesJson.getJSONObject(i);
+                        tmp_ith = results.getJSONObject(i);
                         s.setId(tmp_ith.getInt("id"));
                         s.setTitle(tmp_ith.getString("title"));
                         s.setStarttime(tmp_ith.getString("start_time"));

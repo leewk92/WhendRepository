@@ -17,7 +17,7 @@ public class A2_UserProfileActivity extends AppCompatActivity {
     private int user_id;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.f5_mypage_layout);
+        setContentView(R.layout.a2_userprofile_layout);
 
         Intent intent=new Intent(this.getIntent());
         user_id=intent.getIntExtra("id",0);                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
@@ -27,11 +27,12 @@ public class A2_UserProfileActivity extends AppCompatActivity {
 
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager() , R.id.realtabcontent);
-
+        Bundle inputBundle = new Bundle();
+        inputBundle.putInt("id",user_id);
         mTabHost.addTab(mTabHost.newTabSpec("searchschedule").setIndicator("MY"),
-                F5_1_MyTimeline.class, null);
+                F5_1_MyTimeline.class, inputBundle);
         mTabHost.addTab(mTabHost.newTabSpec("searchhashtag").setIndicator("관심"),
-                F2_1_2_SearchHashtag.class, null);
+                F5_2_MyLikeSchedules.class, inputBundle);
         mTabHost.addTab(mTabHost.newTabSpec("searchuser").setIndicator("분석"),
                 F2_1_3_SearchUser.class, null);
 

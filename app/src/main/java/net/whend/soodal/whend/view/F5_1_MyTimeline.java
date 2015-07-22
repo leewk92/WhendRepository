@@ -48,8 +48,8 @@ public class F5_1_MyTimeline extends Fragment {
     ImageView search_btn, back_btn;
     EditText search_text;
     private int user_id;
-    private static JSONArray outputSchedulesJson;
-
+    private static JSONObject outputSchedulesJson;
+    static String nextURL;
     public F5_1_MyTimeline() {
         // Required empty public constructor
     }
@@ -57,8 +57,15 @@ public class F5_1_MyTimeline extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppPrefs appPrefs = new AppPrefs(getActivity());
-        user_id = appPrefs.getUser_id();
+
+        Bundle inputBundle = getArguments();
+        if(inputBundle.isEmpty()){
+            AppPrefs appPrefs = new AppPrefs(getActivity());
+            user_id = appPrefs.getUser_id();
+        }else{
+            user_id = inputBundle.getInt("id");
+        }
+
 
         // 내가 올린 일정
         // String url1 = "http://119.81.176.245/userinfos/" +user_id+"/schedules/";
@@ -126,12 +133,14 @@ public class F5_1_MyTimeline extends Fragment {
                 super.onPostExecute(result);
 
                 try{
-                    outputSchedulesJson = getOutputJsonArray();
+                    outputSchedulesJson = getOutputJsonObject();
+
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
-                    Log.d("resultslegnth",String.valueOf(outputSchedulesJson.length()));
-                    for(int i=0; i<outputSchedulesJson.length() ;i++){
+                    nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
                         Schedule s = new Schedule();
-                        tmp_ith = outputSchedulesJson.getJSONObject(i);
+                        tmp_ith = results.getJSONObject(i);
                         s.setId(tmp_ith.getInt("id"));
                         s.setTitle(tmp_ith.getString("title"));
                         s.setStarttime(tmp_ith.getString("start_time"));

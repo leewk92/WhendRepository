@@ -18,6 +18,7 @@ import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.Comment;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.model.top.Specific_Schedule;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
@@ -120,8 +121,13 @@ public class Specific_Schedule_Adapter extends Concise_Schedule_Adapter{
 
         ((TextView) v.findViewById(R.id.user_fullname)).setText(CSchedule_list.get(position).getUsername());
         ((TextView) v.findViewById(R.id.title)).setText(CSchedule_list.get(position).getTitle());
-        ((TextView) v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
-        ((TextView) v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
+
+        ((TextView) v.findViewById(R.id.date_start)).setText(CSchedule_list.get(position).getDate_start());
+        ((TextView) v.findViewById(R.id.time_start)).setText(CSchedule_list.get(position).getTime_start());
+
+        ((TextView) v.findViewById(R.id.date_end)).setText(CSchedule_list.get(position).getDate_end());
+        ((TextView) v.findViewById(R.id.time_end)).setText(CSchedule_list.get(position).getTime_end());
+
         ((TextView) v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
         ((TextView)v.findViewById(R.id.like_count)).setText(String.valueOf(CSchedule_list.get(position).getLike_count()));
         ((TextView)v.findViewById(R.id.follow_count)).setText(String.valueOf(CSchedule_list.get(position).getFollow_count()));

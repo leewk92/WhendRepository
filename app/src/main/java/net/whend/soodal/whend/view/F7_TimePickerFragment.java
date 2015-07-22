@@ -1,10 +1,14 @@
 package net.whend.soodal.whend.view;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
@@ -16,6 +20,9 @@ import java.util.Calendar;
  * Created by wonkyung on 2015-07-22.
  */
 public class F7_TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
+    public int HOUR,MINUTE;
+    Context mContext;
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -32,8 +39,23 @@ public class F7_TimePickerFragment extends DialogFragment implements TimePickerD
     //onTimeSet() callback method
     public void onTimeSet(TimePicker view, int hourOfDay, int minute){
 
-        EditText timeview = (EditText)getActivity().findViewById(R.id.time);
-        timeview.setText(String.format("%02d", hourOfDay + 1) + ":" + String.format("%02d", minute));
+        this.HOUR = hourOfDay;
+        this.MINUTE = minute;
+    }
 
+    public int getHOUR() {
+        return HOUR;
+    }
+
+    public void setHOUR(int HOUR) {
+        this.HOUR = HOUR;
+    }
+
+    public int getMINUTE() {
+        return MINUTE;
+    }
+
+    public void setMINUTE(int MINUTE) {
+        this.MINUTE = MINUTE;
     }
 }

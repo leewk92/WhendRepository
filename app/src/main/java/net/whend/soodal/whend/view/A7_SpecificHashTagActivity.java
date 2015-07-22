@@ -27,12 +27,12 @@ public class A7_SpecificHashTagActivity extends Activity {
 
     ArrayList<Concise_Schedule> CSchedule_list= new ArrayList<Concise_Schedule>();
     ListView listview;
-    private static JSONArray outputSchedulesJson;
+    private static JSONObject outputSchedulesJson;
     private Concise_Schedule_Adapter adapter;
     int id;
     private String title;
     private int follower_count;
-
+    static String nextURL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,12 +91,13 @@ public class A7_SpecificHashTagActivity extends Activity {
                 super.onPostExecute(result);
 
                 try{
-                    outputSchedulesJson = getOutputJsonArray();
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
-                    Log.d("resultslegnth", String.valueOf(outputSchedulesJson.length()));
-                    for(int i=0; i<outputSchedulesJson.length() ;i++){
+                    nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
                         Schedule s = new Schedule();
-                        tmp_ith = outputSchedulesJson.getJSONObject(i);
+                        tmp_ith = results.getJSONObject(i);
                         s.setId(tmp_ith.getInt("id"));
                         s.setTitle(tmp_ith.getString("title"));
                         s.setStarttime(tmp_ith.getString("start_time"));

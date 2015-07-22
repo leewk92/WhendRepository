@@ -94,14 +94,22 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:hint="시작"
+                    android:textSize="12dp"
+                    android:layout_marginLeft="5dp"
+                    />
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/date"
                     android:layout_gravity="center_vertical"/>
 
-                <EditText
-                    android:id="@+id/date"
+                <TextView
+                    android:id="@+id/date_start"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="날짜 입력"
@@ -121,8 +129,8 @@
                     android:layout_height="20dp"
                     android:src="@drawable/time"
                     android:layout_gravity="center_vertical"/>
-                <EditText
-                    android:id="@+id/time"
+                <TextView
+                    android:id="@+id/time_start"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="시간 입력"
@@ -132,6 +140,76 @@
                     />
 
             </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:hint="끝"
+                    android:textSize="12dp"
+                    android:layout_marginLeft="5dp"
+                    />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/date"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/date_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="날짜 입력"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/time"
+                    android:layout_gravity="center_vertical"/>
+                <TextView
+                    android:id="@+id/time_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="시간 입력"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            >
+
 
             <LinearLayout
                 android:layout_width="0dp"

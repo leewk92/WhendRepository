@@ -62,7 +62,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         AdjustDataToLayout(v,position);
         // 리스너 함수들
         View user_clickableLayout = (View)v.findViewById(R.id.user_clickableLayout);
-        View comment_writer = (View)v.findViewById(R.id.comment_writer);
+        //View comment_writer = (View)v.findViewById(R.id.comment_writer);
         ImageView like_button = (ImageView)v.findViewById(R.id.like_button);
         ImageView follow_button = (ImageView)v.findViewById(R.id.follow_button);
         ImageView comment_button = (ImageView)v.findViewById(R.id.comment_button);
@@ -72,7 +72,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
 
         UserProfileClickListener(user_clickableLayout, position);
-        UserProfileClickListener(comment_writer,position);
+        //UserProfileClickListener(comment_writer,position);
         LikeButtonClickListener(like_button, like_count,position);
         WriteCommentClickListener(comment_button,position);
         FollowButtonClickListener(follow_button, follow_count, position);

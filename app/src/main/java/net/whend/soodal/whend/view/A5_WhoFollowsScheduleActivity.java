@@ -27,8 +27,9 @@ public class A5_WhoFollowsScheduleActivity extends Activity {
 
     ArrayList <ScheduleFollow_User> User_list= new ArrayList<ScheduleFollow_User>();;
     ListView listview;
-    JSONArray outputSchedulesJson;
+    JSONObject outputSchedulesJson;
     ScheduleFollow_User_Adapter adapter;
+    static String nextURL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,11 +81,12 @@ public class A5_WhoFollowsScheduleActivity extends Activity {
                 super.onPostExecute(result);
 
                 try {
-                    outputSchedulesJson = getOutputJsonArray();
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
-                    Log.d("resultslegnth", String.valueOf(outputSchedulesJson.length()));
-                    for (int i = 0; i < outputSchedulesJson.length(); i++) {
-                        tmp_ith = outputSchedulesJson.getJSONObject(i);
+                    nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
+                        tmp_ith = results.getJSONObject(i);
                         User u = new User();
                         u.setId(tmp_ith.getInt("user_id"));
                         u.setUsername(tmp_ith.getString("user_name"));

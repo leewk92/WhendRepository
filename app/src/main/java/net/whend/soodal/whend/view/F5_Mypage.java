@@ -71,7 +71,7 @@ public class F5_Mypage extends Fragment {
         mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("MY"),
                 F5_1_MyTimeline.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("관심"),
-                F2_Search.class, null);
+                F5_2_MyLikeSchedules.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("Fragment D"),
                 F4_Notify.class, null);
 
