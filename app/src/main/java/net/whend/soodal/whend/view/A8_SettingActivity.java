@@ -37,6 +37,7 @@ public class A8_SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
             }
         });
     }
