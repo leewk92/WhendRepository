@@ -2,27 +2,43 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.whend.soodal.whend" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-
-        <service android:name=".util.AuthenticatorService" android:exported="false">
+        <service
+            android:name=".util.AuthenticatorService"
+            android:exported="false" >
             <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator"/>
+                <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
-            <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/authenticator"/>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
         </service>
-        <activity android:name="Setup" android:label="@string/activity_title_setup">
+
+        <activity
+            android:name=".Setup"
+            android:label="@string/activity_title_setup" >
             <intent-filter>
-                <action android:name="android.content.SyncAdapter"/>
+                <action android:name="android.content.SyncAdapter" />
             </intent-filter>
-            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/calendar_sync_adapter"/>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/calendar_sync_adapter" />
         </activity>
-
-
-
         <activity
             android:name=".view.A0_1_LoginActivity"
             android:label="@string/app_name" >
@@ -54,38 +70,25 @@
         </activity>
         <activity
             android:name=".view.A4_MakeScheduleActivity"
-            android:label="@string/title_activity_a4__make_schedule"
-
-            >
+            android:label="@string/title_activity_a4__make_schedule" >
         </activity>
         <activity
             android:name=".view.A5_WhoFollowsScheduleActivity"
-            android:label="@string/title_activity_a5__whofollowsschedule">
-
+            android:label="@string/title_activity_a5__whofollowsschedule" >
         </activity>
         <activity
             android:name=".view.A6_WriteCommentActivity"
             android:label="@string/title_activity_a6__writecommentactivity"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"
-            >
-
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize" >
         </activity>
         <activity
             android:name=".view.A7_SpecificHashTagActivity"
-            android:label="@string/title_activity_a7__specifichashtagactivity">
-
+            android:label="@string/title_activity_a7__specifichashtagactivity" >
+        </activity>
+        <activity
+            android:name=".view.A8_SettingActivity"
+            android:label="@string/title_activity_a8__setting" >
         </activity>
     </application>
-
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-
 
 </manifest>

@@ -16,5 +16,6 @@
     <string name="title_activity_a0__1__loginactivity">A0_1_LoginActivity</string>
     <string name="my_custom_account">WhenD</string>
     <string name="activity_title_setup">WhendSetup</string>
+    <string name="title_activity_a8__setting">A8_SettingActivity</string>
 
 </resources>

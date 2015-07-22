@@ -109,11 +109,21 @@ public class F1_Wall extends Fragment {
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
         setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
+        setting_btn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),A8_SettingActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+            }
+        });
+
         back_btn.setVisibility(View.GONE);
 
         search_btn.setVisibility(View.INVISIBLE);
         search_text.setVisibility(View.INVISIBLE);
-        setting_btn.setVisibility(View.GONE);
+       // setting_btn.setVisibility(View.GONE);
 
         // View 할당
         rootview = inflater.inflate(R.layout.f1_wall_layout, container, false);
