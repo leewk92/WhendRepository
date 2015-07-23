@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class F4_Notify extends Fragment {
     private FragmentTabHost mTabHost;
 
     TextView mainactivity_title;
+    LinearLayout search_layout, setting_layout;
     ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
     ListView notify_listview;
@@ -68,16 +70,18 @@ public class F4_Notify extends Fragment {
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
         setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
+        search_layout = (LinearLayout) getActivity().findViewById(R.id.search_layout);
+        setting_layout = (LinearLayout) getActivity().findViewById(R.id.setting_layout);
+
         notify_listview = (ListView) rootView.findViewById(R.id.listview_notify_schedule);
 
         Notify_Schedule_Adapter notify_schedule_adapter = new Notify_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayNTchedule);
         notify_listview.setAdapter(notify_schedule_adapter);
 
 
-        search_btn.setVisibility(View.INVISIBLE);
-        search_text.setVisibility(View.INVISIBLE);
         back_btn.setVisibility(View.GONE);
-        setting_btn.setVisibility(View.GONE);
+        search_layout.setVisibility(View.GONE);
+        setting_layout.setVisibility(View.GONE);
 
 
 
