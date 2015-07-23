@@ -42,6 +42,7 @@ import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -53,17 +54,20 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     private int REQ_CODE_SELECT_IMAGE = 100;
     private Uri mImageCaptureUri;
     private String selectedImagePath;
-
+    private String[] hashtags_title;
+    private ArrayList<Integer> hashtags_id = new ArrayList<Integer>();
     private ImageView schedule_photo;
     private ImageView schedule_photo_add;
     private static int YEAR_start,MONTH_start,DAY_start,HOUR_start,MINUTE_start;
     private static int YEAR_end,MONTH_end,DAY_end,HOUR_end,MINUTE_end;
     static TextView date_start,time_start,date_end,time_end;
+    static int completed_num=0;
     EditText title,location,memo;
     String sDate, sContent, sLocation, sTime, sStarttime,sEndtime;
+    Bundle inputBundle_forRequest = new Bundle();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        completed_num=0;
         View.OnClickListener photo_add;
 
 
@@ -357,27 +361,17 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        // 먼저 메모를 파싱한 후 해시태그 이름들을 배열에 담는다.
+        // 그담에 배열의 리스트들을 각각 검색하고 검색 결과가 있다면 그 해시태그의 아이디를 가져온다.
+        // 만약 검색 결과가 없다면 해시태그를 만드는 요청을 보내고 그 해시태그의 아이디를 가져온다.
+        // 이렇게 각각 해시태그에 대한 아이디를 얻어서 배열에 담는다.
+        // 이들을 [1,2,55,71] 형식으로 바꾸고 inputBundle.putIntArrayList 한다.
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_upload) {
-            Bundle inputBundle = new Bundle();
-            inputBundle.putCharSequence("title",title.getText());
-            inputBundle.putCharSequence("memo", memo.getText());
-            Calendar cal = Calendar.getInstance();
-            cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start);
 
-            Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
-            Log.d("getTimeinMillis",cal.getTimeInMillis()+"");
 
-            DateTimeFormatter dtf = new DateTimeFormatter(cal.getTimeInMillis());
-            inputBundle.putCharSequence("start_time", dtf.getOutputString());
-
-            Log.d("getTimeinString",dtf.getOutputString());
-            cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end);
-            dtf = new DateTimeFormatter(cal.getTimeInMillis());
-            inputBundle.putCharSequence("end_time",dtf.getOutputString());
-            String url = "http://119.81.176.245/schedules/";
-            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this,url,"POST",inputBundle);
-            a.doExecution();
+            parseMemo(memo.getText()+"");
 
 
             return true;
@@ -386,6 +380,26 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void parseMemo(String memo){
+        String tmpArray[] = memo.split("#");
+        if(tmpArray != null) {
+
+            hashtags_title = new String[tmpArray.length - 1];
+
+            for (int i = 1; i < tmpArray.length; i++) {
+                hashtags_title[i - 1] = tmpArray[i].split(" ")[0];
+            }
+            searchHashtags();
+        }
+    }
+    public void searchHashtags(){
+        String search_url = "http://119.81.176.245/hashtags/all/exact/?search=";
+        for(int i=0; i<hashtags_title.length; i++){
+            String tmp_url= search_url + hashtags_title[i];
+            HTTPRestfulUtilizerExtender3 a = new HTTPRestfulUtilizerExtender3(this,tmp_url,"GET",hashtags_title[i]);
+            a.doExecution();
+        }
+    }
 
 // for 일정 올리기
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
@@ -486,6 +500,125 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     }
 
 
+    // for 해시태그 검색
+    class HTTPRestfulUtilizerExtender3 extends HTTPRestfulUtilizer {
+        String hashtag_title;
+        public HTTPRestfulUtilizerExtender3(Context mContext, String url, String HTTPRestType, String hashtag_title) {
+            this.hashtag_title = hashtag_title;
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                try{
+                    int count = getOutputJsonObject().getInt("count");
+                    if(count ==0 ){ // 검색결과가 없다는 말이므로 해시태그 생성해줘야함.
+                        String createHashtag_url = "http://119.81.176.245/hashtags/";
+                        Bundle inputBundle_forCreateHashtag = new Bundle();
+                        inputBundle_forCreateHashtag.putCharSequence("title",hashtag_title);
+                        Log.d("hashtag title",hashtag_title);
+                        HTTPRestfulUtilizerExtender4 a = new HTTPRestfulUtilizerExtender4(getmContext(),createHashtag_url,"POST",inputBundle_forCreateHashtag);
+                        a.doExecution();
+                    }else{  // 검색결과가 있다는 말. 아이디를 받아서 배열에 저장
+                        Log.d("hashtag title_yesSearch",hashtag_title);
+                        int id =  getOutputJsonObject().getJSONArray("results").getJSONObject(0).getInt("id");
+                        Log.d("hashtag get id",id+"");
+                        hashtags_id.add(id);
+                        completed_num ++;
+                        Log.d("completed_num",completed_num+"");
+                    }
+                }catch(Exception e){
+                }
+
+            }
+        }
+    }
+
+    // for 해시태그 생성
+    class HTTPRestfulUtilizerExtender4 extends HTTPRestfulUtilizer {
+
+        public HTTPRestfulUtilizerExtender4(Context mContext, String url, String HTTPRestType, Bundle inputBundle) {
+            setInputBundle(inputBundle);
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(POST(url,getInputBundle()));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                try{
+                    int id = getOutputJsonObject().getInt("id");
+                    Log.d("hashtag title_search_id",id+"");
+                    hashtags_id.add(id);
+                    completed_num ++;
+                    Log.d("completed_num",completed_num+"");
+                    if( hashtags_title.length == completed_num){// 아이디를 다 얻었으면 요청
+                        inputBundle_forRequest.putCharSequence("title",title.getText());
+                        inputBundle_forRequest.putCharSequence("memo", memo.getText());
+                        if(hashtags_id.size() !=0){
+                            inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
+                        }
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start);
+
+                        Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
+                        Log.d("getTimeinMillis",cal.getTimeInMillis()+"");
+
+                        DateTimeFormatter dtf = new DateTimeFormatter(cal.getTimeInMillis());
+                        inputBundle_forRequest.putCharSequence("start_time", dtf.getOutputString());
+
+                        Log.d("getTimeinString",dtf.getOutputString());
+                        cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end);
+                        dtf = new DateTimeFormatter(cal.getTimeInMillis());
+                        inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
+                        String url = "http://119.81.176.245/schedules/";
+                        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest);
+                        a.doExecution();
+
+                    }
+
+                }catch(Exception e){
+                }
+
+            }
+        }
+    }
 
 
     static public class F6_DatePickerFragment_start extends F6_DatePickerFragment{

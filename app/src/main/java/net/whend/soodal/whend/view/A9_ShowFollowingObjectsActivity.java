@@ -45,9 +45,9 @@ public class A9_ShowFollowingObjectsActivity extends AppCompatActivity {
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         Bundle inputBundle = new Bundle();
         inputBundle.putInt("id", user_id);
-        mTabHost.addTab(mTabHost.newTabSpec("searchschedule").setIndicator("MY"),
-                F2_1_2_SearchHashtag.class, inputBundle);
-        mTabHost.addTab(mTabHost.newTabSpec("searchhashtag").setIndicator("관심"),
+        mTabHost.addTab(mTabHost.newTabSpec("followingHashtags").setIndicator("태그"),
+                F9_ShowFollowingHashTag.class, inputBundle);
+        mTabHost.addTab(mTabHost.newTabSpec("searchhashtag").setIndicator("유"),
                 F2_1_3_SearchUser.class, inputBundle);
     }
 }

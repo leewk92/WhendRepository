@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
-import net.whend.soodal.whend.form.Specific_Schedule_Adapter;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;

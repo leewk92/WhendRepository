@@ -197,7 +197,10 @@ public class HTTPRestfulUtilizer {
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
-
+            Log.d("firstjson",json);
+            json = json.replace("\"[", "[");
+            json = json.replace("]\"", "]");
+            Log.d("secondjson", json);
             // ** Alternative way to convert Person object to JSON string usin Jackson Lib
             // ObjectMapper mapper = new ObjectMapper();
             // json = mapper.writeValueAsString(person);
