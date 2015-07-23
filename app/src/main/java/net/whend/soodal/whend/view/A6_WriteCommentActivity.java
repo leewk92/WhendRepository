@@ -41,6 +41,11 @@ public class A6_WriteCommentActivity extends Activity {
     Button comment_write_button;
     Bundle inputBundle;
     Context mContext = this;
+
+    public void onBackPressed(){
+        finish();
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

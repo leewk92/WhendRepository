@@ -89,6 +89,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                 Intent intent = new Intent(context, A2_UserProfileActivity.class);
                 intent.putExtra("id", CSchedule_list.get(position).getUser_id());
                 context.startActivity(intent);
+
+
             }
         });
 

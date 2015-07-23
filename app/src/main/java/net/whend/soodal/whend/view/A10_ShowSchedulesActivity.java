@@ -32,6 +32,11 @@ public class A10_ShowSchedulesActivity extends Activity {
     private Concise_Schedule_Adapter concise_schedule_adapter;
     static String nextURL;
 
+
+    public void onBackPressed(){
+        finish();
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

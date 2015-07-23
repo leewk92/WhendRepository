@@ -3,6 +3,7 @@ package net.whend.soodal.whend.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -10,7 +11,7 @@ import net.whend.soodal.whend.R;
 
 import static java.lang.Thread.sleep;
 
-public class A0_0_OpenAcitivity extends Activity {
+public class A0_0_OpenAcitivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +25,11 @@ public class A0_0_OpenAcitivity extends Activity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    finish();
                     Intent i = new Intent(A0_0_OpenAcitivity.this, A0_1_LoginActivity.class);
                     startActivity(i);
+                    overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+
+                    finish();
                 }
             }
         };

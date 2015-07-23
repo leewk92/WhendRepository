@@ -33,6 +33,11 @@ public class A1_UploadActivity extends AppCompatActivity {
 
     private ArrayList<Upload_Schedule> arraySchedule = new ArrayList<Upload_Schedule>();
 
+    public void onBackPressed(){
+        finish();
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

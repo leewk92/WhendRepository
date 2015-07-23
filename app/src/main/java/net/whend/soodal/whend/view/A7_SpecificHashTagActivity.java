@@ -52,8 +52,8 @@ public class A7_SpecificHashTagActivity extends Activity {
         TextView follower_count_view = (TextView)findViewById(R.id.follower_count);
         ImageView title_photo=(ImageView)findViewById(R.id.photo);
 
-        if(photo!=null) {
-            System.out.println(photo);
+        if(!photo.equals("null")) {
+
             Picasso.with(this).load(photo).into(title_photo);
             title_view.setTextColor(Color.parseColor("#FFFFFF"));
         }

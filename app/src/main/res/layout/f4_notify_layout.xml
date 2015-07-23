@@ -10,5 +10,6 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listview_notify_schedule" />
+        android:id="@+id/listview_notify_schedule"
+        android:divider="@android:color/transparent"/>
 </FrameLayout>

@@ -30,6 +30,11 @@ public class A9_ShowFollowingObjectsActivity extends AppCompatActivity {
     private FragmentTabHost mTabHost;
     private int user_id;
 
+
+    public void onBackPressed(){
+        finish();
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
+    }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a9_showfollowingobject_layout);

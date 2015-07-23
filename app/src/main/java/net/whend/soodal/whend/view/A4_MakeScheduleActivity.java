@@ -65,6 +65,12 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     EditText title,location,memo;
     String sDate, sContent, sLocation, sTime, sStarttime,sEndtime;
     Bundle inputBundle_forRequest = new Bundle();
+
+    public void onBackPressed(){
+        finish();
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         completed_num=0;

@@ -30,6 +30,12 @@ public class A5_WhoFollowsScheduleActivity extends Activity {
     JSONObject outputSchedulesJson;
     ScheduleFollow_User_Adapter adapter;
     static String nextURL;
+
+    public void onBackPressed(){
+        finish();
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

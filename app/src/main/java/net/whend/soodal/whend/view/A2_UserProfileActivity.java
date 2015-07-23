@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -23,15 +24,18 @@ import org.json.JSONObject;
  */
 public class A2_UserProfileActivity extends AppCompatActivity {
 
-    TextView mainactivity_title;
-    ImageView search_btn, back_btn, setting_btn;
-    EditText search_text;
+
     JSONObject outputSchedulesJson;
 
     User u = new User();
 
     private FragmentTabHost mTabHost;
     private int user_id;
+
+    public void onBackPressed(){
+        finish();
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
+    }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a2_userprofile_layout);
@@ -41,6 +45,9 @@ public class A2_UserProfileActivity extends AppCompatActivity {
         Log.d("user_id",user_id+"");
     //    TextView textView=(TextView)findViewById(R.id.textview);
     //    textView.setText(s);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.user_toolbar);
+        setSupportActionBar(toolbar);
 
 
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
@@ -197,6 +204,8 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                 }catch(Exception e){
 
                 }
+                ((TextView)findViewById(R.id.title)).setText(u.getUsername());
+
                 ((TextView)findViewById(R.id.username)).setText(u.getUsername());
                 ((TextView)findViewById(R.id.follower_count)).setText(u.getCount_follower() + "");
                 ((TextView) findViewById(R.id.schedule_count)).setText(u.getCount_uploaded_schedule() + "");

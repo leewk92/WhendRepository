@@ -26,6 +26,11 @@
         <item name="colorButtonNormal">#46629D</item>
     </style>
 
+    <style name="ColoredButtonTransparent" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@android:color/transparent</item>
+
+    </style>
+
 
 
 
