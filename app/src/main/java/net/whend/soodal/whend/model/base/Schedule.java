@@ -49,7 +49,7 @@ public class Schedule {
     private int follow_user;            // 캘린더에 넣은사람 (WK)
     private User uploaded_user;          // 올린사람 (WK)
     private String uploaded_username;       // 올린사람 이름
-
+    private int uploaded_user_id;
 
     public Schedule(){
         this.title="";
@@ -97,6 +97,23 @@ public class Schedule {
     public String getPhoto_dir(){
         return photo_dir;
     }
+
+    public int getUploaded_user_id() {
+        return uploaded_user_id;
+    }
+
+    public void setUploaded_user_id(int uploaded_user_id) {
+        this.uploaded_user_id = uploaded_user_id;
+    }
+
+    public void setStarttime_ms(long starttime_ms) {
+        this.starttime_ms = starttime_ms;
+    }
+
+    public void setEndtime_ms(long endtime_ms) {
+        this.endtime_ms = endtime_ms;
+    }
+
     public boolean getAllday(){
         return allday;
     }

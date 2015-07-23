@@ -81,13 +81,13 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     }
 
     // 유저 이름 누를 때 리스너
-    public void UserProfileClickListener(View userview,int position){
+    public void UserProfileClickListener(View userview,final int position){
         userview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, A2_UserProfileActivity.class);
-                intent.putExtra("text", String.valueOf("URL"));
+                intent.putExtra("id", CSchedule_list.get(position).getUser_id());
                 context.startActivity(intent);
             }
         });

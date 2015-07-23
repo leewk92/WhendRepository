@@ -16,6 +16,7 @@ public class Concise_Schedule {
     private Schedule s;
     private int id;
     private String username;
+    private int user_id;
     private String title;
     private String date;
     private String time;
@@ -49,6 +50,7 @@ public class Concise_Schedule {
         this.s = s;
         this.id = s.getId();
         this.username = s.getUploaded_username();
+        this.user_id = s.getUploaded_user_id();
         this.title = s.getTitle();
         //this.location = s.getLocation();
         this.photo_dir = "";
@@ -214,6 +216,14 @@ public class Concise_Schedule {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public boolean isLike() {
