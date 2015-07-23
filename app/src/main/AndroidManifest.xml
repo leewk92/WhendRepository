@@ -61,7 +61,8 @@
         </activity>
         <activity
             android:name=".view.MainActivity"
-            android:label="@string/title_activity_mainactivity" >
+            android:label="@string/title_activity_mainactivity"
+            android:windowSoftInputMode="adjustPan|adjustResize">
         </activity>
         <activity
             android:name=".view.A1_UploadActivity"

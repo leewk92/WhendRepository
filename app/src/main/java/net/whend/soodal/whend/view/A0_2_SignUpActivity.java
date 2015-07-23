@@ -107,6 +107,12 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed(){
+        finish();
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long

@@ -3,10 +3,14 @@ package net.whend.soodal.whend.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
@@ -30,7 +34,7 @@ public class A7_SpecificHashTagActivity extends Activity {
     private static JSONObject outputSchedulesJson;
     private Concise_Schedule_Adapter adapter;
     int id;
-    private String title;
+    private String title, photo;
     private int follower_count;
     static String nextURL;
     @Override
@@ -39,12 +43,22 @@ public class A7_SpecificHashTagActivity extends Activity {
         setContentView(R.layout.a7_specifichashtag_layout);
 
         Intent intent = new Intent(this.getIntent());
-        id = intent.getIntExtra("id",0);                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
+        id = intent.getIntExtra("id", 0);                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
         title = intent.getStringExtra("title");
         follower_count = intent.getIntExtra("follower_count",0);
+        photo = intent.getStringExtra("photo");
 
         TextView title_view=(TextView)findViewById(R.id.title);
         TextView follower_count_view = (TextView)findViewById(R.id.follower_count);
+        ImageView title_photo=(ImageView)findViewById(R.id.photo);
+
+        if(photo!=null) {
+            System.out.println(photo);
+            Picasso.with(this).load(photo).into(title_photo);
+            title_view.setTextColor(Color.parseColor("#FFFFFF"));
+        }
+
+
         title_view.setText("#" +title);
         follower_count_view.setText(follower_count+"");
 

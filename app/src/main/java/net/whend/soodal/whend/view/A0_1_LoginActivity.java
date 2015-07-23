@@ -78,6 +78,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             intent.putExtra("text", String.valueOf("URL"));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
+            overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
 
         }
     };

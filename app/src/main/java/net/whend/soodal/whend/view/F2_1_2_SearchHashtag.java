@@ -118,6 +118,7 @@ public class F2_1_2_SearchHashtag extends Fragment {
                 intent.putExtra("id",SHashtag_list.get(position).getHashTag().getId());
                 intent.putExtra("title",SHashtag_list.get(position).getHashTag().getTitle());
                 intent.putExtra("follower_count",SHashtag_list.get(position).getHashTag().getFollower_count());
+                intent.putExtra("photo",SHashtag_list.get(position).getHashTag().getPhoto());
 
                 startActivity(intent);
             }
