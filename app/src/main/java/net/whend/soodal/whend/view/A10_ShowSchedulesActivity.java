@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import net.whend.soodal.whend.R;
@@ -47,7 +49,18 @@ public class A10_ShowSchedulesActivity extends Activity {
 
         concise_schedule_adapter = new Concise_Schedule_Adapter(this,R.layout.item_concise_schedule,arrayCSchedule);
         listview = (ListView)findViewById(R.id.listview_concise_schedule);
-        listview.setAdapter(concise_schedule_adapter);
+        listview.setAdapter(concise_schedule_adapter);listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int position, long arg3) {
+                // TODO Auto-generated method stub
+
+                Intent intent = new Intent(A10_ShowSchedulesActivity.this, A3_SpecificScheduleActivity.class);
+                intent.putExtra("id", arrayCSchedule.get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
