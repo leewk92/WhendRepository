@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
@@ -21,6 +22,7 @@ public class F3_Upload extends Fragment {
     private FragmentTabHost mTabHost;
 
     TextView mainactivity_title;
+    LinearLayout search_layout, setting_layout;
     ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
 
@@ -48,15 +50,18 @@ public class F3_Upload extends Fragment {
         mainactivity_title = (TextView) getActivity().findViewById(R.id.mainactivity_title);
         mainactivity_title.setText("업로드");
 
+        search_layout = (LinearLayout) getActivity().findViewById(R.id.search_layout);
+        setting_layout = (LinearLayout) getActivity().findViewById(R.id.setting_layout);
+
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
         setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
-        search_btn.setVisibility(View.INVISIBLE);
-        search_text.setVisibility(View.INVISIBLE);
         back_btn.setVisibility(View.GONE);
-        setting_btn.setVisibility(View.GONE);
+        setting_layout.setVisibility(View.GONE);
+        search_layout.setVisibility(View.GONE);
+
 
         Intent intent = new Intent(getActivity(),A1_UploadActivity.class);
         startActivityForResult(intent, 1);

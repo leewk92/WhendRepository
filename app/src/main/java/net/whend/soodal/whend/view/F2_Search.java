@@ -55,6 +55,7 @@ public class F2_Search extends Fragment {
 
 
     private TextView mainactivity_title;
+    LinearLayout search_layout, setting_layout;
     private ImageView search_btn, back_btn, setting_btn;
     private GridView search_gridview;
     private EditText search_text;
@@ -123,9 +124,14 @@ public class F2_Search extends Fragment {
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
         setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
+
+        search_layout = (LinearLayout) getActivity().findViewById(R.id.search_layout);
+        setting_layout = (LinearLayout) getActivity().findViewById(R.id.setting_layout);
+
+        search_layout.setVisibility(View.VISIBLE);
         search_btn.setVisibility(View.VISIBLE);
         search_text.setVisibility(View.VISIBLE);
-        setting_btn.setVisibility(View.GONE);
+        setting_layout.setVisibility(View.GONE);
 
 
 

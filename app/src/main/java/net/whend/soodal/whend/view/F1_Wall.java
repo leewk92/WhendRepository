@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ public class F1_Wall extends Fragment {
     private ArrayList<Concise_Schedule> arrayCSchedule = new ArrayList<Concise_Schedule>();
     private Concise_Schedule_Adapter concise_schedule_adapter;
     private TextView mainactivity_title;
+    LinearLayout search_layout, setting_layout;
     ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
     static String nextURL;
@@ -113,26 +115,19 @@ public class F1_Wall extends Fragment {
         mainactivity_title = (TextView) getActivity().findViewById(R.id.mainactivity_title);
         mainactivity_title.setText("");
 
+        search_layout = (LinearLayout) getActivity().findViewById(R.id.search_layout);
+        setting_layout = (LinearLayout) getActivity().findViewById(R.id.setting_layout);
+
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
         setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
-        setting_btn.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),A8_SettingActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
-            }
-        });
 
         back_btn.setVisibility(View.GONE);
 
-        search_btn.setVisibility(View.INVISIBLE);
-        search_text.setVisibility(View.INVISIBLE);
-       // setting_btn.setVisibility(View.GONE);
+        search_layout.setVisibility(View.GONE);
+        setting_layout.setVisibility(View.GONE);
 
         // View 할당
         rootview = inflater.inflate(R.layout.f1_wall_layout, container, false);

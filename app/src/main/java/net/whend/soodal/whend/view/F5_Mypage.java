@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
@@ -28,6 +29,7 @@ public class F5_Mypage extends Fragment {
     private FragmentTabHost mTabHost;
 
     TextView mainactivity_title;
+    LinearLayout search_layout, setting_layout;
     ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
     JSONObject outputSchedulesJson;
@@ -54,15 +56,27 @@ public class F5_Mypage extends Fragment {
         mainactivity_title = (TextView) getActivity().findViewById(R.id.mainactivity_title);
         mainactivity_title.setText("마이 페이지");
 
+        search_layout = (LinearLayout) getActivity().findViewById(R.id.search_layout);
+        setting_layout = (LinearLayout) getActivity().findViewById(R.id.setting_layout);
+
         search_btn = (ImageView) getActivity().findViewById(R.id.search_btn);
         search_text = (EditText) getActivity().findViewById(R.id.search_text);
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
         setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
-        search_btn.setVisibility(View.INVISIBLE);
-        search_text.setVisibility(View.INVISIBLE);
+        search_layout.setVisibility(View.GONE);
+        setting_layout.setVisibility(View.VISIBLE);
         back_btn.setVisibility(View.GONE);
-        setting_btn.setVisibility(View.VISIBLE);
+
+        setting_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), A8_SettingActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+            }
+        });
 
         mTabHost = (FragmentTabHost)rootView.findViewById(android.R.id.tabhost);
         mTabHost.setTop(120);
