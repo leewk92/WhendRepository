@@ -128,7 +128,7 @@ public class HTTPRestfulUtilizer {
             // json = mapper.writeValueAsString(person);
 
             // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
+            StringEntity se = new StringEntity(json,"UTF-8");
 
             // 6. set httpPost Entity
             httpPut.setEntity(se);
@@ -203,7 +203,7 @@ public class HTTPRestfulUtilizer {
             // json = mapper.writeValueAsString(person);
 
             // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
+            StringEntity se = new StringEntity(json,"UTF-8");
 
             // 6. set httpPost Entity
             httpPost.setEntity(se);

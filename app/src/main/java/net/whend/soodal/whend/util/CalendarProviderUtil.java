@@ -243,14 +243,28 @@ public class CalendarProviderUtil {
     {
         AppPrefs appPrefs = new AppPrefs(mContext);
 
+        Uri uri_cal = CalendarContract.Calendars.CONTENT_URI;
+        ContentResolver cr_cal = mContext.getContentResolver();
 
-        if(appPrefs.getWhendCalendarAccountId()==0) {
+        String selection = "((" + CalendarContract.Calendars.NAME + " = ?) AND ("
+                + CalendarContract.Calendars.ACCOUNT_NAME + " = ?))";
+        String[] selectionArgs = new String[] {account.name+""
+                , account.name+ ""};
+
+        Cursor cur_event = cr_cal.query(uri_cal, CALENDAR_PROJECTION, selection,selectionArgs, null);
+
+        boolean alreadyCreated;
+        if(cur_event.moveToNext()==true ){
+            alreadyCreated = true;
+        }else alreadyCreated = false;
+// 이미 캘린더 만들었으면 안만듦 !
+        if(alreadyCreated==false) {
             final ContentValues v = new ContentValues();
             v.put(CalendarContract.Calendars.NAME, account.name);
             v.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, account.name);
             v.put(CalendarContract.Calendars.ACCOUNT_NAME, account.name);
             v.put(CalendarContract.Calendars.ACCOUNT_TYPE, account.type);
-            v.put(CalendarContract.Calendars.CALENDAR_COLOR, Color.GREEN);
+            v.put(CalendarContract.Calendars.CALENDAR_COLOR, Color.rgb(3,169,245));
             v.put(CalendarContract.Calendars.OWNER_ACCOUNT, account.name);
             v.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_OWNER);
             v.put(CalendarContract.Calendars._ID, obtainLatestCalendarId() + 1);// u can give any id there and use same id any where u need to create event

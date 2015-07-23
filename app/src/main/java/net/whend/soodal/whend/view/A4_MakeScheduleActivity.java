@@ -363,7 +363,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             inputBundle.putCharSequence("title",title.getText());
             inputBundle.putCharSequence("memo", memo.getText());
             Calendar cal = Calendar.getInstance();
-            cal.set(YEAR_start, MONTH_start, DAY_start, HOUR_start, MINUTE_start);
+            cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start);
 
             Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
             Log.d("getTimeinMillis",cal.getTimeInMillis()+"");
@@ -372,7 +372,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             inputBundle.putCharSequence("start_time", dtf.getOutputString());
 
             Log.d("getTimeinString",dtf.getOutputString());
-            cal.set(YEAR_end, MONTH_end, DAY_end, HOUR_end, MINUTE_end);
+            cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end);
             dtf = new DateTimeFormatter(cal.getTimeInMillis());
             inputBundle.putCharSequence("end_time",dtf.getOutputString());
             String url = "http://119.81.176.245/schedules/";
@@ -387,7 +387,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     }
 
 
-
+// for 일정 올리기
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
 
         private EditText dateview;
@@ -439,10 +439,52 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                     }
                 }catch(Exception e){}
 
+                try{    // 올린 일정 받아보기 자동 설정
+                    int id = getOutputJsonObject().getInt("id");
+                    String url = "http://119.81.176.245/schedules/"+id+"/follow/";
+                    HTTPRestfulUtilizerExtender2 b = new HTTPRestfulUtilizerExtender2(getmContext(), url,"PUT");
+                    b.doExecution();
+                }catch(Exception e){
+
+                }
+
 
             }
         }
     }
+// for 일정 받아보기
+    class HTTPRestfulUtilizerExtender2 extends HTTPRestfulUtilizer {
+
+        public HTTPRestfulUtilizerExtender2(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(PUT(url, getInputBundle()));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+            }
+        }
+    }
+
 
 
 
