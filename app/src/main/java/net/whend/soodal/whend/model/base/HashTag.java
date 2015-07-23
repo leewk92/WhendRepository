@@ -19,9 +19,36 @@ public class HashTag {
     private int id;                     // 고유 아이디 (WK)
     private String title;               // HashTag 이름 (WK)
     private String photo;               // 대표사진 : Download photo on cache directory (WK)
-    private int follower_count;         // 댓글을 소유하고 있는 스케줄의 고유 아이디 (WK)
-    private String content;             // 안에 무슨 일정들이 있는지 대충 보여주는 용도
+    private int follower_count;         //
+    private String content;             //
     private int follow_user[];            // 나중에 User class 상속 받을 예정 (WK)
+    private boolean is_Follow;
+    private int count_schedule;
+    private int count_upcoming_schedule;
+
+    public boolean is_Follow() {
+        return is_Follow;
+    }
+
+    public void setIs_Follow(boolean is_Follow) {
+        this.is_Follow = is_Follow;
+    }
+
+    public int getCount_schedule() {
+        return count_schedule;
+    }
+
+    public void setCount_schedule(int count_schedule) {
+        this.count_schedule = count_schedule;
+    }
+
+    public int getCount_upcoming_schedule() {
+        return count_upcoming_schedule;
+    }
+
+    public void setCount_upcoming_schedule(int count_upcoming_schedule) {
+        this.count_upcoming_schedule = count_upcoming_schedule;
+    }
 
     public HashTag(){
 

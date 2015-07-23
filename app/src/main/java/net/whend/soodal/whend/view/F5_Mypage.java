@@ -81,14 +81,28 @@ public class F5_Mypage extends Fragment {
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),rootView,url,"GET");
         a.doExecution();
 
+        View schedule_count_clickablelayout = rootView.findViewById(R.id.schedule_count_clickablelayout);
         View follower_count_clickablelayout = rootView.findViewById(R.id.follower_count_clickablelayout);
         View following_count_clickablelayout = rootView.findViewById(R.id.following_count_clickablelayout);
+        ScheduleClickListener(schedule_count_clickablelayout);
         FollowerClickListener(follower_count_clickablelayout);
-
+        FollowingClickListener(following_count_clickablelayout);
         return rootView;
     }
+    // 게시물 누를때 리스너
+    public void ScheduleClickListener(View schedule_count_clickablelayout){
+        schedule_count_clickablelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    // 유저 이름 누를 때 리스너
+                Intent intent = new Intent(getActivity(), A10_ShowSchedulesActivity.class);
+                intent.putExtra("id", u.getId());
+                startActivity(intent);
+            }
+        });
+
+    }
+    // 팔로워 누를때 리스너
     public void FollowerClickListener(View follower_count_clickablelayout){
         follower_count_clickablelayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +110,19 @@ public class F5_Mypage extends Fragment {
 
                 Intent intent = new Intent(getActivity(), A5_WhoFollowsScheduleActivity.class);
                 intent.putExtra("url", "http://119.81.176.245/userinfos/"+u.getId()+"/followers/");
+                startActivity(intent);
+            }
+        });
+
+    }
+    // 팔로잉 누를때 리스너
+    public void FollowingClickListener(View follower_count_clickablelayout){
+        follower_count_clickablelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), A9_ShowFollowingObjectsActivity.class);
+                intent.putExtra("url", u.getId());
                 startActivity(intent);
             }
         });
@@ -142,11 +169,11 @@ public class F5_Mypage extends Fragment {
                     tmp_ith = outputSchedulesJson;
                     u.setId(tmp_ith.getInt("user_id"));
                     u.setUsername(tmp_ith.getString("user_name"));
-                    u.setPhoto(tmp_ith.getString("photo")==null?"":tmp_ith.getString("photo"));
+                    u.setPhoto(tmp_ith.getString("photo") == null ? "" : tmp_ith.getString("photo"));
                     u.setCount_following_user(tmp_ith.getInt("count_following_user"));
                     u.setCount_following_hashtag(tmp_ith.getInt("count_following_hashtag"));
                     u.setCount_follower(tmp_ith.getInt("count_follower"));
-
+                    u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));
                     JSONArray tmpjsonarray = tmp_ith.getJSONArray("following_user");
                     if(tmpjsonarray!=null) {
                         int[] following_user = new int[tmpjsonarray.length()];
@@ -193,7 +220,7 @@ public class F5_Mypage extends Fragment {
                 }
                 ((TextView)v.findViewById(R.id.username)).setText(u.getUsername());
                 ((TextView)v.findViewById(R.id.follower_count)).setText(u.getCount_follower() + "");
-                ((TextView)v.findViewById(R.id.schedule_count)).setText(u.getSchedule_count() + "");        // not yet
+                ((TextView)v.findViewById(R.id.schedule_count)).setText(u.getCount_uploaded_schedule() + "");
                 ((TextView)v.findViewById(R.id.following_count)).setText(String.valueOf(u.getCount_following_hashtag() + u.getCount_following_user()));
 
             }

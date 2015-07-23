@@ -89,6 +89,14 @@
             android:name=".view.A8_SettingActivity"
             android:label="@string/title_activity_a8__setting" >
         </activity>
+        <activity
+            android:name=".view.A9_ShowFollowingObjectsActivity"
+            android:label="@string/title_activity_a9__showfollowingobjectsactivity" >
+        </activity>
+        <activity
+            android:name=".view.A10_ShowSchedulesActivity"
+            android:label="@string/title_activity_a10__showschedulesactivity" >
+        </activity>
     </application>
 
 </manifest>

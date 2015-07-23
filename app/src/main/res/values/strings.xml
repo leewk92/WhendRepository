@@ -17,5 +17,8 @@
     <string name="my_custom_account">WhenD</string>
     <string name="activity_title_setup">WhendSetup</string>
     <string name="title_activity_a8__setting">A8_SettingActivity</string>
+    <string name="title_activity_a9__showfollowingobjectsactivity">A9_ShowFollowingObjectsActivity</string>
+    <string name="title_activity_a10__showschedulesactivity">A10_ShowSchedulesActivity</string>
+
 
 </resources>

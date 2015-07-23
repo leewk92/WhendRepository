@@ -48,12 +48,12 @@ public class SearchSchedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
 
     // 유저 이름 누를 때 리스너
-    public void UserProfileClickListener(View userview, int position) {
+    public void UserProfileClickListener(View userview, final int position) {
         userview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, A2_UserProfileActivity.class);
-                intent.putExtra("text", String.valueOf("URL"));
+                intent.putExtra("id", CSchedule_list.get(position).getUser_id());
                 context.startActivity(intent);
             }
         });
@@ -68,5 +68,7 @@ public class SearchSchedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
         ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
         //((TextView)v.findViewById(R.id.like_count)).setText(CSchedule_list.get(position).getLike_count());
+
+
     }
 }

@@ -1,10 +1,12 @@
 package net.whend.soodal.whend.model.top;
 
+import net.whend.soodal.whend.model.base.User;
+
 /**
  * Created by wonkyung on 2015-07-13.
  */
 public class Search_User {
-
+    private User user;
     private String username;                // user 이름 (WK)
     private int schedule_count;             // 올린 일정 개수 (WK)
     private int following_people_count;     // 받아보고 있는 사람 수 (WK)
@@ -21,12 +23,33 @@ public class Search_User {
         this.follower_count = 0;
         this.schedule_count = 0;
     }
+    public Search_User(User user){
+        this.user = user;
+
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public boolean isFollow() {
+        return isFollow;
+    }
 
     // Functions
     public void clickFollow(){
-        if(isFollow==true)
+        if(isFollow==true) {
             isFollow = false;
-        else isFollow = true;
+            user.setCount_follower(user.getCount_follower()-1);
+        }
+        else {
+            isFollow = true;
+            user.setCount_follower(user.getCount_follower()+1);
+        }
     }
 
     // Getters and Setters

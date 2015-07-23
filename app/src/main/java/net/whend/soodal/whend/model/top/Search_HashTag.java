@@ -1,11 +1,13 @@
 package net.whend.soodal.whend.model.top;
 
+import net.whend.soodal.whend.model.base.HashTag;
+
 /**
  * Created by wonkyung on 2015-07-13.
  */
 public class Search_HashTag {
 
-
+    HashTag hashTag;
     private int id;                     // 고유 아이디 (WK)
     private String title;               // HashTag 이름 (WK)
     private String photo;               // 대표사진 : Download photo on cache directory (WK)
@@ -17,12 +19,28 @@ public class Search_HashTag {
     public Search_HashTag(){
         this.isFollow = false;
     }
+    public Search_HashTag(HashTag h){
+       this.hashTag = h;
+        this.isFollow = h.is_Follow();
+    }
+
+    public HashTag getHashTag() {
+        return hashTag;
+    }
+
+    public void setHashTag(HashTag hashTag) {
+        this.hashTag = hashTag;
+    }
 
     // Functions
-    public void clickFollow(){
-        if(isFollow==true)
+    public void clickFollow() {
+        if (isFollow == true){
             isFollow = false;
-         else isFollow = true;
+            this.hashTag.setFollower_count(this.hashTag.getFollower_count() - 1);
+        }else {
+            isFollow = true;
+            this.hashTag.setFollower_count(this.hashTag.getFollower_count()+1);
+        }
     }
     // getters and setters
     public int getId() {

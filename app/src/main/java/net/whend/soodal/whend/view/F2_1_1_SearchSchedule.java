@@ -54,6 +54,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
         // Required empty public constructor
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +121,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
                 // TODO Auto-generated method stub
 
                 Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
+                intent.putExtra("id", arrayCSchedule.get(position).getId());
                 startActivity(intent);
             }
         });

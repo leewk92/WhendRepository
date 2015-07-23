@@ -51,6 +51,7 @@ public class User {
     private int count_following_user;     // 받아보고 있는 사람 수 (WK)
     private int count_following_hashtag;    // 받아보고 있는 hashtag 수 (WK)
     private int count_follower;             // 몇명이 나를 follow 하고 있는지, follower수 (WK)
+    private int count_uploaded_schedule;
     private int[] following_user;
     private int[] following_hashtag;
     private int[] following_schedule;
@@ -70,6 +71,14 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public int getCount_uploaded_schedule() {
+        return count_uploaded_schedule;
+    }
+
+    public void setCount_uploaded_schedule(int count_uploaded_schedule) {
+        this.count_uploaded_schedule = count_uploaded_schedule;
     }
 
     public void setUsername(String username) {

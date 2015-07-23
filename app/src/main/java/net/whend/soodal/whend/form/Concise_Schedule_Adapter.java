@@ -164,7 +164,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     a.doExecution();
                     CSchedule_list.get(pos).clickFollow();
                     fcv.setText(String.valueOf(CSchedule_list.get(pos).getFollow_count()));
-                    iv.setImageResource(R.drawable.export_to_calendar_onclick);          // 바꿔야됨 나중에
+                    iv.setImageResource(R.drawable.export_to_calendar_onclick);
                     cpu.addScheduleToInnerCalendar(CSchedule_list.get(pos));
                 }
                 else if(CSchedule_list.get(pos).getIsFollow() == true){

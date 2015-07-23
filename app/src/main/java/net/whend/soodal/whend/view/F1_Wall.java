@@ -53,6 +53,15 @@ public class F1_Wall extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        arrayCSchedule.clear();
+        String url = "http://119.81.176.245/schedules/";
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
+        a.doExecution();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

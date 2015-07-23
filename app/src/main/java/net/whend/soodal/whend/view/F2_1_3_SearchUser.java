@@ -1,17 +1,34 @@
 package net.whend.soodal.whend.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.form.SearchHashTag_Adapter;
 import net.whend.soodal.whend.form.SearchUser_Adapter;
+import net.whend.soodal.whend.model.base.HashTag;
+import net.whend.soodal.whend.model.base.User;
+import net.whend.soodal.whend.model.top.Search_HashTag;
 import net.whend.soodal.whend.model.top.Search_User;
+import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -22,20 +39,63 @@ public class F2_1_3_SearchUser extends Fragment {
 
     private View rootview;
     private ListView listview;
+    private EditText search_text;
     private ArrayList<Search_User> SUser_list = new ArrayList<Search_User>();
     private SearchUser_Adapter searchUser_adapter;
+    private static JSONObject outputSchedulesJson;
+    static String nextURL;
 
     public F2_1_3_SearchUser() {
         // Required empty public constructor
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Search_User a = new Search_User();
-        SUser_list.add(a);
-        SUser_list.add(a);
-        SUser_list.add(a);
+
+        final String url = "http://119.81.176.245/userinfos/all/?search=";
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
+        a.doExecution();
+
+        search_text = (EditText)(getParentFragment().getParentFragment().getActivity().findViewById(R.id.search_text));
+        // search_text 검색시 이벤트
+
+        search_text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    Toast.makeText(getActivity(), search_text.getText().toString(), Toast.LENGTH_SHORT).show();
+                    return true;
+                } else {
+
+                }
+                return false;
+            }
+        });
+        search_text.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url + search_text.getText(), "GET");
+                a.doExecution();
+                Log.d("changed.", search_text.getText().toString());
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                // TODO Auto-generated method stub
+            }
+        });
+
     }
 
     @Override
@@ -45,8 +105,8 @@ public class F2_1_3_SearchUser extends Fragment {
         // View 할당
         rootview = inflater.inflate(R.layout.f2_1_3_searchuser_layout, container, false);
         listview = (ListView)rootview.findViewById(R.id.listview_searchuser);
-
-        listview.setAdapter(new SearchUser_Adapter(getActivity(), R.layout.item_searchuser, SUser_list));
+        searchUser_adapter =  new SearchUser_Adapter(getActivity(), R.layout.item_searchuser, SUser_list);
+        listview.setAdapter(searchUser_adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -55,10 +115,69 @@ public class F2_1_3_SearchUser extends Fragment {
                 // TODO Auto-generated method stub
 
                 Intent intent = new Intent(getActivity(), A2_UserProfileActivity.class);
+                intent.putExtra("id",SUser_list.get(position).getUser().getId());
                 startActivity(intent);
             }
         });
         return rootview;
+    }
+
+
+    class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
+
+        // Constructor for GET
+        public HTTPRestfulUtilizerExtender(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(),getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                SUser_list.clear();
+                try{
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
+                    JSONObject tmp_ith;
+                    nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
+                        User u = new User();
+                        tmp_ith = results.getJSONObject(i);
+                        u.setId(tmp_ith.getInt("user_id"));
+                        u.setUsername(tmp_ith.getString("user_name"));
+                        u.setPhoto((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
+                        u.setCount_following_user(tmp_ith.getInt("count_following_user"));
+                        u.setCount_follower(tmp_ith.getInt("count_follower"));
+                        u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));
+                        u.setCount_following_hashtag(tmp_ith.getInt("count_following_hashtag"));
+                        Search_User su = new Search_User(u);
+                        su.setIsFollow(tmp_ith.getInt("is_follow")==1?true:false);
+                        SUser_list.add(su);
+                    }
+                    searchUser_adapter.notifyDataSetChanged();
+                }catch(Exception e){
+
+                }
+
+            }
+        }
     }
 
 }
