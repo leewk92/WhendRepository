@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -29,7 +30,7 @@ import net.whend.soodal.whend.util.CalendarProviderUtil;
 /** 이 클래스는 마치 서버와 데이터 주고받기 튜토리얼
  * Created by wonkyung on 15. 7. 13.
  */
-public class A0_1_LoginActivity extends Activity {
+public class A0_1_LoginActivity extends AppCompatActivity {
     private EditText username_view;
     private EditText email_view;
     private EditText password_view;

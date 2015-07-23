@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     >
 
     <LinearLayout
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        >
 
         <LinearLayout
             android:id="@+id/user_clickableLayout"
@@ -28,6 +30,7 @@
                 android:layout_height="35dp"
                 android:src="@drawable/userimage_default"
                 />
+
             <TextView
                 android:id="@+id/user_fullname"
                 android:layout_width="wrap_content"
@@ -37,8 +40,8 @@
                 android:textSize="12dp"
                 android:layout_marginLeft="5dp"
                 android:layout_gravity="center"
-
                 />
+
         </LinearLayout>
 
         <TextView
@@ -206,7 +209,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom ="25dp">
             <TextView
                 android:id="@+id/like_count"
                 android:layout_width="0dp"

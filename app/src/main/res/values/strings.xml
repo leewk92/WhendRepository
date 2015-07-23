@@ -19,6 +19,7 @@
     <string name="title_activity_a8__setting">A8_SettingActivity</string>
     <string name="title_activity_a9__showfollowingobjectsactivity">A9_ShowFollowingObjectsActivity</string>
     <string name="title_activity_a10__showschedulesactivity">A10_ShowSchedulesActivity</string>
+    <string name="title_activity_a0_0__open_acitivity">A0_0_OpenAcitivity</string>
 
 
 </resources>

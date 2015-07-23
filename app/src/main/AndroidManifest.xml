@@ -39,14 +39,21 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/calendar_sync_adapter" />
         </activity>
+
+
         <activity
-            android:name=".view.A0_1_LoginActivity"
+            android:name=".view.A0_0_OpenAcitivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".view.A0_1_LoginActivity"
+            android:label="@string/title_activity_a0__1__loginactivity" >
         </activity>
         <activity
             android:name=".view.A0_2_SignUpActivity"
@@ -97,6 +104,7 @@
             android:name=".view.A10_ShowSchedulesActivity"
             android:label="@string/title_activity_a10__showschedulesactivity" >
         </activity>
+
     </application>
 
 </manifest>

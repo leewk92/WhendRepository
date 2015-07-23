@@ -63,4 +63,10 @@ public class A8_SettingActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed(){
+        finish();
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+    }
 }
