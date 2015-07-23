@@ -189,7 +189,7 @@ public class F1_Wall extends Fragment {
                         s.setEndtime(tmp_ith.getString("end_time"));
                         s.setMemo(tmp_ith.getString("memo"));
                         s.setUploaded_username(tmp_ith.getString("user_name"));
-                        //s.setUploaded_user_id(tmp_ith.getInt("user_id"));
+                        s.setUploaded_user_id(tmp_ith.getInt("user_id"));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
