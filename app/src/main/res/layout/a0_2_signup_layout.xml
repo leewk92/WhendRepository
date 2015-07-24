@@ -33,8 +33,6 @@
             android:layout_marginBottom="10dp"
             android:padding="12dp"
             android:hint="아이디"
-            android:layout_marginLeft="1.5dp"
-            android:layout_marginRight="1.5dp"
             />
 
         <EditText
@@ -48,8 +46,6 @@
             android:layout_marginBottom="10dp"
             android:padding="12dp"
             android:hint="이메일"
-            android:layout_marginLeft="1.5dp"
-            android:layout_marginRight="1.5dp"
             android:inputType="textEmailAddress"/>
 
         <EditText
@@ -63,8 +59,6 @@
             android:layout_marginBottom="10dp"
             android:padding="12dp"
             android:hint="비밀번호"
-            android:layout_marginLeft="1.5dp"
-            android:layout_marginRight="1.5dp"
             android:inputType="textPassword"/>
 
         <EditText
@@ -79,8 +73,6 @@
             android:layout_marginBottom="10dp"
             android:padding="12dp"
             android:hint="비밀번호 확인"
-            android:layout_marginLeft="1.5dp"
-            android:layout_marginRight="1.5dp"
             android:imeOptions="actionDone"
             />
 
@@ -93,7 +85,9 @@
             android:text="회원가입"
             android:textSize="13sp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="-5dip"
+            android:layout_marginRight="-5dip"/>
 
     </LinearLayout>
 

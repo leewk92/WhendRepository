@@ -145,7 +145,7 @@ public class F1_Wall extends Fragment {
                 Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
                 intent.putExtra("id", arrayCSchedule.get(position).getId());
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
             }
         });
         listview.setOnScrollListener(new EndlessScrollListener());

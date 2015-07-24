@@ -1,10 +1,12 @@
 package net.whend.soodal.whend.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import net.whend.soodal.whend.R;
@@ -13,7 +15,6 @@ import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by wonkyung on 15. 7. 11.
  */
-public class A3_SpecificScheduleActivity extends Activity {
+public class A3_SpecificScheduleActivity extends AppCompatActivity {
 
     ArrayList<Concise_Schedule> CSchedule_list = new ArrayList<Concise_Schedule>();;
     ListView listview;
@@ -31,13 +32,25 @@ public class A3_SpecificScheduleActivity extends Activity {
 
     public void onBackPressed(){
         finish();
-        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_right_out);
     }
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a3_specificschedule_layout);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_specificschedule);
+        setSupportActionBar(toolbar);
+
+                        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                        overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_right_out);
+            }
+        });
 
         Intent intent=new Intent(this.getIntent());
         id=intent.getIntExtra("id",0);                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.

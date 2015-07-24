@@ -1,36 +1,23 @@
 package net.whend.soodal.whend.view;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -40,8 +27,11 @@ import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.DateTimeFormatter;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
-import org.json.JSONArray;
-
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -53,7 +43,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
     private int REQ_CODE_SELECT_IMAGE = 100;
     private Uri mImageCaptureUri;
-    private String selectedImagePath;
+    private String ImageAbsolutePath;
     private String[] hashtags_title;
     private ArrayList<Integer> hashtags_id = new ArrayList<Integer>();
     private ImageView schedule_photo;
@@ -68,7 +58,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
     public void onBackPressed(){
         finish();
-        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
+
     }
 
     @Override
@@ -166,6 +156,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+
             }
         });
 
@@ -176,7 +167,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final CharSequence[] items = {"카메라에서 찍기", "갤러리에서 가져오기"};
+                final CharSequence[] items = {"카메라로 찍기", "갤러리에서 불러오기"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(A4_MakeScheduleActivity.this, R.style.AppCompatAlertDialogStyle);
                         // 각 항목을 설정하고 클릭했을 때 동작을 지정함
@@ -266,6 +257,9 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+
         if (resultCode == RESULT_OK) {
             if (requestCode == TAKE_FROM_GALLERY) {
                 Bundle extras = data.getExtras();
@@ -274,12 +268,17 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                 if (extras != null) {
                     Bitmap photo = extras.getParcelable("data");
                     schedule_photo.setImageBitmap(photo);
+
+                    ImageAbsolutePath = createImageFromBitmap(photo);
+
                 }
             }else if (requestCode == TAKE_FROM_CAMERA) {
                 Bundle extras2 = data.getExtras();
                 if (extras2 != null) {
                     Bitmap photo = extras2.getParcelable("data");
                     schedule_photo.setImageBitmap(photo);
+
+                    ImageAbsolutePath = createImageFromBitmap(photo);
                 }
             }
         }
@@ -350,8 +349,46 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         });
     }
 
+    public String createImageFromBitmap(Bitmap bmp) {
+
+        long currentTime = 0;
+        FileOutputStream fileOutputStream = null;
+
+        try {
+
+            // create a File object for the parent directory
+            File wallpaperDirectory = new File("/sdcard/Whend/");
+            // have the object build the directory structure, if needed.
+            wallpaperDirectory.mkdirs();
+
+            //Capture is folder name and file name with date and time
+            fileOutputStream = new FileOutputStream(String.format(
+                    "/sdcard/Whend/whend%d.jpg",
+                    currentTime = System.currentTimeMillis()));
+
+            // Here we Resize the Image ...
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100,
+                    byteArrayOutputStream); // bm is the bitmap object
+            byte[] bsResized = byteArrayOutputStream.toByteArray();
 
 
+            try {
+                fileOutputStream.write(bsResized);
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+        }
+
+        return "/sdcard/Whend/whend"+ currentTime + ".jpg";
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,6 +1,5 @@
 package net.whend.soodal.whend.view;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Upload_Schedule_Adapter;
@@ -23,7 +20,6 @@ import net.whend.soodal.whend.model.top.Upload_Schedule;
 import net.whend.soodal.whend.util.CalendarProviderUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class A1_UploadActivity extends AppCompatActivity {
 
@@ -35,7 +31,7 @@ public class A1_UploadActivity extends AppCompatActivity {
 
     public void onBackPressed(){
         finish();
-        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_down_out);
     }
 
     @Override
@@ -60,6 +56,7 @@ public class A1_UploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_down_out);
             }
         });
 

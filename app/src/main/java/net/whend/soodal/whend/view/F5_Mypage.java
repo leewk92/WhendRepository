@@ -1,11 +1,16 @@
 package net.whend.soodal.whend.view;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,19 +23,32 @@ import android.widget.TextView;
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.User;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
+import net.whend.soodal.whend.util.RoundedImage;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class F5_Mypage extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
 
     private FragmentTabHost mTabHost;
+    private int TAKE_FROM_CAMERA = 1;
+    private int TAKE_FROM_GALLERY = 2;
+
+    private Uri mImageCaptureUri;
+    private String ImageAbsolutePath;
+
 
     TextView mainactivity_title;
     LinearLayout search_layout, setting_layout;
-    ImageView search_btn, back_btn, setting_btn;
+    ImageView search_btn, back_btn, setting_btn, user_photo;
     EditText search_text;
     JSONObject outputSchedulesJson;
     private View rootView;
@@ -50,6 +68,7 @@ public class F5_Mypage extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        View.OnClickListener photo_add;
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayUseLogoEnabled(false);
 
         rootView = inflater.inflate(R.layout.f5_mypage_layout, container, false);
@@ -64,6 +83,8 @@ public class F5_Mypage extends Fragment {
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
         setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
+        user_photo = (ImageView) rootView.findViewById(R.id.user_photo);
+
         search_layout.setVisibility(View.GONE);
         setting_layout.setVisibility(View.VISIBLE);
         back_btn.setVisibility(View.GONE);
@@ -77,6 +98,76 @@ public class F5_Mypage extends Fragment {
                 getActivity().overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
             }
         });
+
+        photo_add = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final CharSequence[] items = {"카메라로 찍기", "갤러리에서 불러오기"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
+                // 각 항목을 설정하고 클릭했을 때 동작을 지정함
+
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        if (item == 0) { //카메라에서 찍기
+
+                            // 카메라 호출
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
+
+                            // 이미지 잘라내기 위한 크기
+
+
+                            intent.putExtra("crop", "true");
+                            intent.putExtra("aspectX", 1);
+                            intent.putExtra("aspectY", 1);
+                            intent.putExtra("outputX", 100);
+                            intent.putExtra("outputY", 100);
+
+                            try {
+                                intent.putExtra("return-data", true);
+                                startActivityForResult(Intent.createChooser(intent,
+                                        "Complete action using"), TAKE_FROM_CAMERA);
+                            } catch (ActivityNotFoundException e) {
+                                // Do nothing for now
+                            }
+
+                        } else if (item == 1) { //갤러리에서 가져오기
+
+
+                            Intent intent = new Intent();
+                            // Gallery 호출
+                            intent.setType("image/*");
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            // 잘라내기 셋팅
+
+                            intent.putExtra("crop", "true");
+                            intent.putExtra("aspectX", 1);
+                            intent.putExtra("aspectY", 1);
+
+                            intent.putExtra("outputX", 100);
+                            intent.putExtra("outputY",  100);
+
+                            try {
+                                intent.putExtra("return-data", true);
+                                startActivityForResult(Intent.createChooser(intent,
+                                        "Complete action using"), TAKE_FROM_GALLERY);
+                            } catch (ActivityNotFoundException e) {
+                                // Do nothing for now
+                            }
+                        }
+
+                    }
+                });
+
+                builder.show();
+
+            }
+        };
+
+        user_photo.setOnClickListener(photo_add);
 
         mTabHost = (FragmentTabHost)rootView.findViewById(android.R.id.tabhost);
         mTabHost.setTop(120);
@@ -241,6 +332,76 @@ public class F5_Mypage extends Fragment {
         }
     }
 
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        if (resultCode == getActivity().RESULT_OK) {
+            if (requestCode == TAKE_FROM_GALLERY) {
+                Bundle extras = data.getExtras();
+                mImageCaptureUri = data.getData(); // Get data from selected photo
+
+                if (extras != null) {
+                    Bitmap photo = extras.getParcelable("data");
+                    RoundedImage temp = new RoundedImage(photo);
+                    user_photo.setImageDrawable(temp);
+
+                    ImageAbsolutePath = createImageFromBitmap(photo);
+
+                }
+            }else if (requestCode == TAKE_FROM_CAMERA) {
+                Bundle extras2 = data.getExtras();
+                if (extras2 != null) {
+                    Bitmap photo = extras2.getParcelable("data");
+                    RoundedImage temp = new RoundedImage(photo);
+                    user_photo.setImageDrawable(temp);
+
+                    ImageAbsolutePath = createImageFromBitmap(photo);
+                }
+            }
+        }
+    }
+
+    public String createImageFromBitmap(Bitmap bmp) {
+
+        long currentTime = 0;
+        FileOutputStream fileOutputStream = null;
+
+        try {
+
+            // create a File object for the parent directory
+            File wallpaperDirectory = new File("/sdcard/Whend/");
+            // have the object build the directory structure, if needed.
+            wallpaperDirectory.mkdirs();
+
+            //Capture is folder name and file name with date and time
+            fileOutputStream = new FileOutputStream(String.format(
+                    "/sdcard/Whend/whend%d.jpg",
+                    currentTime = System.currentTimeMillis()));
+
+            // Here we Resize the Image ...
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100,
+                    byteArrayOutputStream); // bm is the bitmap object
+            byte[] bsResized = byteArrayOutputStream.toByteArray();
+
+
+            try {
+                fileOutputStream.write(bsResized);
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+        }
+
+        return "/sdcard/Whend/whend"+ currentTime + ".jpg";
+    }
 
 
     //
