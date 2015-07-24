@@ -16,6 +16,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -142,13 +143,57 @@ public class F1_Wall extends Fragment {
                 // TODO Auto-generated method stub
 
                 Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
-                intent.putExtra("id",arrayCSchedule.get(position).getId());
+                intent.putExtra("id", arrayCSchedule.get(position).getId());
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
             }
         });
+        listview.setOnScrollListener(new EndlessScrollListener());
         return rootview;
     }
+
+    // 끝없이 로딩 하는거
+    public class EndlessScrollListener implements AbsListView.OnScrollListener {
+
+        private int visibleThreshold = 2;
+        private int currentPage = 0;
+        private int previousTotal = 0;
+        private boolean loading = true;
+
+        public EndlessScrollListener() {
+        }
+        public EndlessScrollListener(int visibleThreshold) {
+            this.visibleThreshold = visibleThreshold;
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem,
+                             int visibleItemCount, int totalItemCount) {
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                    currentPage++;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                // I load the next page of gigs using a background task,
+                // but you can call any function here.
+                Log.d("lastItemScrolled", "true");
+                try{
+                    HTTPRestfulUtilizerExtender_loadmore b = new HTTPRestfulUtilizerExtender_loadmore(getActivity(),nextURL,"POST");
+                    b.doExecution();
+                }catch(Exception e){
+
+                }
+                loading = true;
+            }
+        }
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        }
+    }
+
 
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
 
@@ -179,6 +224,70 @@ public class F1_Wall extends Fragment {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 arrayCSchedule.clear();
+                try{
+                    outputSchedulesJson = getOutputJsonObject();
+
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
+                    JSONObject tmp_ith;
+                    nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i<results.length() ;i++){
+                        Schedule s = new Schedule();
+                        tmp_ith = results.getJSONObject(i);
+                        s.setId(tmp_ith.getInt("id"));
+                        s.setTitle(tmp_ith.getString("title"));
+                        s.setStarttime(tmp_ith.getString("start_time"));
+                        s.setEndtime(tmp_ith.getString("end_time"));
+                        s.setMemo(tmp_ith.getString("memo"));
+                        s.setUploaded_username(tmp_ith.getString("user_name"));
+                        s.setUploaded_user_id(tmp_ith.getInt("user_id"));
+                        s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
+                        s.setFollow_count((tmp_ith.getInt("count_follow")));
+                        s.setLike_count((tmp_ith.getInt("count_like")));
+
+                        Concise_Schedule cs = new Concise_Schedule(s);
+                        cs.setIsLike((tmp_ith.getInt("like")==1)?true:false);
+                        cs.setIsFollow((tmp_ith.getInt("follow")==1)?true:false);
+
+                        arrayCSchedule.add(cs);
+                    }
+                    concise_schedule_adapter.notifyDataSetChanged();
+                }catch(Exception e){
+
+                }
+
+            }
+        }
+    }
+
+    class HTTPRestfulUtilizerExtender_loadmore extends HTTPRestfulUtilizer {
+
+        // Constructor for GET
+        public HTTPRestfulUtilizerExtender_loadmore(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(),getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
                 try{
                     outputSchedulesJson = getOutputJsonObject();
 
