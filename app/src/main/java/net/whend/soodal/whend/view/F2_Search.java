@@ -249,8 +249,14 @@ public class F2_Search extends Fragment {
 
                         h.setId(tmp_ith.getInt("id"));
                         h.setTitle(tmp_ith.getString("title"));
-                        h.setPhoto((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
                         h.setFollower_count(tmp_ith.getInt("follower_count"));
+                        h.setPhoto((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
+                        h.setContent(tmp_ith.getString("content"));
+                        h.setCount_schedule(tmp_ith.getInt("count_schedule"));
+                        h.setCount_upcoming_schedule(tmp_ith.getInt("count_upcoming_schedule"));
+                        h.setIs_Follow(tmp_ith.getInt("is_follow")==1?true:false);
+
+
                         Grid_Search_Schedule gs = new Grid_Search_Schedule(h);
                         arrayGSchedule.add(gs);
                     }

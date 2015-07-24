@@ -51,6 +51,9 @@ public class A7_SpecificHashTagActivity extends Activity {
         count_upcoming_schedule = intent.getIntExtra("count_upcoming_schedule",0);
         TextView title_view=(TextView)findViewById(R.id.title);
         TextView follower_count_view = (TextView)findViewById(R.id.follower_count);
+        TextView schedule_count_view = (TextView)findViewById(R.id.schedule_count);
+        TextView uploaded_schedule_count_view = (TextView)findViewById(R.id.comming_count);
+
         ImageView title_photo=(ImageView)findViewById(R.id.photo);
 
         if(!photo.equals("null")) {
@@ -62,7 +65,8 @@ public class A7_SpecificHashTagActivity extends Activity {
 
         title_view.setText("#" +title);
         follower_count_view.setText(follower_count+"");
-
+        schedule_count_view.setText(count_schedule+"");
+        uploaded_schedule_count_view.setText(count_upcoming_schedule+"");
         adapter = new Concise_Schedule_Adapter(this, R.layout.item_concise_schedule, CSchedule_list);
         listview = (ListView) findViewById(R.id.listview_schedule);
         listview.setAdapter(adapter);
