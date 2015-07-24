@@ -150,7 +150,7 @@ public class A6_WriteCommentActivity extends Activity {
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
-                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
+                    for(int i=0; i<results.length() ;i++){
                         Comment s = new Comment();
                         tmp_ith = results.getJSONObject(i);
                         s.setContents(tmp_ith.getString("content"));

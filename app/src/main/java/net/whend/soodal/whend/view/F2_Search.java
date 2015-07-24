@@ -243,7 +243,7 @@ public class F2_Search extends Fragment {
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
-                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
+                    for(int i=0; i<results.length() ;i++){
                         HashTag h = new HashTag();
                         tmp_ith = results.getJSONObject(i);
 

@@ -119,7 +119,8 @@ public class F2_1_2_SearchHashtag extends Fragment {
                 intent.putExtra("title",SHashtag_list.get(position).getHashTag().getTitle());
                 intent.putExtra("follower_count",SHashtag_list.get(position).getHashTag().getFollower_count());
                 intent.putExtra("photo",SHashtag_list.get(position).getHashTag().getPhoto());
-
+                intent.putExtra("count_schedule",SHashtag_list.get(position).getHashTag().getCount_schedule());
+                intent.putExtra("count_upcoming_schedule",SHashtag_list.get(position).getHashTag().getCount_upcoming_schedule());
                 startActivity(intent);
             }
         });
@@ -161,7 +162,7 @@ public class F2_1_2_SearchHashtag extends Fragment {
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
-                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
+                    for (int i=0; i<results.length() ;i++){
                         HashTag h = new HashTag();
 
                         tmp_ith = results.getJSONObject(i);

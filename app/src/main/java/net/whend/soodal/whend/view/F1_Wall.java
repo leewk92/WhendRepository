@@ -178,14 +178,14 @@ public class F1_Wall extends Fragment {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+                arrayCSchedule.clear();
                 try{
                     outputSchedulesJson = getOutputJsonObject();
 
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
-                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
+                    for(int i=0; i<results.length() ;i++){
                         Schedule s = new Schedule();
                         tmp_ith = results.getJSONObject(i);
                         s.setId(tmp_ith.getInt("id"));

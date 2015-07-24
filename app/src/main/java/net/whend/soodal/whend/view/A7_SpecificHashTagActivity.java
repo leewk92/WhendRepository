@@ -33,7 +33,7 @@ public class A7_SpecificHashTagActivity extends Activity {
     ListView listview;
     private static JSONObject outputSchedulesJson;
     private Concise_Schedule_Adapter adapter;
-    int id;
+    int id,count_schedule,count_upcoming_schedule;
     private String title, photo;
     private int follower_count;
     static String nextURL;
@@ -45,9 +45,10 @@ public class A7_SpecificHashTagActivity extends Activity {
         Intent intent = new Intent(this.getIntent());
         id = intent.getIntExtra("id", 0);                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
         title = intent.getStringExtra("title");
-        follower_count = intent.getIntExtra("follower_count",0);
+        follower_count = intent.getIntExtra("follower_count", 0);
         photo = intent.getStringExtra("photo");
-
+        count_schedule = intent.getIntExtra("count_schedule",0);
+        count_upcoming_schedule = intent.getIntExtra("count_upcoming_schedule",0);
         TextView title_view=(TextView)findViewById(R.id.title);
         TextView follower_count_view = (TextView)findViewById(R.id.follower_count);
         ImageView title_photo=(ImageView)findViewById(R.id.photo);
@@ -109,7 +110,7 @@ public class A7_SpecificHashTagActivity extends Activity {
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
-                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
+                    for(int i=0; i< results.length() ;i++){
                         Schedule s = new Schedule();
                         tmp_ith = results.getJSONObject(i);
                         s.setId(tmp_ith.getInt("id"));

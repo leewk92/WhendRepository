@@ -91,7 +91,7 @@ public class A5_WhoFollowsScheduleActivity extends Activity {
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
-                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
+                    for(int i=0; i<results.length() ;i++){
                         tmp_ith = results.getJSONObject(i);
                         User u = new User();
                         u.setId(tmp_ith.getInt("user_id"));

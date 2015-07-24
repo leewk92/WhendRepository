@@ -143,7 +143,7 @@ public class F5_2_MyLikeSchedules extends Fragment {
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
-                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
+                    for(int i=0; i<results.length() ;i++){
                         Schedule s = new Schedule();
                         tmp_ith = results.getJSONObject(i);
                         s.setId(tmp_ith.getInt("id"));

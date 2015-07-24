@@ -157,7 +157,7 @@ public class F2_1_3_SearchUser extends Fragment {
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
-                    for(int i=0; i<outputSchedulesJson.getInt("count") ;i++){
+                    for(int i=0; i<results.length() ;i++){
                         User u = new User();
                         tmp_ith = results.getJSONObject(i);
                         u.setId(tmp_ith.getInt("user_id"));
