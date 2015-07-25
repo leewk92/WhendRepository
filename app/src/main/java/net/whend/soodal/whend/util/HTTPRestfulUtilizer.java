@@ -1,6 +1,7 @@
 package net.whend.soodal.whend.util;
 
 import android.content.Context;
+import android.content.Entity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +12,15 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,7 +43,7 @@ public class HTTPRestfulUtilizer {
     private String token;
     private Context mContext;
     public HttpAsyncTask task;
-
+    private String photo=null;
     public String getToken() {
         return token;
     }
@@ -128,10 +135,20 @@ public class HTTPRestfulUtilizer {
             // json = mapper.writeValueAsString(person);
 
             // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json,"UTF-8");
+           // StringEntity se = new StringEntity(json,"UTF-8");
+
+            MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
+
+            multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+            // multipartEntity.addBinaryBody("someName", file, ContentType.create("image/jpeg"), file.getName());
+            multipartEntity.addPart("", new StringBody(json, ContentType.TEXT_PLAIN));
+
 
             // 6. set httpPost Entity
-            httpPut.setEntity(se);
+            //httpPut.setEntity(se);
+
+            httpPut.setEntity(multipartEntity.build());
 
             // 7. Set some headers to inform server about the type of the content
             httpPut.setHeader("Accept", "application/json;charset=utf-8");
@@ -206,10 +223,17 @@ public class HTTPRestfulUtilizer {
             // json = mapper.writeValueAsString(person);
 
             // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json,"UTF-8");
+            //StringEntity se = new StringEntity(json,"UTF-8");
+            MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 
+            multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+            // multipartEntity.addBinaryBody("someName", file, ContentType.create("image/jpeg"), file.getName());
+            //multipartEntity.addPart("content", json);
+            multipartEntity.addTextBody("content",json);
             // 6. set httpPost Entity
-            httpPost.setEntity(se);
+            //httpPost.setEntity(se);
+            httpPost.setEntity(multipartEntity.build());
 
             // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json;charset=utf-8");
