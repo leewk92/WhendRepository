@@ -203,6 +203,12 @@
             android:src="@drawable/exo"
             android:scaleType="centerCrop" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="#a15a5956"
+            android:layout_marginTop="5dp" />
+
         <TextView
             android:id="@+id/memo"
             android:layout_width="match_parent"
