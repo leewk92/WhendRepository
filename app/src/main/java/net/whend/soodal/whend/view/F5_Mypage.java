@@ -177,8 +177,8 @@ public class F5_Mypage extends Fragment {
                 F5_1_MyTimeline.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("관심"),
                 F5_2_MyLikeSchedules.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("Fragment D"),
-                F4_Notify.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("분석"),
+                F5_3_Analysis.class, null);
 
 
         String url = "http://119.81.176.245/userinfos/";
@@ -251,7 +251,7 @@ public class F5_Mypage extends Fragment {
 
         @Override
         public void doExecution(){
-            task.execute(getUrl(),getHTTPRestType());
+            task.execute(getUrl(), getHTTPRestType());
         }
         class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
             @Override
@@ -348,6 +348,11 @@ public class F5_Mypage extends Fragment {
 
                     ImageAbsolutePath = createImageFromBitmap(photo);
 
+
+                    //이미지를보내려다 포기
+                    //HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(getActivity(),rootView,"url","POST","ImageUri");
+                    //a.doExecution();
+
                 }
             }else if (requestCode == TAKE_FROM_CAMERA) {
                 Bundle extras2 = data.getExtras();
@@ -359,6 +364,54 @@ public class F5_Mypage extends Fragment {
                     ImageAbsolutePath = createImageFromBitmap(photo);
                 }
             }
+        }
+    }
+
+    class HTTPRestfulUtilizerExtender2 extends HTTPRestfulUtilizer {
+
+
+        private View v;
+        //Constructor
+        HTTPRestfulUtilizerExtender2(Context mContext,View rootView, String url, String HTTPRestType, String ImageUri){
+            this.v = rootView;
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+        }
+
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        private class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask {
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+
+
+                if(getPhoto()==null){
+                    setOutputString(POST(url, getInputBundle()));
+                }else {
+
+                    setOutputString(POST_withImage(url, getInputBundle()));
+                }
+
+
+                return getOutputString();
+
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+
+            }
+
         }
     }
 
