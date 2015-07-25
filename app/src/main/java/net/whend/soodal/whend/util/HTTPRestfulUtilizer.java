@@ -2,8 +2,11 @@ package net.whend.soodal.whend.util;
 
 import android.content.Context;
 import android.content.Entity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,22 +15,17 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 
 /**
  * Created by wonkyung on 2015-07-13.
@@ -135,20 +133,20 @@ public class HTTPRestfulUtilizer {
             // json = mapper.writeValueAsString(person);
 
             // 5. set json to StringEntity
-           // StringEntity se = new StringEntity(json,"UTF-8");
+            StringEntity se = new StringEntity(json,"UTF-8");
 
-            MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
+           // MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 
-            multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+           // multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
             // multipartEntity.addBinaryBody("someName", file, ContentType.create("image/jpeg"), file.getName());
-            multipartEntity.addPart("", new StringBody(json, ContentType.TEXT_PLAIN));
+           // multipartEntity.addPart("", new StringBody(json, ContentType.TEXT_PLAIN));
 
 
             // 6. set httpPost Entity
-            //httpPut.setEntity(se);
+            httpPut.setEntity(se);
 
-            httpPut.setEntity(multipartEntity.build());
+           // httpPut.setEntity(multipartEntity.build());
 
             // 7. Set some headers to inform server about the type of the content
             httpPut.setHeader("Accept", "application/json;charset=utf-8");
@@ -223,17 +221,17 @@ public class HTTPRestfulUtilizer {
             // json = mapper.writeValueAsString(person);
 
             // 5. set json to StringEntity
-            //StringEntity se = new StringEntity(json,"UTF-8");
-            MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
+            StringEntity se = new StringEntity(json,"UTF-8");
+            //MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 
-            multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+            //multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
             // multipartEntity.addBinaryBody("someName", file, ContentType.create("image/jpeg"), file.getName());
             //multipartEntity.addPart("content", json);
-            multipartEntity.addTextBody("content",json);
+            //multipartEntity.addTextBody("content",json);
             // 6. set httpPost Entity
-            //httpPost.setEntity(se);
-            httpPost.setEntity(multipartEntity.build());
+            httpPost.setEntity(se);
+            //httpPost.setEntity(multipartEntity.build());
 
             // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json;charset=utf-8");
@@ -398,6 +396,98 @@ public class HTTPRestfulUtilizer {
         }
     }
 
+// 포스트 위드 사진
+
+    public String POST_withImage(String url, Bundle bundle){
+        InputStream inputStream = null;
+        String result = "";
+        try {
+
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost;
+
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject jsonObject = new JSONObject();
+            for( String key : bundle.keySet()){
+                jsonObject.accumulate(key, bundle.get(key));
+            }
+
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
+            Log.d("firstjson",json);
+            json = json.replace("\"[", "[");
+            json = json.replace("]\"", "]");
+            Log.d("secondjson", json);
+            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
+
+
+
+            // 5. set json to StringEntity
+            //StringEntity se = new StringEntity(json,"UTF-8");
+            //MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
+
+            //multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+            // multipartEntity.addBinaryBody("someName", file, ContentType.create("image/jpeg"), file.getName());
+            //multipartEntity.addPart("content", json);
+            //multipartEntity.addTextBody("content",json);
+            // 6. set httpPost Entity
+            httpPost = returnPostFileIncludeImage(photo,url,json);
+           // httpPost.setEntity(se);
+            //httpPost.setEntity(multipartEntity.build());
+
+            // 7. Set some headers to inform server about the type of the content
+    //        httpPost.setHeader("Accept", "application/json;charset=utf-8");
+    //        httpPost.setHeader("Content-type", "application/json");
+    //        AppPrefs appPrefs = new AppPrefs(mContext);
+    //        token = appPrefs.getToken();
+    //        if( token != ""){
+    //            httpPost.setHeader("Authorization","Token "+token);
+    //        }
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if(inputStream != null) {
+                result = convertInputStreamToString(inputStream);
+                Log.d("HTTP POST ResultStream", result);
+            }else {
+                result = "Did not work!";
+                Log.d("HTTP POST ResultStream", result);
+            }
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        outputString = result;
+        try {
+            outputJsonObject = new JSONObject(outputString);
+        }catch (Exception e){
+            outputJsonObject = new JSONObject();
+        }
+
+        try {
+            outputJsonArray = new JSONArray(outputString);
+
+        }catch (Exception e){
+            outputJsonArray = new JSONArray();
+        }
+        return result;
+    }
+
+
+
     public String getUrl() {
         return url;
     }
@@ -444,4 +534,62 @@ public class HTTPRestfulUtilizer {
     public void setOutputString(String outputString) {
         this.outputString = outputString;
     }
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+
+
+
+    public HttpPost returnPostFileIncludeImage(String filePath, String postUrl, String json)
+            throws Exception {
+
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "xxxxxxxx";
+        // Having HttpClient to respond to both HTTP and HTTPS url connection by accepting the urls along with keystore / trust certificates
+
+        Bitmap bm = BitmapFactory.decodeFile(filePath);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 25, baos); // bm is the bitmap object
+        byte[] b = baos.toByteArray();
+
+        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+
+        String str = twoHyphens + boundary + lineEnd;
+        String str2 = "Content-Disposition: form-data; name=\"json\"";
+        String str3 = "Content-Type: application/json";
+        String str4 = "Content-Disposition: form-data; name=\"photo\"";
+        String str5 = "Content-Type: image/jpeg";
+        String str6 = twoHyphens + boundary + twoHyphens;
+
+
+        String StrTotal = str + str2 + "\r\n" + str3 + "\r\n" + "\r\n" + json + "\r\n" + str
+                + str4 + "\r\n" + str5 + "\r\n" + "\r\n" + encodedImage + "\r\n" + str6;
+
+        //System.out.print("Multipart request string is "+StrTotal);
+
+        HttpPost httpPost = new HttpPost(postUrl);
+
+        httpPost.setHeader("Accept", "application/json;charset=utf-8");
+        httpPost.setHeader("Content-type", "multipart/form-data;boundary=" + boundary);
+        httpPost.setHeader("Content-Transfer-Encoding", "base64");
+        AppPrefs appPrefs = new AppPrefs(mContext);
+        String token = appPrefs.getToken();
+        if (token != "") {
+            httpPost.setHeader("Authorization", "Token " + token);
+        }
+// System.out.println("Sending Post proxy request: " + post);
+
+        StringEntity se = new StringEntity(StrTotal);
+        se.setContentEncoding("UTF-8");
+        httpPost.setEntity(se);
+        return httpPost;
+    }
+
 }

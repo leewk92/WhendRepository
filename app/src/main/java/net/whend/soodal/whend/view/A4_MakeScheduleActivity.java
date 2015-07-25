@@ -43,7 +43,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
     private int REQ_CODE_SELECT_IMAGE = 100;
     private Uri mImageCaptureUri;
-    private String ImageAbsolutePath;
+    static private String ImageAbsolutePath=null;
     private String[] hashtags_title;
     private ArrayList<Integer> hashtags_id = new ArrayList<Integer>();
     private ImageView schedule_photo;
@@ -450,11 +450,12 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         private EditText dateview;
         private EditText timeview;
         // Constructor for POST
-        public HTTPRestfulUtilizerExtender(Context mContext, String url, String HTTPRestType, Bundle inputBundle) {
+        public HTTPRestfulUtilizerExtender(Context mContext, String url, String HTTPRestType, Bundle inputBundle, String photo) {
             setmContext(mContext);
             setUrl(url);
             setHTTPRestType(HTTPRestType);
             setInputBundle(inputBundle);
+            setPhoto(photo);
             task = new HttpAsyncTaskExtenders();
             Log.d("HTTP Constructor url", url);
 
@@ -476,7 +477,13 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             protected String doInBackground(String... strings) {
                 String url = strings[0];
                 String sHTTPRestType = strings[1];
-                setOutputString(POST(url, getInputBundle()));
+
+                if(getPhoto()==null){
+                    setOutputString(POST(url, getInputBundle()));
+                }else {
+                    setOutputString(POST_withImage(url, getInputBundle()));
+                }
+
 
                 return getOutputString();
 
@@ -651,7 +658,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                         dtf = new DateTimeFormatter(cal.getTimeInMillis());
                         inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
                         String url = "http://119.81.176.245/schedules/";
-                        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest);
+                        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest, ImageAbsolutePath);
                         a.doExecution();
 
                     }
