@@ -22,10 +22,17 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Created by wonkyung on 2015-07-13.
@@ -204,6 +211,16 @@ public class HTTPRestfulUtilizer {
 
             String json = "";
 
+            if(photo != null){
+
+                Bitmap bm = BitmapFactory.decodeFile(photo);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.JPEG, 25, baos); // bm is the bitmap object
+                byte[] b = baos.toByteArray();
+
+                String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+                inputBundle.putCharSequence("photo",encodedImage);
+            }
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             for( String key : bundle.keySet()){
@@ -562,14 +579,22 @@ public class HTTPRestfulUtilizer {
 
 
         String str = twoHyphens + boundary + lineEnd;
-        String str2 = "Content-Disposition: form-data; name=\"json\"";
+        String str2 = "Content-Disposition: form-data; name=\"title\"";
         String str3 = "Content-Type: application/json";
         String str4 = "Content-Disposition: form-data; name=\"photo\"";
-        String str5 = "Content-Type: image/jpeg";
+        String str5 = "Content-Type: image/jpg\r\nContent-Tranfer-Encoding: base64";
         String str6 = twoHyphens + boundary + twoHyphens;
+        String str7 = "";
+        for( String key : inputBundle.keySet()){
+            str7 = str7+ "\r\n--" + boundary + "\r\n";
+            str7 = str7+ "Content-Type: text;charset=utf-8";
+            str7 = str7 + "Content-Disposition: form-data; name=\"" + key + "\"\r\n\r\n" + inputBundle.get(key);
 
+        }
 
-        String StrTotal = str + str2 + "\r\n" + str3 + "\r\n" + "\r\n" + json + "\r\n" + str
+//        String StrTotal = str + str2 + "\r\n" + str3 + "\r\n" + "\r\n" + json + "\r\n" + str
+//                + str4 + "\r\n" + str5 + "\r\n" + "\r\n" + encodedImage + "\r\n" + str6;
+        String StrTotal = str  +str7 + "\r\n" + str
                 + str4 + "\r\n" + str5 + "\r\n" + "\r\n" + encodedImage + "\r\n" + str6;
 
         //System.out.print("Multipart request string is "+StrTotal);
@@ -578,7 +603,7 @@ public class HTTPRestfulUtilizer {
 
         httpPost.setHeader("Accept", "application/json;charset=utf-8");
         httpPost.setHeader("Content-type", "multipart/form-data;boundary=" + boundary);
-        httpPost.setHeader("Content-Transfer-Encoding", "base64");
+//        httpPost.setHeader("Content-Transfer-Encoding", "base64");
         AppPrefs appPrefs = new AppPrefs(mContext);
         String token = appPrefs.getToken();
         if (token != "") {
@@ -589,7 +614,86 @@ public class HTTPRestfulUtilizer {
         StringEntity se = new StringEntity(StrTotal);
         se.setContentEncoding("UTF-8");
         httpPost.setEntity(se);
+        Log.d("postData", StrTotal);
         return httpPost;
     }
 
+    public String executeClient(String filePath, String postURL, Bundle inputBundle) {
+        try {
+            URL url = new URL(postURL);
+            String boundary = "SpecificString";
+            URLConnection con = url.openConnection();
+            con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+            con.setDoOutput(true);
+
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+
+            for( String key : inputBundle.keySet()){
+                wr.writeBytes("\r\n--" + boundary + "\r\n");
+                wr.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"\r\n\r\n" + inputBundle.get(key));
+
+            }
+			/*
+			wr.writeBytes("\r\n--" + boundary + "\r\n");
+			wr.writeBytes("Content-Disposition: form-data; name=\"msg\"\r\n\r\n" + commentPutEdit.getText().toString());
+			wr.writeBytes("\r\n--" + boundary + "\r\n");
+			wr.writeBytes("Content-Disposition: form-data; name=\"suid\"\r\n\r\n" + clickSuid);
+			wr.writeBytes("\r\n--" + boundary + "\r\n");
+			wr.writeBytes("Content-Disposition: form-data; name=\"uuid\"\r\n\r\n" + uuid);*/
+
+            wr.writeBytes("\r\n--" + boundary + "\r\n");
+            wr.writeBytes("Content-Disposition: form-data; name=\"photo\"; filename=\"image.jpg\"\r\n");
+            wr.writeBytes("Content-Type: application/octet-stream\r\n\r\n");
+
+            Log.d("upload path", filePath);
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+            int bytesAvailable = fileInputStream.available();
+            int maxBufferSize = 1024;
+            int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+            byte[] buffer = new byte[bufferSize];
+
+            int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            while (bytesRead > 0)
+            {
+                // Upload file part(s)
+                DataOutputStream dataWrite = new DataOutputStream(con.getOutputStream());
+                dataWrite.write(buffer, 0, bufferSize);
+                bytesAvailable = fileInputStream.available();
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            }
+            fileInputStream.close();
+
+            wr.writeBytes("\r\n--" + boundary + "--\r\n");
+            Log.d("inputData",wr.toString());
+            wr.flush();
+            DataInputStream is = new DataInputStream(con.getInputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            Log.d("HTTP Post ResultStream" , sb.toString());
+            outputString = sb.toString();
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        return null;
+    }
+
 }
+
+
+
+

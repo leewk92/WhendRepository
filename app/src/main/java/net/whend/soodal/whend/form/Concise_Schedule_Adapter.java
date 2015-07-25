@@ -224,7 +224,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.exporttocalendar);
 
 
-        if(CSchedule_list.get(position).getPhoto_dir_fromweb()!=null) {
+        if(CSchedule_list.get(position).getPhoto_dir_fromweb()!="") {
 
 
             // textview의 배경으로 그림을 넣기위한 원경의 사투 but 안쓰임

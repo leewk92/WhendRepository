@@ -478,11 +478,9 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                 String url = strings[0];
                 String sHTTPRestType = strings[1];
 
-                if(getPhoto()==null){
-                    setOutputString(POST(url, getInputBundle()));
-                }else {
-                    setOutputString(POST_withImage(url, getInputBundle()));
-                }
+
+                setOutputString(POST(url, getInputBundle()));
+
 
 
                 return getOutputString();
