@@ -423,8 +423,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void parseMemo(String memo){
-        String tmpArray[] = memo.split("#");
+    public void parseMemo(String memo_text){
+        String tmpArray[] = memo_text.split("#");
         if(tmpArray != null) {
 
             hashtags_title = new String[tmpArray.length - 1];
@@ -433,6 +433,29 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                 hashtags_title[i - 1] = tmpArray[i].split(" ")[0];
             }
             searchHashtags();
+        }else{      //hash tag가 없을 때
+
+            inputBundle_forRequest.putCharSequence("title",title.getText());
+            inputBundle_forRequest.putCharSequence("memo", memo.getText());
+            /* if(hashtags_id.size() !=0){
+                inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
+            }*/
+            Calendar cal = Calendar.getInstance();
+            cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start);
+
+            Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
+            Log.d("getTimeinMillis",cal.getTimeInMillis()+"");
+
+            DateTimeFormatter dtf = new DateTimeFormatter(cal.getTimeInMillis());
+            inputBundle_forRequest.putCharSequence("start_time", dtf.getOutputString());
+
+            Log.d("getTimeinString",dtf.getOutputString());
+            cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end);
+            dtf = new DateTimeFormatter(cal.getTimeInMillis());
+            inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
+            String url = "http://119.81.176.245/schedules/";
+            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this,url,"POST",inputBundle_forRequest, ImageAbsolutePath);
+            a.doExecution();
         }
     }
     public void searchHashtags(){

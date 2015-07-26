@@ -56,7 +56,7 @@ public class A7_SpecificHashTagActivity extends Activity {
 
         ImageView title_photo=(ImageView)findViewById(R.id.photo);
 
-        if(!photo.equals("null")) {
+        if(!photo.equals("")) {
 
             Picasso.with(this).load(photo).into(title_photo);
             title_view.setTextColor(Color.parseColor("#FFFFFF"));
@@ -123,7 +123,7 @@ public class A7_SpecificHashTagActivity extends Activity {
                         s.setEndtime(tmp_ith.getString("end_time"));
                         s.setMemo(tmp_ith.getString("memo"));
                         s.setUploaded_username(tmp_ith.getString("user_name"));
-                        s.setPhoto_dir_fromweb(tmp_ith.getString("photo"));
+                        s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
 

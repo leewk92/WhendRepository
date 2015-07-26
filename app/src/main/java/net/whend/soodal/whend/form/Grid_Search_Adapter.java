@@ -79,7 +79,7 @@ public class Grid_Search_Adapter extends ArrayAdapter<Grid_Search_Schedule> {
         Log.d("whatthe", "#" + GS_Schedule_list.get(position).getTag().getTitle());
         ((TextView) v.findViewById(R.id.gridsearch_text)).setText("#" + GS_Schedule_list.get(position).getTag().getTitle());
 
-        if(GS_Schedule_list.get(position).getTag().getPhoto()!="null") {
+        if(GS_Schedule_list.get(position).getTag().getPhoto()!="") {
             Log.d("photoDir",GS_Schedule_list.get(position).getTag().getPhoto());
             Picasso.with(context).load(GS_Schedule_list.get(position).getTag().getPhoto()).into((ImageView)v.findViewById(R.id.gridsearch_image));
 

@@ -141,9 +141,9 @@ public class Specific_Schedule_Adapter extends Concise_Schedule_Adapter{
         else
             ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.exporttocalendar);
 
-
-        Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into((ImageView) v.findViewById(R.id.memo_photo));
-
+        if(CSchedule_list.get(position).getPhoto_dir_fromweb()!="") {
+            Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into((ImageView) v.findViewById(R.id.memo_photo));
+        }
     }
 
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {

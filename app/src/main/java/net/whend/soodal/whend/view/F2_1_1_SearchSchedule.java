@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -52,6 +53,15 @@ public class F2_1_1_SearchSchedule extends Fragment {
     static String nextURL;
     public F2_1_1_SearchSchedule() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        arrayCSchedule.clear();
+        String url =  "http://119.81.176.245/schedules/all/?search=";
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
+        a.doExecution();
     }
 
 
@@ -108,6 +118,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        arrayCSchedule.clear();
         // View 할당
         rootview = inflater.inflate(R.layout.f2_1_1_searchschedule_layout, container, false);
         listview = (ListView)rootview.findViewById(R.id.listview_searchschedule);
@@ -125,7 +136,50 @@ public class F2_1_1_SearchSchedule extends Fragment {
                 startActivity(intent);
             }
         });
+        listview.setOnScrollListener(new EndlessScrollListener());
         return rootview;
+    }
+
+    // 끝없이 로딩 하는거
+    public class EndlessScrollListener implements AbsListView.OnScrollListener {
+
+        private int visibleThreshold = 2;
+        private int currentPage = 0;
+        private int previousTotal = 0;
+        private boolean loading = true;
+
+        public EndlessScrollListener() {
+        }
+        public EndlessScrollListener(int visibleThreshold) {
+            this.visibleThreshold = visibleThreshold;
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem,
+                             int visibleItemCount, int totalItemCount) {
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                    currentPage++;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                // I load the next page of gigs using a background task,
+                // but you can call any function here.
+                Log.d("lastItemScrolled", "true");
+                try{
+                    HTTPRestfulUtilizerExtender_loadmore b = new HTTPRestfulUtilizerExtender_loadmore(getActivity(),nextURL,"POST");
+                    b.doExecution();
+                }catch(Exception e){
+
+                }
+                loading = true;
+            }
+        }
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        }
     }
 
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
@@ -172,7 +226,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
                         s.setMemo(tmp_ith.getString("memo"));
                         s.setUploaded_username(tmp_ith.getString("user_name"));
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
-                        s.setPhoto_dir_fromweb(tmp_ith.getString("photo"));
+                        s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         Concise_Schedule cs = new Concise_Schedule(s);
                         arrayCSchedule.add(cs);
                     }
@@ -184,4 +238,61 @@ public class F2_1_1_SearchSchedule extends Fragment {
             }
         }
     }
+    class HTTPRestfulUtilizerExtender_loadmore extends HTTPRestfulUtilizer {
+
+        // Constructor for GET
+        public HTTPRestfulUtilizerExtender_loadmore(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(),getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try{
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
+                    JSONObject tmp_ith;
+                    nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i<results.length() ;i++){
+                        Schedule s = new Schedule();
+                        tmp_ith = results.getJSONObject(i);
+                        s.setId(tmp_ith.getInt("id"));
+                        s.setTitle(tmp_ith.getString("title"));
+                        s.setStarttime(tmp_ith.getString("start_time"));
+                        s.setEndtime(tmp_ith.getString("end_time"));
+                        s.setMemo(tmp_ith.getString("memo"));
+                        s.setUploaded_username(tmp_ith.getString("user_name"));
+                        s.setUploaded_user_id(tmp_ith.getInt("user_id"));
+                        s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        Concise_Schedule cs = new Concise_Schedule(s);
+                        arrayCSchedule.add(cs);
+                    }
+                    searchSchedule_adapter.notifyDataSetChanged();
+                }catch(Exception e){
+
+                }
+
+            }
+        }
+    }
+
 }

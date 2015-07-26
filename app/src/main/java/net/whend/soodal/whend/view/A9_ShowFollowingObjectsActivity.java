@@ -52,7 +52,7 @@ public class A9_ShowFollowingObjectsActivity extends AppCompatActivity {
         inputBundle.putInt("id", user_id);
         mTabHost.addTab(mTabHost.newTabSpec("followingHashtags").setIndicator("태그"),
                 F9_ShowFollowingHashTag.class, inputBundle);
-        mTabHost.addTab(mTabHost.newTabSpec("searchhashtag").setIndicator("유"),
-                F2_1_3_SearchUser.class, inputBundle);
+        mTabHost.addTab(mTabHost.newTabSpec("followingUsers").setIndicator("유저"),
+                F10_ShowFollowingUser.class, inputBundle);
     }
 }

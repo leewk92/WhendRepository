@@ -59,7 +59,10 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.item_concise_schedule, null);
         }
-        AdjustDataToLayout(v,position);
+        try{
+            AdjustDataToLayout(v,position);
+        }catch(Exception e){}
+
         // 리스너 함수들
         View user_clickableLayout = (View)v.findViewById(R.id.user_clickableLayout);
         //View comment_writer = (View)v.findViewById(R.id.comment_writer);

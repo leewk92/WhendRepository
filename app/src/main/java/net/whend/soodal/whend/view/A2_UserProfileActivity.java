@@ -107,7 +107,7 @@ public class A2_UserProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(A2_UserProfileActivity.this, A9_ShowFollowingObjectsActivity.class);
-                intent.putExtra("url", u.getId());
+                intent.putExtra("id", u.getId());
                 startActivity(intent);
             }
         });

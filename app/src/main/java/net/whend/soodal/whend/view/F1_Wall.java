@@ -85,7 +85,7 @@ public class F1_Wall extends Fragment {
                              Bundle savedInstanceState) {
 
         // 로고 사이즈 조정 및 로고 삽입
-
+        arrayCSchedule.clear();
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.whend_actionbar);
         Toolbar toolbar = (Toolbar) container.findViewById(R.id.toolbar);
 
@@ -133,6 +133,8 @@ public class F1_Wall extends Fragment {
         // View 할당
         rootview = inflater.inflate(R.layout.f1_wall_layout, container, false);
         listview = (ListView)rootview.findViewById(R.id.listview_concise_schedule);
+        listview.setOnScrollListener(new EndlessScrollListener());
+
         concise_schedule_adapter = new Concise_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayCSchedule);
         listview.setAdapter(concise_schedule_adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -148,7 +150,7 @@ public class F1_Wall extends Fragment {
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
             }
         });
-        listview.setOnScrollListener(new EndlessScrollListener());
+
         return rootview;
     }
 
@@ -161,6 +163,7 @@ public class F1_Wall extends Fragment {
         private boolean loading = true;
 
         public EndlessScrollListener() {
+
         }
         public EndlessScrollListener(int visibleThreshold) {
             this.visibleThreshold = visibleThreshold;
@@ -169,6 +172,7 @@ public class F1_Wall extends Fragment {
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem,
                              int visibleItemCount, int totalItemCount) {
+
             if (loading) {
                 if (totalItemCount > previousTotal) {
                     loading = false;
@@ -230,7 +234,7 @@ public class F1_Wall extends Fragment {
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
-                    for(int i=0; i<results.length() ;i++){
+                    for(int i=0; i<results.length() ;i++) {
                         Schedule s = new Schedule();
                         tmp_ith = results.getJSONObject(i);
                         s.setId(tmp_ith.getInt("id"));
@@ -240,7 +244,7 @@ public class F1_Wall extends Fragment {
                         s.setMemo(tmp_ith.getString("memo"));
                         s.setUploaded_username(tmp_ith.getString("user_name"));
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
-                        s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length()-4)+".800x200.jpg");
+                        s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         Log.d("photo_dir",s.getPhoto_dir_fromweb());
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
@@ -305,7 +309,7 @@ public class F1_Wall extends Fragment {
                         s.setMemo(tmp_ith.getString("memo"));
                         s.setUploaded_username(tmp_ith.getString("user_name"));
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
-                        s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
+                        s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
 

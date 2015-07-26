@@ -2,9 +2,11 @@ package net.whend.soodal.whend.model.top;
 
 import android.graphics.Color;
 import android.nfc.Tag;
+import android.util.Log;
 
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.base.User;
+import net.whend.soodal.whend.util.DateTimeFormatter;
 
 import java.util.Random;
 
@@ -17,7 +19,7 @@ import java.util.Random;
 
 public class Notify_Schedule {
 
-
+/*
     final int         START_FOLLOWING=0, REQUEST_FOLLOWING=1;
     final int         ADD_SCHEDULE=2, LIKE_SCHEDULE=3, UPDATED_SCHEDULE=4, COMMENT_ON_SCHEDULE=5;
     final int         NEW_SCHEDULE_ON_TAG=6;
@@ -65,5 +67,83 @@ public class Notify_Schedule {
         };
 
     }
+*/
+    String actor_name, verb, description;
+    String timestamp;
+    String date,time;
+    long timestamp_ms;
 
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+        DateParse();
+    }
+
+    // Constructor
+    public Notify_Schedule(){
+
+    }
+
+    public String getActor_name() {
+        return actor_name;
+    }
+
+    public void setActor_name(String actor_name) {
+        this.actor_name = actor_name;
+    }
+
+    public String getVerb() {
+        return verb;
+    }
+
+    public void setVerb(String verb) {
+        this.verb = verb;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void DateParse(){
+
+        String tmpTimestamp = this.timestamp.substring(0,this.timestamp.length()-8)+'Z';
+        Log.d("tmpTimestamp",tmpTimestamp);
+
+        DateTimeFormatter df = new DateTimeFormatter(tmpTimestamp);
+        this.date = df.getDate();
+        this.time = df.getTime();
+        this.setTimestamp_ms(df.getDatetime_ms());
+
+    }
+
+    public long getTimestamp_ms() {
+        return timestamp_ms;
+    }
+
+    public void setTimestamp_ms(long timestamp_ms) {
+        this.timestamp_ms = timestamp_ms;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

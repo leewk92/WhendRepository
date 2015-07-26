@@ -21,29 +21,39 @@ import java.util.ArrayList;
  */
 public class Notify_Schedule_Adapter extends ArrayAdapter<Notify_Schedule> {
 
-        private ArrayList<Notify_Schedule> NT_Schedule_list;
-        private Context context;
+    private ArrayList<Notify_Schedule> NT_Schedule_list;
+    private Context context;
 
-        public Notify_Schedule_Adapter(Context context, int textViewResourceId, ArrayList<Notify_Schedule> lists){
-            super(context, textViewResourceId, lists);
-            this.NT_Schedule_list = lists;
-            this.context = context;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent){
-            View v = convertView;
-            if (v == null) {
-                LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = li.inflate(R.layout.item_notify_schedule, null);
-            }
-
-            Notify_Schedule notify_schedule = NT_Schedule_list.get(position);
-            TextView event_string = (TextView) v.findViewById(R.id.description_text);
-            event_string.setText(notify_schedule.getEvent_string());
-
-
-            return v;
-        }
+    public Notify_Schedule_Adapter(Context context, int textViewResourceId, ArrayList<Notify_Schedule> lists) {
+        super(context, textViewResourceId, lists);
+        this.NT_Schedule_list = lists;
+        this.context = context;
     }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View v = convertView;
+        if (v == null) {
+            LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            v = li.inflate(R.layout.item_notify_schedule, null);
+        }
+        Notify_Schedule notify_schedule = NT_Schedule_list.get(position);
+        TextView actor_name = (TextView) v.findViewById(R.id.actor_name);
+        TextView verb = (TextView) v.findViewById(R.id.verb);
+        TextView description = (TextView) v.findViewById(R.id.description);
+        //TextView datetime = (TextView)v.findViewById(R.id.datetime);
+        AdjustDataToLayout(v, position);
+
+
+        return v;
+    }
+
+
+    public void AdjustDataToLayout(View v, int position) {
+        ((TextView)v.findViewById(R.id.actor_name)).setText(NT_Schedule_list.get(position).getActor_name());
+        ((TextView)v.findViewById(R.id.verb)).setText(NT_Schedule_list.get(position).getVerb());
+        ((TextView)v.findViewById(R.id.description)).setText(NT_Schedule_list.get(position).getDescription());
+        //((TextView)v.findViewById(R.id.datetime)).setText(NT_Schedule_list.get(position).getDate() +NT_Schedule_list.get(position).getTime() );
+    }
+}
 

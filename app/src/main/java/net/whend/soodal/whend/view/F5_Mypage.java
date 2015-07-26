@@ -227,7 +227,7 @@ public class F5_Mypage extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getActivity(), A9_ShowFollowingObjectsActivity.class);
-                intent.putExtra("url", u.getId());
+                intent.putExtra("id", u.getId());
                 startActivity(intent);
             }
         });
@@ -350,7 +350,7 @@ public class F5_Mypage extends Fragment {
 
 
                     //이미지를보내려다 포기
-                    //HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(getActivity(),rootView,"url","POST","ImageUri");
+                    //HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(getActivity(),rootView,"url","POST","ImageAbsolutePath);
                     //a.doExecution();
 
                 }
@@ -366,13 +366,14 @@ public class F5_Mypage extends Fragment {
             }
         }
     }
-
+// 프로필 올리기
     class HTTPRestfulUtilizerExtender2 extends HTTPRestfulUtilizer {
 
 
         private View v;
         //Constructor
-        HTTPRestfulUtilizerExtender2(Context mContext,View rootView, String url, String HTTPRestType, String ImageUri){
+        HTTPRestfulUtilizerExtender2(Context mContext,View rootView, String url, String HTTPRestType, String photo){
+            this.setPhoto(photo);
             this.v = rootView;
             setmContext(mContext);
             setUrl(url);
@@ -393,13 +394,7 @@ public class F5_Mypage extends Fragment {
                 String url = strings[0];
                 String sHTTPRestType = strings[1];
 
-
-                if(getPhoto()==null){
-                    setOutputString(POST(url, getInputBundle()));
-                }else {
-
-                    setOutputString(POST_withImage(url, getInputBundle()));
-                }
+                setOutputString(POST(url, getInputBundle()));
 
 
                 return getOutputString();

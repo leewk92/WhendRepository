@@ -21,11 +21,11 @@ import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.SearchHashTag_Adapter;
-import net.whend.soodal.whend.form.SearchSchedule_Adapter;
+import net.whend.soodal.whend.form.SearchUser_Adapter;
 import net.whend.soodal.whend.model.base.HashTag;
-import net.whend.soodal.whend.model.base.Schedule;
-import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.model.base.User;
 import net.whend.soodal.whend.model.top.Search_HashTag;
+import net.whend.soodal.whend.model.top.Search_User;
 import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
@@ -37,35 +37,33 @@ import java.util.ArrayList;
 /**
  * Created by wonkyung on 2015-07-12.
  */
-public class F9_ShowFollowingHashTag extends Fragment {
+public class F10_ShowFollowingUser extends Fragment {
 
     private View rootview;
     private ListView listview;
     private EditText search_text;
-    private ArrayList<Search_HashTag> SHashtag_list = new ArrayList<Search_HashTag>();
-    private SearchHashTag_Adapter searchHashTag_adapter;
+    private ArrayList<Search_User> SUser_list = new ArrayList<Search_User>();
+    private SearchUser_Adapter searchUser_adapter;
     private static JSONObject outputSchedulesJson;
     static String nextURL;
     private int user_id;
-
-    public F9_ShowFollowingHashTag() {
+    public F10_ShowFollowingUser() {
         // Required empty public constructor
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        SHashtag_list.clear();
-        String url = "http://119.81.176.245/userinfos/"+user_id+"/following_hashtags/";
+        SUser_list.clear();
+        String url =  "http://119.81.176.245/userinfos/"+user_id+"/following_users/";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SHashtag_list.clear();
         Bundle inputBundle = getArguments();
         if(inputBundle==null){
             AppPrefs appPrefs = new AppPrefs(getActivity());
@@ -73,23 +71,22 @@ public class F9_ShowFollowingHashTag extends Fragment {
         }else{
             user_id = inputBundle.getInt("id");
         }
-
-        final String url = "http://119.81.176.245/userinfos/"+user_id+"/following_hashtags/";
+        SUser_list.clear();
+        final String url =  "http://119.81.176.245/userinfos/"+user_id+"/following_users/";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
         a.doExecution();
-
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        SHashtag_list.clear();
+        SUser_list.clear();
         // View 할당
-        rootview = inflater.inflate(R.layout.f2_1_2_searchhashtag_layout, container, false);
-        listview = (ListView)rootview.findViewById(R.id.listview_searchhashtag);
-        searchHashTag_adapter = new SearchHashTag_Adapter(getActivity(), R.layout.item_searchhashtag, SHashtag_list);
-        listview.setAdapter(searchHashTag_adapter);
+        rootview = inflater.inflate(R.layout.f2_1_3_searchuser_layout, container, false);
+        listview = (ListView)rootview.findViewById(R.id.listview_searchuser);
+        searchUser_adapter =  new SearchUser_Adapter(getActivity(), R.layout.item_searchuser, SUser_list);
+        listview.setAdapter(searchUser_adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -97,19 +94,16 @@ public class F9_ShowFollowingHashTag extends Fragment {
                                     int position, long arg3) {
                 // TODO Auto-generated method stub
 
-                Intent intent = new Intent(getActivity(), A7_SpecificHashTagActivity.class);
-                intent.putExtra("id",SHashtag_list.get(position).getHashTag().getId());
-                intent.putExtra("title",SHashtag_list.get(position).getHashTag().getTitle());
-                intent.putExtra("follower_count",SHashtag_list.get(position).getHashTag().getFollower_count());
-                intent.putExtra("photo",SHashtag_list.get(position).getHashTag().getPhoto());
-                intent.putExtra("count_schedule",SHashtag_list.get(position).getHashTag().getCount_schedule());
-                intent.putExtra("count_upcoming_schedule",SHashtag_list.get(position).getHashTag().getCount_upcoming_schedule());
+                Intent intent = new Intent(getActivity(), A2_UserProfileActivity.class);
+                intent.putExtra("id", SUser_list.get(position).getUser().getId());
                 startActivity(intent);
             }
         });
         listview.setOnScrollListener(new EndlessScrollListener());
         return rootview;
     }
+
+
 
     // 끝없이 로딩 하는거
     public class EndlessScrollListener implements AbsListView.OnScrollListener {
@@ -153,7 +147,6 @@ public class F9_ShowFollowingHashTag extends Fragment {
         }
     }
 
-
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
 
         // Constructor for GET
@@ -182,28 +175,27 @@ public class F9_ShowFollowingHashTag extends Fragment {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-                SHashtag_list.clear();
+                SUser_list.clear();
                 try{
                     outputSchedulesJson = getOutputJsonObject();
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
-                    for (int i=0; i<results.length() ;i++){
-                        HashTag h = new HashTag();
-
+                    for(int i=0; i<results.length() ;i++){
+                        User u = new User();
                         tmp_ith = results.getJSONObject(i);
-                        h.setId(tmp_ith.getInt("id"));
-                        h.setTitle(tmp_ith.getString("title"));
-                        h.setFollower_count(tmp_ith.getInt("follower_count"));
-                        h.setPhoto((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
-                        h.setContent(tmp_ith.getString("content"));
-                        h.setCount_schedule(tmp_ith.getInt("count_schedule"));
-                        h.setCount_upcoming_schedule(tmp_ith.getInt("count_upcoming_schedule"));
-                        h.setIs_Follow(tmp_ith.getInt("is_follow")==1?true:false);
-                        Search_HashTag sh = new Search_HashTag(h);
-                        SHashtag_list.add(sh);
+                        u.setId(tmp_ith.getInt("user_id"));
+                        u.setUsername(tmp_ith.getString("user_name"));
+                        u.setPhoto((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
+                        u.setCount_following_user(tmp_ith.getInt("count_following_user"));
+                        u.setCount_follower(tmp_ith.getInt("count_follower"));
+                        u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));
+                        u.setCount_following_hashtag(tmp_ith.getInt("count_following_hashtag"));
+                        Search_User su = new Search_User(u);
+                        su.setIsFollow(tmp_ith.getInt("is_follow")==1?true:false);
+                        SUser_list.add(su);
                     }
-                    searchHashTag_adapter.notifyDataSetChanged();
+                    searchUser_adapter.notifyDataSetChanged();
                 }catch(Exception e){
 
                 }
@@ -247,22 +239,21 @@ public class F9_ShowFollowingHashTag extends Fragment {
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
-                    for (int i=0; i<results.length() ;i++){
-                        HashTag h = new HashTag();
-
+                    for(int i=0; i<results.length() ;i++){
+                        User u = new User();
                         tmp_ith = results.getJSONObject(i);
-                        h.setId(tmp_ith.getInt("id"));
-                        h.setTitle(tmp_ith.getString("title"));
-                        h.setFollower_count(tmp_ith.getInt("follower_count"));
-                        h.setPhoto((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
-                        h.setContent(tmp_ith.getString("content"));
-                        h.setCount_schedule(tmp_ith.getInt("count_schedule"));
-                        h.setCount_upcoming_schedule(tmp_ith.getInt("count_upcoming_schedule"));
-                        h.setIs_Follow(tmp_ith.getInt("is_follow") == 1 ? true : false);
-                        Search_HashTag sh = new Search_HashTag(h);
-                        SHashtag_list.add(sh);
+                        u.setId(tmp_ith.getInt("user_id"));
+                        u.setUsername(tmp_ith.getString("user_name"));
+                        u.setPhoto((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
+                        u.setCount_following_user(tmp_ith.getInt("count_following_user"));
+                        u.setCount_follower(tmp_ith.getInt("count_follower"));
+                        u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));
+                        u.setCount_following_hashtag(tmp_ith.getInt("count_following_hashtag"));
+                        Search_User su = new Search_User(u);
+                        su.setIsFollow(tmp_ith.getInt("is_follow")==1?true:false);
+                        SUser_list.add(su);
                     }
-                    searchHashTag_adapter.notifyDataSetChanged();
+                    searchUser_adapter.notifyDataSetChanged();
                 }catch(Exception e){
 
                 }
