@@ -47,12 +47,12 @@ public class Comment_Adapter extends ArrayAdapter<Comment> {
     }
 
     // 유저 이름 누를 때 리스너
-    public void UserProfileClickListener(View userview, int position) {
+    public void UserProfileClickListener(View userview, final int position) {
         userview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, A2_UserProfileActivity.class);
-                intent.putExtra("text", String.valueOf("URL"));
+                intent.putExtra("id", String.valueOf(Comment_list.get(position).getWrite_userid()));
                 context.startActivity(intent);
             }
         });

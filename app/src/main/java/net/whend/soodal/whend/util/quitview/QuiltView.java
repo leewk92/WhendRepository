@@ -25,7 +25,7 @@ public class QuiltView extends FrameLayout implements OnGlobalLayoutListener {
 
 	public QuiltViewBase quilt;
 	public ViewGroup scroll;
-	public int padding = 0;
+	public int padding = -1;
 	public boolean isVertical = false;
 	public ArrayList<View> views;
 	private Adapter adapter;
@@ -132,7 +132,7 @@ public class QuiltView extends FrameLayout implements OnGlobalLayoutListener {
 
 		LinearLayout wrapper = new LinearLayout(this.getContext());
 
-		wrapper.setPadding(padding-10, padding, padding-10, padding);
+		wrapper.setPadding(padding, padding, padding, padding);
 		wrapper.addView(view);
 		quilt.addPatch(wrapper);
 	}
