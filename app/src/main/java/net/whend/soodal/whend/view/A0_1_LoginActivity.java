@@ -222,26 +222,22 @@ public class A0_1_LoginActivity extends AppCompatActivity {
              //       JSONObject tmpJson = new JSONObject(getOutputString());
              //       String token = tmpJson.getString("key");
                     String token = getOutputJsonObject().getString("key");
-                    if(token == null){
-                        Log.d("whywhy1","whyehwye");
-                        Toast toast1 = Toast.makeText(mContext, "로그인을 할 수 없습니당 유유", Toast.LENGTH_SHORT);
-                        toast1.show();
-                    }
-                    else {
-                        Log.d("whywhy2", "whyehwye");
-                        result_view.setText(result);
+                    result_view.setText(result);
+                    // 유저네임과 토큰을 저장.
+                    AppPrefs appPrefs = new AppPrefs(mContext);
+                    appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
+                    appPrefs.setToken(token);
+                    String getUserIdUrl = "http://119.81.176.245/userinfos/";
+                    // save user id
+                    HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(mContext,getUserIdUrl,"GET");
+                    a.doExecution();
 
-                        // 유저네임과 토큰을 저장.
-                        AppPrefs appPrefs = new AppPrefs(mContext);
-                        appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
-                        appPrefs.setToken(token);
-                        String getUserIdUrl = "http://119.81.176.245/userinfos/";
-                        // save user id
-                        HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(mContext,getUserIdUrl,"GET");
-                        a.doExecution();
-                    }
+                }catch(Exception e){
+                    Toast toast1 = Toast.makeText(mContext, "존재하지 않는 아이디거나 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT);
+                    toast1.setGravity(0,0,100);
+                    toast1.show();
 
-                }catch(Exception e){}
+                }
 
             }
         }
@@ -295,6 +291,10 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     // creating account
                     CalendarProviderUtil cpu = new CalendarProviderUtil(getmContext());
                     cpu.addAccountOfCalendar();
+
+                    Toast toast1 = Toast.makeText(mContext, "로그인 성공.", Toast.LENGTH_SHORT);
+                    toast1.setGravity(0,0,100);
+                    toast1.show();
 
                     Intent intent = new Intent(mContext, MainActivity.class);
                     intent.putExtra("text", String.valueOf("URL"));

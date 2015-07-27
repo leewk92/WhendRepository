@@ -26,6 +26,8 @@ import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.CalendarProviderUtil;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
+import java.util.concurrent.ExecutionException;
+
 /** 이 클래스는 마치 서버와 데이터 주고받기 튜토리얼
  * Created by wonkyung on 15. 7. 13.
  */
@@ -164,7 +166,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
 // 회원가입하고 그 아이디로 로그인 시도.
     class HTTPRestfulUtilizerExtender_login extends HTTPRestfulUtilizer{
 
-
+        public boolean canRegister = true;
         // Constructor for POST
         public HTTPRestfulUtilizerExtender_login(Context mContext, String url, String HTTPRestType, Bundle inputBundle) {
             setmContext(mContext);
@@ -203,22 +205,83 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                 result_view.setText(result);
 
                 try{
-                    String token = getOutputJsonObject().getString("email");
-                    if(token == null){
-                        Toast toast1 = Toast.makeText(mContext, "회원가입을 할 수 없습니당 유유", Toast.LENGTH_SHORT);
+                    String tmp_all = getOutputJsonObject().getString("__all__");
+                    if(tmp_all.contentEquals("[\"You must type the same password each time.\"]")){
+                        Toast toast1 = Toast.makeText(mContext, "같은 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0,0,100);
                         toast1.show();
+                        canRegister=false;
                     }
-                    else {
+
+                }catch(Exception e){Log.d("Catch Exception",e+"");}
+                try{
+                    String tmp_email = getOutputJsonObject().getString("email");
+                    if(tmp_email.contentEquals("[\"Enter a valid email address.\"]")){
+                        Toast toast1 = Toast.makeText(mContext, "이메일을 형식에 맞게 작성해주세요.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0,0,100);
+                        toast1.show();
+                        canRegister=false;
+                    }
+
+                }catch(Exception e){Log.d("Catch Exception",e+"");}
+                try{
+                    String tmp_username = getOutputJsonObject().getString("username");
+                    if(tmp_username.contentEquals("[\"This username is already taken. Please choose another.\"]")){
+                        Toast toast1 = Toast.makeText(mContext, "중복된 아이디입니다.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0,0,100);
+                        toast1.show();
+                        canRegister=false;
+                    }else if(tmp_username.contentEquals("[\"This field is required.\"]")){
+                        Toast toast1 = Toast.makeText(mContext, "아이디를 입력해주세요.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0,0,100);
+                        toast1.show();
+                        canRegister=false;
+                    }
+                }catch(Exception e){Log.d("Catch Exception",e+"");}
+
+                try{
+                    String tmp_password1 = getOutputJsonObject().getString("password1");
+                    if(tmp_password1.contentEquals("[\"This field is required.\"]")){
+                        Toast toast1 = Toast.makeText(mContext, "비밀번호를 입력해주세요.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0,0,100);
+                        toast1.show();
+                        canRegister=false;
+                    }else if(tmp_password1.contentEquals("[\"Password must be a minimum of 6 characters.\"]")){
+                        Toast toast1 = Toast.makeText(mContext, "비밀번호는 6자 이상이어야 합니다.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0,0,100);
+                        toast1.show();
+                        canRegister=false;
+                    }
+
+                }catch(Exception e){Log.d("Catch Exception",e+"");}
+
+                try{
+                    String tmp_password2 = getOutputJsonObject().getString("password2");
+                    if(tmp_password2.contentEquals("[\"This field is required.\"]")){
+                        Toast toast1 = Toast.makeText(mContext, "확인을 위한 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0,0,100);
+                        toast1.show();
+                        canRegister=false;
+                    }
+
+                }catch(Exception e){Log.d("Catch Exception",e+"");}
+
+                try{
+
+                    if(canRegister==true){
                         Bundle loginBundle = new Bundle();
                         loginBundle.putCharSequence("username",getInputBundle().getCharSequence("username"));
-                        loginBundle.putCharSequence("password",getInputBundle().getCharSequence("password1"));
+                        loginBundle.putCharSequence("password", getInputBundle().getCharSequence("password1"));
                         String loginUrl =  "http://119.81.176.245/rest-auth/login/";
 
                         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, loginUrl,"POST",loginBundle);
                         a.doExecution();
+
                     }
 
-                }catch(Exception e){}
+                }catch(Exception e){
+                    Log.d("Catch Exception",e+"");
+                }
 
 
             }
@@ -260,8 +323,8 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                 try{
                     String token = getOutputJsonObject().getString("key");
                     if(token == null){
-                        Toast toast1 = Toast.makeText(mContext, "로그인을 할 수 없습니당 유유", Toast.LENGTH_SHORT);
-                        toast1.show();
+                        //Toast toast1 = Toast.makeText(mContext, "로그인을 할 수 없습니다. ", Toast.LENGTH_SHORT);
+                        //toast1.show();
                     }
                     else {
                         // 유저네임과 토큰을 저장.
@@ -274,7 +337,9 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                         // save user id
                         HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(mContext,getUserIdUrl,"GET");
                         a.doExecution();
-
+                        Toast toast1 = Toast.makeText(mContext, "회원가입 성공", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0,0,100);
+                        toast1.show();
                     }
 
                 }catch(Exception e){}
