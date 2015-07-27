@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,7 +38,9 @@ public class Specific_Schedule_Adapter extends Concise_Schedule_Adapter{
     private ArrayList<Comment> Comment_list = new ArrayList<Comment>();
     private Context context;
     private ListView listview;
-    private static JSONArray outputSchedulesJson;
+
+    static String nextURL;
+    private static JSONObject outputSchedulesJson;
     Comment_Adapter adapter;
 
     public Specific_Schedule_Adapter(Context context, int textViewResourceId, ArrayList<Concise_Schedule> lists){
@@ -80,9 +83,56 @@ public class Specific_Schedule_Adapter extends Concise_Schedule_Adapter{
         adapter = new Comment_Adapter(context,R.layout.item_comments,Comment_list);
         listview = (ListView) v.findViewById(R.id.listview_comments);
         listview.setAdapter(adapter);
+        listview.setOnScrollListener(new EndlessScrollListener());
 
         return v;
     }
+    // 끝없이 로딩 하는거
+    public class EndlessScrollListener implements AbsListView.OnScrollListener {
+
+        private int visibleThreshold = 2;
+        private int currentPage = 0;
+        private int previousTotal = 0;
+        private boolean loading = true;
+
+        public EndlessScrollListener() {
+
+        }
+        public EndlessScrollListener(int visibleThreshold) {
+            this.visibleThreshold = visibleThreshold;
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem,
+                             int visibleItemCount, int totalItemCount) {
+
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                    currentPage++;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                // I load the next page of gigs using a background task,
+                // but you can call any function here.
+                Log.d("lastItemScrolled", "true");
+                try{
+                    HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(context, nextURL,"GET");
+                    b.doExecution();
+                }catch(Exception e){
+
+                }
+                loading = true;
+            }
+        }
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        }
+    }
+
+
+
 
     // 유저 이름 누를 때 리스너
     @Override
@@ -176,12 +226,15 @@ public class Specific_Schedule_Adapter extends Concise_Schedule_Adapter{
                 super.onPostExecute(result);
 
                 try{
-                    outputSchedulesJson = getOutputJsonArray();
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
+                    nextURL = outputSchedulesJson.getString("next");
                     JSONObject tmp_ith;
-                    Log.d("resultslegnth",String.valueOf(outputSchedulesJson.length()));
-                    for(int i=0; i<outputSchedulesJson.length() ;i++){
+
+
+                    for(int i=0; i<results.length() ;i++){
                         Comment s = new Comment();
-                        tmp_ith = outputSchedulesJson.getJSONObject(i);
+                        tmp_ith = results.getJSONObject(i);
                         s.setContents(tmp_ith.getString("content"));
                         s.setWrite_username(tmp_ith.getString("user_name"));
                         s.setWrite_userid(tmp_ith.getInt("user_id"));

@@ -57,7 +57,8 @@ public class A10_ShowSchedulesActivity extends Activity {
         concise_schedule_adapter = new Concise_Schedule_Adapter(this,R.layout.item_concise_schedule,arrayCSchedule);
         listview = (ListView)findViewById(R.id.listview_concise_schedule);
         listview.setOnScrollListener(new EndlessScrollListener());
-        listview.setAdapter(concise_schedule_adapter);listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setAdapter(concise_schedule_adapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,

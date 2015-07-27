@@ -9,15 +9,19 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.WriteComment_Adapter;
 import net.whend.soodal.whend.model.base.Comment;
+import net.whend.soodal.whend.model.base.Schedule;
+import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
@@ -39,7 +43,7 @@ public class A6_WriteCommentActivity extends Activity {
     static String nextURL;
     EditText comment_content;
     Button comment_write_button;
-    Bundle inputBundle;
+    Bundle inputBundle = new Bundle();
     Context mContext = this;
 
     public void onBackPressed(){
@@ -66,6 +70,7 @@ public class A6_WriteCommentActivity extends Activity {
 
         listview = (ListView) findViewById(R.id.listview_comments);
         listview.setAdapter(adapter);
+        listview.setOnScrollListener(new EndlessScrollListener());
 
         // Keyboard 위치에 따라 입력칸의 높이 다르게 만들기
         final LinearLayout Linear_listview = (LinearLayout)findViewById(R.id.linear_listview);
@@ -93,22 +98,78 @@ public class A6_WriteCommentActivity extends Activity {
                 }
             }
         });
+
+
+
+
+
+    }
+
+    // 끝없이 로딩 하는거
+    public class EndlessScrollListener implements AbsListView.OnScrollListener {
+
+        private int visibleThreshold = 2;
+        private int currentPage = 0;
+        private int previousTotal = 0;
+        private boolean loading = true;
+
+        public EndlessScrollListener() {
+
+        }
+        public EndlessScrollListener(int visibleThreshold) {
+            this.visibleThreshold = visibleThreshold;
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem,
+                             int visibleItemCount, int totalItemCount) {
+
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                    currentPage++;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                // I load the next page of gigs using a background task,
+                // but you can call any function here.
+                Log.d("lastItemScrolled", "true");
+                try{
+                    HTTPRestfulUtilizerExtender_loadmore b = new HTTPRestfulUtilizerExtender_loadmore(A6_WriteCommentActivity.this,nextURL,"POST");
+                    b.doExecution();
+                }catch(Exception e){
+
+                }
+                loading = true;
+            }
+        }
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        }
     }
 
         // 댓글달기 아이콘 누를 때 리스너
 
-    public void WriteCommentButtonClickListener(final Context context, Button comment_write_button, EditText comment_content) {
+    public void WriteCommentButtonClickListener(final Context context, Button comment_write_button, final EditText comment_content) {
 
-        EditText c = comment_content;
-        inputBundle = new Bundle();
-        inputBundle.putCharSequence("content", c.getText());
+
         comment_write_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                HTTPRestfulUtilizerExtender2 b = new HTTPRestfulUtilizerExtender2(context,url,"POST",inputBundle);
-                b.doExecution();
+                String content = comment_content.getText()+"";
+                if(content == ""){
+                    Toast toast1 = Toast.makeText(mContext, "댓글을 입력하세요.", Toast.LENGTH_SHORT);
+                    toast1.setGravity(0,0,100);
+                    toast1.show();
+                }else{
+                    inputBundle.clear();
+                    inputBundle.putCharSequence("content", comment_content.getText());
 
+                    HTTPRestfulUtilizerExtender2 b = new HTTPRestfulUtilizerExtender2(context,url,"POST",inputBundle);
+                    b.doExecution();
+                }
             }
         });
 
@@ -167,7 +228,57 @@ public class A6_WriteCommentActivity extends Activity {
             }
         }
     }
+    class HTTPRestfulUtilizerExtender_loadmore extends HTTPRestfulUtilizer {
 
+        // Constructor for GET
+        public HTTPRestfulUtilizerExtender_loadmore(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(),getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try{
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
+                    JSONObject tmp_ith;
+                    nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i<results.length() ;i++){
+                        Comment s = new Comment();
+                        tmp_ith = results.getJSONObject(i);
+                        s.setContents(tmp_ith.getString("content"));
+                        s.setWrite_username(tmp_ith.getString("user_name"));
+                        s.setWrite_userid(tmp_ith.getInt("user_id"));
+
+                        Comment_list.add(s);
+                    }
+                    adapter.notifyDataSetChanged();
+                }catch(Exception e){
+
+                }
+
+            }
+        }
+    }
 
     // for sending comment
     class HTTPRestfulUtilizerExtender2 extends HTTPRestfulUtilizer {

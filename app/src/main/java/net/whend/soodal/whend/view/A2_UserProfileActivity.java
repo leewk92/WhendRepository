@@ -12,8 +12,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v4.app.FragmentManager;
+import android.widget.Toast;
+
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.User;
+import net.whend.soodal.whend.model.top.Search_User;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
@@ -26,9 +29,9 @@ public class A2_UserProfileActivity extends AppCompatActivity {
 
 
     JSONObject outputSchedulesJson;
-
+    Context mContext = this;
     User u = new User();
-
+    Search_User su;
     private FragmentTabHost mTabHost;
     private int user_id;
 
@@ -69,11 +72,51 @@ public class A2_UserProfileActivity extends AppCompatActivity {
         View schedule_count_clickablelayout = findViewById(R.id.schedule_count_clickablelayout);
         View follower_count_clickablelayout = findViewById(R.id.follower_count_clickablelayout);
         View following_count_clickablelayout =findViewById(R.id.following_count_clickablelayout);
+        ImageView follow_button = (ImageView)findViewById(R.id.follow_button);
 
         FollowerClickListener(follower_count_clickablelayout);
         FollowingClickListener(following_count_clickablelayout);
         ScheduleClickListener(schedule_count_clickablelayout);
+        LikeButtonClickListener(follow_button, mContext);
     }
+
+    // 좋아요 누를 때 리스너
+    public void LikeButtonClickListener(ImageView follow_button, Context mContext){
+        final Context context = mContext;
+        final ImageView iv = follow_button;
+        follow_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("isFollow",su.getIsFollow()+"");
+                if (su.getIsFollow() == false) {
+                    Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+                    toast1.show();
+                    su.clickFollow();
+                    iv.setImageResource(R.drawable.like_on);
+
+                    String url = "http://119.81.176.245/userinfos/"+su.getUser().getId()+"/follow/";
+                    HTTPRestfulUtilizerExtender_follow a = new HTTPRestfulUtilizerExtender_follow(context, url,"PUT");
+                    a.doExecution();
+                    ((TextView)findViewById(R.id.follower_count)).setText(String.valueOf(su.getUser().getCount_follower()));
+
+                } else if (su.getIsFollow() == true) {
+                    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+                    toast2.show();
+                    su.clickFollow();
+                    iv.setImageResource(R.drawable.like);
+
+                    String url = "http://119.81.176.245/userinfos/"+su.getUser().getId()+"/follow/";
+                    HTTPRestfulUtilizerExtender_follow a = new HTTPRestfulUtilizerExtender_follow(context, url,"PUT");
+                    a.doExecution();
+                    ((TextView)findViewById(R.id.follower_count)).setText(String.valueOf(su.getUser().getCount_follower()));
+
+                }
+
+            }
+        });
+
+    }
+
     // 게시물 누를때 리스너
     public void ScheduleClickListener(View schedule_count_clickablelayout){
         schedule_count_clickablelayout.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +203,7 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                     u.setCount_following_hashtag(tmp_ith.getInt("count_following_hashtag"));
                     u.setCount_follower(tmp_ith.getInt("count_follower"));
                     u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));
+
                     JSONArray tmpjsonarray = tmp_ith.getJSONArray("following_user");
                     if(tmpjsonarray!=null) {
                         int[] following_user = new int[tmpjsonarray.length()];
@@ -201,6 +245,9 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                         }
                         u.setFollowing_schedule(following_schedule);
                     }
+                    su = new Search_User(u);
+                    su.setIsFollow(tmp_ith.getInt("is_follow")==1?true:false);
+
                 }catch(Exception e){
 
                 }
@@ -211,9 +258,45 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                 ((TextView) findViewById(R.id.schedule_count)).setText(u.getCount_uploaded_schedule() + "");
                 ((TextView)findViewById(R.id.following_count)).setText(String.valueOf(u.getCount_following_hashtag() + u.getCount_following_user()));
 
+                if(su.isFollow() == true)
+                    ((ImageView)findViewById(R.id.follow_button)).setImageResource(R.drawable.like_on);
+                else
+                    ((ImageView)findViewById(R.id.follow_button)).setImageResource(R.drawable.like);
+
             }
         }
     }
 
+    class HTTPRestfulUtilizerExtender_follow extends HTTPRestfulUtilizer {
+
+        public HTTPRestfulUtilizerExtender_follow(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(PUT(url, getInputBundle()));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+            }
+        }
+    }
 
 }
