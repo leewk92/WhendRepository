@@ -90,11 +90,11 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
                 Log.d("editText_comment_height",edittext_comment_height+"");
                 if (heightDiff > 100) { // if more than 100 pixels, its probably a keyboard...
                     //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)pxFromDp(mContext,183));
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(rootHeight-heightDiff-edittext_comment_height*4.5));// 왜 4.5인지는 모름.. 그냥 몇번 시도 끝에 찾은 값
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(rootHeight-heightDiff-edittext_comment_height*3));// 왜 4.5인지는 모름.. 그냥 몇번 시도 끝에 찾은 값
                     Linear_listview.setLayoutParams(params);
                 }
                 else{
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(rootHeight-heightDiff-edittext_comment_height*4.5));
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(rootHeight-heightDiff-edittext_comment_height*3));
                     Linear_listview.setLayoutParams(params);
                 }
             }

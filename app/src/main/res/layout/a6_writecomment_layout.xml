@@ -47,7 +47,7 @@
     <LinearLayout
 
         android:id="@+id/comment_content_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom">
         <RelativeLayout
@@ -56,32 +56,40 @@
             android:orientation="horizontal"
             android:background="#727272"
             android:gravity="bottom">
-            <EditText
-                android:id="@+id/comment_content"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="5dp"
-                android:hint="댓글 입력..."
-                android:gravity="center_vertical"
-                android:background="#FFFFFF"
-                android:padding="3dp"
-                />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <Button
-                android:theme="@style/ColoredButtonOrange"
-                android:id="@+id/comment_write_button"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="입력"
-                android:layout_alignParentRight="true"
-                android:textSize="12dp"
-                android:layout_marginTop="-1dip"
-                android:layout_marginBottom="-1dip"
-                />
+                <EditText
+                    android:id="@+id/comment_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:hint="댓글 입력..."
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:background="#FFFFFF"
+                    android:padding="3dp"
+                    android:layout_weight="1"
+                    android:textSize="12dp"
+                    />
 
+                <Button
+                    android:theme="@style/ColoredButtonOrange"
+                    android:id="@+id/comment_write_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="입력"
+                    android:layout_alignParentRight="true"
+                    android:textSize="12dp"
+                    android:layout_marginTop="-1dip"
+                    android:layout_marginBottom="-1dip"
+                    android:layout_weight="4"
+                    />
 
-
+            </LinearLayout>
 
 
         </RelativeLayout>
