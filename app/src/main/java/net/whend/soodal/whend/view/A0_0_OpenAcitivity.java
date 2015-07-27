@@ -1,6 +1,7 @@
 package net.whend.soodal.whend.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.util.AppPrefs;
 
 import static java.lang.Thread.sleep;
 
 public class A0_0_OpenAcitivity extends AppCompatActivity {
-
+    public Context mContext = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +27,21 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    Intent i = new Intent(A0_0_OpenAcitivity.this, A0_1_LoginActivity.class);
-                    startActivity(i);
-                    overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+                    AppPrefs appPrefs = new AppPrefs(mContext);
+                    if(appPrefs.getToken()== "" ) {       //로그인창으로 이동
 
-                    finish();
+                        Intent i = new Intent(A0_0_OpenAcitivity.this, A0_1_LoginActivity.class);
+                        startActivity(i);
+                        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+
+                        finish();
+                    }else{      // MainActivity로 이동
+                        Intent i = new Intent(A0_0_OpenAcitivity.this, MainActivity.class);
+                        startActivity(i);
+                        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+
+                        finish();
+                    }
                 }
             }
         };

@@ -21,7 +21,7 @@ public AppPrefs(Context context){
  this.prefsEditor = appSharedPrefs.edit();
  }
 public String getUsername() {
- return appSharedPrefs.getString(username, "username");
+ return appSharedPrefs.getString(username, "");
  }
 public void setUsername(String _username) {
  prefsEditor.putString(username, _username).commit();

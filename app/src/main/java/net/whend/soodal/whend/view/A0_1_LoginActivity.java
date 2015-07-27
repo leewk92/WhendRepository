@@ -42,6 +42,12 @@ public class A0_1_LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
+
+
         setContentView(R.layout.a0_1_login_layout);
         mContext = this.getApplicationContext();
         username_view = (EditText) findViewById(R.id.login_username);
