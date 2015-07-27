@@ -173,6 +173,7 @@ public class A8_SettingActivity extends AppCompatActivity {
                         AppPrefs appPrefs = new AppPrefs(mContext);
                         appPrefs.setToken("");
                         appPrefs.setUsername("");
+                        appPrefs.setPassword("");
                         appPrefs.setUser_id(0);
                         Toast toast1 = Toast.makeText(mContext, "로그아웃 하였습니다.", Toast.LENGTH_SHORT);
                         toast1.show();

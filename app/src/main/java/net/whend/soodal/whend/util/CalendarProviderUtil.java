@@ -257,6 +257,7 @@ public class CalendarProviderUtil {
         boolean alreadyCreated;
         if(cur_event.moveToNext()==true ){
             alreadyCreated = true;
+            appPrefs.setWhendCalendarAccountId(cur_event.getInt(0));
         }else alreadyCreated = false;
 // 이미 캘린더 만들었으면 안만듦 !
         if(alreadyCreated==false) {

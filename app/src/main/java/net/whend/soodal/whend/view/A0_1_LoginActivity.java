@@ -218,7 +218,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
 
 
                 try{
-                    Log.d("whywhy","whyehwye");
+
              //       JSONObject tmpJson = new JSONObject(getOutputString());
              //       String token = tmpJson.getString("key");
                     String token = getOutputJsonObject().getString("key");
@@ -226,6 +226,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     // 유저네임과 토큰을 저장.
                     AppPrefs appPrefs = new AppPrefs(mContext);
                     appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
+                    appPrefs.setPassword(getInputBundle().getCharSequence("password").toString());
                     appPrefs.setToken(token);
                     String getUserIdUrl = "http://119.81.176.245/userinfos/";
                     // save user id

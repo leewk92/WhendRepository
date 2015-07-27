@@ -13,7 +13,7 @@ public class AppPrefs {
  private String mostRecentInnerCalendarEventId="mostRecentInnerCalendarEventId";
  private String whendCalendarAccountId="whendCalendarAccountId";
  private String caljson_str = null;
- private String primary = "primary";
+ private String password = "password";
  private String user_id = "user_id";
 
 public AppPrefs(Context context){
@@ -27,11 +27,11 @@ public void setUsername(String _username) {
  prefsEditor.putString(username, _username).commit();
 }
 
-public int getPrimary(){
-	return appSharedPrefs.getInt(primary, 0);
+public String getPassword(){
+	return appSharedPrefs.getString(password, "");
 }
-public void setPrimary(int _primary){
-	prefsEditor.putInt(primary, _primary).commit();
+public void setPassword(String _password){
+	prefsEditor.putString(password, _password).commit();
 }
 
 public String getToken() {
