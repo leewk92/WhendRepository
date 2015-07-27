@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
@@ -138,7 +140,34 @@ public class F1_Wall extends Fragment {
         concise_schedule_adapter = new Concise_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayCSchedule);
         listview.setAdapter(concise_schedule_adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+/*
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Concise_Schedule item = arrayCSchedule.get(position);
 
+                boolean waiting=false;
+                if ( a != null && a.getStatus() != AsyncTask.Status.FINISHED) {
+                    refreshMailtask.cancel(true);
+                    waiting=true;
+                }
+                if ( waiting ) {
+                    MailItemListActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MailItemListActivity.this, "데이터 로딩중입니다. 잠시 기다리세요.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                }
+
+                Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
+                intent.putExtra("id", arrayCSchedule.get(position).getId());
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
+
+                // 이후 생략
+            }
+*/
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
