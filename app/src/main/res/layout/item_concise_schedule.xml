@@ -150,7 +150,7 @@
             android:textColor="#FFF"
             android:textStyle="bold"
             android:layout_marginTop="5dp"
-            android:textSize="12dp"
+            android:textSize="16dp"
             />
 
     </FrameLayout>

@@ -27,15 +27,7 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/seemore_button"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="16dp"
-        android:text="더보기 .."
-        android:textColor="#727272"
-        android:textSize="12dp" />
+
 
     <LinearLayout
         android:id="@+id/linear_listview"
@@ -70,8 +62,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:background="#FFFFFF"
+                android:background="#03A9F4"
                 />
+
             <Button
                 android:id="@+id/comment_write_button"
                 android:layout_width="60dp"
@@ -79,7 +72,13 @@
                 android:layout_marginTop = "3dp"
                 android:layout_marginLeft="1dp"
                 android:text="입력"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true"
+                android:textSize="12dp"
+                android:background="#FFC107"
+                />
+
+
+
 
 
         </RelativeLayout>
