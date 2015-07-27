@@ -10,12 +10,4 @@
         android:src="@drawable/whend_3_3_00_01"
         android:scaleType="centerCrop" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:id="@+id/imageView7"
-        android:src="@drawable/whend_3_3_00_01"
-        android:scaleType="center"
-        android:layout_marginTop="180dp"
-        android:padding="50dp" />
 </FrameLayout>

@@ -5,4 +5,5 @@
     <!--Color primary dark 700 from palette colors -->
     <color name="primaryDark">#0288D1</color>
     <color name="semitransparent_white">#77ffffff</color>
+    <color name="lightgray">#B6B6B6</color>
 </resources>
