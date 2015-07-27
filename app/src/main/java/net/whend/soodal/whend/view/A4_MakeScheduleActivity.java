@@ -1,5 +1,7 @@
 package net.whend.soodal.whend.view;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -55,6 +57,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     EditText title,location,memo;
     String sDate, sContent, sLocation, sTime, sStarttime,sEndtime;
     Bundle inputBundle_forRequest = new Bundle();
+    ProgressDialog progress;
+
 
     public void onBackPressed(){
         finish();
@@ -413,9 +417,9 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_upload) {
 
+            completed_num=0;
 
-            parseMemo(memo.getText()+"");
-
+            parseMemo(memo.getText() + "");
 
             return true;
         }
@@ -494,6 +498,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+
             }
 
             @Override
@@ -517,6 +522,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                     String memo = getOutputJsonObject().getString("memo");
                     Log.d("memo",memo);
                     if(memo.contentEquals("[\"This field may not be blank.\"]")){
+                        progress.dismiss();
                         Toast.makeText(getmContext(),"메모를 입력하세요! ",Toast.LENGTH_SHORT).show();
                     }
                     else{
@@ -565,7 +571,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+                progress.dismiss();
+                finish();
             }
         }
     }
@@ -589,6 +596,14 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             task.execute(getUrl(), getHTTPRestType());
         }
         class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progress = ProgressDialog.show(getmContext(), "일정올리기",
+                        "일정을 올리는 중입니다.", true);
+            }
+
             @Override
             protected String doInBackground(String... strings) {
                 String url = strings[0];

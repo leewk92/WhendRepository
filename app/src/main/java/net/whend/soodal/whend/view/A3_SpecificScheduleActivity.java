@@ -7,14 +7,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.form.Comment_Adapter;
 import net.whend.soodal.whend.form.Specific_Schedule_Adapter;
+import net.whend.soodal.whend.model.base.Comment;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.util.CalendarProviderUtil;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -24,12 +34,15 @@ import java.util.ArrayList;
  */
 public class A3_SpecificScheduleActivity extends AppCompatActivity {
 
-    ArrayList<Concise_Schedule> CSchedule_list = new ArrayList<Concise_Schedule>();;
+
+    Concise_Schedule cs;
     ListView listview;
     private int id;
     private static JSONObject outputSchedulesJson;
-    Specific_Schedule_Adapter adapter;
-
+    Comment_Adapter adapter;
+    Context mContext = this;
+    static String nextURL;
+    private ArrayList<Comment> Comment_list = new ArrayList<Comment>();
     public void onBackPressed(){
         finish();
         overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_right_out);
@@ -62,11 +75,223 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this, url,"GET");
         a.doExecution();
 
-
-        adapter = new Specific_Schedule_Adapter(this,R.layout.item_specific_schedule,CSchedule_list);
-        listview = (ListView)findViewById(R.id.listview_specific_schedule);
+        adapter = new Comment_Adapter(this,R.layout.item_comments,Comment_list);
+        listview = (ListView) findViewById(R.id.listview_comments);
         listview.setAdapter(adapter);
+        listview.setOnScrollListener(new EndlessScrollListener());
+
+        // 리스너 함수들
+        View user_clickableLayout = (View)findViewById(R.id.user_clickableLayout);
+        ImageView like_button = (ImageView)findViewById(R.id.like_button);
+        ImageView follow_button = (ImageView)findViewById(R.id.follow_button);
+        ImageView comment_button = (ImageView)findViewById(R.id.comment_button);
+        View schedulefollow_user_clickablelayout = (View)findViewById(R.id.schedulefollow_user_clickablelayout);
+        TextView like_count = (TextView)findViewById(R.id.like_count);
+        TextView follow_count = (TextView)findViewById(R.id.follow_count);
+
+        UserProfileClickListener(user_clickableLayout);
+        LikeButtonClickListener(like_button, like_count);
+        FollowButtonClickListener(follow_button,follow_count);
+        WriteCommentClickListener(comment_button);
+        WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout);
+
     }
+
+    // 끝없이 로딩 하는거
+    public class EndlessScrollListener implements AbsListView.OnScrollListener {
+
+        private int visibleThreshold = 2;
+        private int currentPage = 0;
+        private int previousTotal = 0;
+        private boolean loading = true;
+
+        public EndlessScrollListener() {
+
+        }
+        public EndlessScrollListener(int visibleThreshold) {
+            this.visibleThreshold = visibleThreshold;
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem,
+                             int visibleItemCount, int totalItemCount) {
+
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                    currentPage++;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                // I load the next page of gigs using a background task,
+                // but you can call any function here.
+                Log.d("lastItemScrolled", "true");
+                try{
+                    HTTPRestfulUtilizerExtender_comment b = new HTTPRestfulUtilizerExtender_comment(mContext, nextURL,"GET");
+                    b.doExecution();
+                }catch(Exception e){
+
+                }
+                loading = true;
+            }
+        }
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        }
+    }
+
+    // 유저 이름 누를 때 리스너
+    public void UserProfileClickListener(View userview){
+        userview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(mContext, A2_UserProfileActivity.class);
+                intent.putExtra("id", cs.getUser_id());
+                mContext.startActivity(intent);
+
+
+            }
+        });
+
+    }
+
+    // 외 15명 누를 때 리스너
+    public void WhoFollowsScheduleClickListener(View schedulefollow_user_clickablelayout){
+        schedulefollow_user_clickablelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, A5_WhoFollowsScheduleActivity.class);
+                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/"+ cs.getId()+"/followers/"));       // 나중에 해결
+                mContext.startActivity(intent);
+            }
+        });
+
+    }
+
+
+    // 좋아요 누를 때 리스너
+    public void LikeButtonClickListener(ImageView likebutton,TextView like_count){
+
+
+        final ImageView iv = likebutton;
+        final TextView lcv = like_count;
+        likebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(cs.getIsLike() == false){
+                    Toast toast1 = Toast.makeText(mContext, "Like Button Clicked", Toast.LENGTH_SHORT);
+                    toast1.show();
+                    String url = "http://119.81.176.245/schedules/"+cs.getId()+"/like/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, url,"PUT");
+                    a.doExecution();
+                    cs.clickLike();
+                    lcv.setText(String.valueOf(cs.getLike_count()));
+                    iv.setImageResource(R.drawable.like_on);
+                }
+                else if(cs.getIsLike() == true){
+                    Toast toast2 = Toast.makeText(mContext, "Like Button Unclicked", Toast.LENGTH_SHORT);
+                    toast2.show();
+                    String url = "http://119.81.176.245/schedules/"+cs.getId()+"/like/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, url,"PUT");
+                    a.doExecution();
+                    cs.clickLike();
+                    lcv.setText(String.valueOf(cs.getLike_count()));
+                    iv.setImageResource(R.drawable.like);
+                }
+
+            }
+        });
+
+    }
+
+    // 받아보기 누를 때 리스너
+    public void FollowButtonClickListener(ImageView followbutton, TextView follow_count){
+
+        final ImageView iv = followbutton;
+        final TextView fcv = follow_count;
+        followbutton.setOnClickListener(new View.OnClickListener() {
+
+            CalendarProviderUtil cpu = new CalendarProviderUtil(mContext);
+
+            @Override
+            public void onClick(View v) {
+
+                if (cs.getIsFollow() == false) {
+                    Toast toast1 = Toast.makeText(mContext, "Follow Button Clicked", Toast.LENGTH_SHORT);
+                    toast1.show();
+                    String url = "http://119.81.176.245/schedules/" + cs.getId() + "/follow/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, url, "PUT");
+                    a.doExecution();
+                    cs.clickFollow();
+                    fcv.setText(String.valueOf(cs.getFollow_count()));
+                    iv.setImageResource(R.drawable.export_to_calendar_onclick);
+                    cpu.addScheduleToInnerCalendar(cs);
+                } else if (cs.getIsFollow() == true) {
+                    Toast toast2 = Toast.makeText(mContext, "Follow Button Unclicked", Toast.LENGTH_SHORT);
+                    toast2.show();
+                    String url = "http://119.81.176.245/schedules/" + cs.getId() + "/follow/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, url, "PUT");
+                    a.doExecution();
+                    cs.clickFollow();
+                    fcv.setText(String.valueOf(cs.getFollow_count()));
+                    iv.setImageResource(R.drawable.exporttocalendar);
+
+                    cpu.deleteScheduleFromInnerCalendar(cs);
+                }
+
+            }
+        });
+
+    }
+
+    // 댓글달기 아이콘 누를 때 리스너
+    public void WriteCommentClickListener(ImageView comment_button){
+
+        comment_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, A6_WriteCommentActivity.class);
+                intent.putExtra("id", cs.getId());
+                mContext.startActivity(intent);
+            }
+        });
+
+    }
+
+
+    // 레이아웃에 데이터 적용
+    public void AdjustDataToLayout(Context mContext, Concise_Schedule cs) {
+
+        ((TextView) findViewById(R.id.user_fullname)).setText(cs.getUsername());
+        ((TextView) findViewById(R.id.title)).setText(cs.getTitle());
+
+        ((TextView) findViewById(R.id.date_start)).setText(cs.getDate_start());
+        ((TextView) findViewById(R.id.time_start)).setText(cs.getTime_start());
+
+        ((TextView) findViewById(R.id.date_end)).setText(cs.getDate_end());
+        ((TextView) findViewById(R.id.time_end)).setText(cs.getTime_end());
+
+        ((TextView) findViewById(R.id.memo)).setText(cs.getMemo());
+        ((TextView) findViewById(R.id.like_count)).setText(String.valueOf(cs.getLike_count()));
+        ((TextView) findViewById(R.id.follow_count)).setText(String.valueOf(cs.getFollow_count()));
+        if(cs.getIsLike() == true)
+            ((ImageView)findViewById(R.id.like_button)).setImageResource(R.drawable.like_on);
+        else
+            ((ImageView)findViewById(R.id.like_button)).setImageResource(R.drawable.like);
+
+        if(cs.getIsFollow() == true)
+            ((ImageView)findViewById(R.id.follow_button)).setImageResource(R.drawable.export_to_calendar_onclick);
+        else
+            ((ImageView)findViewById(R.id.follow_button)).setImageResource(R.drawable.exporttocalendar);
+
+        if(cs.getPhoto_dir_fromweb()!="") {
+            Picasso.with(mContext).load(cs.getPhoto_dir_fromweb()).into((ImageView) findViewById(R.id.memo_photo));
+        }
+    }
+
 
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
 
@@ -117,15 +342,76 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     s.setFollow_count((tmp_ith.getInt("count_follow")));
                     s.setLike_count((tmp_ith.getInt("count_like")));
 
-                    Concise_Schedule cs = new Concise_Schedule(s);
-                    cs.setIsLike(tmp_ith.getInt("like")==1?true:false);
-                    cs.setIsFollow(tmp_ith.getInt("follow")==1?true:false);
-                    CSchedule_list.add(cs);
+                    cs = new Concise_Schedule(s);
+                    cs.setIsLike(tmp_ith.getInt("like") == 1 ? true : false);
+                    cs.setIsFollow(tmp_ith.getInt("follow") == 1 ? true : false);
 
-                    adapter.notifyDataSetChanged();
+                    AdjustDataToLayout(getmContext(),cs);
+
+                    // getting comment
+                    String url_comment = "http://119.81.176.245/schedules/"+cs.getId() + "/comments/";
+
+                    HTTPRestfulUtilizerExtender_comment a = new HTTPRestfulUtilizerExtender_comment(getmContext(), url_comment,"GET");
+                    a.doExecution();
+
                 }catch(Exception e){
                 }
             }
         }
     }
+
+    class HTTPRestfulUtilizerExtender_comment extends HTTPRestfulUtilizer {
+
+        // Constructor for GET
+        public HTTPRestfulUtilizerExtender_comment(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(),getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try{
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
+                    nextURL = outputSchedulesJson.getString("next");
+                    JSONObject tmp_ith;
+
+
+                    for(int i=0; i<results.length() ;i++){
+                        Comment s = new Comment();
+                        tmp_ith = results.getJSONObject(i);
+                        s.setContents(tmp_ith.getString("content"));
+                        s.setWrite_username(tmp_ith.getString("user_name"));
+                        s.setWrite_userid(tmp_ith.getInt("user_id"));
+
+                        Comment_list.add(s);
+                    }
+                    adapter.notifyDataSetChanged();
+                }catch(Exception e){
+
+                }
+
+            }
+        }
+    }
+
 }
