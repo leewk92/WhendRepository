@@ -88,6 +88,7 @@ public class CalendarProviderUtil {
             CalendarContract.Events.ALL_DAY,
             CalendarContract.Events.RDATE,
             CalendarContract.Events.AVAILABILITY
+
              */
             AppPrefs appPrefs = new AppPrefs(mContext);
             String username = appPrefs.getUsername();
