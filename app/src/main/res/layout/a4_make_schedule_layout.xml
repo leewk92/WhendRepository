@@ -10,7 +10,7 @@
         android:layout_height="50dp"
         android:layout_width="match_parent"
         android:minHeight="50dp"
-        android:background="#ff4b4b4b"
+        android:background="#FFC107"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         android:layout_gravity="right"
         android:layout_marginBottom="5dp">
@@ -18,8 +18,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="1dp"
-            android:layout_height="34dp"
-            android:background="#ff7c7c7d"
+            android:layout_height="18dp"
+            android:background="#ffffffff"
             android:layout_marginRight="5dp"></LinearLayout>
 
         <TextView
@@ -34,9 +34,9 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="1dp"
-            android:layout_height="34dp"
+            android:layout_height="18dp"
             android:layout_gravity="right"
-            android:background="#ff7c7c7d"
+            android:background="#ffffffff"
             android:layout_marginRight="3dp"></LinearLayout>
 
     </android.support.v7.widget.Toolbar>
@@ -54,7 +54,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="5dp"
-            android:clickable="true">
+            android:clickable="true"
+            android:layout_marginBottom="15dp">
 
             <ImageView
                 android:id="@+id/user_photo"
@@ -75,91 +76,82 @@
         </LinearLayout>
 
         <EditText
+            android:theme="@style/Theme.App.Base"
             android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:hint="아카라카"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="일정 제목 입력"
             android:textSize="12dp"
-            android:layout_marginTop="5dp"
-            />
+            android:layout_marginTop="5dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/upload_starttime"
             >
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:hint="시작"
-                    android:textSize="12dp"
-                    android:layout_marginLeft="5dp"
-                    />
+                android:hint="시작"
+                android:textSize="12dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical|right" />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/date"
-                    android:layout_gravity="center_vertical"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/date"
+                android:layout_gravity="center_vertical"/>
 
-                <TextView
-                    android:id="@+id/date_start"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:hint="날짜 입력"
-                    android:textSize="12dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                   />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/date_start"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/time"
-                    android:layout_gravity="center_vertical"/>
-                <TextView
-                    android:id="@+id/time_start"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:hint="시간 입력"
-                    android:textSize="12dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    />
+                android:hint="날짜 입력"
+                android:textSize="12dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="25dp" />
 
-            </LinearLayout>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/time"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/time_start"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="시간 입력"
+                android:textSize="12dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                />
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/upload_endtime"
             >
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
                 <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
                     android:hint="끝"
                     android:textSize="12dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical|right"
                     />
 
                 <ImageView
@@ -170,29 +162,26 @@
 
                 <TextView
                     android:id="@+id/date_end"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:hint="날짜 입력"
                     android:textSize="12dp"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginRight="25dp"
                     />
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/time"
                     android:layout_gravity="center_vertical"/>
+
                 <TextView
                     android:id="@+id/time_end"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:hint="시간 입력"
                     android:textSize="12dp"
                     android:gravity="center_vertical"
@@ -202,18 +191,19 @@
             </LinearLayout>
 
 
-        </LinearLayout>
+           </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="5dp"
-            >
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
 
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1">
                 <ImageView
                     android:layout_width="20dp"
@@ -221,23 +211,23 @@
                     android:src="@drawable/location"
                     android:layout_gravity="center_vertical"/>
                 <EditText
+                    android:theme="@style/Theme.App.Base"
                     android:id="@+id/location"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:hint="장소 입력"
                     android:textSize="12dp"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp" />
 
             </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="12dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -250,7 +240,7 @@
             android:id="@+id/memo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="예시) 기다리고 기다리던 아카라카! \n #연세대학교 #아카라카"
+            android:hint="메모와 태그를 입력해 주세요 (#WhenD #웬디 #일정)"
             android:textColorHint="#FFF"
             android:textColor="#FFF"
             android:textStyle="bold"
@@ -266,6 +256,11 @@
             android:padding="3dp"
             android:layout_gravity="right" />
     </FrameLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/test" />
 
 
 </LinearLayout>

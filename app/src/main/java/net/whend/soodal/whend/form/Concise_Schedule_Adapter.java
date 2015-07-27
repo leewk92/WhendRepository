@@ -251,7 +251,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             };
             */
 
-            Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into((ImageView)v.findViewById(R.id.memo_photo));
+           Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into((ImageView)v.findViewById(R.id.memo_photo));
 
         }
 
