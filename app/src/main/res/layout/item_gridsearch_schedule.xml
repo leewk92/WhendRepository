@@ -22,6 +22,11 @@
             android:scaleType="centerCrop"
             android:src="@drawable/exo" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#a15a5956" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,5 +37,6 @@
             android:textColor="#ffffffff"
             android:textIsSelectable="false"
             android:textStyle="bold" />
+
     </FrameLayout>
 </LinearLayout>

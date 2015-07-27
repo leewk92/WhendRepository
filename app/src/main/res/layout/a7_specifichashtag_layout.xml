@@ -41,17 +41,23 @@
                 android:id="@+id/photo"
                 android:scaleType="centerCrop" />
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="#a15a5956" />
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="#공채일정"
                 android:textSize="20dp"
-                android:textColor="#212121"
+                android:textColor="#FFFFFF"
                 android:gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp" />
 
         </FrameLayout>
     </LinearLayout>

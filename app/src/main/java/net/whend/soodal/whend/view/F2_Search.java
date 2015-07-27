@@ -110,7 +110,8 @@ public class F2_Search extends Fragment {
         root_layout = (FrameLayout) rootView.findViewById(R.id.search_rootlayout);
 
         quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
-        quiltView.setChildPadding(5);
+        quiltView.setChildPadding(-3);
+
 
 
         // 툴바 커스터마이징

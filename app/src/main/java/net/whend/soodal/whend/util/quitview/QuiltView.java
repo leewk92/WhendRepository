@@ -88,11 +88,9 @@ public class QuiltView extends FrameLayout implements OnGlobalLayoutListener {
 		//setViewsFromAdapter(adapter);
 
 		this.removeAllViews();
-		Log.d("과연 제대로?", adapter.getCount() + "");
 		for(int i = 0; i < adapter.getCount(); i++) {
 			View temp_view = adapter.getView(i, null, null);
 			TextView temp_txt = (TextView) temp_view.findViewById(R.id.gridsearch_text);
-			Log.d("텍스트체크", temp_txt.getText() + "");
 
 			quilt.addPatch(temp_view);
 
@@ -118,6 +116,7 @@ public class QuiltView extends FrameLayout implements OnGlobalLayoutListener {
 		image.setLayoutParams(params);
 
 		LinearLayout wrapper = new LinearLayout(this.getContext());
+		
 		wrapper.setPadding(padding, padding, padding, padding);
 		wrapper.addView(image);
 		quilt.addPatch(wrapper);
@@ -130,11 +129,17 @@ public class QuiltView extends FrameLayout implements OnGlobalLayoutListener {
 	}
 
 	public void addPatchView(View view){
-		quilt.addPatch(view);
+
+		LinearLayout wrapper = new LinearLayout(this.getContext());
+
+		wrapper.setPadding(padding-10, padding, padding-10, padding);
+		wrapper.addView(view);
+		quilt.addPatch(wrapper);
 	}
 
 	public void addPatchesOnLayout(){
 		for(View view: views){
+
 			quilt.addPatch(view);
 		}
 	}

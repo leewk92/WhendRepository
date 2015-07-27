@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 /**
  * Created by wonkyung on 15. 7. 12.
  */
-public class A6_WriteCommentActivity extends Activity {
+public class A6_WriteCommentActivity extends AppCompatActivity {
     ArrayList<Comment> Comment_list = new ArrayList<Comment>();
     ListView listview;
     WriteComment_Adapter adapter;

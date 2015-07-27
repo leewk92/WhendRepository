@@ -59,7 +59,6 @@ public class A7_SpecificHashTagActivity extends Activity {
         if(!photo.equals("")) {
 
             Picasso.with(this).load(photo).into(title_photo);
-            title_view.setTextColor(Color.parseColor("#FFFFFF"));
         }
 
 
