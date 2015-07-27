@@ -10,7 +10,7 @@
         android:layout_height="50dp"
         android:layout_width="match_parent"
         android:minHeight="50dp"
-        android:background="#ff4b4b4b"
+        android:background="#FFC107"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         android:clickable="false">
 
