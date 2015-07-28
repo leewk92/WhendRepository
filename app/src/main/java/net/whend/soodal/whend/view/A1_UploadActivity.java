@@ -51,7 +51,7 @@ public class A1_UploadActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationIcon(R.drawable.cancel);
+        toolbar.setNavigationIcon(R.drawable.cancel_s);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

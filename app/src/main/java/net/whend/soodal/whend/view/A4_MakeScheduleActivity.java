@@ -1,6 +1,5 @@
 package net.whend.soodal.whend.view;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -155,7 +154,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         toolbartext.setText("공유하기");
 
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationIcon(R.drawable.back_s);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

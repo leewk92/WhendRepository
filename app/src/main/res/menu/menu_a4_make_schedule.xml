@@ -3,6 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="net.whend.soodal.whend.view.A4_MakeScheduleActivity">
     <item android:id="@+id/action_upload" android:title="@string/action_upload"
-        android:icon="@drawable/menu_importcalendar"
+        android:icon="@drawable/import_calendar_s"
         android:orderInCategory="100" app:showAsAction="always"/>
 </menu>
