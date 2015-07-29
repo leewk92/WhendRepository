@@ -31,7 +31,7 @@ public class CalendarProviderUtil {
     private ArrayList<Schedule> innerScheduleList = new ArrayList<Schedule>();
     private Context mContext;
     private long whendCalendarId;
-    private int amount=10;     // 가져올 일정 개수
+    private int amount=15;     // 가져올 일정 개수
     public static final String[] CALENDAR_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0
             CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
@@ -70,11 +70,16 @@ public class CalendarProviderUtil {
     public void includeInnerScheduleList(){
         Uri uri2 = CalendarContract.Events.CONTENT_URI;
         ContentResolver cr2 = mContext.getContentResolver();
-        Cursor cur2 = cr2.query(uri2, EVENT_PROJECTION, CalendarContract.Events._ID+">="+
-                ( (obtainLatestEventId()-amount)>0?(obtainLatestEventId()-amount):0),null, null);
+       // Cursor cur2 = cr2.query(uri2, EVENT_PROJECTION, CalendarContract.Events._ID+">="+
+       //         ( (obtainLatestEventId()-amount)>0?(obtainLatestEventId()-amount):0),null, null);
+        Cursor cur2 = cr2.query(uri2, EVENT_PROJECTION, CalendarContract.Calendars._ID+"!="+
+                this.whendCalendarId,null, null);
 
         Calendar calendar = null;
+        int i=0;
         while (cur2.moveToNext()) {
+            if(i++ == amount)
+                break;
 /*Ref
             CalendarContract.Events._ID,
             CalendarContract.Events.DTSTART,
