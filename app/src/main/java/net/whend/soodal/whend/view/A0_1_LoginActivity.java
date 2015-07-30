@@ -304,7 +304,11 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     finish();
 
 
-                }catch(Exception e){}
+                }catch(Exception e){
+                    Log.d("login exception",e.toString());
+
+
+                }
 
             }
         }

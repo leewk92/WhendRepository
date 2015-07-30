@@ -58,6 +58,7 @@ public class Concise_Schedule {
         this.memo = s.getMemo();
         this.like_count = s.getLike_count();
         this.follow_count = s.getFollow_count();
+        this.location = s.getLocation();
         this.isLike=false;
         this.isFollow=false;
         DateParse(s);

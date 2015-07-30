@@ -215,7 +215,10 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
         ((TextView)v.findViewById(R.id.like_count)).setText(String.valueOf(CSchedule_list.get(position).getLike_count()));
         ((TextView)v.findViewById(R.id.follow_count)).setText(String.valueOf(CSchedule_list.get(position).getFollow_count()));
-        Log.d("like",String.valueOf(CSchedule_list.get(position).getIsLike()));
+        ((TextView)v.findViewById(R.id.location)).setText(String.valueOf(CSchedule_list.get(position).getLocation()) == null ? "" : CSchedule_list.get(position).getLocation())
+        ;
+        Log.d("location_view",String.valueOf(CSchedule_list.get(position).getLocation()));
+        Log.d("like", String.valueOf(CSchedule_list.get(position).getIsLike()));
         if(CSchedule_list.get(position).getIsLike() == true)
             ((ImageView)v.findViewById(R.id.like_button)).setImageResource(R.drawable.like_on);
         else
@@ -253,6 +256,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
            Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into((ImageView)v.findViewById(R.id.memo_photo));
 
+        }else{
+            // 기본이미지 로드.
         }
 
 

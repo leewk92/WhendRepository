@@ -226,6 +226,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
                         s.setMemo(tmp_ith.getString("memo"));
                         s.setUploaded_username(tmp_ith.getString("user_name"));
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
+                        s.setLocation((tmp_ith.getString("location")));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         Concise_Schedule cs = new Concise_Schedule(s);
                         arrayCSchedule.add(cs);
@@ -282,6 +283,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
                         s.setMemo(tmp_ith.getString("memo"));
                         s.setUploaded_username(tmp_ith.getString("user_name"));
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
+                        s.setLocation((tmp_ith.getString("location")));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         Concise_Schedule cs = new Concise_Schedule(s);
                         arrayCSchedule.add(cs);

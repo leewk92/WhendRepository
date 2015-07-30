@@ -7,9 +7,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -24,10 +26,11 @@ import java.util.ArrayList;
 public class A1_UploadActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
+    public int pos=0;
     private ArrayList<Upload_Schedule> arraySchedule = new ArrayList<Upload_Schedule>();
+    private RecyclerView.Adapter mAdapter= new Upload_Schedule_Adapter(this, R.layout.item_upload_schedule, arraySchedule);
+
 
     public void onBackPressed(){
         finish();
@@ -43,7 +46,7 @@ public class A1_UploadActivity extends AppCompatActivity {
         arraySchedule.add(new Upload_Schedule("2015년 6월 15일", "민수 생일", "하루 종일", "민수 방"));
         arraySchedule.add(new Upload_Schedule("2015년 12월 23일", "원경 생일", "하루 종일", "원경 방"));
 */
-        getDataFromInnerCalendar();
+        getDataFromInnerCalendar(pos++);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
         TextView uploadactivity_title = (TextView) findViewById(R.id.uploadactivity_title);
@@ -63,15 +66,14 @@ public class A1_UploadActivity extends AppCompatActivity {
 
         //Recycler View 설정
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new Upload_Schedule_Adapter(this, R.layout.item_upload_schedule, arraySchedule);
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_upload);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-
-
+        mRecyclerView.addOnScrollListener(new EndlessScrollListener());
         // FAB
 
         ImageButton fabImageButton = (ImageButton) findViewById(R.id.fab_image_button);
@@ -81,22 +83,74 @@ public class A1_UploadActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(A1_UploadActivity.this, A4_MakeScheduleActivity.class);
+            //    intent.putExtra("content",getText(R.id.));
+            //    intent.putExtra("location",);
+            //    intent.putExtra("datetime_start",);
+            //    intent.putExtra("datetime_end",);         도와줘 준삐 ...
+
                 startActivity(intent);
 
 
             }
         });
 
+
     }
 
-    public void getDataFromInnerCalendar(){
-        CalendarProviderUtil cpu = new CalendarProviderUtil(this);
+    // 끝없이 로딩 하는거
+    public class EndlessScrollListener extends RecyclerView.OnScrollListener {
 
+        private int previousTotal = 0;
+        private boolean loading = true;
+        private int visibleThreshold = 5;
+        int firstVisibleItem, visibleItemCount, totalItemCount;
+
+        public EndlessScrollListener() {
+
+        }
+        public EndlessScrollListener(int visibleThreshold) {
+            this.visibleThreshold = visibleThreshold;
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            LinearLayoutManager mLayoutManager = (LinearLayoutManager) mRecyclerView
+                    .getLayoutManager();
+
+            visibleItemCount = mRecyclerView.getChildCount();
+            totalItemCount = mLayoutManager.getItemCount();
+            firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount)
+                    <= (firstVisibleItem + visibleThreshold)) {
+                // End has been reached
+
+                Log.i("...", "end called");
+
+                getDataFromInnerCalendar(pos++);
+
+                loading = true;
+            }
+        }
+    }
+
+
+    public void getDataFromInnerCalendar(int pos){
+        CalendarProviderUtil cpu = new CalendarProviderUtil(this);
+        cpu.includeInnerScheduleList(pos);
         ArrayList<Schedule> innerScheduleList= cpu.getInnerScheduleList();
         for(int i =0; i<innerScheduleList.size(); i++){
 
-            Upload_Schedule us = new Upload_Schedule(innerScheduleList.get(i));
+            Upload_Schedule us = new Upload_Schedule(innerScheduleList.get(innerScheduleList.size()-1-i));  // 가장 최근이 가장 위에 올라오게.
             arraySchedule.add(us);
+            mAdapter.notifyDataSetChanged();
         }
     }
 

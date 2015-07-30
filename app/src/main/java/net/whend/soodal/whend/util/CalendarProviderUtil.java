@@ -56,30 +56,43 @@ public class CalendarProviderUtil {
             CalendarContract.Events.DURATION,
             CalendarContract.Events.ALL_DAY,
             CalendarContract.Events.RDATE,
-            CalendarContract.Events.AVAILABILITY
+            CalendarContract.Events.AVAILABILITY,
+            CalendarContract.Events.CALENDAR_COLOR,
+            CalendarContract.Events.EVENT_LOCATION,
+            CalendarContract.Events.EVENT_COLOR,
+            CalendarContract.Events.EVENT_COLOR_KEY
     };
 
 
     // Constructors
     public CalendarProviderUtil(Context mContext){
         this.mContext = mContext;
-        includeInnerScheduleList();
+
     }
 
     // functions
-    public void includeInnerScheduleList(){
+    public void includeInnerScheduleList(int position){
         Uri uri2 = CalendarContract.Events.CONTENT_URI;
         ContentResolver cr2 = mContext.getContentResolver();
        // Cursor cur2 = cr2.query(uri2, EVENT_PROJECTION, CalendarContract.Events._ID+">="+
        //         ( (obtainLatestEventId()-amount)>0?(obtainLatestEventId()-amount):0),null, null);
-        Cursor cur2 = cr2.query(uri2, EVENT_PROJECTION, CalendarContract.Calendars._ID+"!="+
-                this.whendCalendarId,null, null);
+//        Cursor cur2 = cr2.query(uri2, EVENT_PROJECTION, CalendarContract.Calendars._ID+"!="+
+//                this.whendCalendarId,null, "_id DESC");
+//        Cursor cur1 = cr2.query(uri2, EVENT_PROJECTION, CalendarContract.Calendars._ID+"!="+
+//                this.whendCalendarId,null, null);
+        Cursor cur2 = cr2.query(uri2, EVENT_PROJECTION,null,null,"_id DESC");
 
-        Calendar calendar = null;
         int i=0;
-        while (cur2.moveToNext()) {
-            if(i++ == amount)
-                break;
+//        int num_schedules=0;
+//        while(cur2.moveToNext())
+//            num_schedules++;            // number of schedules
+        try {
+            cur2.moveToPosition(amount * position);
+        }catch(Exception e){}
+
+        do {
+
+
 /*Ref
             CalendarContract.Events._ID,
             CalendarContract.Events.DTSTART,
@@ -95,27 +108,52 @@ public class CalendarProviderUtil {
             CalendarContract.Events.AVAILABILITY
 
              */
-            AppPrefs appPrefs = new AppPrefs(mContext);
-            String username = appPrefs.getUsername();
+            try {
 
-            Schedule tmpSchedule = new Schedule();
-            tmpSchedule.setTitle(cur2.getString(4));
-            tmpSchedule.setStarttime_ms(cur2.getLong(1));
-            tmpSchedule.setEndtime_ms(cur2.getLong(2));
 
-            tmpSchedule.setUploaded_username(username);
-            tmpSchedule.setAllday((cur2.getInt(8) == 1) ? true : false);
-            tmpSchedule.setMemo(cur2.getString(5));
-            tmpSchedule.setTimezone(cur2.getString(6));
+                AppPrefs appPrefs = new AppPrefs(mContext);
+                String username = appPrefs.getUsername();
 
-            // datetime ms -> string
-            DateTimeFormatter dtf_starttime = new DateTimeFormatter(tmpSchedule.getStarttime_ms());
-            tmpSchedule.setStarttime(dtf_starttime.getOutputString());
+                Schedule tmpSchedule = new Schedule();
+                tmpSchedule.setTitle(cur2.getString(4));
+                tmpSchedule.setStarttime_ms(cur2.getLong(1));
+                tmpSchedule.setEndtime_ms(cur2.getLong(2));
 
-            DateTimeFormatter dtf_endtime = new DateTimeFormatter(tmpSchedule.getEndtime_ms());
-            tmpSchedule.setEndtime(dtf_endtime.getOutputString());
-            innerScheduleList.add(tmpSchedule);
-        }
+                tmpSchedule.setUploaded_username(username);
+                tmpSchedule.setAllday((cur2.getInt(8) == 1) ? true : false);
+                tmpSchedule.setMemo(cur2.getString(5));
+                tmpSchedule.setTimezone(cur2.getString(6));
+
+                try {
+                    tmpSchedule.setColor(cur2.getString(12));
+                    Log.d("color_calendar", cur2.getString(12));
+                    Log.d("color_event", cur2.getString(14));
+                    Log.d("color_key", cur2.getString(15));
+                } catch (Exception e) {
+                }
+
+                try {
+                    Log.d("Location", cur2.getString(13));
+                    tmpSchedule.setLocation(cur2.getString(13));
+                } catch (Exception e) {
+
+                }
+                // datetime ms -> string
+                DateTimeFormatter dtf_starttime = new DateTimeFormatter(tmpSchedule.getStarttime_ms());
+                tmpSchedule.setStarttime(dtf_starttime.getOutputString());
+
+                DateTimeFormatter dtf_endtime = new DateTimeFormatter(tmpSchedule.getEndtime_ms());
+                tmpSchedule.setEndtime(dtf_endtime.getOutputString());
+
+                innerScheduleList.add(tmpSchedule);
+                //            if(i++ >= num_schedules - amount)
+                //                innerScheduleList.add(tmpSchedule);
+                if (i++ == amount)
+                    break;
+            }catch(Exception e){
+                break;
+            }
+        }while (cur2.moveToNext());
     }
 
     public long obtainLatestCalendarId(){

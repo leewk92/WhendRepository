@@ -50,6 +50,15 @@ public class Schedule {
     private User uploaded_user;          // 올린사람 (WK)
     private String uploaded_username;       // 올린사람 이름
     private int uploaded_user_id;
+    private String color;
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     public Schedule(){
         this.title="";

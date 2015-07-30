@@ -67,6 +67,7 @@ public class SearchSchedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ((TextView)v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
         ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
         ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
+        ((TextView)v.findViewById(R.id.location)).setText(CSchedule_list.get(position).getLocation());
         //((TextView)v.findViewById(R.id.like_count)).setText(CSchedule_list.get(position).getLike_count());
 
 

@@ -440,6 +440,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
             inputBundle_forRequest.putCharSequence("title",title.getText());
             inputBundle_forRequest.putCharSequence("memo", memo.getText());
+            inputBundle_forRequest.putCharSequence("location",location.getText());
+            Log.d("updateLocation",location.getText()+"");
             /* if(hashtags_id.size() !=0){
                 inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
             }*/
@@ -630,6 +632,31 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                         hashtags_id.add(id);
                         completed_num ++;
                         Log.d("completed_num",completed_num+"");
+                        if( hashtags_title.length == completed_num){// 아이디를 다 얻었으면 요청
+                            inputBundle_forRequest.putCharSequence("title",title.getText());
+                            inputBundle_forRequest.putCharSequence("memo", memo.getText());
+                            inputBundle_forRequest.putCharSequence("location",location.getText());
+                            if(hashtags_id.size() !=0){
+                                inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
+                            }
+                            Calendar cal = Calendar.getInstance();
+                            cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start);
+
+                            Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
+                            Log.d("getTimeinMillis",cal.getTimeInMillis()+"");
+
+                            DateTimeFormatter dtf = new DateTimeFormatter(cal.getTimeInMillis());
+                            inputBundle_forRequest.putCharSequence("start_time", dtf.getOutputString());
+
+                            Log.d("getTimeinString",dtf.getOutputString());
+                            cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end);
+                            dtf = new DateTimeFormatter(cal.getTimeInMillis());
+                            inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
+                            String url = "http://119.81.176.245/schedules/";
+                            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest, ImageAbsolutePath);
+                            a.doExecution();
+
+                        }
                     }
                 }catch(Exception e){
                 }
@@ -676,6 +703,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                     if( hashtags_title.length == completed_num){// 아이디를 다 얻었으면 요청
                         inputBundle_forRequest.putCharSequence("title",title.getText());
                         inputBundle_forRequest.putCharSequence("memo", memo.getText());
+                        inputBundle_forRequest.putCharSequence("location",location.getText());
                         if(hashtags_id.size() !=0){
                             inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
                         }

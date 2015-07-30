@@ -193,7 +193,20 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
                     finish();
 
 
-                }catch(Exception e){}
+                }catch(Exception e){
+                    // 안되면 로그인화면으로 이동
+                    AppPrefs appPrefs = new AppPrefs(mContext);
+                    appPrefs.setToken("");
+                    appPrefs.setUsername("");
+                    appPrefs.setPassword("");
+                    appPrefs.setUser_id(0);
+                    Intent i = new Intent(A0_0_OpenAcitivity.this, A0_1_LoginActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+
+                    finish();
+
+                }
 
             }
         }
