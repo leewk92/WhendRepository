@@ -11,5 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview_notify_schedule"
-        android:divider="@android:color/transparent"/>
+        android:divider="@android:color/transparent"
+        android:listSelector="@drawable/listview_selector" />
 </FrameLayout>

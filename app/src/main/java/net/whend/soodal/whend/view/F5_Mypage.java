@@ -348,8 +348,11 @@ public class F5_Mypage extends Fragment {
 
                     ImageAbsolutePath = createImageFromBitmap(photo);
 
+                    String url = "http://119.81.176.245/userinfos/";
 
-                    //이미지를보내려다 포기
+                    HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(getActivity(),url,"PUT",ImageAbsolutePath);
+                    a.doExecution();
+
                     //HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(getActivity(),rootView,"url","POST","ImageAbsolutePath);
                     //a.doExecution();
 
@@ -362,6 +365,8 @@ public class F5_Mypage extends Fragment {
                     user_photo.setImageDrawable(temp);
 
                     ImageAbsolutePath = createImageFromBitmap(photo);
+
+
                 }
             }
         }
@@ -370,16 +375,17 @@ public class F5_Mypage extends Fragment {
 // 프로필 올리기
     class HTTPRestfulUtilizerExtender2 extends HTTPRestfulUtilizer {
 
-
-        private View v;
         //Constructor
-        HTTPRestfulUtilizerExtender2(Context mContext,View rootView, String url, String HTTPRestType, String photo){
+        HTTPRestfulUtilizerExtender2(Context mContext, String url, String HTTPRestType, String photo){
             this.setPhoto(photo);
-            this.v = rootView;
+
             setmContext(mContext);
             setUrl(url);
             setHTTPRestType(HTTPRestType);
+            setPhoto(photo);
+
             task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor2 url", url);
         }
 
         public void doExecution(){
@@ -395,7 +401,7 @@ public class F5_Mypage extends Fragment {
                 String url = strings[0];
                 String sHTTPRestType = strings[1];
 
-                setOutputString(POST(url, getInputBundle()));
+                setOutputString(PUT(url, getInputBundle()));
 
 
                 return getOutputString();
