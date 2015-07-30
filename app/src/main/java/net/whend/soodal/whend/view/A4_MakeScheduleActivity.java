@@ -360,13 +360,17 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         try {
 
             // create a File object for the parent directory
-            File wallpaperDirectory = new File("/sdcard/Whend/");
+
+            //File wallpaperDirectory = new File("/sdcard/Whend/");
+            File wallpaperDirectory = new File(this.getCacheDir().getPath());
+
             // have the object build the directory structure, if needed.
             wallpaperDirectory.mkdirs();
 
             //Capture is folder name and file name with date and time
             fileOutputStream = new FileOutputStream(String.format(
-                    "/sdcard/Whend/whend%d.jpg",
+                    this.getCacheDir().getPath()+"/whend%d.jpg",
+
                     currentTime = System.currentTimeMillis()));
 
             // Here we Resize the Image ...
@@ -390,7 +394,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         } finally {
         }
 
-        return "/sdcard/Whend/whend"+ currentTime + ".jpg";
+        return this.getCacheDir().getPath()+"/whend"+ currentTime + ".jpg";
     }
 
     @Override
