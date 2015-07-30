@@ -2,6 +2,7 @@ package net.whend.soodal.whend.form;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.ScheduleFollow_User;
+import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
 
 import java.util.ArrayList;
@@ -40,21 +42,22 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
 
         // 리스너 함수들
         View user = (View) v.findViewById(R.id.user_clickableLayout);
-        ImageView like_button = (ImageView) v.findViewById(R.id.like_button);
+        ImageView follow_button = (ImageView) v.findViewById(R.id.follow_button);
 
         UserProfileClickListener(user, position);
-        LikeButtonClickListener(like_button, position);
+        LikeButtonClickListener(follow_button, v, position);
 
         return v;
     }
 
     // 유저 이름 누를때 리스너
-    public void UserProfileClickListener(View userview, int position) {
+    public void UserProfileClickListener(View userview, final int position) {
         userview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, A2_UserProfileActivity.class);
-                intent.putExtra("text", String.valueOf("URL"));
+                intent.putExtra("id", User_list.get(position).getUser().getId());
+                Log.d("profileId",User_list.get(position).getUser().getId()+"");
                 context.startActivity(intent);
             }
         });
@@ -62,12 +65,23 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
     }
 
 
-    // 좋아요 누를 때 리스너
-    public void LikeButtonClickListener(ImageView likebutton, int position) {
+    public void AdjustDataToLayout(final View v, int position) {
 
+        ((TextView) v.findViewById(R.id.fullname)).setText(User_list.get(position).getUsername());
+        if(User_list.get(position).getIsFollow() == true)
+            ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.like_on);
+        else
+            ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.like);
+        // image najoong ae
+    }
+
+
+    // 좋아요 누를 때 리스너
+    public void LikeButtonClickListener(ImageView follow_button,View rootView, int position){
+        final View rv = rootView;
         final int pos = position;
-        final ImageView iv = likebutton;
-        likebutton.setOnClickListener(new View.OnClickListener() {
+        final ImageView iv = follow_button;
+        follow_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -75,12 +89,24 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
                     Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
                     toast1.show();
                     User_list.get(pos).clickFollow();
-                    iv.setImageResource(R.drawable.notice_on);          // 바꿔야됨 나중에
+                    iv.setImageResource(R.drawable.like_on);
+
+                    String url = "http://119.81.176.245/userinfos/" + User_list.get(pos).getUser().getId() + "/follow/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url, "PUT");
+                    a.doExecution();
+                //    ((TextView) rv.findViewById(R.id.follower_count)).setText(String.valueOf(User_list.get(pos).getUser().getCount_follower()));
+
                 } else if (User_list.get(pos).getIsFollow() == true) {
                     Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
                     toast2.show();
                     User_list.get(pos).clickFollow();
                     iv.setImageResource(R.drawable.like);
+
+                    String url = "http://119.81.176.245/userinfos/" + User_list.get(pos).getUser().getId() + "/follow/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url, "PUT");
+                    a.doExecution();
+              //      ((TextView) rv.findViewById(R.id.follower_count)).setText(String.valueOf(User_list.get(pos).getUser().getCount_follower()));
+
                 }
 
             }
@@ -88,10 +114,37 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
 
     }
 
-    public void AdjustDataToLayout(final View v, int position) {
 
-        ((TextView) v.findViewById(R.id.fullname)).setText(User_list.get(position).getUsername());
+    class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
 
-        // image najoong ae
+        public HTTPRestfulUtilizerExtender(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(PUT(url, getInputBundle()));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+            }
+        }
     }
+
 }

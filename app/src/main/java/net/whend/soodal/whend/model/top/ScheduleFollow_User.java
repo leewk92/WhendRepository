@@ -8,7 +8,7 @@ import net.whend.soodal.whend.model.base.User;
  * Created by wonkyung on 15. 7. 12.
  */
 public class ScheduleFollow_User {
-
+    private User user;
     private String username;
     private String photo_dir;
     private String photo_dir_fromweb;
@@ -21,6 +21,7 @@ public class ScheduleFollow_User {
     public ScheduleFollow_User(User user, boolean isFollow){
         this.username = user.getUsername();
         this.photo_dir = user.getPhoto();
+        this.user = user;
         this.isFollow = isFollow;
     }
     public ScheduleFollow_User(String username, String photo_dir, boolean isFollow){
@@ -59,5 +60,25 @@ public class ScheduleFollow_User {
     }
     public void setIsFollow(boolean isFollow) {
         this.isFollow = isFollow;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getPhoto_dir_fromweb() {
+        return photo_dir_fromweb;
+    }
+
+    public void setPhoto_dir_fromweb(String photo_dir_fromweb) {
+        this.photo_dir_fromweb = photo_dir_fromweb;
+    }
+
+    public boolean isFollow() {
+        return isFollow;
     }
 }

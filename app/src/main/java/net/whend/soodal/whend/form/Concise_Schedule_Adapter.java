@@ -29,6 +29,7 @@ import net.whend.soodal.whend.view.A2_UserProfileActivity;
 import net.whend.soodal.whend.view.A5_WhoFollowsScheduleActivity;
 import net.whend.soodal.whend.view.A6_WriteCommentActivity;
 import net.whend.soodal.whend.view.F5_Mypage;
+import net.whend.soodal.whend.view.MainActivity;
 
 import org.json.JSONObject;
 
@@ -70,16 +71,28 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ImageView follow_button = (ImageView)v.findViewById(R.id.follow_button);
         ImageView comment_button = (ImageView)v.findViewById(R.id.comment_button);
         View schedulefollow_user_clickablelayout = (View)v.findViewById(R.id.schedulefollow_user_clickablelayout);
+        View schedulelike_user_clickablelayout = (View)v.findViewById(R.id.schedulelike_user_clickablelayout);
         TextView like_count = (TextView)v.findViewById(R.id.like_count);
         TextView follow_count = (TextView)v.findViewById(R.id.follow_count);
 
+        try {
 
-        UserProfileClickListener(user_clickableLayout, position);
-        //UserProfileClickListener(comment_writer,position);
-        LikeButtonClickListener(like_button, like_count,position);
-        WriteCommentClickListener(comment_button,position);
-        FollowButtonClickListener(follow_button, follow_count, position);
-        WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout, position);
+            UserProfileClickListener(user_clickableLayout, position);
+            //UserProfileClickListener(comment_writer,position);
+            LikeButtonClickListener(like_button, like_count, position);
+            WriteCommentClickListener(comment_button, position);
+            FollowButtonClickListener(follow_button, follow_count, position);
+            WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout, position);
+            WhoLikesScheduleClickListener(schedulelike_user_clickablelayout, position);
+        }catch(Exception e){
+            Intent intent = new Intent(context, MainActivity.class);
+            
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+
+
+        }
+
         return v;
     }
 
@@ -99,13 +112,26 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
     }
 
-    // 외 15명 누를 때 리스너
+    // 받아보기 15명 누를 때 리스너
     public void WhoFollowsScheduleClickListener(View schedulefollow_user_clickablelayout,final int position){
         schedulefollow_user_clickablelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, A5_WhoFollowsScheduleActivity.class);
-                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/"+ CSchedule_list.get(position).getId()+"/followers/"));       // 나중에 해결
+                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/" + CSchedule_list.get(position).getId() + "/followers/"));       // 나중에 해결
+                context.startActivity(intent);
+            }
+        });
+
+    }
+
+    // 좋아요 15명 누를 때 리스너
+    public void WhoLikesScheduleClickListener(View schedulelike_user_clickablelayout,final int position){
+        schedulelike_user_clickablelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, A5_WhoFollowsScheduleActivity.class);
+                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/"+ CSchedule_list.get(position).getId()+"/like_users/"));       // 나중에 해결
                 context.startActivity(intent);
             }
         });
@@ -217,7 +243,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ((TextView)v.findViewById(R.id.follow_count)).setText(String.valueOf(CSchedule_list.get(position).getFollow_count()));
         ((TextView)v.findViewById(R.id.location)).setText(String.valueOf(CSchedule_list.get(position).getLocation()) == null ? "" : CSchedule_list.get(position).getLocation())
         ;
-        Log.d("location_view",String.valueOf(CSchedule_list.get(position).getLocation()));
+        ((TextView)v.findViewById(R.id.comment_count)).setText(String.valueOf(CSchedule_list.get(position).getComment_count()));
+        Log.d("location_view", String.valueOf(CSchedule_list.get(position).getLocation()));
         Log.d("like", String.valueOf(CSchedule_list.get(position).getIsLike()));
         if(CSchedule_list.get(position).getIsLike() == true)
             ((ImageView)v.findViewById(R.id.like_button)).setImageResource(R.drawable.like_on);

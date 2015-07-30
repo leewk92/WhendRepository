@@ -86,14 +86,16 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         ImageView follow_button = (ImageView)findViewById(R.id.follow_button);
         ImageView comment_button = (ImageView)findViewById(R.id.comment_button);
         View schedulefollow_user_clickablelayout = (View)findViewById(R.id.schedulefollow_user_clickablelayout);
+        View schedulelike_user_clickablelayout = (View)findViewById(R.id.schedulelike_user_clickablelayout);
         TextView like_count = (TextView)findViewById(R.id.like_count);
         TextView follow_count = (TextView)findViewById(R.id.follow_count);
 
         UserProfileClickListener(user_clickableLayout);
         LikeButtonClickListener(like_button, like_count);
-        FollowButtonClickListener(follow_button,follow_count);
+        FollowButtonClickListener(follow_button, follow_count);
         WriteCommentClickListener(comment_button);
         WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout);
+        WhoLikesScheduleClickListener(schedulelike_user_clickablelayout);
 
     }
 
@@ -157,13 +159,25 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
 
     }
 
-    // 외 15명 누를 때 리스너
+    // 받아보기 15명 누를 때 리스너
     public void WhoFollowsScheduleClickListener(View schedulefollow_user_clickablelayout){
         schedulefollow_user_clickablelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, A5_WhoFollowsScheduleActivity.class);
-                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/"+ cs.getId()+"/followers/"));       // 나중에 해결
+                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/" + cs.getId() + "/followers/"));       // 나중에 해결
+                mContext.startActivity(intent);
+            }
+        });
+
+    }
+    // 좋아요 15명 누를 때 리스너
+    public void WhoLikesScheduleClickListener(View schedulelike_user_clickablelayout){
+        schedulelike_user_clickablelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, A5_WhoFollowsScheduleActivity.class);
+                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/"+ cs.getId()+"/like_users/"));       // 나중에 해결
                 mContext.startActivity(intent);
             }
         });
@@ -270,9 +284,10 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.date_start)).setText(cs.getDate_start());
         ((TextView) findViewById(R.id.time_start)).setText(cs.getTime_start());
-
+        ((TextView) findViewById(R.id.location)).setText(cs.getLocation());
         ((TextView) findViewById(R.id.date_end)).setText(cs.getDate_end());
         ((TextView) findViewById(R.id.time_end)).setText(cs.getTime_end());
+        ((TextView) findViewById(R.id.comment_count)).setText(String.valueOf(cs.getComment_count()));
 
         ((TextView) findViewById(R.id.memo)).setText(cs.getMemo());
         ((TextView) findViewById(R.id.like_count)).setText(String.valueOf(cs.getLike_count()));
@@ -341,7 +356,8 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                     s.setFollow_count((tmp_ith.getInt("count_follow")));
                     s.setLike_count((tmp_ith.getInt("count_like")));
-
+                    s.setLocation((tmp_ith.getString("location")));
+                    s.setComment_count((tmp_ith.getInt("count_comment")));
                     cs = new Concise_Schedule(s);
                     cs.setIsLike(tmp_ith.getInt("like") == 1 ? true : false);
                     cs.setIsFollow(tmp_ith.getInt("follow") == 1 ? true : false);

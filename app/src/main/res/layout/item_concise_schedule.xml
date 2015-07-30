@@ -219,46 +219,52 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom ="24dp">
-            <TextView
-                android:id="@+id/like_count"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:text="15"
-                android:textSize="12dp"
-                />
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:layout_weight="2"
                 >
-                <!--
+                <LinearLayout
+                    android:id="@+id/schedulelike_user_clickablelayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp">
+                    <TextView
+                        android:id="@+id/like_count"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:text="15"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="명"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        />
+                </LinearLayout>
+
                 <TextView
-                    android:id="@+id/best_friend_username"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:text="김민수"
+                    android:text="의 관심과"
                     android:textSize="12dp"
                     />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="님"
-                    android:textSize="12dp"
-                    />
-                    -->
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="2"
+                >
                 <LinearLayout
                     android:id="@+id/schedulefollow_user_clickablelayout"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp">
-                    <!--
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:text=" 외"
-                        android:textSize="12dp"
-                        />
-                        -->
                     <TextView
                         android:id="@+id/follow_count"
                         android:layout_width="wrap_content"
@@ -279,11 +285,47 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:text="이 일정에 추가했습니다."
+                    android:text="의 받아보기, "
                     android:textSize="12dp"
                     />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="2"
+                >
+                <LinearLayout
+                    android:id="@+id/schedule_comment_clickablelayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp">
+                    <TextView
+                        android:id="@+id/comment_count"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:text="15"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="개"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="의 댓글이 있어요."
+                    android:textSize="12dp"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
+
 <!--
         <LinearLayout
             android:layout_width="match_parent"

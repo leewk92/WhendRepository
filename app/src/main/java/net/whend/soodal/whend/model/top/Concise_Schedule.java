@@ -33,6 +33,7 @@ public class Concise_Schedule {
     private int like_count;
     private String best_friend_like;
     private int follow_count;
+    private int comment_count;
     private String best_friend_comment;
     private String best_comment;
     private HashTag[] hashTags;         // 나중에 생각
@@ -58,6 +59,7 @@ public class Concise_Schedule {
         this.memo = s.getMemo();
         this.like_count = s.getLike_count();
         this.follow_count = s.getFollow_count();
+        this.comment_count = s.getComment_count();
         this.location = s.getLocation();
         this.isLike=false;
         this.isFollow=false;
@@ -73,12 +75,21 @@ public class Concise_Schedule {
         this.like_count = s.getLike_count();
         this.best_friend_like = best_friend_forLike.getUsername();
         this.follow_count = s.getFollow_count();
+        this.comment_count = s.getComment_count();
         this.best_friend_comment = best_friend_forComment.getWrite_user().getUsername();
         this.best_comment = best_friend_forComment.getContents();
 
         this.isLike=false;
         this.isFollow=false;
         DateParse(s);
+    }
+
+    public int getComment_count() {
+        return comment_count;
+    }
+
+    public void setComment_count(int comment_count) {
+        this.comment_count = comment_count;
     }
 
     public void DateParse(Schedule s){

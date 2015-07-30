@@ -47,7 +47,7 @@
             android:layout_weight="1"
             >
             <ImageView
-                android:id="@+id/like_button"
+                android:id="@+id/follow_button"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/like"

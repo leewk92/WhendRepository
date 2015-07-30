@@ -204,7 +204,7 @@ public class F5_1_MyTimeline extends Fragment {
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
-
+                        s.setComment_count((tmp_ith.getInt("count_comment")));
                         Concise_Schedule cs = new Concise_Schedule(s);
                         cs.setIsLike(tmp_ith.getInt("like") == 1 ? true : false);
                         cs.setIsFollow(tmp_ith.getInt("follow") == 1 ? true : false);
@@ -271,7 +271,7 @@ public class F5_1_MyTimeline extends Fragment {
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
-
+                        s.setComment_count((tmp_ith.getInt("count_comment")));
                         Concise_Schedule cs = new Concise_Schedule(s);
                         cs.setIsLike(tmp_ith.getInt("like") == 1 ? true : false);
                         cs.setIsFollow(tmp_ith.getInt("follow") == 1 ? true : false);

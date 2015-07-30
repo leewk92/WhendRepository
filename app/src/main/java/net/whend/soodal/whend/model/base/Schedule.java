@@ -45,6 +45,7 @@ public class Schedule {
 //    private String uploaded_at;       // "
     private int like_count;             // 좋아요 누른 사람 수 (WK)
     private int follow_count;
+    private int comment_count;
     private HashTag hashtag;            // 나중에 생
     private int follow_user;            // 캘린더에 넣은사람 (WK)
     private User uploaded_user;          // 올린사람 (WK)
@@ -76,7 +77,13 @@ public class Schedule {
 
     }
 
+    public int getComment_count() {
+        return comment_count;
+    }
 
+    public void setComment_count(int comment_count) {
+        this.comment_count = comment_count;
+    }
 
     // Accessors
     public int getId(){
