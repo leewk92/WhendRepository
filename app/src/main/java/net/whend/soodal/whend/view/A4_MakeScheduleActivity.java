@@ -54,7 +54,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     static TextView date_start,time_start,date_end,time_end;
     static int completed_num=0;
     EditText title,location,memo;
-    String sDate, sContent, sLocation, sTime, sStarttime,sEndtime;
+    String sStartDate, sEndDate, sContent, sLocation, sTime, sStarttime,sEndtime;
     Bundle inputBundle_forRequest = new Bundle();
     ProgressDialog progress;
 
@@ -94,7 +94,9 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this.getIntent());
 
-
+        sStartDate = intent.getStringExtra("date_start");
+        sEndDate = intent.getStringExtra("date_end");
+        sTime = intent.getStringExtra("time_start");
         sContent = intent.getStringExtra("content");
         sLocation = intent.getStringExtra("location");
         sStarttime = intent.getStringExtra("datetime_start");
@@ -141,6 +143,12 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             HOUR_end = dtf.getCalendar().get(Calendar.HOUR);
             MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
         }
+
+        if(sStartDate != null)
+            date_start.setText(sStartDate);
+
+        if(sEndDate != null)
+            date_end.setText(sEndDate);
 
         if(sLocation != null)
             location.setText(sLocation);

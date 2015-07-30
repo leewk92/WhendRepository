@@ -38,14 +38,40 @@
             android:padding="10dp">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2015년 2월 7일"
-                android:id="@+id/Date_card"
-                android:layout_marginBottom="5dp"
-                android:textColor="#ff000000"
-                android:textSize="17dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2015년 2월 7일"
+                    android:id="@+id/date_start"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="#ff000000"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:id="@+id/date_dash"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="#ff000000"
+                    android:textSize="17dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2015년 2월 7일"
+                    android:id="@+id/date_end"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="#ff000000"
+                    android:textSize="17dp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,7 +99,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="하루종일"
-                    android:id="@+id/Time_card"
+                    android:id="@+id/time_start"
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold"
+                    android:textIsSelectable="true"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#ff000000"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:id="@+id/time_dash"
+                    android:textStyle="bold"
+                    android:textIsSelectable="true"
+                    android:textColor="#ff000000"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="하루종일"
+                    android:id="@+id/time_end"
                     android:layout_marginLeft="10dp"
                     android:textStyle="bold"
                     android:textIsSelectable="true"

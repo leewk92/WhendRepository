@@ -71,7 +71,7 @@ public class QuiltViewBase extends GridLayout {
 			params.width = size[0]*child.width_ratio;
 			params.height = size[1]*child.height_ratio;
 			params.rowSpec = GridLayout.spec(Integer.MIN_VALUE, child.height_ratio);
-		params.columnSpec = GridLayout.spec(Integer.MIN_VALUE, child.width_ratio);
+			params.columnSpec = GridLayout.spec(Integer.MIN_VALUE, child.width_ratio);
 		view.setLayoutParams(params);
 
 

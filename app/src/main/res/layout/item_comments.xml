@@ -27,7 +27,7 @@
                 android:textColor="#212121"
                 android:gravity="center"
                 android:layout_marginLeft="10dp"
-                />
+                android:textStyle="bold" />
 
         </LinearLayout>
 

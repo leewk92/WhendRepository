@@ -14,6 +14,8 @@ import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.Upload_Schedule;
 import net.whend.soodal.whend.view.A4_MakeScheduleActivity;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -58,9 +60,22 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
     @Override
     public void onBindViewHolder(Upload_ViewHolder holder, int position) {
         final Upload_Schedule schedule = Schedule_list.get(position);
-        holder.vDate.setText(schedule.getDate());
+
+        if(schedule.getDateStart().equals(schedule.getDateEnd())){
+            holder.vDate_dash.setVisibility(View.GONE);
+            holder.vDate_end.setVisibility(View.GONE);
+        }
+
+        if(schedule.getTime_end().equals(schedule.getTime_start())){
+            holder.vTime_dash.setVisibility(View.GONE);
+            holder.vTime_end.setVisibility(View.GONE);
+        }
+
+
+        holder.vDate_start.setText(schedule.getDateStart());
+        holder.vDate_end.setText(schedule.getDateEnd());
         holder.vContent.setText(schedule.getContent());
-        holder.vTime.setText(schedule.getTime());
+        holder.vTime_start.setText(schedule.getTime_start());
         holder.vLocation.setText(schedule.getLocation());
 
         holder.setClickListener(new ItemClickListener(){
@@ -68,9 +83,11 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 Intent intent = new Intent(context, A4_MakeScheduleActivity.class);
-                intent.putExtra("date", schedule.getDate().toString());
+                intent.putExtra("date_start", schedule.getDateStart().toString());
+                intent.putExtra("date_end", schedule.getDateEnd().toString());
                 intent.putExtra("content", schedule.getContent().toString());
-                intent.putExtra("time",schedule.getTime().toString());
+                intent.putExtra("time_start", schedule.getTime_start().toString());
+                intent.putExtra("time_end", schedule.getTime_end().toString());
                 intent.putExtra("location",schedule.getLocation().toString());
                 intent.putExtra("text", String.valueOf("URL")); // 아마 유저정보...?
                 intent.putExtra("datetime",schedule.getSchedule().getStarttime());
@@ -105,9 +122,9 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
 
     public static class Upload_ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        protected TextView vDate;
+        protected TextView vDate_start, vDate_end, vDate_dash;
         protected TextView vContent;
-        protected TextView vTime;
+        protected TextView vTime_start, vTime_end, vTime_dash;
         protected TextView vLocation;
         protected LinearLayout vColor;
         private ItemClickListener clickListener;
@@ -115,9 +132,13 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
 
         public Upload_ViewHolder(View v){
             super(v);
-            vDate = (TextView) v.findViewById(R.id.Date_card);
+            vDate_start = (TextView) v.findViewById(R.id.date_start);
+            vDate_dash = (TextView) v.findViewById(R.id.date_dash);
+            vDate_end = (TextView) v.findViewById(R.id.date_end);
             vContent = (TextView) v.findViewById(R.id.Content_card) ;
-            vTime = (TextView) v.findViewById(R.id.Time_card);
+            vTime_start = (TextView) v.findViewById(R.id.time_start);
+            vTime_dash = (TextView) v.findViewById(R.id.time_dash);
+            vTime_end = (TextView) v.findViewById(R.id.time_end);
             vLocation = (TextView) v.findViewById(R.id.Location_card);
             vColor = (LinearLayout) v.findViewById(R.id.color);
 

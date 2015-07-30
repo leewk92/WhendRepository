@@ -42,9 +42,6 @@ public class A1_UploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a1_upload_layout);
 /*
-        arraySchedule.add(new Upload_Schedule("2015년 2월 7일", "준삐 생일", "하루 종일", "내 방"));
-        arraySchedule.add(new Upload_Schedule("2015년 6월 15일", "민수 생일", "하루 종일", "민수 방"));
-        arraySchedule.add(new Upload_Schedule("2015년 12월 23일", "원경 생일", "하루 종일", "원경 방"));
 */
         getDataFromInnerCalendar(pos++);
 
@@ -83,8 +80,8 @@ public class A1_UploadActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(A1_UploadActivity.this, A4_MakeScheduleActivity.class);
-            //    intent.putExtra("content",getText(R.id.));
-            //    intent.putExtra("location",);
+                //    intent.putExtra("content",getText(R.id.));
+                //    intent.putExtra("location",);
             //    intent.putExtra("datetime_start",);
             //    intent.putExtra("datetime_end",);         도와줘 준삐 ...
 

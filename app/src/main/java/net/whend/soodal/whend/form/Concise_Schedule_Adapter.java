@@ -1,4 +1,5 @@
 package net.whend.soodal.whend.form;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -104,7 +105,12 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
                 Intent intent = new Intent(context, A2_UserProfileActivity.class);
                 intent.putExtra("id", CSchedule_list.get(position).getUser_id());
-                context.startActivity(intent);
+
+                Activity activity = (Activity) context;
+                activity.startActivity(intent);
+
+                activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
+
 
 
             }
@@ -225,7 +231,11 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             public void onClick(View v) {
                 Intent intent = new Intent(context, A6_WriteCommentActivity.class);
                 intent.putExtra("id", CSchedule_list.get(pos).getId());
-                context.startActivity(intent);
+
+                Activity activity = (Activity) context;
+                activity.startActivity(intent);
+
+                activity.overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
             }
         });
 

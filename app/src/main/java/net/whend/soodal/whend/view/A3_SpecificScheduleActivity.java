@@ -47,7 +47,17 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_right_out);
     }
-    
+
+
+    public void onResume() {
+        super.onResume();
+        Comment_list.clear();
+        String url = "http://119.81.176.245/schedules/"+id+"/";
+
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this, url,"GET");
+        a.doExecution();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

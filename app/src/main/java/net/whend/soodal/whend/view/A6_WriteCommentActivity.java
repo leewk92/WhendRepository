@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,22 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
         setContentView(R.layout.a6_writecomment_layout);
         Intent intent = new Intent(this.getIntent());
         id = intent.getIntExtra("id", 0);                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_writecomment);
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitle("");
+
+
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_right_out);
+            }
+        });
+
         comment_url = "http://119.81.176.245/schedules/" + id + "/comments/";
 
         adapter = new WriteComment_Adapter(this, R.layout.item_writecomments, Comment_list);
