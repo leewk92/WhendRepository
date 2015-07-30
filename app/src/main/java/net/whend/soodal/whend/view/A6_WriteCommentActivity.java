@@ -40,7 +40,7 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
     WriteComment_Adapter adapter;
     JSONObject outputSchedulesJson;
     private int id;
-    String url;
+    static String comment_url;
     static String nextURL;
     EditText comment_content;
     Button comment_write_button;
@@ -57,22 +57,22 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
         setContentView(R.layout.a6_writecomment_layout);
         Intent intent = new Intent(this.getIntent());
         id = intent.getIntExtra("id", 0);                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
-        url = "http://119.81.176.245/schedules/" + id + "/comments/";
+        comment_url = "http://119.81.176.245/schedules/" + id + "/comments/";
 
         adapter = new WriteComment_Adapter(this, R.layout.item_writecomments, Comment_list);
 
         comment_content = (EditText) findViewById(R.id.comment_content);
         comment_write_button = (Button) findViewById(R.id.comment_write_button);
 
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this, url, "GET");
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this, comment_url, "GET");
         a.doExecution();
 
         WriteCommentButtonClickListener(this, comment_write_button, comment_content);
 
         listview = (ListView) findViewById(R.id.listview_comments);
         listview.setAdapter(adapter);
-        listview.setOnScrollListener(new EndlessScrollListener());
-
+        View loadmore_clickablelayout = findViewById(R.id.loadmore_clickablelayout);
+        loadmore_clickablelayout(this, loadmore_clickablelayout);
         // Keyboard 위치에 따라 입력칸의 높이 다르게 만들기
         final LinearLayout Linear_listview = (LinearLayout)findViewById(R.id.linear_listview);
         final View activityRootView = findViewById(R.id.a6_writecomment);
@@ -84,71 +84,25 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
                 int presentHeight = activityRootView.getHeight();
                 int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
                 int edittext_comment_height = edittext_comment.getHeight();
-                Log.d("rootHeight",rootHeight+"");
-                Log.d("presentHeight",presentHeight+"");
-                Log.d("heightDiff",heightDiff+"");
-                Log.d("editText_comment_height",edittext_comment_height+"");
+      //          Log.d("rootHeight",rootHeight+"");
+      //          Log.d("presentHeight",presentHeight+"");
+      //          Log.d("heightDiff",heightDiff+"");
+      //          Log.d("editText_comment_height",edittext_comment_height+"");
                 if (heightDiff > 100) { // if more than 100 pixels, its probably a keyboard...
                     //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)pxFromDp(mContext,183));
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(rootHeight - heightDiff-edittext_comment_height*2-pxFromDp(mContext, 50)));// 왜 4.5인지는 모름.. 그냥 몇번 시도 끝에 찾은 값
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(rootHeight - heightDiff-edittext_comment_height*2-pxFromDp(mContext, 50)-pxFromDp(mContext, 40)));// 왜 4.5인지는 모름.. 그냥 몇번 시도 끝에 찾은 값
                     Linear_listview.setLayoutParams(params);
                 }
                 else{
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(rootHeight-heightDiff-edittext_comment_height*2-pxFromDp(mContext, 50)));
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(rootHeight-heightDiff-edittext_comment_height*2-pxFromDp(mContext, 50)-pxFromDp(mContext, 40)));
                     Linear_listview.setLayoutParams(params);
                 }
             }
         });
-
-
-
-
-
     }
 
-    // 끝없이 로딩 하는거
-    public class EndlessScrollListener implements AbsListView.OnScrollListener {
 
-        private int visibleThreshold = 2;
-        private int currentPage = 0;
-        private int previousTotal = 0;
-        private boolean loading = true;
-
-        public EndlessScrollListener() {
-
-        }
-        public EndlessScrollListener(int visibleThreshold) {
-            this.visibleThreshold = visibleThreshold;
-        }
-
-        @Override
-        public void onScroll(AbsListView view, int firstVisibleItem,
-                             int visibleItemCount, int totalItemCount) {
-
-            if (loading) {
-                if (totalItemCount > previousTotal) {
-                    loading = false;
-                    previousTotal = totalItemCount;
-                    currentPage++;
-                }
-            }
-            if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                // I load the next page of gigs using a background task,
-                // but you can call any function here.
-                Log.d("lastItemScrolled", "true");
-                try{
-                    HTTPRestfulUtilizerExtender_loadmore b = new HTTPRestfulUtilizerExtender_loadmore(A6_WriteCommentActivity.this,nextURL,"POST");
-                    b.doExecution();
-                }catch(Exception e){
-
-                }
-                loading = true;
-            }
-        }
-        @Override
-        public void onScrollStateChanged(AbsListView view, int scrollState) {
-        }
-    }
+//
 
         // 댓글달기 아이콘 누를 때 리스너
 
@@ -167,14 +121,28 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
                 }else{
                     inputBundle.clear();
                     inputBundle.putCharSequence("content", comment_content.getText());
-
-                    HTTPRestfulUtilizerExtender2 b = new HTTPRestfulUtilizerExtender2(context,url,"POST",inputBundle);
+                    Log.d("comment_url",comment_url);
+                    HTTPRestfulUtilizerExtender2 b = new HTTPRestfulUtilizerExtender2(context,comment_url,"POST",inputBundle);
                     b.doExecution();
                 }
             }
         });
 
     }
+    // 더보기 버튼 리스너
+    public void loadmore_clickablelayout(final Context context, View loadmore_clickablelayout) {
+
+        loadmore_clickablelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(context,nextURL,"GET");
+            b.doExecution();
+            }
+        });
+
+    }
+
 
 
     // for getting comments
@@ -206,12 +174,18 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+                ArrayList<Comment> tmpComment_list = new ArrayList<Comment>();
+                ArrayList<Comment> forsortingComment_list = new ArrayList<Comment>();
+                for(int i=0; i<Comment_list.size(); i++){
+                    forsortingComment_list.add(Comment_list.get(i));
+                }
+                Comment_list.clear();
                 try{
                     outputSchedulesJson = getOutputJsonObject();
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
+
                     for(int i=0; i<results.length() ;i++){
                         Comment s = new Comment();
                         tmp_ith = results.getJSONObject(i);
@@ -219,8 +193,22 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
                         s.setWrite_username(tmp_ith.getString("user_name"));
                         s.setWrite_userid(tmp_ith.getInt("user_id"));
 
-                        Comment_list.add(s);
+                        tmpComment_list.add(s);
+
                     }
+
+                    for(int i=0; i<tmpComment_list.size(); i++){
+                        //Comment_list.add(tmpComment_list.get(tmpComment_list.size()-1-i));
+                        Comment_list.add(tmpComment_list.get(i));
+
+                    }
+
+                    for(int i=0; i<forsortingComment_list.size(); i++){
+                        Comment_list.add(forsortingComment_list.get(i));
+
+                    }
+
+
                     adapter.notifyDataSetChanged();
                 }catch(Exception e){
 

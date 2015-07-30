@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import net.whend.soodal.whend.R;
@@ -49,6 +50,7 @@ public class A5_WhoFollowsScheduleActivity extends Activity {
         adapter = new ScheduleFollow_User_Adapter(this,R.layout.item_schedulefollow_user,User_list);
         listview = (ListView)findViewById(R.id.listview_schedulefollow_user);
         listview.setAdapter(adapter);
+
 
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this,url,"GET");
         a.doExecution();
