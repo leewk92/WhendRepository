@@ -194,16 +194,23 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
                             // 이미지 잘라내기 위한 크기
 
-                            float width_dpi = getResources().getDisplayMetrics().densityDpi;
-                            float height_dpi = 120f;
 
-                            float ratio = width_dpi/height_dpi;
+                            float density  = getResources().getDisplayMetrics().density;
+
+                            float width_dp = (float) getResources().getDisplayMetrics().widthPixels / density;
+                            float height_dp = 120f;
+                            float ratio = width_dp/height_dp;
+
+                            System.out.println("witdhdp " + width_dp);
+                            System.out.println("heightdp " + height_dp);
+                            System.out.println("ratio " + ratio);
 
                             intent.putExtra("crop", "true");
-                            intent.putExtra("aspectX", ratio);
-                            intent.putExtra("aspectY", 1);
-                            intent.putExtra("outputX", 200);
-                            intent.putExtra("outputY", 150);
+                            intent.putExtra("aspectX", (int) (ratio * 100));
+                            intent.putExtra("aspectY", 100);
+
+                            intent.putExtra("outputX", (int)(ratio*100));
+                            intent.putExtra("outputY",  100);
 
                             try {
                                 intent.putExtra("return-data", true);
