@@ -22,7 +22,7 @@ public class Comment {
     private User write_user;             // 나중에 User class 상속 받을 예정 (WK)
     private String write_username;
     private int write_userid;
-    private String user_photo;
+    private String user_photo="";
 
     public String getUser_photo() {
         return user_photo;
@@ -49,7 +49,7 @@ public class Comment {
     }
 
     public Comment(){
-
+        this.user_photo="";
     }
     public Comment(String write_username, String contents){
         this.write_username = write_username;

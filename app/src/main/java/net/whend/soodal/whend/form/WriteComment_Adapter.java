@@ -7,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.Comment;
@@ -21,7 +24,7 @@ import java.util.ArrayList;
 public class WriteComment_Adapter extends Comment_Adapter {
     private ArrayList<Comment> Comment_list;
     private Context context;
-
+    private ImageView user_photo;
     public WriteComment_Adapter(Context context, int textViewResourceId, ArrayList<Comment> lists){
         super(context, textViewResourceId, lists);
         this.Comment_list = lists;
@@ -36,7 +39,7 @@ public class WriteComment_Adapter extends Comment_Adapter {
             v = li.inflate(R.layout.item_writecomments, null);
 
         }
-
+        user_photo = (ImageView)v.findViewById(R.id.user_photo);
         AdjustDataToLayout(v,position);
 
         // 리스너 함수들
@@ -44,6 +47,7 @@ public class WriteComment_Adapter extends Comment_Adapter {
         View user_clickableLayout = (View) v.findViewById(R.id.user_clickableLayout);
         TextView username = (TextView)v.findViewById(R.id.comment_writer);
         TextView content = (TextView)v.findViewById(R.id.comment_content);
+
         UserProfileClickListener(user_clickableLayout, position);
 
         return v;
@@ -67,6 +71,18 @@ public class WriteComment_Adapter extends Comment_Adapter {
             }
         });
 
+    }
+    public void AdjustDataToLayout(final View v, int position) {
+
+        ((TextView) v.findViewById(R.id.comment_writer)).setText(Comment_list.get(position).getWrite_username());
+        ((TextView) v.findViewById(R.id.comment_content)).setText(Comment_list.get(position).getContents());
+        if(Comment_list.get(position).getUser_photo()!="") {
+            Picasso.with(context).load(Comment_list.get(position).getUser_photo()).into((ImageView) v.findViewById(R.id.user_photo));
+
+        }else{
+            // 기본이미지 로드.
+            user_photo.setImageResource(R.drawable.userimage_default);
+        }
     }
 
 }

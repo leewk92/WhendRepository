@@ -218,7 +218,7 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
                         s.setContents(tmp_ith.getString("content"));
                         s.setWrite_username(tmp_ith.getString("user_name"));
                         s.setWrite_userid(tmp_ith.getInt("user_id"));
-
+                     //   s.setUser_photo(tmp_ith.getString("user_photo")  == "null" ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
                         tmpComment_list.add(s);
 
                     }
@@ -285,6 +285,7 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
                         s.setContents(tmp_ith.getString("content"));
                         s.setWrite_username(tmp_ith.getString("user_name"));
                         s.setWrite_userid(tmp_ith.getInt("user_id"));
+                       // s.setUser_photo(tmp_ith.getString("user_photo")  == "null" ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
 
                         Comment_list.add(s);
                         adapter.notifyDataSetChanged();
