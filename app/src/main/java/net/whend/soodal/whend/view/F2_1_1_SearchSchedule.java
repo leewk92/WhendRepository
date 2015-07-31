@@ -229,10 +229,13 @@ public class F2_1_1_SearchSchedule extends Fragment {
                         s.setLocation((tmp_ith.getString("location")));
                         s.setComment_count((tmp_ith.getInt("count_comment")));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
+
                         Concise_Schedule cs = new Concise_Schedule(s);
                         arrayCSchedule.add(cs);
+                        searchSchedule_adapter.notifyDataSetChanged();
                     }
-                    searchSchedule_adapter.notifyDataSetChanged();
+
                 }catch(Exception e){
 
                 }
@@ -287,10 +290,13 @@ public class F2_1_1_SearchSchedule extends Fragment {
                         s.setLocation((tmp_ith.getString("location")));
                         s.setComment_count((tmp_ith.getInt("count_comment")));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
+
                         Concise_Schedule cs = new Concise_Schedule(s);
                         arrayCSchedule.add(cs);
+                        searchSchedule_adapter.notifyDataSetChanged();
                     }
-                    searchSchedule_adapter.notifyDataSetChanged();
+
                 }catch(Exception e){
 
                 }

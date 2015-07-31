@@ -381,6 +381,8 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     s.setLike_count((tmp_ith.getInt("count_like")));
                     s.setLocation((tmp_ith.getString("location")));
                     s.setComment_count((tmp_ith.getInt("count_comment")));
+                    s.setUser_photo(tmp_ith.getString("user_photo") == "null" ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
+
                     cs = new Concise_Schedule(s);
                     cs.setIsLike(tmp_ith.getInt("like") == 1 ? true : false);
                     cs.setIsFollow(tmp_ith.getInt("follow") == 1 ? true : false);
@@ -435,7 +437,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     JSONObject tmp_ith;
 
 
-                    for(int i=0; i<results.length() ;i++){
+                    for (int i = 0; i < results.length() ;i++){
                         Comment s = new Comment();
                         tmp_ith = results.getJSONObject(i);
                         s.setContents(tmp_ith.getString("content"));
@@ -443,8 +445,9 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                         s.setWrite_userid(tmp_ith.getInt("user_id"));
 
                         Comment_list.add(s);
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
+
                 }catch(Exception e){
 
                 }

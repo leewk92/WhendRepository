@@ -229,8 +229,9 @@ public class F2_1_2_SearchHashtag extends Fragment {
                         h.setIs_Follow(tmp_ith.getInt("is_follow")==1?true:false);
                         Search_HashTag sh = new Search_HashTag(h);
                         SHashtag_list.add(sh);
+                        searchHashTag_adapter.notifyDataSetChanged();
                     }
-                    searchHashTag_adapter.notifyDataSetChanged();
+
                 }catch(Exception e){
 
                 }
@@ -288,8 +289,9 @@ public class F2_1_2_SearchHashtag extends Fragment {
                         h.setIs_Follow(tmp_ith.getInt("is_follow") == 1 ? true : false);
                         Search_HashTag sh = new Search_HashTag(h);
                         SHashtag_list.add(sh);
+                        searchHashTag_adapter.notifyDataSetChanged();
                     }
-                    searchHashTag_adapter.notifyDataSetChanged();
+
                 }catch(Exception e){
 
                 }

@@ -201,7 +201,7 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                     tmp_ith = outputSchedulesJson;
                     u.setId(tmp_ith.getInt("user_id"));
                     u.setUsername(tmp_ith.getString("user_name"));
-                    u.setUser_photo(tmp_ith.getString("photo") == null ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".200x200.jpg");
+                    u.setUser_photo(tmp_ith.getString("photo") == "null" ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".100x100.jpg");
                     u.setCount_following_user(tmp_ith.getInt("count_following_user"));
                     u.setCount_following_hashtag(tmp_ith.getInt("count_following_hashtag"));
                     u.setCount_follower(tmp_ith.getInt("count_follower"));

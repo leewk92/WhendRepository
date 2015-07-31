@@ -98,12 +98,14 @@ public class A5_WhoFollowsScheduleActivity extends Activity {
                         User u = new User();
                         u.setId(tmp_ith.getInt("user_id"));
                         u.setUsername(tmp_ith.getString("user_name"));
-                        u.setUser_photo(tmp_ith.getString("photo") == "null" ? "" : tmp_ith.getString("photo"));
+                        u.setUser_photo(tmp_ith.getString("photo") == "null" ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".100x100.jpg");
+
 
                         ScheduleFollow_User sfu = new ScheduleFollow_User(u, tmp_ith.getInt("is_follow")==1?true:false);     // 이거 아직 모름
                         User_list.add(sfu);
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
+
                 } catch (Exception e) {
 
                 }

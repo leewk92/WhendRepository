@@ -22,6 +22,15 @@ public class Comment {
     private User write_user;             // 나중에 User class 상속 받을 예정 (WK)
     private String write_username;
     private int write_userid;
+    private String user_photo;
+
+    public String getUser_photo() {
+        return user_photo;
+    }
+
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
+    }
 
     public int getWrite_userid() {
         return write_userid;

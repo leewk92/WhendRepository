@@ -260,8 +260,9 @@ public class F2_Search extends Fragment {
 
                         Grid_Search_Schedule gs = new Grid_Search_Schedule(h);
                         arrayGSchedule.add(gs);
+                        mgrid_search_adapter.notifyDataSetChanged();
                     }
-                    mgrid_search_adapter.notifyDataSetChanged();
+
                     for(int i=0; i< mgrid_search_adapter.getCount(); i++)
                         quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
                 }catch(Exception e){

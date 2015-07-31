@@ -200,6 +200,8 @@ public class F5_2_MyLikeSchedules extends Fragment {
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
                         s.setLocation((tmp_ith.getString("location")));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
+
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
                         s.setComment_count((tmp_ith.getInt("count_comment")));
@@ -207,8 +209,9 @@ public class F5_2_MyLikeSchedules extends Fragment {
                         cs.setIsLike(tmp_ith.getInt("like") == 1 ? true : false);
                         cs.setIsFollow(tmp_ith.getInt("follow") == 1 ? true : false);
                         arrayCSchedule.add(cs);
+                        concise_schedule_adapter.notifyDataSetChanged();
                     }
-                    concise_schedule_adapter.notifyDataSetChanged();
+
                 }catch(Exception e){
 
                 }
@@ -266,6 +269,8 @@ public class F5_2_MyLikeSchedules extends Fragment {
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
                         s.setLocation((tmp_ith.getString("location")));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
+
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
                         s.setComment_count((tmp_ith.getInt("count_comment")));
@@ -273,8 +278,9 @@ public class F5_2_MyLikeSchedules extends Fragment {
                         cs.setIsLike(tmp_ith.getInt("like") == 1 ? true : false);
                         cs.setIsFollow(tmp_ith.getInt("follow") == 1 ? true : false);
                         arrayCSchedule.add(cs);
+                        concise_schedule_adapter.notifyDataSetChanged();
                     }
-                    concise_schedule_adapter.notifyDataSetChanged();
+
                 }catch(Exception e){
 
                 }

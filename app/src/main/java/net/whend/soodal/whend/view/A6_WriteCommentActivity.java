@@ -279,8 +279,9 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
                         s.setWrite_userid(tmp_ith.getInt("user_id"));
 
                         Comment_list.add(s);
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
+
                 }catch(Exception e){
 
                 }

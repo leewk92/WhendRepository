@@ -279,13 +279,16 @@ public class F1_Wall extends Fragment {
                         s.setLike_count((tmp_ith.getInt("count_like")));
                         s.setComment_count((tmp_ith.getInt("count_comment")));
                         s.setLocation((tmp_ith.getString("location")));
+                        s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
+
                         Concise_Schedule cs = new Concise_Schedule(s);
                         cs.setIsLike((tmp_ith.getInt("like")==1)?true:false);
-                        cs.setIsFollow((tmp_ith.getInt("follow")==1)?true:false);
+                        cs.setIsFollow((tmp_ith.getInt("follow") == 1) ? true : false);
 
                         arrayCSchedule.add(cs);
+                        concise_schedule_adapter.notifyDataSetChanged();
                     }
-                    concise_schedule_adapter.notifyDataSetChanged();
+
                 }catch(Exception e){
 
                 }
@@ -344,13 +347,16 @@ public class F1_Wall extends Fragment {
                         s.setLike_count((tmp_ith.getInt("count_like")));
                         s.setComment_count((tmp_ith.getInt("count_comment")));
                         s.setLocation((tmp_ith.getString("location")));
+                        s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
+
                         Concise_Schedule cs = new Concise_Schedule(s);
                         cs.setIsLike((tmp_ith.getInt("like")==1)?true:false);
                         cs.setIsFollow((tmp_ith.getInt("follow")==1)?true:false);
 
                         arrayCSchedule.add(cs);
+                        concise_schedule_adapter.notifyDataSetChanged();
                     }
-                    concise_schedule_adapter.notifyDataSetChanged();
+
                 }catch(Exception e){
 
                 }

@@ -28,6 +28,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -251,6 +252,8 @@ public class HTTPRestfulUtilizer {
 
             // 5. set json to StringEntity
             StringEntity se = new StringEntity(json,"UTF-8");
+
+
             //MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 
             //multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
