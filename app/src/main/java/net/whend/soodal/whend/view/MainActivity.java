@@ -2,16 +2,20 @@ package net.whend.soodal.whend.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
 
@@ -21,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText search_text;
     private ImageView search_btn;
     private ImageView back_btn;
+
+    // 핸들러, 플래그 선언 for back key로 종료
+    private Handler mHandler;
+    private boolean mFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +90,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.what == 0) {
+                    mFlag = false;
+                }
+            }
+        };
+
+
+
     }
 
     @Override
@@ -91,6 +111,21 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //2초안에 백키 눌르면 종료
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(!mFlag) {
+                Toast.makeText(this, "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+                mFlag = true;
+                mHandler.sendEmptyMessageDelayed(0, 2000);
+                return false;
+            } else {
+                finish();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

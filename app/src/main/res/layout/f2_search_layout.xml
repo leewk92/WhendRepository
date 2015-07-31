@@ -14,14 +14,20 @@
         android:layout_height="match_parent"
         android:id="@+id/search_grid">
 
-        <net.whend.soodal.whend.util.quitview.QuiltView
-            android:id="@+id/quilt"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dip"
-            app:scrollOrientation="vertical">
+        <net.whend.soodal.whend.util.observablescrollview.ObservableScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/quilt_scroll" >
 
-        </net.whend.soodal.whend.util.quitview.QuiltView>
+            <net.whend.soodal.whend.util.quitview.QuiltView
+                android:id="@+id/quilt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dip"
+                app:scrollOrientation="vertical">
+
+            </net.whend.soodal.whend.util.quitview.QuiltView>
+        </net.whend.soodal.whend.util.observablescrollview.ObservableScrollView>
 
     </LinearLayout>
 

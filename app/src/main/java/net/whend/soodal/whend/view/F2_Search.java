@@ -11,8 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -20,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,8 @@ import net.whend.soodal.whend.form.Grid_Search_Adapter;
 import net.whend.soodal.whend.model.base.HashTag;
 import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
+import net.whend.soodal.whend.util.observablescrollview.ObservableScrollView;
+import net.whend.soodal.whend.util.observablescrollview.ScrollViewListener;
 import net.whend.soodal.whend.util.quitview.QuiltView;
 
 import org.json.JSONArray;
@@ -46,7 +51,7 @@ import java.util.ArrayList;
 >>>>>>> origin/JB:app/src/main/java/net/whend/soodal/whend/view/Fragment2.java
  * create an instance of this fragment.
  */
-public class F2_Search extends Fragment {
+public class F2_Search extends Fragment implements ScrollViewListener {
     // TODO: Rename parameter arguments, choose names that match
 
     private FragmentTabHost mTabHost;
@@ -206,7 +211,15 @@ public class F2_Search extends Fragment {
         });
 
 
+        ObservableScrollView scrollView = (ObservableScrollView) rootView.findViewById(R.id.quilt_scroll);
+        scrollView.setScrollViewListener(this);
+
         return rootView;
+    }
+
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+        Toast.makeText(getActivity(),"scrolled",Toast.LENGTH_SHORT);
     }
 
 
