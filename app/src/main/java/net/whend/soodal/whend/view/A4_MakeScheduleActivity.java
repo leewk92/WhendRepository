@@ -558,6 +558,16 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                         Toast.makeText(getmContext(),"업로드합니다! ",Toast.LENGTH_SHORT).show();
                     }
                 }catch(Exception e){}
+                try{
+                    String title = getOutputJsonObject().getString("title");
+
+                    if(title.contentEquals("[\"This field must be unique.\"]")){
+                        progress.dismiss();
+                        Toast.makeText(getmContext(),"업로드에 실패하였습니다. ",Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch(Exception e){}
+
 
                 try{    // 올린 일정 받아보기 자동 설정
                     int id = getOutputJsonObject().getInt("id");
@@ -669,17 +679,19 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                             }
                             Calendar cal = Calendar.getInstance();
                             cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start);
-
                             Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
-                            Log.d("getTimeinMillis",cal.getTimeInMillis()+"");
-
+                            Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
                             DateTimeFormatter dtf = new DateTimeFormatter(cal.getTimeInMillis());
                             inputBundle_forRequest.putCharSequence("start_time", dtf.getOutputString());
-
                             Log.d("getTimeinString",dtf.getOutputString());
+
                             cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end);
+                            Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
+                            Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
                             dtf = new DateTimeFormatter(cal.getTimeInMillis());
                             inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
+                            Log.d("getTimeinString",dtf.getOutputString());
+
                             String url = "http://119.81.176.245/schedules/";
                             HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest, ImageAbsolutePath);
                             a.doExecution();
@@ -736,18 +748,25 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                             inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
                         }
                         Calendar cal = Calendar.getInstance();
-                        cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start);
+                        cal.set(YEAR_start, MONTH_start, DAY_start, HOUR_start, MINUTE_start);
 
                         Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
-                        Log.d("getTimeinMillis",cal.getTimeInMillis()+"");
+                        Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
 
                         DateTimeFormatter dtf = new DateTimeFormatter(cal.getTimeInMillis());
                         inputBundle_forRequest.putCharSequence("start_time", dtf.getOutputString());
+                        Log.d("getTimeinString", dtf.getOutputString());
 
-                        Log.d("getTimeinString",dtf.getOutputString());
-                        cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end);
+
+
+                        cal.set(YEAR_end, MONTH_end, DAY_end, HOUR_end, MINUTE_end);
+                        Log.d("getTimeinInt", YEAR_end + " " + MONTH_end + " " + DAY_end + " " + HOUR_end + " " + MINUTE_end + "");
+                        Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
+
                         dtf = new DateTimeFormatter(cal.getTimeInMillis());
                         inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
+                        Log.d("getTimeinString", dtf.getOutputString());
+
                         String url = "http://119.81.176.245/schedules/";
                         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest, ImageAbsolutePath);
                         a.doExecution();
@@ -811,7 +830,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             this.MINUTE = minute;
             HOUR_start =HOUR;
             MINUTE_start = MINUTE;
-            time_start.setText(String.format("%02d", HOUR_end)+":" +String.format("%02d", MINUTE_end));
+            time_start.setText(String.format("%02d", HOUR_start)+":" +String.format("%02d", MINUTE_start));
         }
     }
     static public class F6_DatePickerFragment_end extends F6_DatePickerFragment{

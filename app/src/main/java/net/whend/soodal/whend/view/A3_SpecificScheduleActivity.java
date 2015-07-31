@@ -2,6 +2,7 @@ package net.whend.soodal.whend.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -320,7 +321,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         if(cs.getPhoto_dir_fromweb()!="") {
             Picasso.with(mContext).load(cs.getPhoto_dir_fromweb()).into((ImageView) findViewById(R.id.memo_photo));
         }else{
-            memo_photo.setImageResource(R.drawable.exo);
+            memo_photo.setBackgroundColor(Color.BLACK);
         }
 
         if(cs.getUser_photo()!="") {

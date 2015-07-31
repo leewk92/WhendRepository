@@ -342,7 +342,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_weight="1"
-                        android:text="15"
+                        android:text=""
                         android:textSize="12dp"
                         android:textStyle="bold"
                         />
@@ -379,7 +379,7 @@
                         android:id="@+id/follow_count"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:text="15"
+                        android:text=""
                         android:textSize="12dp"
                         android:textStyle="bold"
                         />
@@ -414,7 +414,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_weight="1"
-                        android:text="15"
+                        android:text=""
                         android:textSize="12dp"
                         android:textStyle="bold"
                         />

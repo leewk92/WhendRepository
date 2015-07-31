@@ -315,7 +315,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             // 기본이미지 로드.
             //user_photo.setImageResource(R.drawable.userimage_default);
             holder.user_photo_vh.setImageResource(R.drawable.userimage_default);
-
+            Log.d("default_image","default_image");
         }
 
 
