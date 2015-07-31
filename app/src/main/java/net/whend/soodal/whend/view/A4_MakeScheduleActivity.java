@@ -117,7 +117,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             YEAR_start = dtf.getCalendar().get(Calendar.YEAR);
             MONTH_start = dtf.getCalendar().get(Calendar.MONTH);
             DAY_start = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
-            HOUR_start = dtf.getCalendar().get(Calendar.HOUR);
+            HOUR_start = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
             MINUTE_start = dtf.getCalendar().get(Calendar.MINUTE);
         }else{
             // now
@@ -127,7 +127,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             YEAR_start = dtf.getCalendar().get(Calendar.YEAR);
             MONTH_start = dtf.getCalendar().get(Calendar.MONTH);
             DAY_start = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
-            HOUR_start = dtf.getCalendar().get(Calendar.HOUR);
+            HOUR_start = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
             MINUTE_start = dtf.getCalendar().get(Calendar.MINUTE);
         }
         if(sDatetime_end != 0) {
@@ -137,7 +137,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             YEAR_end = dtf.getCalendar().get(Calendar.YEAR);
             MONTH_end = dtf.getCalendar().get(Calendar.MONTH);
             DAY_end = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
-            HOUR_end = dtf.getCalendar().get(Calendar.HOUR);
+            HOUR_end = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
             MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
         }else{
             // now
@@ -147,7 +147,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             YEAR_end = dtf.getCalendar().get(Calendar.YEAR);
             MONTH_end = dtf.getCalendar().get(Calendar.MONTH);
             DAY_end = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
-            HOUR_end = dtf.getCalendar().get(Calendar.HOUR);
+            HOUR_end = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
             MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
         }
 
@@ -454,6 +454,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     }
 
     public void parseMemo(String memo_text){
+        memo_text = memo_text.replaceAll("\n"," ");
         String tmpArray[] = memo_text.split("#");
         if(tmpArray != null) {
 
@@ -798,8 +799,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             int minute = MINUTE_start;
 
             // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), this, hour, minute,
-                    DateFormat.is24HourFormat(getActivity()));
+            return new TimePickerDialog(getActivity(), this, hour, minute,true);
         }
 
 
@@ -849,8 +849,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             int minute = MINUTE_end;
 
             // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), this, hour, minute,
-                    DateFormat.is24HourFormat(getActivity()));
+            return new TimePickerDialog(getActivity(), this, hour, minute, true);
         }
 
         @Override
