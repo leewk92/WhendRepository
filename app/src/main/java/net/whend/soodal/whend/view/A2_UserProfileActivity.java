@@ -8,10 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -19,9 +17,9 @@ import com.squareup.picasso.Picasso;
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.User;
 import net.whend.soodal.whend.model.top.Search_User;
+import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -266,7 +264,7 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                 else
                     ((ImageView)findViewById(R.id.follow_button)).setImageResource(R.drawable.like);
                 if(u.getUser_photo()!="") {
-                    Picasso.with(mContext).load(u.getUser_photo()).into((ImageView) findViewById(R.id.user_photo));
+                    Picasso.with(mContext).load(u.getUser_photo()).transform(new CircleTransform()).into((ImageView) findViewById(R.id.user_photo));
 
                 }else{
                     // 기본이미지 로드.

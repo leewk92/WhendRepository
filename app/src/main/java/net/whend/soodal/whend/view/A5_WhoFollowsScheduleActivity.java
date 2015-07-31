@@ -1,18 +1,17 @@
 package net.whend.soodal.whend.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.ScheduleFollow_User_Adapter;
-import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.base.User;
-import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.model.top.ScheduleFollow_User;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Created by wonkyung on 15. 7. 12.
  */
-public class A5_WhoFollowsScheduleActivity extends Activity {
+public class A5_WhoFollowsScheduleActivity extends AppCompatActivity {
 
     ArrayList <ScheduleFollow_User> User_list= new ArrayList<ScheduleFollow_User>();;
     ListView listview;
@@ -46,6 +45,19 @@ public class A5_WhoFollowsScheduleActivity extends Activity {
         String url=intent.getStringExtra("url");                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
         //    TextView textView=(TextView)findViewById(R.id.textview);
         //    textView.setText(s);
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_whofollowschedule);
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_right_out);
+            }
+        });
 
         adapter = new ScheduleFollow_User_Adapter(this,R.layout.item_schedulefollow_user,User_list);
         listview = (ListView)findViewById(R.id.listview_schedulefollow_user);

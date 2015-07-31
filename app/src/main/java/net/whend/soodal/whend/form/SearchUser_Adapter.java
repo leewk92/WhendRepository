@@ -13,8 +13,8 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
-import net.whend.soodal.whend.model.top.Search_HashTag;
 import net.whend.soodal.whend.model.top.Search_User;
+import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import java.util.ArrayList;
@@ -105,7 +105,7 @@ public class SearchUser_Adapter extends ArrayAdapter<Search_User> {
             ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.like);
 
         if(SUser_list.get(position).getUser().getUser_photo()!="") {
-            Picasso.with(context).load(SUser_list.get(position).getUser().getUser_photo()).into((ImageView) v.findViewById(R.id.user_photo));
+            Picasso.with(context).load(SUser_list.get(position).getUser().getUser_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
 
         }else{
             // 기본이미지 로드.

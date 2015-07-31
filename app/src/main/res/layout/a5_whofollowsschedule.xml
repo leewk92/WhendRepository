@@ -1,5 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="fill_parent"
     tools:context="net.whend.soodal.whend.view.A5_WhoFollowsScheduleActivity">
@@ -9,21 +11,27 @@
         android:paddingBottom="@dimen/activity_vertical_margin"-->
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_whofollowsschedule"
+        android:id="@+id/toolbar_whofollowschedule"
         android:layout_height="50dp"
         android:layout_width="match_parent"
         android:minHeight="50dp"
-        android:background="#ff4b4b4b"
-        android:layout_gravity="right">
+        android:background="#03A9F4"
+        android:layout_gravity="right"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
         <TextView
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="캘린더에 넣은 사람들"
-            android:layout_gravity="center"
-            android:textColor="@android:color/white" />
-
+            android:text="팔로워"
+            android:textColor="@android:color/white"
+            />
+    </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
     <ListView

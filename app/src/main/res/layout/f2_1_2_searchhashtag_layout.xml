@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="50dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp">
+    >
     <ListView
         android:id="@+id/listview_searchhashtag"
         android:layout_width="match_parent"
