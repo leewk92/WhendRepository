@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -130,11 +129,8 @@ public class QuiltView extends FrameLayout implements OnGlobalLayoutListener {
 
 	public void addPatchView(View view){
 
-		LinearLayout wrapper = new LinearLayout(this.getContext());
-
-		wrapper.setPadding(padding, padding, padding, padding);
-		wrapper.addView(view);
-		quilt.addPatch(wrapper);
+		view.setPadding(padding, padding, padding, padding);
+		quilt.addPatch(view);
 	}
 
 	public void addPatchesOnLayout(){
