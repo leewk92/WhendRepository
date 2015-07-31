@@ -245,7 +245,7 @@
             android:textColorHint="#FFF"
             android:textColor="#FFF"
             android:textStyle="bold"
-            android:textSize="12dp"
+            android:textSize="16dp"
             android:layout_gravity="center"
             android:gravity="center_vertical|center_horizontal" />
 
