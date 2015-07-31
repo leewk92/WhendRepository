@@ -2,12 +2,6 @@ package net.whend.soodal.whend.form;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.ComposeShader;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,25 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import net.whend.soodal.whend.R;
-import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.util.CalendarProviderUtil;
+import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.PicassoImageTool;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
 import net.whend.soodal.whend.view.A5_WhoFollowsScheduleActivity;
 import net.whend.soodal.whend.view.A6_WriteCommentActivity;
-import net.whend.soodal.whend.view.F5_Mypage;
 import net.whend.soodal.whend.view.MainActivity;
 
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.nio.channels.SelectableChannel;
 import java.util.ArrayList;
 
 /**
@@ -302,7 +289,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         }
 
         if(CSchedule_list.get(position).getUser_photo()!="") {
-            Picasso.with(context).load(CSchedule_list.get(position).getUser_photo()).into((ImageView)v.findViewById(R.id.user_photo));
+            Picasso.with(context).load(CSchedule_list.get(position).getUser_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
 
         }else{
             // 기본이미지 로드.

@@ -17,11 +17,11 @@ import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Comment_Adapter;
-import net.whend.soodal.whend.form.Specific_Schedule_Adapter;
 import net.whend.soodal.whend.model.base.Comment;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.util.CalendarProviderUtil;
+import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
@@ -322,7 +322,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         }
 
         if(cs.getUser_photo()!="") {
-            Picasso.with(mContext).load(cs.getUser_photo()).into((ImageView)findViewById(R.id.user_photo));
+            Picasso.with(mContext).load(cs.getUser_photo()).transform(new CircleTransform()).into((ImageView)findViewById(R.id.user_photo));
 
         }else{
             // 기본이미지 로드.

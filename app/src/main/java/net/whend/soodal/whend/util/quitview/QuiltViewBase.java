@@ -44,7 +44,7 @@ public class QuiltViewBase extends GridLayout {
 	public void setupVertical(){
 		size = getBaseSizeVertical();
 		this.setColumnCount(columns);
-		this.setRowCount(10);
+		this.setRowCount(3);
 		this.setOrientation(this.HORIZONTAL);
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 		this.setLayoutParams(params);
@@ -53,7 +53,7 @@ public class QuiltViewBase extends GridLayout {
 	public void setupHorizontal(){
 		size = getBaseSizeHorizontal();
 		this.setRowCount(rows);
-		this.setColumnCount(3);
+		this.setColumnCount(2);
 		this.setOrientation(this.VERTICAL);
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 		this.setLayoutParams(params);
@@ -146,6 +146,7 @@ public class QuiltViewBase extends GridLayout {
 	}
 	
 	public int getBaseHeight(){
+		/*
 		if(view_height < 350){
 			rows = 2;
 		} else if(view_height < 650){
@@ -156,7 +157,8 @@ public class QuiltViewBase extends GridLayout {
 			rows = 5;
 		} else {
 			rows = 6;
-		}
+		}*/
+		rows = 6;
 		return (view_height / rows);
 	}
 	 

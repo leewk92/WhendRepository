@@ -25,7 +25,7 @@ public class QuiltView extends FrameLayout implements OnGlobalLayoutListener {
 	public QuiltViewBase quilt;
 	public ViewGroup scroll;
 	public int padding = -1;
-	public boolean isVertical = false;
+	public boolean isVertical = true;
 	public ArrayList<View> views;
 	private Adapter adapter;
 	

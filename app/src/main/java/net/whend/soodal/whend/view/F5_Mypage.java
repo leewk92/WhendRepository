@@ -25,10 +25,10 @@ import com.squareup.picasso.Picasso;
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.User;
 import net.whend.soodal.whend.util.AppPrefs;
+import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.RoundedImage;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -331,7 +331,7 @@ public class F5_Mypage extends Fragment {
                 ((TextView)v.findViewById(R.id.schedule_count)).setText(u.getCount_uploaded_schedule() + "");
                 ((TextView)v.findViewById(R.id.following_count)).setText(String.valueOf(u.getCount_following_hashtag() + u.getCount_following_user()));
                 if(u.getUser_photo()!="") {
-                    Picasso.with(getActivity()).load(u.getUser_photo()).into((ImageView) v.findViewById(R.id.user_photo));
+                    Picasso.with(getActivity()).load(u.getUser_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
 
                 }else{
                     // 기본이미지 로드.
@@ -356,6 +356,9 @@ public class F5_Mypage extends Fragment {
                     user_photo.setImageDrawable(temp);
 
                     ImageAbsolutePath = createImageFromBitmap(photo);
+
+                    //Picasso.with(getActivity()).load(ImageAbsolutePath).transform(new CircleTransform()).into(user_photo);
+
                     AppPrefs appPrefs = new AppPrefs(getActivity());
                     String url = "http://119.81.176.245/userinfos/"+appPrefs.getUser_id()+"/";
                     Bundle inputBundle = new Bundle();
