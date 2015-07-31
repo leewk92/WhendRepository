@@ -102,6 +102,19 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
+                if(result.split(" ")[0].contains("recvfrom")){
+                    Log.d("recvfrom","recvfrom");
+                    AppPrefs appPrefs = new AppPrefs(mContext);
+                    appPrefs.setToken("");
+                    appPrefs.setUsername("");
+                    appPrefs.setPassword("");
+                    appPrefs.setUser_id(0);
+                    Intent i = new Intent(A0_0_OpenAcitivity.this, A0_1_LoginActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+
+                    finish();
+                }
 
 
                 try{
@@ -195,7 +208,7 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
 
                 }catch(Exception e){
                     // 안되면 로그인화면으로 이동
-                    AppPrefs appPrefs = new AppPrefs(mContext);
+        /*            AppPrefs appPrefs = new AppPrefs(mContext);
                     appPrefs.setToken("");
                     appPrefs.setUsername("");
                     appPrefs.setPassword("");
@@ -205,6 +218,17 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
 
                     finish();
+*/
+
+                    String url = "http://119.81.176.245/rest-auth/login/";
+                    AppPrefs appPrefs = new AppPrefs(mContext);
+                    appPrefs.setToken("");
+                    appPrefs.setUser_id(0);
+                    Bundle inputBundle = new Bundle();
+                    inputBundle.putCharSequence("username",appPrefs.getUsername());
+                    inputBundle.putCharSequence("password",appPrefs.getPassword());
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, url,"POST",inputBundle);
+                    a.doExecution();
 
                 }
 

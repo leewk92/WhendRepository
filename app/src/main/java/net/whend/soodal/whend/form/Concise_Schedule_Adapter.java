@@ -47,6 +47,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
     private ArrayList<Concise_Schedule> CSchedule_list;
     private Context context;
+    ImageView memo_photo;
 
     public Concise_Schedule_Adapter(Context context, int textViewResourceId, ArrayList<Concise_Schedule> lists){
         super(context, textViewResourceId, lists);
@@ -71,6 +72,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ImageView like_button = (ImageView)v.findViewById(R.id.like_button);
         ImageView follow_button = (ImageView)v.findViewById(R.id.follow_button);
         ImageView comment_button = (ImageView)v.findViewById(R.id.comment_button);
+        memo_photo = (ImageView)v.findViewById(R.id.memo_photo);
         View schedulefollow_user_clickablelayout = (View)v.findViewById(R.id.schedulefollow_user_clickablelayout);
         View schedulelike_user_clickablelayout = (View)v.findViewById(R.id.schedulelike_user_clickablelayout);
         TextView like_count = (TextView)v.findViewById(R.id.like_count);
@@ -295,6 +297,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
         }else{
             // 기본이미지 로드.
+            memo_photo.setImageResource(R.drawable.exo);
         }
 
 

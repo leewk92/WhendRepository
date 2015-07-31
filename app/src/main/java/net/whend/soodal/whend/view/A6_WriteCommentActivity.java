@@ -148,15 +148,18 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
     }
     // 더보기 버튼 리스너
     public void loadmore_clickablelayout(final Context context, View loadmore_clickablelayout) {
+        try {
 
-        loadmore_clickablelayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(context,nextURL,"GET");
-            b.doExecution();
-            }
-        });
+            loadmore_clickablelayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(context, nextURL, "GET");
+                    b.doExecution();
+                }
+            });
+        }catch (Exception e){}
 
     }
 
@@ -215,8 +218,8 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
                     }
 
                     for(int i=0; i<tmpComment_list.size(); i++){
-                        //Comment_list.add(tmpComment_list.get(tmpComment_list.size()-1-i));
-                        Comment_list.add(tmpComment_list.get(i));
+                        Comment_list.add(tmpComment_list.get(tmpComment_list.size()-1-i));
+                        //Comment_list.add(tmpComment_list.get(i));
 
                     }
 

@@ -55,7 +55,7 @@ public class DateTimeFormatter {
     public void Parse(){
         this.year = cal.get(Calendar.YEAR)+"년";
         this.date = String.format("%d", cal.get(Calendar.MONTH) + 1) + "월"+  String.format("%d", cal.get(Calendar.DAY_OF_MONTH))+"일";
-        this.time =  String.format("%02d", cal.get(Calendar.HOUR))+":" +String.format("%02d", cal.get(Calendar.MINUTE));
+        this.time =  String.format("%02d", cal.get(Calendar.HOUR_OF_DAY))+":" +String.format("%02d", cal.get(Calendar.MINUTE));
         this.datetime_ms = cal.getTimeInMillis();
     }
 

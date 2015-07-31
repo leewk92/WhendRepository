@@ -62,7 +62,7 @@
                 android:id="@+id/user_fullname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="이원경"
+                android:text=""
                 android:textStyle="bold"
                 android:textSize="12dp"
                 android:layout_marginLeft="5dp"
@@ -75,7 +75,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:text="영화 인사이드아웃 개봉"
+            android:text=""
             android:textSize="12dp"
 
             android:layout_marginTop="5dp" />
@@ -107,7 +107,7 @@
                 android:id="@+id/date_start"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:hint="날짜 입력"
+                android:hint=""
                 android:textSize="12dp"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="10dp"
@@ -123,7 +123,7 @@
                 android:id="@+id/time_start"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:hint="시간 입력"
+                android:hint=""
                 android:textSize="12dp"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="10dp"
@@ -160,7 +160,7 @@
                 android:id="@+id/date_end"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:hint="날짜 입력"
+                android:hint=""
                 android:textSize="12dp"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="10dp"
@@ -178,7 +178,7 @@
                 android:id="@+id/time_end"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:hint="시간 입력"
+                android:hint=""
                 android:textSize="12dp"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="10dp"
@@ -208,7 +208,7 @@
                     android:id="@+id/location"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="연세대학교"
+                    android:text=""
                     android:textSize="12dp"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"/>
@@ -245,7 +245,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:gravity="center_horizontal|center_vertical"
-            android:text="감정이들 보러가야지\n#영화개봉일 #애니매이션 #인사이드아웃"
+            android:text=""
             android:textColor="#FFF"
             android:textStyle="bold"
             android:layout_marginTop="5dp"
@@ -317,8 +317,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp">
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom ="24dp">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="20dp"
@@ -328,6 +328,12 @@
                     android:id="@+id/schedulelike_user_clickablelayout"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="관심 "
+                        android:textSize="12dp"
+                        />
                     <TextView
                         android:id="@+id/like_count"
                         android:layout_width="0dp"
@@ -346,12 +352,7 @@
                         />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="의 관심과"
-                    android:textSize="12dp"
-                    />
+
             </LinearLayout>
 
 
@@ -365,6 +366,12 @@
                     android:id="@+id/schedulefollow_user_clickablelayout"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="캘린더 추가 "
+                        android:textSize="12dp"
+                        />
                     <TextView
                         android:id="@+id/follow_count"
                         android:layout_width="wrap_content"
@@ -382,12 +389,7 @@
                         />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="의 받아보기, "
-                    android:textSize="12dp"
-                    />
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
@@ -398,6 +400,12 @@
                     android:id="@+id/schedule_comment_clickablelayout"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="댓글 "
+                        android:textSize="12dp"
+                        />
                     <TextView
                         android:id="@+id/comment_count"
                         android:layout_width="0dp"
@@ -416,12 +424,7 @@
                         />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="의 댓글이 있어요."
-                    android:textSize="12dp"
-                    />
+
             </LinearLayout>
 
         </LinearLayout>

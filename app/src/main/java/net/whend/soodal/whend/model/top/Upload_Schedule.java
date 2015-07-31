@@ -19,7 +19,7 @@ public class Upload_Schedule {
         DateTimeFormatter dtf2 = new DateTimeFormatter(s.getEndtime());
 
         this.date_start = dtf.getDate();
-        this.date_end = dtf.getDate();
+        this.date_end = dtf2.getDate();
 
         this.time_start = dtf.getTime();
         this.time_end = dtf2.getTime();

@@ -1,5 +1,6 @@
 package net.whend.soodal.whend.form;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -50,8 +51,22 @@ public class WriteComment_Adapter extends Comment_Adapter {
 
     // 유저 이름 누를 때 리스너
     @Override
-    public void UserProfileClickListener(View userview,int position){
-        super.UserProfileClickListener(userview,position);
+    public void UserProfileClickListener(View userview,final int position){
+        userview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, A2_UserProfileActivity.class);
+                intent.putExtra("id", Comment_list.get(position).getWrite_userid());
+
+                Activity activity = (Activity) context;
+                activity.startActivity(intent);
+
+                activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
+
+
+            }
+        });
 
     }
 

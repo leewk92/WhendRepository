@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +78,12 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
         holder.vContent.setText(schedule.getContent());
         holder.vTime_start.setText(schedule.getTime_start());
         holder.vLocation.setText(schedule.getLocation());
-
+        try {
+            String tmpcolor = schedule.getSchedule().getColor();
+            holder.vColor.setBackgroundColor(Color.parseColor("#"+tmpcolor));
+        }catch (Exception e){
+            holder.vColor.setBackgroundColor(Color.parseColor("#03A9F4"));
+        }
         holder.setClickListener(new ItemClickListener(){
 
             @Override
@@ -90,13 +96,15 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
                 intent.putExtra("time_end", schedule.getTime_end().toString());
                 intent.putExtra("location",schedule.getLocation().toString());
                 intent.putExtra("text", String.valueOf("URL")); // 아마 유저정보...?
-                intent.putExtra("datetime",schedule.getSchedule().getStarttime());
+                intent.putExtra("datetime_start",schedule.getSchedule().getStarttime_ms());
+                Log.d("datetime_start_upload", schedule.getSchedule().getStarttime_ms() + "");
+                intent.putExtra("datetime_end",schedule.getSchedule().getEndtime_ms());
                 context.startActivity(intent);
             }
         });
 
 
-
+/*
         // 아직 색깔 랜덤
         Random random = new Random();
         int color = random.nextInt(4);
@@ -117,7 +125,7 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
                 holder.vColor.setBackgroundColor(Color.parseColor("#6BFFBA"));
                 break;
         };
-
+*/
     }
 
     public static class Upload_ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

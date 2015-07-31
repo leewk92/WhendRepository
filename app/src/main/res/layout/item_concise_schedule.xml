@@ -229,6 +229,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp">
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="관심 "
+                        android:textSize="12dp"
+                        />
+                    <TextView
                         android:id="@+id/like_count"
                         android:layout_width="0dp"
                         android:layout_height="20dp"
@@ -246,12 +252,7 @@
                         />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="의 관심과"
-                    android:textSize="12dp"
-                    />
+
             </LinearLayout>
 
 
@@ -265,6 +266,12 @@
                     android:id="@+id/schedulefollow_user_clickablelayout"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="캘린더 추가 "
+                        android:textSize="12dp"
+                        />
                     <TextView
                         android:id="@+id/follow_count"
                         android:layout_width="wrap_content"
@@ -282,12 +289,7 @@
                         />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="의 받아보기, "
-                    android:textSize="12dp"
-                    />
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
@@ -298,6 +300,12 @@
                     android:id="@+id/schedule_comment_clickablelayout"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="댓글 "
+                        android:textSize="12dp"
+                        />
                     <TextView
                         android:id="@+id/comment_count"
                         android:layout_width="0dp"
@@ -316,12 +324,7 @@
                         />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="의 댓글이 있어요."
-                    android:textSize="12dp"
-                    />
+
             </LinearLayout>
 
         </LinearLayout>

@@ -1,6 +1,9 @@
 package net.whend.soodal.whend.view;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +15,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,7 +58,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     static TextView date_start,time_start,date_end,time_end;
     static int completed_num=0;
     EditText title,location,memo;
-    String sStartDate, sEndDate, sContent, sLocation, sTime, sStarttime,sEndtime;
+    String sStartDate, sEndDate, sContent, sLocation, sStartTime,sEndTime;
+    long sDatetime_start,sDatetime_end;
     Bundle inputBundle_forRequest = new Bundle();
     ProgressDialog progress;
 
@@ -96,19 +101,21 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
         sStartDate = intent.getStringExtra("date_start");
         sEndDate = intent.getStringExtra("date_end");
-        sTime = intent.getStringExtra("time_start");
+        sStartTime = intent.getStringExtra("time_start");
+        sEndTime = intent.getStringExtra("time_end");
         sContent = intent.getStringExtra("content");
         sLocation = intent.getStringExtra("location");
-        sStarttime = intent.getStringExtra("datetime_start");
-        sEndtime = intent.getStringExtra("datetime_end");
+        sDatetime_start = intent.getLongExtra("datetime_start", 0);
+        sDatetime_end = intent.getLongExtra("datetime_end", 0);
 
 
-        if(sStarttime != null) {
-            DateTimeFormatter dtf = new DateTimeFormatter(sStarttime);
+        if(sDatetime_start != 0) {
+            DateTimeFormatter dtf = new DateTimeFormatter(sDatetime_start);
             date_start.setText(dtf.getDate());
             time_start.setText(dtf.getTime());
+
             YEAR_start = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_start = dtf.getCalendar().get(Calendar.MONTH)+1;
+            MONTH_start = dtf.getCalendar().get(Calendar.MONTH);
             DAY_start = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
             HOUR_start = dtf.getCalendar().get(Calendar.HOUR);
             MINUTE_start = dtf.getCalendar().get(Calendar.MINUTE);
@@ -118,17 +125,17 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             date_start.setText(dtf.getDate());
             time_start.setText(dtf.getTime());
             YEAR_start = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_start = dtf.getCalendar().get(Calendar.MONTH)+1;
+            MONTH_start = dtf.getCalendar().get(Calendar.MONTH);
             DAY_start = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
             HOUR_start = dtf.getCalendar().get(Calendar.HOUR);
             MINUTE_start = dtf.getCalendar().get(Calendar.MINUTE);
         }
-        if(sEndtime != null) {
-            DateTimeFormatter dtf = new DateTimeFormatter(sStarttime);
+        if(sDatetime_end != 0) {
+            DateTimeFormatter dtf = new DateTimeFormatter(sDatetime_end);
             date_end.setText(dtf.getDate());
             time_end.setText(dtf.getTime());
             YEAR_end = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_end = dtf.getCalendar().get(Calendar.MONTH)+1;
+            MONTH_end = dtf.getCalendar().get(Calendar.MONTH);
             DAY_end = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
             HOUR_end = dtf.getCalendar().get(Calendar.HOUR);
             MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
@@ -138,7 +145,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             date_end.setText(dtf.getDate());
             time_end.setText(dtf.getTime());
             YEAR_end = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_end = dtf.getCalendar().get(Calendar.MONTH)+1;
+            MONTH_end = dtf.getCalendar().get(Calendar.MONTH);
             DAY_end = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
             HOUR_end = dtf.getCalendar().get(Calendar.HOUR);
             MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
@@ -146,13 +153,14 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
         if(sStartDate != null)
             date_start.setText(sStartDate);
-
         if(sEndDate != null)
             date_end.setText(sEndDate);
-
+        if(sStartTime != null)
+            time_start.setText(sStartTime);
+        if(sEndTime != null)
+            time_end.setText(sEndTime);
         if(sLocation != null)
             location.setText(sLocation);
-
         if(sContent != null)
             title.setText(sContent);
 
@@ -266,11 +274,11 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         schedule_photo.setOnClickListener(photo_add);
         schedule_photo_add.setOnClickListener(photo_add);
 
-        StartDatePickerTextviewListener(this, date_start, sStarttime);
-        StartTimePickerTextviewListener(this, time_start, sStarttime);
+        StartDatePickerTextviewListener(this, date_start, sDatetime_start);
+        StartTimePickerTextviewListener(this, time_start, sDatetime_start);
 
-        EndDatePickerTextviewListener(this, date_end, sEndtime);
-        EndTimePickerTextviewListener(this, time_end, sEndtime);
+        EndDatePickerTextviewListener(this, date_end, sDatetime_end);
+        EndTimePickerTextviewListener(this, time_end, sDatetime_end);
     }
 
 
@@ -302,7 +310,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         }
     }
 
-    public void StartDatePickerTextviewListener(Context context, TextView date, String datetime){
+    public void StartDatePickerTextviewListener(Context context, TextView date, long datetime){
         final Context mContext = context;
         final TextView dateview = date;
         final DateTimeFormatter dtf = new DateTimeFormatter(datetime);
@@ -319,7 +327,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     }
 
 
-    public void StartTimePickerTextviewListener(Context context, TextView time, String datetime){
+    public void StartTimePickerTextviewListener(Context context, TextView time, long datetime){
         final Context mContext = context;
         final TextView timeview = time;
         final DateTimeFormatter dtf = new DateTimeFormatter(datetime);
@@ -334,7 +342,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             }
         });
     }
-    public void EndDatePickerTextviewListener(Context context, TextView date, String datetime){
+    public void EndDatePickerTextviewListener(Context context, TextView date, long datetime){
         final Context mContext = context;
         final TextView dateview = date;
         final DateTimeFormatter dtf = new DateTimeFormatter(datetime);
@@ -351,7 +359,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     }
 
 
-    public void EndTimePickerTextviewListener(Context context, TextView time, String datetime){
+    public void EndTimePickerTextviewListener(Context context, TextView time, long datetime){
         final Context mContext = context;
         final TextView timeview = time;
         final DateTimeFormatter dtf = new DateTimeFormatter(datetime);
@@ -468,7 +476,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start);
 
             Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
-            Log.d("getTimeinMillis",cal.getTimeInMillis()+"");
+            Log.d("getTimeinMillis", cal.getTimeInMillis()+"");
 
             DateTimeFormatter dtf = new DateTimeFormatter(cal.getTimeInMillis());
             inputBundle_forRequest.putCharSequence("start_time", dtf.getOutputString());
@@ -756,6 +764,18 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     static public class F6_DatePickerFragment_start extends F6_DatePickerFragment{
         public int YEAR,MONTH,DAY;
         @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            int year = YEAR_start;
+            int month = MONTH_start;
+            int day = DAY_start;
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+
+        }
+
+        @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             this.YEAR = year;
             this.MONTH = monthOfYear+1;
@@ -768,7 +788,21 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         }
     }
     static public class F7_TimePickerFragment_start extends F7_TimePickerFragment{
-        public int YEAR,MONTH,DAY;
+
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+
+            int hour = HOUR_start;
+            int minute = MINUTE_start;
+
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
+
+
         @Override
         //onTimeSet() callback method
         public void onTimeSet(TimePicker view, int hourOfDay, int minute){
@@ -777,11 +811,22 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             this.MINUTE = minute;
             HOUR_start =HOUR;
             MINUTE_start = MINUTE;
-            time_start.setText(HOUR_start + ":" + MINUTE_start);
+            time_start.setText(String.format("%02d", HOUR_end)+":" +String.format("%02d", MINUTE_end));
         }
     }
     static public class F6_DatePickerFragment_end extends F6_DatePickerFragment{
         public int YEAR,MONTH,DAY;
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            int year = YEAR_end;
+            int month = MONTH_end;
+            int day = DAY_end;
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+
+        }
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             this.YEAR = year;
@@ -795,7 +840,19 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         }
     }
     static public class F7_TimePickerFragment_end extends F7_TimePickerFragment{
-        public int YEAR,MONTH,DAY;
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+
+            int hour = HOUR_end;
+            int minute = MINUTE_end;
+
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
+
         @Override
         //onTimeSet() callback method
         public void onTimeSet(TimePicker view, int hourOfDay, int minute){
@@ -804,7 +861,9 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             this.MINUTE = minute;
             HOUR_end =HOUR;
             MINUTE_end = MINUTE;
-            time_end.setText(HOUR_end + ":" + MINUTE_end);
+            time_end.setText(String.format("%02d", HOUR_end)+":" +String.format("%02d", MINUTE_end));
+
+
         }
     }
 

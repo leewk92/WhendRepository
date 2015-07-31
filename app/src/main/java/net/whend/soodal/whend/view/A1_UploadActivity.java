@@ -80,10 +80,7 @@ public class A1_UploadActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(A1_UploadActivity.this, A4_MakeScheduleActivity.class);
-                //    intent.putExtra("content",getText(R.id.));
-                //    intent.putExtra("location",);
-            //    intent.putExtra("datetime_start",);
-            //    intent.putExtra("datetime_end",);         도와줘 준삐 ...
+
 
                 startActivity(intent);
 

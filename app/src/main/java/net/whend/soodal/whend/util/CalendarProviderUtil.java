@@ -126,9 +126,7 @@ public class CalendarProviderUtil {
 
                 try {
                     tmpSchedule.setColor(cur2.getString(12));
-                    Log.d("color_calendar", cur2.getString(12));
-                    Log.d("color_event", cur2.getString(14));
-                    Log.d("color_key", cur2.getString(15));
+
                 } catch (Exception e) {
                 }
 
