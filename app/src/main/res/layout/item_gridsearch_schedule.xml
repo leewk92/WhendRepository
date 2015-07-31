@@ -18,6 +18,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:minHeight="100dp"
+            android:minWidth="180dp"
             android:id="@+id/gridsearch_image"
             android:scaleType="centerCrop"
             android:src="@drawable/exo" />
