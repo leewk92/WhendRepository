@@ -134,7 +134,7 @@ public class HTTPRestfulUtilizer {
                 byte[] b = baos.toByteArray();
 
                 String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-                inputBundle.putCharSequence("photo",encodedImage);
+                bundle.putCharSequence("photo",encodedImage);
             }
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
@@ -154,7 +154,7 @@ public class HTTPRestfulUtilizer {
 
             // 5. set json to StringEntity
             StringEntity se = new StringEntity(json,"UTF-8");
-
+           // StringEntity se = new StringEntity(json);
            // MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 
            // multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -169,6 +169,7 @@ public class HTTPRestfulUtilizer {
            // httpPut.setEntity(multipartEntity.build());
 
             // 7. Set some headers to inform server about the type of the content
+            httpPut.setHeader("Cache-Control", "no-cache");
             httpPut.setHeader("Accept", "application/json;charset=utf-8");
             httpPut.setHeader("Content-type", "application/json");
             AppPrefs appPrefs = new AppPrefs(mContext);
@@ -176,7 +177,8 @@ public class HTTPRestfulUtilizer {
             if( token != ""){
                 httpPut.setHeader("Authorization","Token "+token);
             }
-            // 8. Execute POST request to the given URL
+            // 8. Execute PUT request to the given URL
+            Log.d("contents",convertInputStreamToString(httpPut.getEntity().getContent()));
             HttpResponse httpResponse = httpclient.execute(httpPut);
 
             // 9. receive response as inputStream
@@ -232,7 +234,7 @@ public class HTTPRestfulUtilizer {
                 byte[] b = baos.toByteArray();
 
                 String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-                inputBundle.putCharSequence("photo",encodedImage);
+                bundle.putCharSequence("photo",encodedImage);
             }
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
@@ -266,6 +268,8 @@ public class HTTPRestfulUtilizer {
             //httpPost.setEntity(multipartEntity.build());
 
             // 7. Set some headers to inform server about the type of the content
+
+
             httpPost.setHeader("Accept", "application/json;charset=utf-8");
             httpPost.setHeader("Content-type", "application/json");
             AppPrefs appPrefs = new AppPrefs(mContext);

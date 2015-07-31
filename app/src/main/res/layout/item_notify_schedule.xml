@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="60dp"
     >
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -15,7 +15,7 @@
         android:layout_marginBottom="8dp"
         android:weightSum="1">
 
-        <ImageView
+<!--        <ImageView
             android:id="@+id/userphoto"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -23,7 +23,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="5dp"
             android:focusableInTouchMode="false" />
-
+-->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -31,13 +31,14 @@
             >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="actor_name"
                 android:id="@+id/actor_name"
                 android:layout_gravity="center_vertical"
                 android:textColor="#0288D1"
-                android:textSize="12dp"/>
+                android:textSize="12dp"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,6 +61,14 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="12dp"
                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,9 +77,10 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="#b6b6b6"
                 android:layout_marginLeft="5dp"
-                android:textSize="12dp"/>
-        </LinearLayout>
+                android:textSize="12dp"
+                />
 
+        </LinearLayout>
 
 
 

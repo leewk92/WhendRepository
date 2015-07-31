@@ -63,7 +63,7 @@ public class Grid_Search_Adapter extends ArrayAdapter<Grid_Search_Schedule> {
                     intent.putExtra("photo",grid_search_schedule.getTag().getPhoto());
                     intent.putExtra("count_schedule",grid_search_schedule.getTag().getCount_schedule());
                     intent.putExtra("count_upcoming_schedule",grid_search_schedule.getTag().getCount_upcoming_schedule());
-
+                    intent.putExtra("is_follow",grid_search_schedule.getTag().is_Follow());
                     context.startActivity(intent);
                 }
             });

@@ -69,12 +69,6 @@ public class Comment_Adapter extends ArrayAdapter<Comment> {
 
         ((TextView) v.findViewById(R.id.comment_writer)).setText(Comment_list.get(position).getWrite_username());
         ((TextView) v.findViewById(R.id.comment_content)).setText(Comment_list.get(position).getContents());
-        if(Comment_list.get(position).getUser_photo()!="") {
-            Picasso.with(context).load(Comment_list.get(position).getUser_photo()).into((ImageView)v.findViewById(R.id.user_photo));
 
-        }else{
-            // 기본이미지 로드.
-            user_photo.setImageResource(R.drawable.userimage_default);
-        }
     }
 }

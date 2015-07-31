@@ -357,7 +357,7 @@ public class F5_Mypage extends Fragment {
 
                     ImageAbsolutePath = createImageFromBitmap(photo);
                     AppPrefs appPrefs = new AppPrefs(getActivity());
-                    String url = "http://119.81.176.245/userinfos/"+appPrefs.getUser_id();
+                    String url = "http://119.81.176.245/userinfos/"+appPrefs.getUser_id()+"/";
                     Bundle inputBundle = new Bundle();
 //                    inputBundle.putIntegerArrayList("following_hashtag", u.getFollowing_hashtag_AL());
 //                    inputBundle.putIntegerArrayList("following_schedule",u.getFollowing_schedule_AL());
@@ -390,7 +390,7 @@ public class F5_Mypage extends Fragment {
 
         //Constructor
         HTTPRestfulUtilizerExtender2(Context mContext, String url, String HTTPRestType, Bundle inputBundle, String photo){
-            this.setPhoto(photo);
+
             setInputBundle(inputBundle);
             setmContext(mContext);
             setUrl(url);

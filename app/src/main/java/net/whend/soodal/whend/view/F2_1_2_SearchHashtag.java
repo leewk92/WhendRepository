@@ -131,6 +131,8 @@ public class F2_1_2_SearchHashtag extends Fragment {
                 intent.putExtra("photo", SHashtag_list.get(position).getHashTag().getPhoto());
                 intent.putExtra("count_schedule", SHashtag_list.get(position).getHashTag().getCount_schedule());
                 intent.putExtra("count_upcoming_schedule", SHashtag_list.get(position).getHashTag().getCount_upcoming_schedule());
+                intent.putExtra("is_follow",SHashtag_list.get(position).getHashTag().is_Follow());
+                Log.d("is_follow",SHashtag_list.get(position).getHashTag().is_Follow()+"");
                 startActivity(intent);
             }
         });

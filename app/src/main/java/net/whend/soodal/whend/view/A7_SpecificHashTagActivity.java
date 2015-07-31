@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -34,9 +37,11 @@ public class A7_SpecificHashTagActivity extends Activity {
     private static JSONObject outputSchedulesJson;
     private Concise_Schedule_Adapter adapter;
     int id,count_schedule,count_upcoming_schedule;
+    static boolean is_follow;
     private String title, photo;
     private int follower_count;
     static String nextURL;
+    Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +54,13 @@ public class A7_SpecificHashTagActivity extends Activity {
         photo = intent.getStringExtra("photo");
         count_schedule = intent.getIntExtra("count_schedule",0);
         count_upcoming_schedule = intent.getIntExtra("count_upcoming_schedule",0);
+        is_follow = intent.getBooleanExtra("is_follow",true);
+
         TextView title_view=(TextView)findViewById(R.id.title);
         TextView follower_count_view = (TextView)findViewById(R.id.follower_count);
         TextView schedule_count_view = (TextView)findViewById(R.id.schedule_count);
         TextView uploaded_schedule_count_view = (TextView)findViewById(R.id.comming_count);
-
+        ImageView follow_button = (ImageView)findViewById(R.id.follow_button);
         ImageView title_photo=(ImageView)findViewById(R.id.photo);
 
         if(!photo.equals("")) {
@@ -61,14 +68,61 @@ public class A7_SpecificHashTagActivity extends Activity {
             Picasso.with(this).load(photo).into(title_photo);
         }
 
+        LikeButtonClickListener(follow_button);
 
         title_view.setText("#" +title);
         follower_count_view.setText(follower_count+"");
         schedule_count_view.setText(count_schedule+"");
         uploaded_schedule_count_view.setText(count_upcoming_schedule+"");
+        if(is_follow == true)
+            follow_button.setImageResource(R.drawable.like_on);
+        else
+            follow_button.setImageResource(R.drawable.like);
+
         adapter = new Concise_Schedule_Adapter(this, R.layout.item_concise_schedule, CSchedule_list);
         listview = (ListView) findViewById(R.id.listview_schedule);
         listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /*
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Concise_Schedule item = arrayCSchedule.get(position);
+
+                            boolean waiting=false;
+                            if ( a != null && a.getStatus() != AsyncTask.Status.FINISHED) {
+                                refreshMailtask.cancel(true);
+                                waiting=true;
+                            }
+                            if ( waiting ) {
+                                MailItemListActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(MailItemListActivity.this, "데이터 로딩중입니다. 잠시 기다리세요.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                return;
+                            }
+
+                            Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
+                            intent.putExtra("id", arrayCSchedule.get(position).getId());
+                            startActivity(intent);
+                            getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
+
+                            // 이후 생략
+                        }
+            */
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int position, long arg3) {
+                // TODO Auto-generated method stub
+
+                Intent intent = new Intent(context, A3_SpecificScheduleActivity.class);
+                intent.putExtra("id", CSchedule_list.get(position).getId());
+                startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
+            }
+        });
 
         String url = "http://119.81.176.245/hashtags/"+id+"/list/";
 
@@ -77,6 +131,48 @@ public class A7_SpecificHashTagActivity extends Activity {
 
 
     }
+
+
+    // 좋아요 누를 때 리스너
+    public void LikeButtonClickListener(ImageView follow_button) {
+
+        final ImageView iv = follow_button;
+        follow_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (is_follow == false) {
+                    Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+                    toast1.show();
+                    is_follow = true;
+                    iv.setImageResource(R.drawable.like_on);
+
+                    String url = "http://119.81.176.245/hashtags/"+id+"/follow/";
+                    HTTPRestfulUtilizerExtender_follow a = new HTTPRestfulUtilizerExtender_follow(context, url,"PUT");
+                    a.doExecution();
+                    follower_count++;
+                    ((TextView)findViewById(R.id.follower_count)).setText(String.valueOf(follower_count));
+
+
+                } else if (is_follow == true) {
+                    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+                    toast2.show();
+                    is_follow = false;
+                    iv.setImageResource(R.drawable.like);
+
+                    String url = "http://119.81.176.245/hashtags/"+id+"/follow/";
+                    HTTPRestfulUtilizerExtender_follow a = new HTTPRestfulUtilizerExtender_follow(context, url,"PUT");
+                    a.doExecution();
+                    follower_count--;
+                    ((TextView) findViewById(R.id.follower_count)).setText(String.valueOf(follower_count));
+
+                }
+
+            }
+        });
+
+    }
+
 
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
 
@@ -140,5 +236,38 @@ public class A7_SpecificHashTagActivity extends Activity {
             }
         }
     }
+    class HTTPRestfulUtilizerExtender_follow extends HTTPRestfulUtilizer {
+
+        public HTTPRestfulUtilizerExtender_follow(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(PUT(url, getInputBundle()));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+            }
+        }
+    }
+
+
 
 }
