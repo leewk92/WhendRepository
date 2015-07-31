@@ -61,8 +61,8 @@ public class SearchUser_Adapter extends ArrayAdapter<Search_User> {
             public void onClick(View v) {
 
                 if (SUser_list.get(pos).getIsFollow() == false) {
-                    Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
-                    toast1.show();
+   //                 Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+   //                 toast1.show();
                     SUser_list.get(pos).clickFollow();
                     iv.setImageResource(R.drawable.like_on);
 
@@ -72,8 +72,8 @@ public class SearchUser_Adapter extends ArrayAdapter<Search_User> {
                     ((TextView) rv.findViewById(R.id.follower_count)).setText(String.valueOf(SUser_list.get(pos).getUser().getCount_follower()));
 
                 } else if (SUser_list.get(pos).getIsFollow() == true) {
-                    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
-                    toast2.show();
+    //                Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+    //                toast2.show();
                     SUser_list.get(pos).clickFollow();
                     iv.setImageResource(R.drawable.like);
 

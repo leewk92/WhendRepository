@@ -49,7 +49,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_right_out);
     }
 
-
+/*
     public void onResume() {
         super.onResume();
         Comment_list.clear();
@@ -58,7 +58,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this, url,"GET");
         a.doExecution();
     }
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,8 +143,10 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                 // but you can call any function here.
                 Log.d("lastItemScrolled", "true");
                 try{
-                    HTTPRestfulUtilizerExtender_comment b = new HTTPRestfulUtilizerExtender_comment(mContext, nextURL,"GET");
-                    b.doExecution();
+                    if(nextURL != "null"){
+                        HTTPRestfulUtilizerExtender_comment b = new HTTPRestfulUtilizerExtender_comment(mContext, nextURL,"GET");
+          //              b.doExecution();
+                    }
                 }catch(Exception e){
 
                 }
@@ -212,7 +214,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     Toast toast1 = Toast.makeText(mContext, "Like Button Clicked", Toast.LENGTH_SHORT);
                     toast1.show();
                     String url = "http://119.81.176.245/schedules/"+cs.getId()+"/like/";
-                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, url,"PUT");
+                    HTTPRestfulUtilizerExtender_likefollow a = new HTTPRestfulUtilizerExtender_likefollow(mContext, url,"PUT");
                     a.doExecution();
                     cs.clickLike();
                     lcv.setText(String.valueOf(cs.getLike_count()));
@@ -222,7 +224,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     Toast toast2 = Toast.makeText(mContext, "Like Button Unclicked", Toast.LENGTH_SHORT);
                     toast2.show();
                     String url = "http://119.81.176.245/schedules/"+cs.getId()+"/like/";
-                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, url,"PUT");
+                    HTTPRestfulUtilizerExtender_likefollow a = new HTTPRestfulUtilizerExtender_likefollow(mContext, url,"PUT");
                     a.doExecution();
                     cs.clickLike();
                     lcv.setText(String.valueOf(cs.getLike_count()));
@@ -250,7 +252,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     Toast toast1 = Toast.makeText(mContext, "Follow Button Clicked", Toast.LENGTH_SHORT);
                     toast1.show();
                     String url = "http://119.81.176.245/schedules/" + cs.getId() + "/follow/";
-                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, url, "PUT");
+                    HTTPRestfulUtilizerExtender_likefollow a = new HTTPRestfulUtilizerExtender_likefollow(mContext, url, "PUT");
                     a.doExecution();
                     cs.clickFollow();
                     fcv.setText(String.valueOf(cs.getFollow_count()));
@@ -260,7 +262,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     Toast toast2 = Toast.makeText(mContext, "Follow Button Unclicked", Toast.LENGTH_SHORT);
                     toast2.show();
                     String url = "http://119.81.176.245/schedules/" + cs.getId() + "/follow/";
-                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, url, "PUT");
+                    HTTPRestfulUtilizerExtender_likefollow a = new HTTPRestfulUtilizerExtender_likefollow(mContext, url, "PUT");
                     a.doExecution();
                     cs.clickFollow();
                     fcv.setText(String.valueOf(cs.getFollow_count()));
@@ -391,7 +393,8 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
 
                     // getting comment
                     String url_comment = "http://119.81.176.245/schedules/"+cs.getId() + "/comments/";
-
+                    Comment_list.clear();
+                    adapter.notifyDataSetChanged();
                     HTTPRestfulUtilizerExtender_comment a = new HTTPRestfulUtilizerExtender_comment(getmContext(), url_comment,"GET");
                     a.doExecution();
 
@@ -455,5 +458,35 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
             }
         }
     }
+    class HTTPRestfulUtilizerExtender_likefollow extends HTTPRestfulUtilizer {
 
+        public HTTPRestfulUtilizerExtender_likefollow(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(PUT(url, getInputBundle()));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+            }
+        }
+    }
 }

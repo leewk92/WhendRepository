@@ -2,6 +2,7 @@ package net.whend.soodal.whend.form;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         View v = convertView;
+
         if (v == null) {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.item_concise_schedule, null);
@@ -84,6 +86,11 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
         }
 
+        ViewHolder holder = new ViewHolder();
+        holder.memo_photo_vh = (ImageView) v.findViewById(R.id.memo_photo);
+        holder.user_photo_vh = (ImageView) v.findViewById(R.id.user_photo);
+        v.setTag(holder);
+
         return v;
     }
 
@@ -93,13 +100,13 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, A2_UserProfileActivity.class);
-                intent.putExtra("id", CSchedule_list.get(position).getUser_id());
+            Intent intent = new Intent(context, A2_UserProfileActivity.class);
+            intent.putExtra("id", CSchedule_list.get(position).getUser_id());
 
-                Activity activity = (Activity) context;
-                activity.startActivity(intent);
+            Activity activity = (Activity) context;
+            activity.startActivity(intent);
 
-                activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
+            activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
 
 
 
@@ -146,8 +153,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             public void onClick(View v) {
 
                 if(CSchedule_list.get(pos).getIsLike() == false){
-                    Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
-                    toast1.show();
+                //    Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+                //    toast1.show();
                     String url = "http://119.81.176.245/schedules/"+CSchedule_list.get(pos).getId()+"/like/";
                     HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url,"PUT");
                     a.doExecution();
@@ -156,8 +163,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     iv.setImageResource(R.drawable.like_on);
                 }
                 else if(CSchedule_list.get(pos).getIsLike() == true){
-                    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
-                    toast2.show();
+                //    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+                //    toast2.show();
                     String url = "http://119.81.176.245/schedules/"+CSchedule_list.get(pos).getId()+"/like/";
                     HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url,"PUT");
                     a.doExecution();
@@ -184,8 +191,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             public void onClick(View v) {
 
                 if(CSchedule_list.get(pos).getIsFollow() == false){
-                    Toast toast1 = Toast.makeText(context, "Follow Button Clicked", Toast.LENGTH_SHORT);
-                    toast1.show();
+                //    Toast toast1 = Toast.makeText(context, "Follow Button Clicked", Toast.LENGTH_SHORT);
+                //    toast1.show();
                     String url = "http://119.81.176.245/schedules/"+CSchedule_list.get(pos).getId()+"/follow/";
                     HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url,"PUT");
                     a.doExecution();
@@ -195,8 +202,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     cpu.addScheduleToInnerCalendar(CSchedule_list.get(pos));
                 }
                 else if(CSchedule_list.get(pos).getIsFollow() == true){
-                    Toast toast2 = Toast.makeText(context, "Follow Button Unclicked", Toast.LENGTH_SHORT);
-                    toast2.show();
+                //    Toast toast2 = Toast.makeText(context, "Follow Button Unclicked", Toast.LENGTH_SHORT);
+                //    toast2.show();
                     String url = "http://119.81.176.245/schedules/"+CSchedule_list.get(pos).getId()+"/follow/";
                     HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url,"PUT");
                     a.doExecution();
@@ -230,6 +237,13 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         });
 
     }
+
+    static class ViewHolder {
+        ImageView memo_photo_vh;
+        ImageView user_photo_vh;
+        int position;
+    }
+
 
     // 레이아웃에 데이터 적용
     public void AdjustDataToLayout(final View v,int position){
@@ -285,7 +299,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
         }else{
             // 기본이미지 로드.
-            memo_photo.setImageResource(R.drawable.exo);
+            memo_photo.setBackgroundColor(Color.BLACK);
         }
 
         if(CSchedule_list.get(position).getUser_photo()!="") {

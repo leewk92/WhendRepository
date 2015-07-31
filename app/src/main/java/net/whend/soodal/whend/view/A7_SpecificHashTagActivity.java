@@ -142,8 +142,8 @@ public class A7_SpecificHashTagActivity extends Activity {
             public void onClick(View v) {
 
                 if (is_follow == false) {
-                    Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
-                    toast1.show();
+    //                Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+    //                toast1.show();
                     is_follow = true;
                     iv.setImageResource(R.drawable.like_on);
 
@@ -155,8 +155,8 @@ public class A7_SpecificHashTagActivity extends Activity {
 
 
                 } else if (is_follow == true) {
-                    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
-                    toast2.show();
+    //                Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+    //                toast2.show();
                     is_follow = false;
                     iv.setImageResource(R.drawable.like);
 

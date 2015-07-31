@@ -56,24 +56,26 @@ public class F1_Wall extends Fragment {
     public F1_Wall() {
         // Required empty public constructor
     }
-
+/*
     @Override
     public void onResume() {
         super.onResume();
         arrayCSchedule.clear();
+        concise_schedule_adapter.notifyDataSetChanged();
         String url = "http://119.81.176.245/schedules/";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();
     }
-
+*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String url = "http://119.81.176.245/schedules/";
-
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
-        a.doExecution();
+       // String url = "http://119.81.176.245/schedules/";
+       // arrayCSchedule.clear();
+        //concise_schedule_adapter.notifyDataSetChanged();
+     //   HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
+     //   a.doExecution();
 
 
         //Concise_Schedule cs = new Concise_Schedule();
@@ -85,9 +87,13 @@ public class F1_Wall extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        arrayCSchedule.clear();
+        String url = "http://119.81.176.245/schedules/";
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
+        a.doExecution();
 
         // 로고 사이즈 조정 및 로고 삽입
-        arrayCSchedule.clear();
+        //arrayCSchedule.clear();
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.whend_actionbar);
         Toolbar toolbar = (Toolbar) container.findViewById(R.id.toolbar);
 
@@ -214,7 +220,7 @@ public class F1_Wall extends Fragment {
                 // but you can call any function here.
                 Log.d("lastItemScrolled", "true");
                 try{
-                    HTTPRestfulUtilizerExtender_loadmore b = new HTTPRestfulUtilizerExtender_loadmore(getActivity(),nextURL,"POST");
+                    HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(getActivity(),nextURL,"POST");
                     b.doExecution();
                 }catch(Exception e){
 
@@ -256,7 +262,7 @@ public class F1_Wall extends Fragment {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-                arrayCSchedule.clear();
+                //arrayCSchedule.clear();
                 try{
                     outputSchedulesJson = getOutputJsonObject();
 

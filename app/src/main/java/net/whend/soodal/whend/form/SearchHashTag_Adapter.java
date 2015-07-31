@@ -58,8 +58,8 @@ public class SearchHashTag_Adapter extends ArrayAdapter<Search_HashTag> {
             public void onClick(View v) {
 
                 if (SHashTag_list.get(pos).getIsFollow() == false) {
-                    Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
-                    toast1.show();
+   //                 Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+   //                 toast1.show();
                     SHashTag_list.get(pos).clickFollow();
                     iv.setImageResource(R.drawable.like_on);
 
@@ -70,8 +70,8 @@ public class SearchHashTag_Adapter extends ArrayAdapter<Search_HashTag> {
 
 
                 } else if (SHashTag_list.get(pos).getIsFollow() == true) {
-                    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
-                    toast2.show();
+    //                Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+    //                toast2.show();
                     SHashTag_list.get(pos).clickFollow();
                     iv.setImageResource(R.drawable.like);
 
