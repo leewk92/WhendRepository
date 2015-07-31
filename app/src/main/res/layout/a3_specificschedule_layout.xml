@@ -234,8 +234,8 @@
             android:minHeight="120dp"
             android:id="@+id/memo_photo"
             android:layout_marginTop="5dp"
-            android:src="@drawable/exo"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:background="#000000" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -252,7 +252,7 @@
             android:textColor="#FFF"
             android:textStyle="bold"
             android:layout_marginTop="5dp"
-            android:textSize="12dp"
+            android:textSize="16dp"
             />
 
     </FrameLayout>

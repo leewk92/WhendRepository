@@ -1,9 +1,9 @@
 package net.whend.soodal.whend.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by wonkyung on 15. 7. 23.
  */
-public class A10_ShowSchedulesActivity extends Activity {
+public class A10_ShowSchedulesActivity extends AppCompatActivity {
 
     private int id;
     private static JSONObject outputSchedulesJson;

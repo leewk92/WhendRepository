@@ -133,8 +133,8 @@
             android:minWidth="480dp"
             android:id="@+id/memo_photo"
             android:layout_marginTop="5dp"
-            android:src="@drawable/exo"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:background="#000000" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -239,7 +239,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_weight="1"
-                        android:text="15"
                         android:textSize="12dp"
                         android:textStyle="bold"
                         />
@@ -276,7 +275,6 @@
                         android:id="@+id/follow_count"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:text="15"
                         android:textSize="12dp"
                         android:textStyle="bold"
                         />
@@ -311,7 +309,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_weight="1"
-                        android:text="15"
                         android:textSize="12dp"
                         android:textStyle="bold"
                         />

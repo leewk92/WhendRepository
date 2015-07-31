@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.ScheduleFollow_User;
+import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
 
@@ -78,7 +79,7 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
             ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.like);
 
         if(User_list.get(position).getUser().getUser_photo()!="") {
-            Picasso.with(context).load(User_list.get(position).getUser().getUser_photo()).into((ImageView) v.findViewById(R.id.user_photo));
+            Picasso.with(context).load(User_list.get(position).getUser().getUser_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
 
         }else{
             // 기본이미지 로드.
