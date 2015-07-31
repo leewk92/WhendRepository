@@ -185,7 +185,7 @@ public class F1_Wall extends Fragment {
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
             }
         });
-
+        listview.setSmoothScrollbarEnabled(true);
         return rootview;
     }
 

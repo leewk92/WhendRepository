@@ -51,9 +51,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.item_concise_schedule, null);
         }
-        try{
-            AdjustDataToLayout(v,position);
-        }catch(Exception e){}
+
 
         // 리스너 함수들
         View user_clickableLayout = (View)v.findViewById(R.id.user_clickableLayout);
@@ -90,6 +88,10 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         holder.memo_photo_vh = (ImageView) v.findViewById(R.id.memo_photo);
         holder.user_photo_vh = (ImageView) v.findViewById(R.id.user_photo);
         v.setTag(holder);
+
+        try{
+            AdjustDataToLayout(v,position,holder);
+        }catch(Exception e){}
 
         return v;
     }
@@ -246,7 +248,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
 
     // 레이아웃에 데이터 적용
-    public void AdjustDataToLayout(final View v,int position){
+    public void AdjustDataToLayout(final View v,int position, ViewHolder holder){
 
         ((TextView)v.findViewById(R.id.user_fullname)).setText(CSchedule_list.get(position).getUsername());
         ((TextView)v.findViewById(R.id.title)).setText(CSchedule_list.get(position).getTitle());
@@ -295,19 +297,25 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             };
             */
 
-           Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into((ImageView)v.findViewById(R.id.memo_photo));
+          // Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into((ImageView)v.findViewById(R.id.memo_photo));
+            Picasso.with(context).load(CSchedule_list.get(position).getPhoto_dir_fromweb()).into(holder.memo_photo_vh);
 
         }else{
             // 기본이미지 로드.
-            memo_photo.setBackgroundColor(Color.BLACK);
+          //  memo_photo.setBackgroundColor(Color.BLACK);
+            holder.memo_photo_vh.setBackgroundColor(Color.BLACK);
+
         }
 
         if(CSchedule_list.get(position).getUser_photo()!="") {
-            Picasso.with(context).load(CSchedule_list.get(position).getUser_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
+         //   Picasso.with(context).load(CSchedule_list.get(position).getUser_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
+            Picasso.with(context).load(CSchedule_list.get(position).getUser_photo()).transform(new CircleTransform()).into(holder.user_photo_vh);
 
         }else{
             // 기본이미지 로드.
-            user_photo.setImageResource(R.drawable.userimage_default);
+            //user_photo.setImageResource(R.drawable.userimage_default);
+            holder.user_photo_vh.setImageResource(R.drawable.userimage_default);
+
         }
 
 
