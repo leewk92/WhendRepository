@@ -207,7 +207,7 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                     u.setCount_follower(tmp_ith.getInt("count_follower"));
                     u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));
 
-                    JSONArray tmpjsonarray = tmp_ith.getJSONArray("following_user");
+/*                    JSONArray tmpjsonarray = tmp_ith.getJSONArray("following_user");
                     if(tmpjsonarray!=null) {
                         int[] following_user = new int[tmpjsonarray.length()];
                         // Extract numbers from JSON array.
@@ -247,7 +247,7 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                             following_schedule[i] = tmpjsonarray.optInt(i);
                         }
                         u.setFollowing_schedule(following_schedule);
-                    }
+                    }*/
                     su = new Search_User(u);
                     su.setIsFollow(tmp_ith.getInt("is_follow")==1?true:false);
 
