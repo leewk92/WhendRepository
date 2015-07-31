@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.Search_HashTag;
 import net.whend.soodal.whend.model.top.Search_User;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 public class SearchUser_Adapter extends ArrayAdapter<Search_User> {
     private ArrayList<Search_User> SUser_list;
     private Context context;
-
+    private ImageView user_photo;
     public SearchUser_Adapter(Context context, int textViewResourceId, ArrayList<Search_User> lists) {
         super(context, textViewResourceId, lists);
         this.SUser_list = lists;
@@ -37,7 +39,10 @@ public class SearchUser_Adapter extends ArrayAdapter<Search_User> {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.item_searchuser, null);
         }
+        user_photo = (ImageView)v.findViewById(R.id.user_photo);
+
         AdjustDataToLayout(v,position);
+
 
         // 리스너 함수들
         ImageView follow_button = (ImageView) v.findViewById(R.id.follow_button);
@@ -99,6 +104,13 @@ public class SearchUser_Adapter extends ArrayAdapter<Search_User> {
         else
             ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.like);
 
+        if(SUser_list.get(position).getUser().getUser_photo()!="") {
+            Picasso.with(context).load(SUser_list.get(position).getUser().getUser_photo()).into((ImageView) v.findViewById(R.id.user_photo));
+
+        }else{
+            // 기본이미지 로드.
+            user_photo.setImageResource(R.drawable.userimage_default);
+        }
     }
 
 

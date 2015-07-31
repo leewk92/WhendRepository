@@ -125,7 +125,16 @@ public class HTTPRestfulUtilizer {
             HttpPut httpPut = new HttpPut(url);
 
             String json = "";
+            if(photo != null){
 
+                Bitmap bm = BitmapFactory.decodeFile(photo);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.JPEG, 25, baos); // bm is the bitmap object
+                byte[] b = baos.toByteArray();
+
+                String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+                inputBundle.putCharSequence("photo",encodedImage);
+            }
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
             for( String key : bundle.keySet()){
@@ -134,7 +143,10 @@ public class HTTPRestfulUtilizer {
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
-
+            Log.d("firstjson",json);
+            json = json.replace("\"[", "[");
+            json = json.replace("]\"", "]");
+            Log.d("secondjson", json);
             // ** Alternative way to convert Person object to JSON string usin Jackson Lib
             // ObjectMapper mapper = new ObjectMapper();
             // json = mapper.writeValueAsString(person);
@@ -172,10 +184,10 @@ public class HTTPRestfulUtilizer {
             // 10. convert inputstream to string
             if(inputStream != null) {
                 result = convertInputStreamToString(inputStream);
-                Log.d("HTTP POST ResultStream", result);
+                Log.d("HTTP PUT ResultStream", result);
             }else {
                 result = "Did not work!";
-                Log.d("HTTP POST ResultStream", result);
+                Log.d("HTTP PUT ResultStream", result);
             }
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());

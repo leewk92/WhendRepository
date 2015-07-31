@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.User;
 import net.whend.soodal.whend.model.top.Search_User;
@@ -34,7 +36,7 @@ public class A2_UserProfileActivity extends AppCompatActivity {
     Search_User su;
     private FragmentTabHost mTabHost;
     private int user_id;
-
+    private ImageView user_photo;
     public void onBackPressed(){
         finish();
         overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
@@ -73,6 +75,7 @@ public class A2_UserProfileActivity extends AppCompatActivity {
         View follower_count_clickablelayout = findViewById(R.id.follower_count_clickablelayout);
         View following_count_clickablelayout =findViewById(R.id.following_count_clickablelayout);
         ImageView follow_button = (ImageView)findViewById(R.id.follow_button);
+        user_photo = (ImageView)findViewById(R.id.user_photo);
 
         FollowerClickListener(follower_count_clickablelayout);
         FollowingClickListener(following_count_clickablelayout);
@@ -198,7 +201,7 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                     tmp_ith = outputSchedulesJson;
                     u.setId(tmp_ith.getInt("user_id"));
                     u.setUsername(tmp_ith.getString("user_name"));
-                    u.setPhoto(tmp_ith.getString("photo") == null ? "" : tmp_ith.getString("photo"));
+                    u.setUser_photo(tmp_ith.getString("photo") == null ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".200x200.jpg");
                     u.setCount_following_user(tmp_ith.getInt("count_following_user"));
                     u.setCount_following_hashtag(tmp_ith.getInt("count_following_hashtag"));
                     u.setCount_follower(tmp_ith.getInt("count_follower"));
@@ -262,7 +265,13 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                     ((ImageView)findViewById(R.id.follow_button)).setImageResource(R.drawable.like_on);
                 else
                     ((ImageView)findViewById(R.id.follow_button)).setImageResource(R.drawable.like);
+                if(u.getUser_photo()!="") {
+                    Picasso.with(mContext).load(u.getUser_photo()).into((ImageView) findViewById(R.id.user_photo));
 
+                }else{
+                    // 기본이미지 로드.
+                    user_photo.setImageResource(R.drawable.userimage_default);
+                }
             }
         }
     }

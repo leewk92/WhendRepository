@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.ScheduleFollow_User;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_User> {
     private ArrayList<ScheduleFollow_User> User_list;
     private Context context;
-
+    private ImageView user_photo;
     public ScheduleFollow_User_Adapter(Context context, int textViewResourceId, ArrayList<ScheduleFollow_User> lists) {
         super(context, textViewResourceId, lists);
         this.User_list = lists;
@@ -38,6 +40,8 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.item_schedulefollow_user, null);
         }
+        user_photo = (ImageView)v.findViewById(R.id.user_photo);
+
         AdjustDataToLayout(v,position);
 
         // 리스너 함수들
@@ -72,7 +76,14 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
             ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.like_on);
         else
             ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.like);
-        // image najoong ae
+
+        if(User_list.get(position).getUser().getUser_photo()!="") {
+            Picasso.with(context).load(User_list.get(position).getUser().getUser_photo()).into((ImageView) v.findViewById(R.id.user_photo));
+
+        }else{
+            // 기본이미지 로드.
+            user_photo.setImageResource(R.drawable.userimage_default);
+        }
     }
 
 

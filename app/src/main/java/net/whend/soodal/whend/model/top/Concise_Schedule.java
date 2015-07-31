@@ -25,6 +25,7 @@ public class Concise_Schedule {
     private String time_start;
     private String date_end;
     private String time_end;
+    private String user_photo;
 
     private String location;
     private String photo_dir;
@@ -50,6 +51,7 @@ public class Concise_Schedule {
     public Concise_Schedule(Schedule s){
         this.s = s;
         this.id = s.getId();
+        this.user_photo = s.getUser_photo();
         this.username = s.getUploaded_username();
         this.user_id = s.getUploaded_user_id();
         this.title = s.getTitle();
@@ -302,5 +304,13 @@ public class Concise_Schedule {
 
     public void setSchedule(Schedule s) {
         this.s = s;
+    }
+
+    public String getUser_photo() {
+        return user_photo;
+    }
+
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
     }
 }

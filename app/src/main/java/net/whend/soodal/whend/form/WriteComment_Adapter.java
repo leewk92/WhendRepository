@@ -64,7 +64,6 @@ public class WriteComment_Adapter extends Comment_Adapter {
 
                 activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
 
-
             }
         });
 

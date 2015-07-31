@@ -20,8 +20,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.User;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.RoundedImage;
 
@@ -180,7 +183,6 @@ public class F5_Mypage extends Fragment {
         mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("분석"),
                 F5_3_Analysis.class, null);
 
-
         String url = "http://119.81.176.245/userinfos/";
 
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),rootView,url,"GET");
@@ -274,17 +276,18 @@ public class F5_Mypage extends Fragment {
                     tmp_ith = outputSchedulesJson;
                     u.setId(tmp_ith.getInt("user_id"));
                     u.setUsername(tmp_ith.getString("user_name"));
-                    u.setPhoto(tmp_ith.getString("photo") == null ? "" : tmp_ith.getString("photo"));
+                    u.setUser_photo(tmp_ith.getString("photo") == "null" ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".200x200.jpg");
                     u.setCount_following_user(tmp_ith.getInt("count_following_user"));
                     u.setCount_following_hashtag(tmp_ith.getInt("count_following_hashtag"));
                     u.setCount_follower(tmp_ith.getInt("count_follower"));
                     u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));
-                    JSONArray tmpjsonarray = tmp_ith.getJSONArray("following_user");
+/*                    JSONArray tmpjsonarray = tmp_ith.getJSONArray("following_user");
                     if(tmpjsonarray!=null) {
                         int[] following_user = new int[tmpjsonarray.length()];
                         // Extract numbers from JSON array.
                         for (int i = 0; i < tmpjsonarray.length(); ++i) {
                             following_user[i] = tmpjsonarray.optInt(i);
+                            Log.d("following_user[i]",following_user[i]+"");
                         }
                         u.setFollowing_user(following_user);
                     }
@@ -319,7 +322,7 @@ public class F5_Mypage extends Fragment {
                             following_schedule[i] = tmpjsonarray.optInt(i);
                         }
                         u.setFollowing_schedule(following_schedule);
-                    }
+                    }*/
                 }catch(Exception e){
 
                 }
@@ -327,7 +330,13 @@ public class F5_Mypage extends Fragment {
                 ((TextView)v.findViewById(R.id.follower_count)).setText(u.getCount_follower() + "");
                 ((TextView)v.findViewById(R.id.schedule_count)).setText(u.getCount_uploaded_schedule() + "");
                 ((TextView)v.findViewById(R.id.following_count)).setText(String.valueOf(u.getCount_following_hashtag() + u.getCount_following_user()));
+                if(u.getUser_photo()!="") {
+                    Picasso.with(getActivity()).load(u.getUser_photo()).into((ImageView) v.findViewById(R.id.user_photo));
 
+                }else{
+                    // 기본이미지 로드.
+                    user_photo.setImageResource(R.drawable.userimage_default);
+                }
             }
         }
     }
@@ -347,10 +356,14 @@ public class F5_Mypage extends Fragment {
                     user_photo.setImageDrawable(temp);
 
                     ImageAbsolutePath = createImageFromBitmap(photo);
-
-                    String url = "http://119.81.176.245/userinfos/";
-
-                    HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(getActivity(),url,"PUT",ImageAbsolutePath);
+                    AppPrefs appPrefs = new AppPrefs(getActivity());
+                    String url = "http://119.81.176.245/userinfos/"+appPrefs.getUser_id();
+                    Bundle inputBundle = new Bundle();
+//                    inputBundle.putIntegerArrayList("following_hashtag", u.getFollowing_hashtag_AL());
+//                    inputBundle.putIntegerArrayList("following_schedule",u.getFollowing_schedule_AL());
+//                    inputBundle.putIntegerArrayList("following_user", u.getFollowing_user_AL());
+//                    inputBundle.putIntegerArrayList("like_schedule", u.getLike_schedule_AL());
+                    HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(getActivity(),url,"PUT",inputBundle,ImageAbsolutePath);
                     a.doExecution();
 
                     //HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(getActivity(),rootView,"url","POST","ImageAbsolutePath);
@@ -376,9 +389,9 @@ public class F5_Mypage extends Fragment {
     class HTTPRestfulUtilizerExtender2 extends HTTPRestfulUtilizer {
 
         //Constructor
-        HTTPRestfulUtilizerExtender2(Context mContext, String url, String HTTPRestType, String photo){
+        HTTPRestfulUtilizerExtender2(Context mContext, String url, String HTTPRestType, Bundle inputBundle, String photo){
             this.setPhoto(photo);
-
+            setInputBundle(inputBundle);
             setmContext(mContext);
             setUrl(url);
             setHTTPRestType(HTTPRestType);
@@ -425,13 +438,15 @@ public class F5_Mypage extends Fragment {
         try {
 
             // create a File object for the parent directory
-            File wallpaperDirectory = new File("/sdcard/Whend/");
+            File wallpaperDirectory = new File(this.getActivity().getCacheDir().getPath());
+
             // have the object build the directory structure, if needed.
             wallpaperDirectory.mkdirs();
 
             //Capture is folder name and file name with date and time
             fileOutputStream = new FileOutputStream(String.format(
-                    "/sdcard/Whend/whend%d.jpg",
+                    this.getActivity().getCacheDir().getPath()+"/whend%d.jpg",
+
                     currentTime = System.currentTimeMillis()));
 
             // Here we Resize the Image ...
@@ -455,7 +470,7 @@ public class F5_Mypage extends Fragment {
         } finally {
         }
 
-        return "/sdcard/Whend/whend"+ currentTime + ".jpg";
+        return this.getActivity().getCacheDir().getPath()+"/whend"+ currentTime + ".jpg";
     }
 
 

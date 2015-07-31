@@ -216,7 +216,7 @@ public class F2_1_3_SearchUser extends Fragment {
                         tmp_ith = results.getJSONObject(i);
                         u.setId(tmp_ith.getInt("user_id"));
                         u.setUsername(tmp_ith.getString("user_name"));
-                        u.setPhoto((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
+                        u.setUser_photo((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".200x200.jpg");
                         u.setCount_following_user(tmp_ith.getInt("count_following_user"));
                         u.setCount_follower(tmp_ith.getInt("count_follower"));
                         u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));
@@ -274,7 +274,7 @@ public class F2_1_3_SearchUser extends Fragment {
                         tmp_ith = results.getJSONObject(i);
                         u.setId(tmp_ith.getInt("user_id"));
                         u.setUsername(tmp_ith.getString("user_name"));
-                        u.setPhoto((tmp_ith.getString("photo") == null) ? "" : tmp_ith.getString("photo"));
+                        u.setUser_photo((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".200x200.jpg");
                         u.setCount_following_user(tmp_ith.getInt("count_following_user"));
                         u.setCount_follower(tmp_ith.getInt("count_follower"));
                         u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));

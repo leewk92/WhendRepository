@@ -52,6 +52,7 @@ public class Schedule {
     private String uploaded_username;       // 올린사람 이름
     private int uploaded_user_id;
     private String color;
+    private String user_photo;
 
     public String getColor() {
         return color;
@@ -74,7 +75,7 @@ public class Schedule {
         this.timezone="";
         this.uploaded_username="";
         this.photo_dir_fromweb="";
-
+        this.user_photo = "";
     }
 
     public int getComment_count() {
@@ -218,5 +219,13 @@ public class Schedule {
     }
     public void setUploaded_username(String uploaded_username){
         this.uploaded_username = uploaded_username;
+    }
+
+    public String getUser_photo() {
+        return user_photo;
+    }
+
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
     }
 }

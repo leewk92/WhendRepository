@@ -20,7 +20,7 @@ public class ScheduleFollow_User {
     }
     public ScheduleFollow_User(User user, boolean isFollow){
         this.username = user.getUsername();
-        this.photo_dir = user.getPhoto();
+        this.photo_dir = user.getUser_photo();
         this.user = user;
         this.isFollow = isFollow;
     }

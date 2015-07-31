@@ -43,7 +43,7 @@ public class User {
     //    private boolean is_staff;
 //    private boolean is_active;
 //    private String date_joined;
-    private String photo;                   // Download photo on cache directory (WK)
+    private String user_photo;                   // Download photo on cache directory (WK)
     //    private String created_at;
 //    private String updated_at;
 //    private String login_at;
@@ -56,14 +56,11 @@ public class User {
     private int[] following_hashtag;
     private int[] following_schedule;
     private int[] like_schedule;
+    private ArrayList<Integer> following_user_AL;
+    private ArrayList<Integer> following_hashtag_AL;
+    private ArrayList<Integer> following_schedule_AL;
+    private ArrayList<Integer> like_schedule_AL;
 
-    public int[] getLike_schedule() {
-        return like_schedule;
-    }
-
-    public void setLike_schedule(int[] like_schedule) {
-        this.like_schedule = like_schedule;
-    }
 
     public User(){
 
@@ -101,12 +98,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getUser_photo() {
+        return user_photo;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
     }
 
     public int getSchedule_count() {
@@ -146,7 +143,7 @@ public class User {
     }
 
     public void setFollowing_user(int[] following_user) {
-        this.following_user = following_user;
+        this.following_user = following_user.clone();
     }
 
     public int[] getFollowing_hashtag() {
@@ -154,7 +151,7 @@ public class User {
     }
 
     public void setFollowing_hashtag(int[] following_hashtag) {
-        this.following_hashtag = following_hashtag;
+        this.following_hashtag = following_hashtag.clone();
     }
 
     public int[] getFollowing_schedule() {
@@ -162,6 +159,65 @@ public class User {
     }
 
     public void setFollowing_schedule(int[] following_schedule) {
-        this.following_schedule = following_schedule;
+        this.following_schedule = following_schedule.clone();
     }
+
+    public ArrayList<Integer> getFollowing_user_AL() {
+        following_user_AL = new ArrayList<Integer>();
+        for(int i=0; i<following_user.length; i++){
+            following_user_AL.add(following_user[i]);
+        }
+        return following_user_AL;
+    }
+
+    public void setFollowing_user_AL(ArrayList<Integer> following_user_AL) {
+        this.following_user_AL = following_user_AL;
+    }
+
+    public ArrayList<Integer> getFollowing_hashtag_AL() {
+        following_hashtag_AL = new ArrayList<Integer>();
+        for(int i=0; i<following_hashtag.length; i++){
+            following_hashtag_AL.add(following_hashtag[i]);
+        }
+        return following_hashtag_AL;
+    }
+
+    public void setFollowing_hashtag_AL(ArrayList<Integer> following_hashtag_AL) {
+        this.following_hashtag_AL = following_hashtag_AL;
+    }
+
+    public ArrayList<Integer> getFollowing_schedule_AL() {
+        following_schedule_AL = new ArrayList<Integer>();
+        for(int i=0; i<following_schedule.length; i++){
+            following_schedule_AL.add(following_schedule[i]);
+        }
+        return following_schedule_AL;
+    }
+
+    public void setFollowing_schedule_AL(ArrayList<Integer> following_schedule_AL) {
+        this.following_schedule_AL = following_schedule_AL;
+    }
+
+    public ArrayList<Integer> getLike_schedule_AL() {
+        like_schedule_AL = new ArrayList<Integer>();
+        for(int i=0; i<like_schedule.length; i++){
+            like_schedule_AL.add(like_schedule[i]);
+        }
+        return like_schedule_AL;
+    }
+
+    public void setLike_schedule_AL(ArrayList<Integer> like_schedule_AL) {
+        this.like_schedule_AL = like_schedule_AL;
+    }
+
+    public int[] getLike_schedule() {
+        return like_schedule;
+    }
+
+    public void setLike_schedule(int[] like_schedule) {
+        this.like_schedule = like_schedule.clone();
+    }
+
+
+
 }

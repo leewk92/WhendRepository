@@ -309,6 +309,13 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
         }
 
         class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                comment_content.setText("");
+            }
+
             @Override
             protected String doInBackground(String... strings) {
                 String url = strings[0];
@@ -320,7 +327,7 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+/*
                 Comment s = new Comment();
                 AppPrefs appPrefs = new AppPrefs(getmContext());
 
@@ -329,9 +336,12 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
                 s.setWrite_userid(appPrefs.getUser_id());
 
                 Comment_list.add(s);
+                 adapter.notifyDataSetChanged();
+*/              nextURL = null;
+                Comment_list.clear();
+                HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(), comment_url, "GET");
+                a.doExecution();
 
-                adapter.notifyDataSetChanged();
-                comment_content.setText("");
             }
         }
     }

@@ -43,6 +43,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
     Context mContext = this;
     static String nextURL;
     private ArrayList<Comment> Comment_list = new ArrayList<Comment>();
+    private ImageView memo_photo,user_photo;
     public void onBackPressed(){
         finish();
         overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_right_out);
@@ -99,6 +100,8 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         View schedulelike_user_clickablelayout = (View)findViewById(R.id.schedulelike_user_clickablelayout);
         TextView like_count = (TextView)findViewById(R.id.like_count);
         TextView follow_count = (TextView)findViewById(R.id.follow_count);
+        memo_photo = (ImageView)findViewById(R.id.memo_photo);
+        user_photo = (ImageView)findViewById(R.id.user_photo);
 
         UserProfileClickListener(user_clickableLayout);
         LikeButtonClickListener(like_button, like_count);
@@ -314,6 +317,16 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
 
         if(cs.getPhoto_dir_fromweb()!="") {
             Picasso.with(mContext).load(cs.getPhoto_dir_fromweb()).into((ImageView) findViewById(R.id.memo_photo));
+        }else{
+            memo_photo.setImageResource(R.drawable.exo);
+        }
+
+        if(cs.getUser_photo()!="") {
+            Picasso.with(mContext).load(cs.getUser_photo()).into((ImageView)findViewById(R.id.user_photo));
+
+        }else{
+            // 기본이미지 로드.
+            user_photo.setImageResource(R.drawable.userimage_default);
         }
     }
 

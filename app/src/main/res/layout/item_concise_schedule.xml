@@ -36,7 +36,7 @@
                 android:id="@+id/user_fullname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="이원경"
+                android:text=""
                 android:textStyle="bold"
                 android:textSize="12dp"
                 android:layout_marginLeft="5dp"
@@ -49,7 +49,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:text="영화 인사이드아웃 개봉"
+            android:text=""
             android:textSize="12dp"
 
             android:layout_marginTop="5dp" />
@@ -73,7 +73,7 @@
                     android:id="@+id/date"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="7월9일"
+                    android:text=""
                     android:textSize="12dp"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="5dp"/>
@@ -92,7 +92,7 @@
                     android:id="@+id/time"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="11:00"
+                    android:text=""
                     android:textSize="12dp"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="5dp"/>
@@ -111,7 +111,7 @@
                     android:id="@+id/location"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="연세대학교"
+                    android:text=""
                     android:textSize="12dp"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="5dp"/>
@@ -147,7 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:gravity="center_horizontal|center_vertical"
-            android:text="감정이들 보러가야지\n#영화개봉일 #애니매이션 #인사이드아웃"
+            android:text=""
             android:textColor="#FFF"
             android:textStyle="bold"
             android:layout_marginTop="5dp"
@@ -236,7 +236,7 @@
                         />
                     <TextView
                         android:id="@+id/like_count"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_weight="1"
                         android:text="15"
@@ -308,7 +308,7 @@
                         />
                     <TextView
                         android:id="@+id/comment_count"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_weight="1"
                         android:text="15"
