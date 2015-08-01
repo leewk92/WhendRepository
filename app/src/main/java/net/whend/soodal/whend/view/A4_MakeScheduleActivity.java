@@ -455,6 +455,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
     public void parseMemo(String memo_text){
         memo_text = memo_text.replaceAll("\n"," ");
+        memo_text = memo_text.replaceAll("#"," #");
         String tmpArray[] = memo_text.split("#");
         if(tmpArray != null) {
 
