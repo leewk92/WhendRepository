@@ -22,7 +22,7 @@
             android:minWidth="180dp"
             android:id="@+id/gridsearch_image"
             android:scaleType="centerCrop"
-            android:src="@drawable/exo" />
+            android:background="#000000" />
 
         <FrameLayout
             android:layout_width="match_parent"

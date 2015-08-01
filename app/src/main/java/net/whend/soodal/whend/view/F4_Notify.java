@@ -21,6 +21,7 @@ import net.whend.soodal.whend.form.Notify_Schedule_Adapter;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
 import net.whend.soodal.whend.model.top.Notify_Schedule;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
@@ -212,6 +213,12 @@ public class F4_Notify extends Fragment {
                         ns.setTimestamp(tmp_ith.getString("timestamp"));
 
 
+                        AppPrefs appPrefs = new AppPrefs(getActivity());
+
+                        if(tmp_ith.getString("actor_name").equals(appPrefs.getUsername()))
+                            continue;
+
+
                         arrayNTchedule.add(ns);
                     }
                     notify_schedule_adapter.notifyDataSetChanged();
@@ -266,6 +273,14 @@ public class F4_Notify extends Fragment {
                         ns.setVerb(tmp_ith.getString("verb"));
                         ns.setDescription(tmp_ith.getString("description"));
                         ns.setTimestamp(tmp_ith.getString("timestamp"));
+
+
+                        AppPrefs appPrefs = new AppPrefs(getActivity());
+
+
+                        if(tmp_ith.getString("actor_name").equals(appPrefs.getUsername()))
+                            continue;
+
 
 
                         arrayNTchedule.add(ns);
