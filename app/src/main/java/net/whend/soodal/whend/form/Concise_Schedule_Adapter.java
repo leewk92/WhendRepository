@@ -26,6 +26,7 @@ import net.whend.soodal.whend.view.A6_WriteCommentActivity;
 import net.whend.soodal.whend.view.MainActivity;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Wall 에서 일정을 간단한 카드 형식 리스트로 보여주기 위한 어답터
@@ -163,6 +164,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     CSchedule_list.get(pos).clickLike();
                     lcv.setText(String.valueOf(CSchedule_list.get(pos).getLike_count()));
                     iv.setImageResource(R.drawable.like_on);
+                    notifyDataSetChanged();
                 }
                 else if(CSchedule_list.get(pos).getIsLike() == true){
                 //    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
@@ -173,6 +175,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     CSchedule_list.get(pos).clickLike();
                     lcv.setText(String.valueOf(CSchedule_list.get(pos).getLike_count()));
                     iv.setImageResource(R.drawable.like);
+                    notifyDataSetChanged();
                 }
 
             }
@@ -202,6 +205,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     fcv.setText(String.valueOf(CSchedule_list.get(pos).getFollow_count()));
                     iv.setImageResource(R.drawable.export_to_calendar_onclick);
                     cpu.addScheduleToInnerCalendar(CSchedule_list.get(pos));
+                    notifyDataSetChanged();
                 }
                 else if(CSchedule_list.get(pos).getIsFollow() == true){
                 //    Toast toast2 = Toast.makeText(context, "Follow Button Unclicked", Toast.LENGTH_SHORT);
@@ -214,6 +218,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     iv.setImageResource(R.drawable.exporttocalendar);
 
                     cpu.deleteScheduleFromInnerCalendar(CSchedule_list.get(pos));
+                    notifyDataSetChanged();
                 }
 
             }
@@ -235,6 +240,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                 activity.startActivity(intent);
 
                 activity.overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
+                notifyDataSetChanged();
             }
         });
 
@@ -303,7 +309,30 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         }else{
             // 기본이미지 로드.
           //  memo_photo.setBackgroundColor(Color.BLACK);
-            holder.memo_photo_vh.setBackgroundColor(Color.BLACK);
+          // holder.memo_photo_vh.setBackgroundColor(Color.BLACK);
+
+            // 6개의 기본이미지
+            Random random = new Random();
+            int color = random.nextInt(4);
+            switch (color){
+                case 0:
+                    holder.memo_photo_vh.setImageResource(R.drawable.memo_photo_default6);
+                    break;
+                case 1:
+                    holder.memo_photo_vh.setImageResource(R.drawable.memo_photo_default2);
+                    break;
+                case 2:
+                    holder.memo_photo_vh.setImageResource(R.drawable.memo_photo_default3);
+                    break;
+                case 3:
+                    holder.memo_photo_vh.setImageResource(R.drawable.memo_photo_default4);
+                    break;
+                case 4:
+                    holder.memo_photo_vh.setImageResource(R.drawable.memo_photo_default5);
+                    break;
+
+            }
+
 
         }
 
@@ -327,6 +356,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         a.doSomething();
         ((TextView)v.findViewById(R.id.memo)).setBackgroundResource(a.getGeneratedId());
 */
+        notifyDataSetChanged();
     }
 
 

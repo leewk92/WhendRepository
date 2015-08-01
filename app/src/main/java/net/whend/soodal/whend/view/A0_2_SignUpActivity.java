@@ -398,6 +398,11 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                     CalendarProviderUtil cpu = new CalendarProviderUtil(getmContext());
                     cpu.addAccountOfCalendar();
 
+                    String url = "http://119.81.176.245/userinfos/"+user_id+"/follow/";
+                    HTTPRestfulUtilizerExtender_follow a = new HTTPRestfulUtilizerExtender_follow(getmContext(), url,"PUT");
+                    a.doExecution();
+
+
                     Intent intent = new Intent(mContext, MainActivity.class);
                     intent.putExtra("text", String.valueOf("URL"));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -408,5 +413,38 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
             }
         }
     }
+
+    class HTTPRestfulUtilizerExtender_follow extends HTTPRestfulUtilizer {
+
+        public HTTPRestfulUtilizerExtender_follow(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(PUT(url, getInputBundle()));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+            }
+        }
+    }
+
 
 }

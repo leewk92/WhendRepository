@@ -115,7 +115,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             time_start.setText(dtf.getTime());
 
             YEAR_start = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_start = dtf.getCalendar().get(Calendar.MONTH);
+            MONTH_start = dtf.getCalendar().get(Calendar.MONTH)+1;
             DAY_start = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
             HOUR_start = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
             MINUTE_start = dtf.getCalendar().get(Calendar.MINUTE);
@@ -125,7 +125,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             date_start.setText(dtf.getDate());
             time_start.setText(dtf.getTime());
             YEAR_start = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_start = dtf.getCalendar().get(Calendar.MONTH);
+            MONTH_start = dtf.getCalendar().get(Calendar.MONTH)+1;
             DAY_start = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
             HOUR_start = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
             MINUTE_start = dtf.getCalendar().get(Calendar.MINUTE);
@@ -135,7 +135,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             date_end.setText(dtf.getDate());
             time_end.setText(dtf.getTime());
             YEAR_end = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_end = dtf.getCalendar().get(Calendar.MONTH);
+            MONTH_end = dtf.getCalendar().get(Calendar.MONTH)+1;
             DAY_end = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
             HOUR_end = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
             MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
@@ -145,7 +145,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             date_end.setText(dtf.getDate());
             time_end.setText(dtf.getTime());
             YEAR_end = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_end = dtf.getCalendar().get(Calendar.MONTH);
+            MONTH_end = dtf.getCalendar().get(Calendar.MONTH)+1;
             DAY_end = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
             HOUR_end = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
             MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
@@ -787,7 +787,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
             int year = YEAR_start;
-            int month = MONTH_start;
+            int month = MONTH_start-1;
             int day = DAY_start;
 
             // Create a new instance of DatePickerDialog and return it
@@ -839,7 +839,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
             int year = YEAR_end;
-            int month = MONTH_end;
+            int month = MONTH_end-1;
             int day = DAY_end;
 
             // Create a new instance of DatePickerDialog and return it

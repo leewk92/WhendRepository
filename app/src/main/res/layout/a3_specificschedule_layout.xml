@@ -53,7 +53,7 @@
             android:orientation="horizontal"
 
             android:clickable="true"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="5dp">
 
             <ImageView
                 android:id="@+id/user_photo"
@@ -68,7 +68,7 @@
                 android:text=""
                 android:textStyle="bold"
                 android:textSize="12dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
 
                 />
@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/specific_starttime"
             >
 
@@ -139,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/upload_endtime"
             >
 
@@ -193,7 +193,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:orientation="horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="20dp">
 
 
@@ -225,7 +225,7 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="5dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -459,14 +459,14 @@
             android:textSize="12dp"
             android:layout_weight="10"
             />
-
+<!--
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:text="댓글 달기"
             android:textSize="12dp"
             android:layout_weight="1"
-            />
+            />-->
     </LinearLayout>
 
 </LinearLayout>

@@ -61,14 +61,14 @@
 
             </LinearLayout>
         </LinearLayout>
-
+<!--
         <ImageView
             android:id="@+id/follow_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/like_on"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="7.5dp" />
+            android:layout_marginTop="7.5dp" />-->
     </RelativeLayout>
 
     <LinearLayout

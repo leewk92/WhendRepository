@@ -51,31 +51,49 @@ public class F1_Wall extends Fragment {
     ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
     static String nextURL;
+    public int index;
+    public boolean scrollToIndex;
     private static JSONObject outputSchedulesJson;
 
     public F1_Wall() {
         // Required empty public constructor
     }
-/*
+
     @Override
     public void onResume() {
         super.onResume();
+        nextURL=null;
         arrayCSchedule.clear();
-        concise_schedule_adapter.notifyDataSetChanged();
         String url = "http://119.81.176.245/schedules/";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();
+
+        listview.setOnScrollListener(new EndlessScrollListener());
+
     }
-*/
+
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        arrayCSchedule.clear();
+        concise_schedule_adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       // String url = "http://119.81.176.245/schedules/";
-       // arrayCSchedule.clear();
-        //concise_schedule_adapter.notifyDataSetChanged();
-     //   HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
-     //   a.doExecution();
+    //    String url = "http://119.81.176.245/schedules/";
+    //    arrayCSchedule.clear();
+    //    concise_schedule_adapter.notifyDataSetChanged();
+    //    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
+    //    a.doExecution();
 
 
         //Concise_Schedule cs = new Concise_Schedule();
@@ -87,10 +105,10 @@ public class F1_Wall extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        arrayCSchedule.clear();
-        String url = "http://119.81.176.245/schedules/";
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
-        a.doExecution();
+//        arrayCSchedule.clear();
+//        String url = "http://119.81.176.245/schedules/";
+//        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
+//        a.doExecution();
 
         // 로고 사이즈 조정 및 로고 삽입
         //arrayCSchedule.clear();
@@ -141,7 +159,7 @@ public class F1_Wall extends Fragment {
         // View 할당
         rootview = inflater.inflate(R.layout.f1_wall_layout, container, false);
         listview = (ListView)rootview.findViewById(R.id.listview_concise_schedule);
-        listview.setOnScrollListener(new EndlessScrollListener());
+        //listview.setOnScrollListener(new EndlessScrollListener());
 
         concise_schedule_adapter = new Concise_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayCSchedule);
         listview.setAdapter(concise_schedule_adapter);
@@ -207,7 +225,7 @@ public class F1_Wall extends Fragment {
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem,
                              int visibleItemCount, int totalItemCount) {
-
+            Log.d("loading,totalItemCount,pre",loading +" "+ totalItemCount +" " + previousTotal + "");
             if (loading) {
                 if (totalItemCount > previousTotal) {
                     loading = false;
@@ -220,7 +238,7 @@ public class F1_Wall extends Fragment {
                 // but you can call any function here.
                 Log.d("lastItemScrolled", "true");
                 try{
-                    HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(getActivity(),nextURL,"POST");
+                    HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(getActivity(),nextURL,"GET");
                     b.doExecution();
                 }catch(Exception e){
 

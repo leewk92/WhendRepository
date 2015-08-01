@@ -29,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by wonkyung on 15. 7. 11.
@@ -72,7 +73,8 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                 toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        finish();
+                        onBackPressed();
+                        //finish();
                         overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_right_out);
             }
         });
@@ -321,7 +323,27 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         if(cs.getPhoto_dir_fromweb()!="") {
             Picasso.with(mContext).load(cs.getPhoto_dir_fromweb()).into((ImageView) findViewById(R.id.memo_photo));
         }else{
-            memo_photo.setBackgroundColor(Color.BLACK);
+            //memo_photo.setBackgroundColor(Color.BLACK);
+            Random random = new Random();
+            int color = random.nextInt(4);
+            switch (color){
+                case 0:
+                    memo_photo.setImageResource(R.drawable.memo_photo_default6);
+                    break;
+                case 1:
+                    memo_photo.setImageResource(R.drawable.memo_photo_default2);
+                    break;
+                case 2:
+                    memo_photo.setImageResource(R.drawable.memo_photo_default3);
+                    break;
+                case 3:
+                    memo_photo.setImageResource(R.drawable.memo_photo_default4);
+                    break;
+                case 4:
+                    memo_photo.setImageResource(R.drawable.memo_photo_default5);
+                    break;
+
+            }
         }
 
         if(cs.getUser_photo()!="") {
