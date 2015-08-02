@@ -659,7 +659,8 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginBottom="30dp"
                 android:textSize="20dp"
-                android:textIsSelectable="false" />
+                android:textIsSelectable="false"
+                android:gravity="center_horizontal" />
 
             <Button
                 android:theme="@style/ColoredButtonOrange"
@@ -669,11 +670,10 @@
                 android:layout_marginBottom="-5dip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="시작하기"
+                android:text="다음"
                 android:id="@+id/t1_next"
                 android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:padding="10dp" />
+                android:padding="20dp" />
         </LinearLayout>
 
     </FrameLayout>
