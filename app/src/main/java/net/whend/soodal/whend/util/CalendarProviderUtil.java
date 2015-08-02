@@ -120,7 +120,7 @@ public class CalendarProviderUtil {
                 tmpSchedule.setEndtime_ms(cur2.getLong(2));
 
                 tmpSchedule.setUploaded_username(username);
-                tmpSchedule.setAllday((cur2.getInt(8) == 1) ? true : false);
+                tmpSchedule.setAllday((cur2.getInt(9) == 1) ? true : false);
                 tmpSchedule.setMemo(cur2.getString(5));
                 tmpSchedule.setTimezone(cur2.getString(6));
 
@@ -220,20 +220,26 @@ public class CalendarProviderUtil {
 
             ContentResolver cr = mContext.getApplicationContext().getContentResolver();
             ContentValues values = new ContentValues();
-            values.put(CalendarContract.Events.DTSTART, cs.getSchedule().getStarttime_ms());
-            values.put(CalendarContract.Events.DTEND, cs.getSchedule().getEndtime_ms());
+            values.put(CalendarContract.Events.DTSTART, (cs.getSchedule().getStarttime_ms()/1000)*1000);
+            values.put(CalendarContract.Events.DTEND, (cs.getSchedule().getEndtime_ms()/1000)*1000);
+//            values.put(CalendarContract.Events.ALL_DAY, cs.getSchedule().getAllday());
+            values.put(CalendarContract.Events.ALL_DAY, cs.getSchedule().getAllday()==true?1:0);
             values.put(CalendarContract.Events.TITLE, cs.getTitle());
             values.put(CalendarContract.Events.DESCRIPTION, cs.getMemo());
             values.put(CalendarContract.Events.CALENDAR_ID, calID);
             values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().toString());
+//            values.put(CalendarContract.Events.EVENT_TIMEZONE, "UTC");
 
             // Uri creationUri = asSyncAdapter(CalendarContract.Events.CONTENT_URI, account.name, account.type);
             // Uri uri = mContext.getContentResolver().insert(creationUri, values);
 
             Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
             long id = Long.parseLong(uri.getLastPathSegment());
-
+            Log.d("event_timezone",TimeZone.getDefault().toString());
             Log.d("added schedule id", id + "");
+            Log.d("add allday",cs.getSchedule().getAllday()+"");
+            Log.d("add dtstart",cs.getSchedule().getStarttime_ms()+"");
+            Log.d("add dtend",cs.getSchedule().getEndtime_ms()+"");
         }else{
             Log.d("repeated event","true");
         }

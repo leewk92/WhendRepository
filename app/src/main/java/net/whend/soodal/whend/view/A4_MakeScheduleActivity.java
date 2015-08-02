@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,7 +59,11 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     private static int YEAR_end,MONTH_end,DAY_end,HOUR_end,MINUTE_end;
     static TextView date_start,time_start,date_end,time_end;
     static int completed_num=0;
+    static boolean all_day_boolean;
+    int all_day_int;
+    Boolean sAllday;
     EditText title,location,memo;
+    CheckBox all_day;
     String sStartDate, sEndDate, sContent, sLocation, sStartTime,sEndTime;
     long sDatetime_start,sDatetime_end;
     Bundle inputBundle_forRequest = new Bundle();
@@ -83,7 +89,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         TextView username = (TextView)findViewById(R.id.user_fullname);
         username.setText(appPrefs.getUsername());
 
-
+        all_day = (CheckBox) findViewById(R.id.allday_checkbox);
         date_start = (TextView) findViewById(R.id.date_start);
         time_start = (TextView) findViewById(R.id.time_start);
 
@@ -107,7 +113,15 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         sLocation = intent.getStringExtra("location");
         sDatetime_start = intent.getLongExtra("datetime_start", 0);
         sDatetime_end = intent.getLongExtra("datetime_end", 0);
-
+        sAllday = intent.getBooleanExtra("allday", false);
+        Log.d("intent allday",sAllday+"");
+        if(sAllday == true){
+            all_day.setChecked(true);
+            View time_start_visiblelayout = findViewById(R.id.time_start_visiblelayout);
+            time_start_visiblelayout.setVisibility(View.INVISIBLE);
+            View time_end_visiblelayout = findViewById(R.id.time_end_visiblelayout);
+            time_end_visiblelayout.setVisibility(View.INVISIBLE);
+        }
 
         if(sDatetime_start != 0) {
             DateTimeFormatter dtf = new DateTimeFormatter(sDatetime_start);
@@ -182,6 +196,30 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
         // 클릭리스너
 
+
+        all_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    View time_start_visiblelayout = findViewById(R.id.time_start_visiblelayout);
+                    time_start_visiblelayout.setVisibility(View.INVISIBLE);
+                    View time_end_visiblelayout = findViewById(R.id.time_end_visiblelayout);
+                    time_end_visiblelayout.setVisibility(View.INVISIBLE);
+                    all_day_boolean = true;
+                    HOUR_start = 9;
+                    MINUTE_start = 0;
+                    HOUR_end = 9;
+                    MINUTE_end = 0;
+
+                }else {
+                    View time_start_visiblelayout = findViewById(R.id.time_start_visiblelayout);
+                    time_start_visiblelayout.setVisibility(View.VISIBLE);
+                    View time_end_visiblelayout = findViewById(R.id.time_end_visiblelayout);
+                    time_end_visiblelayout.setVisibility(View.VISIBLE);
+                    all_day_boolean = false;
+                }
+            }
+        });
         photo_add = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -467,24 +505,41 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             searchHashtags();
         }else{      //hash tag가 없을 때
 
+
+            if(all_day_boolean){
+                all_day_int=1;
+            }else all_day_int=0;
+
             inputBundle_forRequest.putCharSequence("title",title.getText());
             inputBundle_forRequest.putCharSequence("memo", memo.getText());
             inputBundle_forRequest.putCharSequence("location",location.getText());
-            Log.d("updateLocation",location.getText()+"");
+            inputBundle_forRequest.putInt("all_day", all_day_int);
+            Log.d("all_day",all_day_int+"");
+            Log.d("updateLocation", location.getText() + "");
             /* if(hashtags_id.size() !=0){
                 inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
             }*/
             Calendar cal = Calendar.getInstance();
-            cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start);
+            cal.setTimeInMillis(0);
+            if(all_day_boolean==false)
+                cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start,0);
+            else
+                cal.set(YEAR_start, MONTH_start - 1, DAY_start, HOUR_start, MINUTE_start,0);
 
             Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
-            Log.d("getTimeinMillis", cal.getTimeInMillis()+"");
 
+            Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
+
+            cal.setTimeInMillis((cal.getTimeInMillis() / 1000) * 1000);
             DateTimeFormatter dtf = new DateTimeFormatter(cal.getTimeInMillis());
             inputBundle_forRequest.putCharSequence("start_time", dtf.getOutputString());
 
             Log.d("getTimeinString",dtf.getOutputString());
-            cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end);
+            if(all_day_boolean == false)
+                cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end,0);
+            else
+                cal.set(YEAR_end, MONTH_end-1, DAY_end+1, HOUR_end, MINUTE_end,0);
+            cal.setTimeInMillis((cal.getTimeInMillis()/1000)*1000);
             dtf = new DateTimeFormatter(cal.getTimeInMillis());
             inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
             String url = "http://119.81.176.245/schedules/";
@@ -556,6 +611,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                         Toast.makeText(getmContext(),"메모를 입력하세요! ",Toast.LENGTH_SHORT).show();
                     }
                     else{
+                        progress.dismiss();
+                        onBackPressed();
                         Toast.makeText(getmContext(),"업로드합니다! ",Toast.LENGTH_SHORT).show();
                     }
                 }catch(Exception e){}
@@ -672,23 +729,41 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                         completed_num ++;
                         Log.d("completed_num",completed_num+"");
                         if( hashtags_title.length == completed_num){// 아이디를 다 얻었으면 요청
+
+                            if(all_day_boolean){
+                                all_day_int=1;
+                            }else all_day_int=0;
+
+
                             inputBundle_forRequest.putCharSequence("title",title.getText());
                             inputBundle_forRequest.putCharSequence("memo", memo.getText());
                             inputBundle_forRequest.putCharSequence("location",location.getText());
+                            inputBundle_forRequest.putCharSequence("all_day",all_day_int+"");
                             if(hashtags_id.size() !=0){
                                 inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
                             }
                             Calendar cal = Calendar.getInstance();
-                            cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start);
+                            cal.setTimeInMillis(0);
+                            if(all_day_boolean==false)
+                                cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start,0);
+                            else
+                                cal.set(YEAR_start, MONTH_start - 1, DAY_start, HOUR_start, MINUTE_start, 0);
                             Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
                             Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
+                            cal.setTimeInMillis((cal.getTimeInMillis() / 1000) * 1000);
                             DateTimeFormatter dtf = new DateTimeFormatter(cal.getTimeInMillis());
                             inputBundle_forRequest.putCharSequence("start_time", dtf.getOutputString());
-                            Log.d("getTimeinString",dtf.getOutputString());
+                            Log.d("getTimeinString", dtf.getOutputString());
 
-                            cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end);
+
+                            if(all_day_boolean==false)
+                                cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end,0);
+                            else
+                                cal.set(YEAR_end, MONTH_end-1, DAY_end+1, HOUR_end, MINUTE_end,0);
+
                             Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
                             Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
+                            cal.setTimeInMillis((cal.getTimeInMillis() / 1000) * 1000);
                             dtf = new DateTimeFormatter(cal.getTimeInMillis());
                             inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
                             Log.d("getTimeinString",dtf.getOutputString());
@@ -742,28 +817,42 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                     completed_num ++;
                     Log.d("completed_num",completed_num+"");
                     if( hashtags_title.length == completed_num){// 아이디를 다 얻었으면 요청
+
+                        if(all_day_boolean){
+                            all_day_int=1;
+                        }else all_day_int=0;
+
+
                         inputBundle_forRequest.putCharSequence("title",title.getText());
                         inputBundle_forRequest.putCharSequence("memo", memo.getText());
                         inputBundle_forRequest.putCharSequence("location",location.getText());
+                        inputBundle_forRequest.putCharSequence("all_day",all_day_int+"");
                         if(hashtags_id.size() !=0){
                             inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
                         }
                         Calendar cal = Calendar.getInstance();
-                        cal.set(YEAR_start, MONTH_start, DAY_start, HOUR_start, MINUTE_start);
+                        cal.setTimeInMillis(0);
+                        if(all_day_boolean==false)
+                            cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start,0);
+                        else
+                            cal.set(YEAR_start, MONTH_start - 1, DAY_start, HOUR_start, MINUTE_start,0);
 
                         Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
                         Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
-
+                        cal.setTimeInMillis((cal.getTimeInMillis() / 1000) * 1000);
                         DateTimeFormatter dtf = new DateTimeFormatter(cal.getTimeInMillis());
                         inputBundle_forRequest.putCharSequence("start_time", dtf.getOutputString());
                         Log.d("getTimeinString", dtf.getOutputString());
 
 
+                        if(all_day_boolean==false)
+                            cal.set(YEAR_end, MONTH_end - 1, DAY_end, HOUR_end, MINUTE_end,0);
+                        else
+                            cal.set(YEAR_end, MONTH_end -1 , DAY_end +1, HOUR_end, MINUTE_end,0);
 
-                        cal.set(YEAR_end, MONTH_end, DAY_end, HOUR_end, MINUTE_end);
                         Log.d("getTimeinInt", YEAR_end + " " + MONTH_end + " " + DAY_end + " " + HOUR_end + " " + MINUTE_end + "");
                         Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
-
+                        cal.setTimeInMillis((cal.getTimeInMillis()/1000)*1000);
                         dtf = new DateTimeFormatter(cal.getTimeInMillis());
                         inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
                         Log.d("getTimeinString", dtf.getOutputString());

@@ -99,6 +99,7 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
                 intent.putExtra("datetime_start",schedule.getSchedule().getStarttime_ms());
                 Log.d("datetime_start_upload", schedule.getSchedule().getStarttime_ms() + "");
                 intent.putExtra("datetime_end",schedule.getSchedule().getEndtime_ms());
+                intent.putExtra("allday",schedule.getSchedule().getAllday());
                 context.startActivity(intent);
             }
         });
