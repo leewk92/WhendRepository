@@ -65,6 +65,7 @@ public class Concise_Schedule {
         this.location = s.getLocation();
         this.isLike=false;
         this.isFollow=false;
+
         DateParse(s);
     }
     public Concise_Schedule(Schedule s, User best_friend_forLike, Comment best_friend_forComment){

@@ -61,11 +61,14 @@ public class SearchSchedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     }
 
     public void AdjustDataToLayout(View v,int position){
-
+        if(CSchedule_list.get(position).getSchedule().getAllday()==true) {
+            ((TextView) v.findViewById(R.id.time)).setText("하루 종일");
+        }else{
+            ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
+        }
         ((TextView)v.findViewById(R.id.user_fullname)).setText(CSchedule_list.get(position).getUsername());
         ((TextView)v.findViewById(R.id.title)).setText(CSchedule_list.get(position).getTitle());
         ((TextView)v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
-        ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
         ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
         ((TextView)v.findViewById(R.id.location)).setText(CSchedule_list.get(position).getLocation());
         //((TextView)v.findViewById(R.id.like_count)).setText(CSchedule_list.get(position).getLike_count());

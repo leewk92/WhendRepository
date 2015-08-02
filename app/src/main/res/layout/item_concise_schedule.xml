@@ -15,36 +15,50 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         >
-
         <LinearLayout
-            android:id="@+id/user_clickableLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-
-            android:clickable="true"
-            android:layout_marginBottom="5dp">
-
-            <ImageView
-                android:id="@+id/user_photo"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/userimage_default"
-                />
-
-            <TextView
-                android:id="@+id/user_fullname"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/user_clickableLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textStyle="bold"
-                android:textSize="12dp"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center"
-                />
+                android:orientation="horizontal"
+
+                android:clickable="true"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/user_photo"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/userimage_default"
+                    />
+
+                <TextView
+                    android:id="@+id/user_fullname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right">
+                <ImageView
+                    android:id="@+id/edit"
+                    android:padding="8dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/drop_down" />
+            </RelativeLayout>
 
         </LinearLayout>
-
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -105,7 +119,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
                 <ImageView
-
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/location"/>

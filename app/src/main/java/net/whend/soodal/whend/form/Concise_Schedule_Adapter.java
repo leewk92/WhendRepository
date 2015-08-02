@@ -1,8 +1,11 @@
 package net.whend.soodal.whend.form;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,7 @@ import net.whend.soodal.whend.util.CalendarProviderUtil;
 import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.PicassoImageTool;
+import net.whend.soodal.whend.view.A11_EditScheduleActivity;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
 import net.whend.soodal.whend.view.A5_WhoFollowsScheduleActivity;
 import net.whend.soodal.whend.view.A6_WriteCommentActivity;
@@ -66,9 +70,10 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         View schedulelike_user_clickablelayout = (View)v.findViewById(R.id.schedulelike_user_clickablelayout);
         TextView like_count = (TextView)v.findViewById(R.id.like_count);
         TextView follow_count = (TextView)v.findViewById(R.id.follow_count);
+        ImageView edit = (ImageView)v.findViewById(R.id.edit);
 
         try {
-
+            EditClieckListener(edit,position);
             UserProfileClickListener(user_clickableLayout, position);
             //UserProfileClickListener(comment_writer,position);
             LikeButtonClickListener(like_button, like_count, position);
@@ -95,6 +100,58 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         }catch(Exception e){}
 
         return v;
+    }
+    // edit 버튼 리스너
+    public void EditClieckListener(ImageView edit, final int position){
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                builder1.setMessage("이 일정을 수정 또는 삭제할 수 있습니다.");
+                builder1.setCancelable(true);
+                builder1.setNegativeButton("수정하기",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Concise_Schedule cs = CSchedule_list.get(position);
+                                Intent intent = new Intent(context, A11_EditScheduleActivity.class);
+                                intent.putExtra("id", cs.getId());
+                                intent.putExtra("date_start", cs.getDate_start());
+                                intent.putExtra("date_end", cs.getDate_end());
+                                intent.putExtra("time_start", cs.getTime_start());
+                                intent.putExtra("time_end", cs.getTime_end());
+                                intent.putExtra("title", cs.getTitle());
+                                intent.putExtra("location", cs.getLocation());
+                                intent.putExtra("datetime_start", cs.getSchedule().getStarttime_ms());
+                                intent.putExtra("datetime_end", cs.getSchedule().getEndtime_ms());
+                                intent.putExtra("allday", cs.getSchedule().getAllday());
+                                intent.putExtra("memo", cs.getMemo());
+
+                                Activity activity = (Activity) context;
+                                activity.startActivity(intent);
+                                activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
+                                dialog.cancel();
+                            }
+                        });
+                builder1.setPositiveButton("삭제하기",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String url_delete = "http://119.81.176.245/schedules/" + CSchedule_list.get(position).getId() + "/";
+                                HTTPRestfulUtilizerExtender_delete hd = new HTTPRestfulUtilizerExtender_delete(context, url_delete, "DELETE");
+                                hd.doExecution();
+                                dialog.cancel();
+                                Intent intent = new Intent(context, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                context.startActivity(intent);
+
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+
+            }
+        });
     }
 
     // 유저 이름 누를 때 리스너
@@ -258,14 +315,21 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
     // 레이아웃에 데이터 적용
     public void AdjustDataToLayout(final View v,int position, ViewHolder holder){
-
+        ImageView edit = (ImageView) v.findViewById(R.id.edit);
+        if(CSchedule_list.get(position).getSchedule().isMaster() == true){
+            edit.setVisibility(View.VISIBLE);
+            edit.setClickable(true);
+        }else {
+            edit.setVisibility(View.INVISIBLE);
+            edit.setClickable(false);
+        }
         ((TextView)v.findViewById(R.id.user_fullname)).setText(CSchedule_list.get(position).getUsername());
         ((TextView)v.findViewById(R.id.title)).setText(CSchedule_list.get(position).getTitle());
-        ((TextView)v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
+        ((TextView) v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
         if(CSchedule_list.get(position).getSchedule().getAllday()==false)
             ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
         else
-            ((TextView)v.findViewById(R.id.time)).setText("종일 일정");
+            ((TextView)v.findViewById(R.id.time)).setText("하루 종일");
 
         ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
         ((TextView)v.findViewById(R.id.like_count)).setText(String.valueOf(CSchedule_list.get(position).getLike_count()));
@@ -406,5 +470,38 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             }
         }
     }
+
+    class HTTPRestfulUtilizerExtender_delete extends HTTPRestfulUtilizer {
+
+        public HTTPRestfulUtilizerExtender_delete(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(DELETE(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+            }
+        }
+    }
+
 
 }

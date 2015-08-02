@@ -205,6 +205,7 @@ public class F2_1_3_SearchUser extends Fragment {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
+                listview.setClickable(false);
                 SUser_list.clear();
                 try{
                     outputSchedulesJson = getOutputJsonObject();
@@ -226,7 +227,7 @@ public class F2_1_3_SearchUser extends Fragment {
                         SUser_list.add(su);
                         searchUser_adapter.notifyDataSetChanged();
                     }
-
+                    listview.setClickable(true);
                 }catch(Exception e){
 
                 }
@@ -264,7 +265,7 @@ public class F2_1_3_SearchUser extends Fragment {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+                listview.setClickable(false);
                 try{
                     outputSchedulesJson = getOutputJsonObject();
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
@@ -285,7 +286,7 @@ public class F2_1_3_SearchUser extends Fragment {
                         SUser_list.add(su);
                         searchUser_adapter.notifyDataSetChanged();
                     }
-
+                    listview.setClickable(true);
                 }catch(Exception e){
 
                 }

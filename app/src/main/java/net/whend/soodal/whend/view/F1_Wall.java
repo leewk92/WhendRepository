@@ -282,6 +282,7 @@ public class F1_Wall extends Fragment {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 //arrayCSchedule.clear();
+                listview.setClickable(true);
                 try{
                     outputSchedulesJson = getOutputJsonObject();
 
@@ -306,6 +307,7 @@ public class F1_Wall extends Fragment {
                         s.setLocation((tmp_ith.getString("location")));
                         s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
                         s.setAllday((tmp_ith.getBoolean("all_day")));
+                        s.setMaster((tmp_ith.getInt("master")==1?true:false));
                         Concise_Schedule cs = new Concise_Schedule(s);
                         cs.setIsLike((tmp_ith.getInt("like")==1)?true:false);
                         cs.setIsFollow((tmp_ith.getInt("follow") == 1) ? true : false);
@@ -313,7 +315,7 @@ public class F1_Wall extends Fragment {
                         arrayCSchedule.add(cs);
                         concise_schedule_adapter.notifyDataSetChanged();
                     }
-
+                    listview.setClickable(false);
                 }catch(Exception e){
 
                 }
@@ -350,7 +352,7 @@ public class F1_Wall extends Fragment {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+                listview.setClickable(false);
                 try{
                     outputSchedulesJson = getOutputJsonObject();
 
@@ -374,13 +376,15 @@ public class F1_Wall extends Fragment {
                         s.setLocation((tmp_ith.getString("location")));
                         s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
                         s.setAllday((tmp_ith.getBoolean("all_day")));
+                        s.setMaster((tmp_ith.getInt("master")==1?true:false));
+
                         Concise_Schedule cs = new Concise_Schedule(s);
                         cs.setIsLike((tmp_ith.getInt("like")==1)?true:false);
                         cs.setIsFollow((tmp_ith.getInt("follow")==1)?true:false);
 
                         arrayCSchedule.add(cs);
                         concise_schedule_adapter.notifyDataSetChanged();
-                    }
+                    }listview.setClickable(true);
 
                 }catch(Exception e){
 

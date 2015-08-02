@@ -324,6 +324,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
 
                         AppPrefs appPrefs = new AppPrefs(mContext);
                         appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
+                        appPrefs.setPassword(getInputBundle().getCharSequence("password").toString());
                         appPrefs.setToken(token);
 
                         String getUserIdUrl = "http://119.81.176.245/userinfos/";
@@ -397,7 +398,8 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
 */
 
                     Intent intent = new Intent(mContext, T1_welcome.class);
-                    intent.putExtra("text", String.valueOf("URL"));
+                    intent.putExtra("username", appPrefs.getUsername());
+
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
                     finish();

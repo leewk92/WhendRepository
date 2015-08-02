@@ -316,7 +316,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
 
                         h.setId(tmp_ith.getInt("id"));
                         h.setTitle(tmp_ith.getString("title"));
-                        h.setFollower_count(tmp_ith.getInt("follower_count"));
+                        h.setFollower_count(tmp_ith.getInt("count_follower"));
                         h.setPhoto((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         h.setContent(tmp_ith.getString("content"));
                         h.setCount_schedule(tmp_ith.getInt("count_schedule"));

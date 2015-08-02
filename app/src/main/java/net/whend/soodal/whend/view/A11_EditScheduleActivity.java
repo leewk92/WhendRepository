@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import static java.lang.Thread.sleep;
 
-public class A4_MakeScheduleActivity extends AppCompatActivity {
+public class A11_EditScheduleActivity extends AppCompatActivity {
 
     private int TAKE_FROM_CAMERA = 1;
     private int TAKE_FROM_GALLERY = 2;
@@ -65,7 +65,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     Boolean sAllday;
     EditText title,location,memo;
     CheckBox all_day;
-    String sStartDate, sEndDate, sContent, sLocation, sStartTime,sEndTime;
+    int sId;
+    String sStartDate, sEndDate, sContent, sLocation, sStartTime,sEndTime,sTitle,sMemo,sPhoto;
     long sDatetime_start,sDatetime_end;
     Bundle inputBundle_forRequest = new Bundle();
     ProgressDialog progress ;
@@ -105,29 +106,26 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         schedule_photo_add = (ImageView) findViewById(R.id.schedule_photo_add);
 
         Intent intent = new Intent(this.getIntent());
-
+        sId = intent.getIntExtra("id",0);
         sStartDate = intent.getStringExtra("date_start");
         sEndDate = intent.getStringExtra("date_end");
         sStartTime = intent.getStringExtra("time_start");
         sEndTime = intent.getStringExtra("time_end");
-        sContent = intent.getStringExtra("content");
+        sTitle = intent.getStringExtra("title");
         sLocation = intent.getStringExtra("location");
         sDatetime_start = intent.getLongExtra("datetime_start", 0);
         sDatetime_end = intent.getLongExtra("datetime_end", 0);
         sAllday = intent.getBooleanExtra("allday", false);
+        sMemo = intent.getStringExtra("memo");
+        sPhoto = intent.getStringExtra("photo");
         Log.d("intent allday",sAllday+"");
-        if(sAllday == true){
-            all_day.setChecked(true);
-            all_day_boolean=true;
-            View time_start_visiblelayout = findViewById(R.id.time_start_visiblelayout);
-            time_start_visiblelayout.setVisibility(View.INVISIBLE);
-            View time_end_visiblelayout = findViewById(R.id.time_end_visiblelayout);
-            time_end_visiblelayout.setVisibility(View.INVISIBLE);
 
-        }else{
-            all_day.setChecked(false);
-            all_day_boolean=false;
-        }
+        title.setText(sTitle);
+        memo.setText(sMemo);
+        location.setText(sLocation);
+
+
+
 
         if(sDatetime_start != 0) {
             DateTimeFormatter dtf = new DateTimeFormatter(sDatetime_start);
@@ -171,6 +169,28 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
         }
 
+        if(sAllday == true){
+            all_day.setChecked(true);
+            all_day_boolean=true;
+            View time_start_visiblelayout = findViewById(R.id.time_start_visiblelayout);
+            time_start_visiblelayout.setVisibility(View.INVISIBLE);
+            View time_end_visiblelayout = findViewById(R.id.time_end_visiblelayout);
+            time_end_visiblelayout.setVisibility(View.INVISIBLE);
+            DateTimeFormatter dtf = new DateTimeFormatter(sDatetime_end-24*60*60*1000);// 종일일정이면 하루 빠져야함
+
+            date_end.setText(dtf.getDate());
+            time_end.setText(dtf.getTime());
+            YEAR_end = dtf.getCalendar().get(Calendar.YEAR);
+            MONTH_end = dtf.getCalendar().get(Calendar.MONTH)+1;
+            DAY_end = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
+            HOUR_end = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
+            MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
+
+        }else{
+            all_day.setChecked(false);
+            all_day_boolean=false;
+        }
+
         if(sStartDate != null)
             date_start.setText(sStartDate);
         if(sEndDate != null)
@@ -187,7 +207,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
         toolbar.setTitle("");
         TextView toolbartext = (TextView) findViewById(R.id.toolbar_textview);
-        toolbartext.setText("공유하기");
+        toolbartext.setText("일정 수정하기");
 
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back_s);
@@ -239,8 +259,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
                 final CharSequence[] items = {"카메라로 찍기", "갤러리에서 불러오기"};
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(A4_MakeScheduleActivity.this, R.style.AppCompatAlertDialogStyle);
-                        // 각 항목을 설정하고 클릭했을 때 동작을 지정함
+                AlertDialog.Builder builder = new AlertDialog.Builder(A11_EditScheduleActivity.this, R.style.AppCompatAlertDialogStyle);
+                // 각 항목을 설정하고 클릭했을 때 동작을 지정함
 
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
@@ -491,7 +511,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         // 이렇게 각각 해시태그에 대한 아이디를 얻어서 배열에 담는다.
         // 이들을 [1,2,55,71] 형식으로 바꾸고 inputBundle.putIntArrayList 한다.
 
-        //noinspection SimplifiableIfStatement
+        //noinspection SimplifiableIfStatement드
         if (id == R.id.action_upload) {
 
             completed_num=0;
@@ -557,8 +577,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             cal.setTimeInMillis((cal.getTimeInMillis()/1000)*1000);
             dtf = new DateTimeFormatter(cal.getTimeInMillis());
             inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
-            String url = "http://119.81.176.245/schedules/";
-            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this,url,"POST",inputBundle_forRequest, ImageAbsolutePath);
+            String url = "http://119.81.176.245/schedules/"+sId+"/";
+            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this,url,"PUT",inputBundle_forRequest, ImageAbsolutePath);
             a.doExecution();
         }
     }
@@ -574,7 +594,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         }
     }
 
-// for 일정 올리기
+    // for 일정 올리기
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
 
         private EditText dateview;
@@ -610,7 +630,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                 String sHTTPRestType = strings[1];
 
 
-                setOutputString(POST(url, getInputBundle()));
+                setOutputString(PUT(url, getInputBundle()));
 
 
 
@@ -630,8 +650,11 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                     }
                     else{
                         progress.dismiss();
+                        Intent intent = new Intent(getmContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        getmContext().startActivity(intent);
                         finish();
-                        Toast.makeText(getmContext(),"업로드합니다! ",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getmContext(),"일정을 수정합니다! ",Toast.LENGTH_SHORT).show();
                     }
                 }catch(Exception e){}
                 try{
@@ -639,7 +662,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
                     if(title.contentEquals("[\"This field must be unique.\"]")){
                         progress.dismiss();
-                        Toast.makeText(getmContext(),"업로드에 실패하였습니다. ",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getmContext(),"일정 수정에 실패하였습니다. ",Toast.LENGTH_SHORT).show();
                     }
 
                 }catch(Exception e){}
@@ -658,7 +681,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             }
         }
     }
-// for 일정 받아보기
+    // for 일정 받아보기
     class HTTPRestfulUtilizerExtender2 extends HTTPRestfulUtilizer {
 
         public HTTPRestfulUtilizerExtender2(Context mContext, String url, String HTTPRestType) {
@@ -801,8 +824,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                             inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
                             Log.d("getTimeinString",dtf.getOutputString());
 
-                            String url = "http://119.81.176.245/schedules/";
-                            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest, ImageAbsolutePath);
+                            String url = "http://119.81.176.245/schedules/" + sId + "/";
+                            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"PUT",inputBundle_forRequest, ImageAbsolutePath);
                             a.doExecution();
 
                         }
@@ -899,8 +922,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                         inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
                         Log.d("getTimeinString", dtf.getOutputString());
 
-                        String url = "http://119.81.176.245/schedules/";
-                        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest, ImageAbsolutePath);
+                        String url = "http://119.81.176.245/schedules/" + sId + "/";
+                        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"PUT",inputBundle_forRequest, ImageAbsolutePath);
                         a.doExecution();
 
                     }

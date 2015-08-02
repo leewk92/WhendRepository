@@ -201,6 +201,12 @@ public class F2_1_2_SearchHashtag extends Fragment {
         }
         class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
             @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
+            @Override
             protected String doInBackground(String... strings) {
                 String url = strings[0];
                 String sHTTPRestType = strings[1];
@@ -212,6 +218,8 @@ public class F2_1_2_SearchHashtag extends Fragment {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 SHashtag_list.clear();
+                listview.setClickable(false);
+
                 try{
                     outputSchedulesJson = getOutputJsonObject();
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
@@ -223,7 +231,7 @@ public class F2_1_2_SearchHashtag extends Fragment {
                         tmp_ith = results.getJSONObject(i);
                         h.setId(tmp_ith.getInt("id"));
                         h.setTitle(tmp_ith.getString("title"));
-                        h.setFollower_count(tmp_ith.getInt("follower_count"));
+                        h.setFollower_count(tmp_ith.getInt("count_follower"));
                         h.setPhoto((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         h.setContent(tmp_ith.getString("content"));
                         h.setCount_schedule(tmp_ith.getInt("count_schedule"));
@@ -233,7 +241,7 @@ public class F2_1_2_SearchHashtag extends Fragment {
                         SHashtag_list.add(sh);
                         searchHashTag_adapter.notifyDataSetChanged();
                     }
-
+                    listview.setClickable(true);
                 }catch(Exception e){
 
                 }
@@ -255,11 +263,19 @@ public class F2_1_2_SearchHashtag extends Fragment {
             // new HttpAsyncTask().execute(url,HTTPRestType);
         }
 
+
         @Override
         public void doExecution(){
             task.execute(getUrl(),getHTTPRestType());
         }
         class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
             @Override
             protected String doInBackground(String... strings) {
                 String url = strings[0];
@@ -271,7 +287,7 @@ public class F2_1_2_SearchHashtag extends Fragment {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+                listview.setClickable(false);
                 try{
                     outputSchedulesJson = getOutputJsonObject();
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
@@ -283,7 +299,7 @@ public class F2_1_2_SearchHashtag extends Fragment {
                         tmp_ith = results.getJSONObject(i);
                         h.setId(tmp_ith.getInt("id"));
                         h.setTitle(tmp_ith.getString("title"));
-                        h.setFollower_count(tmp_ith.getInt("follower_count"));
+                        h.setFollower_count(tmp_ith.getInt("count_follower"));
                         h.setPhoto((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         h.setContent(tmp_ith.getString("content"));
                         h.setCount_schedule(tmp_ith.getInt("count_schedule"));
@@ -293,7 +309,7 @@ public class F2_1_2_SearchHashtag extends Fragment {
                         SHashtag_list.add(sh);
                         searchHashTag_adapter.notifyDataSetChanged();
                     }
-
+                    listview.setClickable(true);
                 }catch(Exception e){
 
                 }

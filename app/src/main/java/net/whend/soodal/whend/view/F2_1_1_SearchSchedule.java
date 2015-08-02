@@ -211,6 +211,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 arrayCSchedule.clear();
+                listview.setClickable(false);
                 try{
                     outputSchedulesJson = getOutputJsonObject();
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
@@ -230,12 +231,13 @@ public class F2_1_1_SearchSchedule extends Fragment {
                         s.setComment_count((tmp_ith.getInt("count_comment")));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
-
+                        s.setAllday((tmp_ith.getBoolean("all_day")));
+                        s.setMaster((tmp_ith.getInt("master") == 1 ? true : false));
                         Concise_Schedule cs = new Concise_Schedule(s);
                         arrayCSchedule.add(cs);
                         searchSchedule_adapter.notifyDataSetChanged();
                     }
-
+                    listview.setClickable(true);
                 }catch(Exception e){
 
                 }
@@ -271,7 +273,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+                listview.setClickable(false);
                 try{
                     outputSchedulesJson = getOutputJsonObject();
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
@@ -291,12 +293,14 @@ public class F2_1_1_SearchSchedule extends Fragment {
                         s.setComment_count((tmp_ith.getInt("count_comment")));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
+                        s.setAllday((tmp_ith.getBoolean("all_day")));
+                        s.setMaster((tmp_ith.getInt("master")==1?true:false));
 
                         Concise_Schedule cs = new Concise_Schedule(s);
                         arrayCSchedule.add(cs);
                         searchSchedule_adapter.notifyDataSetChanged();
                     }
-
+                    listview.setClickable(true);
                 }catch(Exception e){
 
                 }

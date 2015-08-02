@@ -323,7 +323,7 @@ public class A7_SpecificHashTagActivity extends Activity {
 
                     h.setId(tmp_ith.getInt("id"));
                     title= (tmp_ith.getString("title"));
-                    follower_count = (tmp_ith.getInt("follower_count"));
+                    follower_count = (tmp_ith.getInt("count_follower"));
                     photo = ((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                     h.setContent(tmp_ith.getString("content"));
                     count_schedule=(tmp_ith.getInt("count_schedule"));

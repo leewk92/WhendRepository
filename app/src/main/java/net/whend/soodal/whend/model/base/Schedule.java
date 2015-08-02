@@ -53,6 +53,15 @@ public class Schedule {
     private int uploaded_user_id;
     private String color;
     private String user_photo;
+    private boolean master;
+
+    public boolean isMaster() {
+        return master;
+    }
+
+    public void setMaster(boolean master) {
+        this.master = master;
+    }
 
     public String getColor() {
         return color;

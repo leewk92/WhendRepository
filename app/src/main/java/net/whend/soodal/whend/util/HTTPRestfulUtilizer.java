@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -240,6 +241,7 @@ public class HTTPRestfulUtilizer {
             JSONObject jsonObject = new JSONObject();
             for( String key : bundle.keySet()){
                 jsonObject.accumulate(key, bundle.get(key));
+                Log.d("key,value", key + " " + bundle.get(key));
             }
 
             // 4. convert JSONObject to JSON to String
@@ -253,6 +255,7 @@ public class HTTPRestfulUtilizer {
             // json = mapper.writeValueAsString(person);
 
             // 5. set json to StringEntity
+
             StringEntity se = new StringEntity(json,"UTF-8");
 
 
@@ -279,6 +282,8 @@ public class HTTPRestfulUtilizer {
             }
             // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            //se.consumeContent();
 
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
@@ -309,6 +314,7 @@ public class HTTPRestfulUtilizer {
         }catch (Exception e){
             outputJsonArray = new JSONArray();
         }
+
         return result;
     }
 
@@ -348,6 +354,63 @@ public class HTTPRestfulUtilizer {
                 result = "Did not work!";
                 Log.d("HTTP GET ResultStream", result);
             }
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        outputString = result;
+        try {
+            outputJsonObject = new JSONObject(outputString);
+        }catch (Exception e){
+            outputJsonObject = new JSONObject();
+        }
+
+        try {
+            outputJsonArray = new JSONArray(outputString);
+
+        }catch (Exception e){
+            outputJsonArray = new JSONArray();
+        }
+
+        return result;
+    }
+
+    public String DELETE(String url){
+        InputStream inputStream = null;
+        String result = "";
+        try {
+
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpDelete httpDelete = new HttpDelete(url);
+
+
+            // 7. Set some headers to inform server about the type of the content
+            httpDelete.setHeader("Accept", "application/json;charset=utf-8");
+            //httpDelete.setHeader("Content-type", "application/json");
+            AppPrefs appPrefs = new AppPrefs(mContext);
+            token = appPrefs.getToken();
+            if( token != ""){
+                httpDelete.setHeader("Authorization","Token "+token);
+            }
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpDelete);
+
+            // 9. receive response as inputStream
+     /*       inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if(inputStream != null) {
+                result = convertInputStreamToString(inputStream);
+                Log.d("HTTP GET ResultStream", result);
+            }
+            else {
+                result = "Did not work!";
+                Log.d("HTTP GET ResultStream", result);
+            }*/
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }

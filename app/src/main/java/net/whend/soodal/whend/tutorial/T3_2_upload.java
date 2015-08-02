@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.view.MainActivity;
 
 public class T3_2_upload extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class T3_2_upload extends AppCompatActivity {
     ImageView t3_finger;
     TextView t3_text1;
     int i=0;
-
+    String username;
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -63,7 +64,7 @@ public class T3_2_upload extends AppCompatActivity {
 
             case 4:
                 i++;
-                t3_text1.setText("**님이 아는 또 다른 일정을\n친구와 공유할 수 있습니다.");
+                t3_text1.setText(username + " 님이 아는 또 다른 일정을\n친구와 공유할 수 있습니다.");
                 t3_text1.startAnimation(fade_in);
                 t3_text1.setVisibility(View.VISIBLE);
 
@@ -116,7 +117,8 @@ public class T3_2_upload extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.t3_2_upload);
-
+        AppPrefs appPrefs = new AppPrefs(this);
+        username= appPrefs.getUsername();
         t3_dark1 = (LinearLayout)findViewById(R.id.t3_dark1);
         t3_dark2 = (LinearLayout)findViewById(R.id.t3_dark2);
 
