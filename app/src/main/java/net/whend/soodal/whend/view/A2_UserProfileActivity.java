@@ -61,8 +61,8 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                 F5_1_MyTimeline.class, inputBundle);
         mTabHost.addTab(mTabHost.newTabSpec("searchhashtag").setIndicator("관심"),
                 F5_2_MyLikeSchedules.class, inputBundle);
-        mTabHost.addTab(mTabHost.newTabSpec("searchuser").setIndicator("분석"),
-                F2_1_3_SearchUser.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("analysis").setIndicator("분석"),
+                F5_3_Analysis.class, null);
 
         String url = "http://119.81.176.245/userinfos/"+user_id;
 
