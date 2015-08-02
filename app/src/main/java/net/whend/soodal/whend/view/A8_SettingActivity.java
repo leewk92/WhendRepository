@@ -180,7 +180,7 @@ public class A8_SettingActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(mContext, A0_1_LoginActivity.class);
 
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         mContext.startActivity(intent);
                         finish();
                     }

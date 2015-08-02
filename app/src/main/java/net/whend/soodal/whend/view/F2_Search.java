@@ -78,15 +78,44 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         public F2_Search() {
         // Required empty public constructor
     }
+/*
+    @Override
+    public void onPause() {
+        super.onPause();
+        arrayGSchedule.clear();
+        // quiltView.removeAllViews();
+        try{
+            quiltView.refresh();
+        }catch(Exception e){}
+        quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
+        quiltView.setChildPadding(-3);
 
+        String url = "http://119.81.176.245/hashtags/";
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
+        a.doExecution();
+    }
+*/
+    @Override
+    public void onResume(){
+        super.onResume();
+        arrayGSchedule.clear();
+       // quiltView.removeAllViews();
+        try{
+            quiltView.refresh();
+        }catch(Exception e){}
+        quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
+        quiltView.setChildPadding(-3);
+
+        String url = "http://119.81.176.245/hashtags/";
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
+        a.doExecution();
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        String url = "http://119.81.176.245/hashtags/";
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
-        a.doExecution();
+
 
     }
 
@@ -115,8 +144,8 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         search_linear = (FrameLayout) rootView.findViewById(R.id.search_linear);
         root_layout = (FrameLayout) rootView.findViewById(R.id.search_rootlayout);
 
-        quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
-        quiltView.setChildPadding(-3);
+      //  quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
+      //  quiltView.setChildPadding(-3);
 
 
 
@@ -153,8 +182,8 @@ public class F2_Search extends Fragment implements ScrollViewListener {
 
         mgrid_search_adapter = new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule);
 
-        for(int i=0; i< mgrid_search_adapter.getCount(); i++)
-            quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
+//        for(int i=0; i< mgrid_search_adapter.getCount(); i++)
+//            quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
 
         // search_text 검색시 이벤트
         search_text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -238,7 +267,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
 
         @Override
         public void doExecution(){
-            task.execute(getUrl(),getHTTPRestType());
+            task.execute(getUrl(), getHTTPRestType());
         }
         class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
             @Override
@@ -276,6 +305,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
                         arrayGSchedule.add(gs);
                         mgrid_search_adapter.notifyDataSetChanged();
                     }*/
+
                     outputSchedulesJson = getOutputJsonArray();
              //       JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
@@ -298,8 +328,9 @@ public class F2_Search extends Fragment implements ScrollViewListener {
                         arrayGSchedule.add(gs);
                         mgrid_search_adapter.notifyDataSetChanged();
                     }
-                    for(int i=0; i< mgrid_search_adapter.getCount(); i++)
-                        quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
+                    for(int i=0; i< mgrid_search_adapter.getCount(); i++) {
+                        quiltView.addPatchView(mgrid_search_adapter.getView(i, null, null));
+                    }
                 }catch(Exception e){
 
                 }

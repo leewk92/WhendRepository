@@ -105,33 +105,12 @@
             android:label="@string/title_activity_a10__showschedulesactivity" >
         </activity>
         <activity
-            android:name=".tutorial.T1_welcome"
+            android:name=".tutorial.t1_welcome"
             android:label="@string/title_activity_t1_welcome" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
-            android:name=".tutorial.T2_1_tagfollowing"
+            android:name=".tutorial.t2_tagfollowing"
             android:label="@string/title_activity_t2_tagfollowing" >
-        </activity>
-        <activity
-            android:name=".tutorial.T2_2_tagfollowing"
-            android:label="@string/title_activity_t2_2_tagfollowing" >
-        </activity>
-        <activity
-            android:name=".tutorial.T2_3_tagfollowing"
-            android:label="@string/title_activity_t2_3_tagfollowing" >
-        </activity>
-        <activity
-            android:name=".tutorial.T3_1_upload"
-            android:label="@string/title_activity_t3_search" >
-        </activity>
-        <activity
-            android:name=".tutorial.T3_2_upload"
-            android:label="@string/title_activity_t3_2_upload" >
         </activity>
     </application>
 

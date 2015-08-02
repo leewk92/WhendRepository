@@ -18,8 +18,10 @@ import com.squareup.picasso.Picasso;
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
 import net.whend.soodal.whend.form.Specific_Schedule_Adapter;
+import net.whend.soodal.whend.model.base.HashTag;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.model.top.Search_HashTag;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
@@ -42,34 +44,38 @@ public class A7_SpecificHashTagActivity extends Activity {
     private int follower_count;
     static String nextURL;
     Context context = this;
+    TextView title_view,follower_count_view,schedule_count_view,uploaded_schedule_count_view;
+    ImageView follow_button,title_photo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a7_specifichashtag_layout);
 
         Intent intent = new Intent(this.getIntent());
-        id = intent.getIntExtra("id", 0);                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
-        title = intent.getStringExtra("title");
+        id = intent.getIntExtra("id", 0);
+/*        title = intent.getStringExtra("title");
         follower_count = intent.getIntExtra("follower_count", 0);
         photo = intent.getStringExtra("photo");
         count_schedule = intent.getIntExtra("count_schedule",0);
         count_upcoming_schedule = intent.getIntExtra("count_upcoming_schedule",0);
         is_follow = intent.getBooleanExtra("is_follow",true);
+*/
+        title_view=(TextView)findViewById(R.id.title);
+        follower_count_view = (TextView)findViewById(R.id.follower_count);
+        schedule_count_view = (TextView)findViewById(R.id.schedule_count);
+        uploaded_schedule_count_view = (TextView)findViewById(R.id.comming_count);
+        follow_button = (ImageView)findViewById(R.id.follow_button);
 
-        TextView title_view=(TextView)findViewById(R.id.title);
-        TextView follower_count_view = (TextView)findViewById(R.id.follower_count);
-        TextView schedule_count_view = (TextView)findViewById(R.id.schedule_count);
-        TextView uploaded_schedule_count_view = (TextView)findViewById(R.id.comming_count);
-        ImageView follow_button = (ImageView)findViewById(R.id.follow_button);
-        ImageView title_photo=(ImageView)findViewById(R.id.photo);
-
+        title_photo=(ImageView)findViewById(R.id.photo);
+/*
         if(!photo.equals("")) {
 
             Picasso.with(this).load(photo).into(title_photo);
         }
-
+*/
         LikeButtonClickListener(follow_button);
-
+/*
         title_view.setText("#" +title);
         follower_count_view.setText(follower_count+"");
         schedule_count_view.setText(count_schedule+"");
@@ -78,7 +84,7 @@ public class A7_SpecificHashTagActivity extends Activity {
             follow_button.setImageResource(R.drawable.like_on);
         else
             follow_button.setImageResource(R.drawable.like);
-
+*/
         adapter = new Concise_Schedule_Adapter(this, R.layout.item_concise_schedule, CSchedule_list);
         listview = (ListView) findViewById(R.id.listview_schedule);
         listview.setAdapter(adapter);
@@ -128,6 +134,10 @@ public class A7_SpecificHashTagActivity extends Activity {
 
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this, url,"GET");
         a.doExecution();
+
+        String url2 = "http://119.81.176.245/hashtags/"+id+"/";
+        HTTPRestfulUtilizerExtender_hashtags b = new HTTPRestfulUtilizerExtender_hashtags(this, url2, "GET");
+        b.doExecution();
 
 
     }
@@ -270,6 +280,74 @@ public class A7_SpecificHashTagActivity extends Activity {
         }
     }
 
+
+
+    class HTTPRestfulUtilizerExtender_hashtags extends HTTPRestfulUtilizer {
+
+        // Constructor for GET
+        public HTTPRestfulUtilizerExtender_hashtags(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try{
+                    Log.d("comein","comein");
+                    outputSchedulesJson = getOutputJsonObject();
+                    //JSONArray results = outputSchedulesJson.getJSONArray("results");
+                    JSONObject tmp_ith=outputSchedulesJson;
+                   // nextURL = outputSchedulesJson.getString("next");
+
+                    HashTag h = new HashTag();
+
+                    h.setId(tmp_ith.getInt("id"));
+                    title= (tmp_ith.getString("title"));
+                    follower_count = (tmp_ith.getInt("follower_count"));
+                    photo = ((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                    h.setContent(tmp_ith.getString("content"));
+                    count_schedule=(tmp_ith.getInt("count_schedule"));
+                    count_upcoming_schedule =(tmp_ith.getInt("count_upcoming_schedule"));
+                    is_follow = (tmp_ith.getInt("is_follow") == 1 ? true : false);
+
+                    title_view.setText("#" + title);
+                    follower_count_view.setText(follower_count + "");
+                    schedule_count_view.setText(count_schedule + "");
+                    uploaded_schedule_count_view.setText(count_upcoming_schedule + "");
+                    if(is_follow == true)
+                        follow_button.setImageResource(R.drawable.like_on);
+                    else
+                        follow_button.setImageResource(R.drawable.like);
+                    if(!photo.equals("")) {
+                        Picasso.with(getmContext()).load(photo).into(title_photo);
+                    }
+
+                }catch(Exception e){
+
+                }
+            }
+        }
+    }
 
 
 }
