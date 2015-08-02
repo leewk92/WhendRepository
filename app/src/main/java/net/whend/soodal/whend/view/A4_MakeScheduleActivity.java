@@ -612,7 +612,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                     }
                     else{
                         progress.dismiss();
-                        onBackPressed();
+                        finish();
                         Toast.makeText(getmContext(),"업로드합니다! ",Toast.LENGTH_SHORT).show();
                     }
                 }catch(Exception e){}
