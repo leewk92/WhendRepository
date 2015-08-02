@@ -56,7 +56,7 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
             }
         };
 
-        moveTomain.start();
+            moveTomain.start();
     }
 
 
