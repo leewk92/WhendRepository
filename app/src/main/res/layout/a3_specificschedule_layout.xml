@@ -101,7 +101,7 @@
                 android:gravity="center_vertical|right" />
 
             <ImageView
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:src="@drawable/date"
                 android:layout_gravity="center_vertical"/>
@@ -117,7 +117,7 @@
                 android:layout_marginRight="25dp" />
 
             <ImageView
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:src="@drawable/time"
                 android:layout_gravity="center_vertical"/>
@@ -154,7 +154,7 @@
                 />
 
             <ImageView
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:src="@drawable/date"
                 android:layout_gravity="center_vertical"/>
@@ -172,7 +172,7 @@
 
 
             <ImageView
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:src="@drawable/time"
                 android:layout_gravity="center_vertical"/>

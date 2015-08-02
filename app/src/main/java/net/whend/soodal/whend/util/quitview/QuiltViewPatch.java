@@ -12,7 +12,7 @@ public class QuiltViewPatch implements Comparable{
 	private static QuiltViewPatch create(Size size){
 		switch(size){
 		case Big:
-			return new QuiltViewPatch(3,2);
+			return new QuiltViewPatch(3,1);
 
 		case Small:
 			return new QuiltViewPatch(1,1);
