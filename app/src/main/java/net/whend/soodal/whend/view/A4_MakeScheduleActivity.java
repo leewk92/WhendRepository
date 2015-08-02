@@ -805,6 +805,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             MONTH_start = MONTH;
             DAY_start = DAY;
             date_start.setText(MONTH_start + "월" + DAY_start + "일");
+            date_end.setText(MONTH_start + "월" + DAY_start + "일");
 
         }
     }
@@ -832,6 +833,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             HOUR_start =HOUR;
             MINUTE_start = MINUTE;
             time_start.setText(String.format("%02d", HOUR_start)+":" +String.format("%02d", MINUTE_start));
+            time_end.setText(String.format("%02d", HOUR_start)+":" +String.format("%02d", MINUTE_start));
         }
     }
     static public class F6_DatePickerFragment_end extends F6_DatePickerFragment{
