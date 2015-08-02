@@ -195,7 +195,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-                result_view.setText(result);
+  //              result_view.setText(result);
 
                 try{
                     String tmp_all = getOutputJsonObject().getString("__all__");
@@ -311,7 +311,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-                result_view.setText(result);
+  //              result_view.setText(result);
 
                 try{
                     String token = getOutputJsonObject().getString("key");

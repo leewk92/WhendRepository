@@ -34,7 +34,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
     private EditText username_view;
     private EditText email_view;
     private EditText password_view;
-    private Button loginButton_view, signupButton_view;
+    private Button loginButton_view, signupButton_view,login_facebook;
     private TextView result_view;
     private String email;
     private String password;
@@ -45,15 +45,13 @@ public class A0_1_LoginActivity extends AppCompatActivity {
 
 
 
-
-
-
         setContentView(R.layout.a0_1_login_layout);
         mContext = this.getApplicationContext();
         username_view = (EditText) findViewById(R.id.login_username);
         password_view = (EditText) findViewById(R.id.login_password);
         loginButton_view = (Button) findViewById(R.id.login_button);
         signupButton_view = (Button) findViewById(R.id.signup_button);
+        login_facebook = (Button) findViewById(R.id.login_facebook);
         loginButton_view.setOnClickListener(loginButtonListener);
         signupButton_view.setOnClickListener(signupButtonListener);
 
@@ -74,7 +72,17 @@ public class A0_1_LoginActivity extends AppCompatActivity {
 
             }
         });
+        login_facebook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                    Toast toast1 = Toast.makeText(mContext, "준비중입니다!", Toast.LENGTH_SHORT);
+                    toast1.setGravity(0,0,100);
+                    toast1.show();
+                }
+            }
+
+        );
     }
 
     public View.OnClickListener signupButtonListener = new View.OnClickListener(){
@@ -222,7 +230,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
              //       JSONObject tmpJson = new JSONObject(getOutputString());
              //       String token = tmpJson.getString("key");
                     String token = getOutputJsonObject().getString("key");
-                    result_view.setText(result);
+     //               result_view.setText(result);
                     // 유저네임과 토큰을 저장.
                     AppPrefs appPrefs = new AppPrefs(mContext);
                     appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
