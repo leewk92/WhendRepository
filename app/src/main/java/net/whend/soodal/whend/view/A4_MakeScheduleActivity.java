@@ -569,7 +569,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
                 }catch(Exception e){}
 
-
+/*
                 try{    // 올린 일정 받아보기 자동 설정
                     int id = getOutputJsonObject().getInt("id");
                     String url = "http://119.81.176.245/schedules/"+id+"/follow/";
@@ -578,7 +578,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                 }catch(Exception e){
 
                 }
-
+*/
 
             }
         }
