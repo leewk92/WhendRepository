@@ -1,6 +1,7 @@
 package net.whend.soodal.whend.form;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,7 +85,7 @@ public class Grid_Search_Adapter extends ArrayAdapter<Grid_Search_Schedule> {
             Picasso.with(context).load(GS_Schedule_list.get(position).getTag().getPhoto()).into((ImageView)v.findViewById(R.id.gridsearch_image));
 
         }else
-            ((ImageView)v.findViewById(R.id.gridsearch_image)).setImageResource(R.drawable.exo);
+            ((ImageView)v.findViewById(R.id.gridsearch_image)).setBackgroundColor(Color.parseColor("#000000"));
         notifyDataSetChanged();
     }
 }

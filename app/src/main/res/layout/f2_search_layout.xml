@@ -15,8 +15,8 @@
         android:id="@+id/search_grid">
 
         <net.whend.soodal.whend.util.observablescrollview.ObservableScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/quilt_scroll" >
 
             <net.whend.soodal.whend.util.quitview.QuiltView
