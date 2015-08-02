@@ -12,11 +12,16 @@ public class QuiltViewPatch implements Comparable{
 	private static QuiltViewPatch create(Size size){
 		switch(size){
 		case Big:
-			return new QuiltViewPatch(3,1);
+			return new QuiltViewPatch(3,2);
 
 		case Small:
-		case Tall:
 			return new QuiltViewPatch(1,1);
+
+		case Tall:
+			return new QuiltViewPatch(1,2);
+
+		case Square:
+			return new QuiltViewPatch(2,2);
 
 		}
 		
@@ -42,12 +47,13 @@ public class QuiltViewPatch implements Comparable{
 	private enum Size{
 		Big,
 		Small,
-		Tall
+		Tall,
+		Square
 	}
 	
 	public static QuiltViewPatch init(int position, int column){
 
-		return init3(position);
+		return init4(position);
 	}
 
 	private static QuiltViewPatch init3(int position){
@@ -55,6 +61,65 @@ public class QuiltViewPatch implements Comparable{
 			return create(Size.Big);
 		else
 			return create(Size.Small);
+	}
+
+	private static QuiltViewPatch init4(int position){
+		switch(position % 32){
+			case 0:
+				return create(Size.Big);
+			case 1:
+			case 2:
+			case 3:
+				return create(Size.Small);
+			case 4:
+				return create(Size.Small);
+			case 5:
+				return create(Size.Square);
+			case 6:
+				return create(Size.Small);
+			case 7:
+				return create(Size.Tall);
+			case 8:
+			case 9:
+			case 10:
+				return create(Size.Small);
+			case 11:
+				return create(Size.Square);
+			case 12:
+				return create(Size.Tall);
+			case 13:
+			case 14:
+				return create(Size.Small);
+			case 15:
+				return create(Size.Small);
+			case 16:
+				return create(Size.Tall);
+			case 17:
+			case 18:
+			case 19:
+				return create(Size.Small);
+			case 20:
+				return create(Size.Tall);
+			case 21:
+			case 22:
+				return create(Size.Small);
+			case 23:
+				return create(Size.Tall);
+			case 24:
+				return create(Size.Small);
+			case 25:
+			case 26:
+			case 27:
+			case 28:
+				return create(Size.Small);
+			case 29:
+				return create(Size.Tall);
+			case 30:
+			case 31:
+				return create(Size.Small);
+		}
+
+		return create(Size.Small);
 	}
 
 	private static QuiltViewPatch initsample(int position){
@@ -78,7 +143,7 @@ public class QuiltViewPatch implements Comparable{
 		case 11:
 			return create(Size.Small);
 		case 12:
-			return create(Size.Big);
+			return create(Size.Small);
 		case 13:
 			return create(Size.Tall);
 		case 14:
@@ -98,7 +163,7 @@ public class QuiltViewPatch implements Comparable{
 		case 24:
 			return create(Size.Small);
 		case 25:
-			return create(Size.Big);
+			return create(Size.Tall);
 		case 26:
 			return create(Size.Small);
 		case 27:
@@ -110,7 +175,7 @@ public class QuiltViewPatch implements Comparable{
 		case 31:
 			return create(Size.Tall);
 		case 32:
-			return create(Size.Big);
+			return create(Size.Small);
 		case 33:
 			return create(Size.Tall);
 		case 34:
