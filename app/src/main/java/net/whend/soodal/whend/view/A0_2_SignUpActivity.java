@@ -397,11 +397,11 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                     // creating account
                     CalendarProviderUtil cpu = new CalendarProviderUtil(getmContext());
                     cpu.addAccountOfCalendar();
-
+/*
                     String url = "http://119.81.176.245/userinfos/"+user_id+"/follow/";
                     HTTPRestfulUtilizerExtender_follow a = new HTTPRestfulUtilizerExtender_follow(getmContext(), url,"PUT");
                     a.doExecution();
-
+*/
 
                     Intent intent = new Intent(mContext, MainActivity.class);
                     intent.putExtra("text", String.valueOf("URL"));

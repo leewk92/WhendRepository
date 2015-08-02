@@ -163,6 +163,7 @@ public class F1_Wall extends Fragment {
 
         concise_schedule_adapter = new Concise_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayCSchedule);
         listview.setAdapter(concise_schedule_adapter);
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 /*
             @Override
