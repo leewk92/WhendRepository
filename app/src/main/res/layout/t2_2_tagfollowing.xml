@@ -1,0 +1,186 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.whend.soodal.whend.tutorial.T2_2_tagfollowing">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.Toolbar
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/toolbar"
+                    android:layout_height="50dp"
+                    android:layout_width="match_parent"
+                    android:minHeight="50dp"
+                    android:background="#ff03a8f3"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    >
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+
+
+                        <LinearLayout
+                            android:id="@+id/search_layout"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            >
+
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/search_btn"
+                                android:layout_marginRight="3dp"
+                                android:src="@drawable/abc_ic_search_api_mtrl_alpha"
+                                android:focusable="true"/>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/search_text"
+                                android:hint="검색"
+                                android:imeOptions="actionSearch"
+                                android:inputType="text"/>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/setting_layout"
+                            android:gravity="center|center_vertical|center_horizontal|right"
+                            android:layout_gravity="center|center_vertical|center_horizontal|right"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            >
+
+                            <ImageView
+                                android:layout_gravity="center|right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/setting_btn"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
+                                android:focusable="true"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+
+                </android.support.v7.widget.Toolbar>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/t2_2_dark2"
+                    android:background="#CC000000"></LinearLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginBottom="5dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:id="@+id/t2_2_image"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/t2_festivals" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#77000000"></FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="#축제"
+                        android:id="@+id/textView15"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:id="@+id/t2_2_finger"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/finger_point_turned" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:id="@+id/imageView14"
+                        android:src="@drawable/t2_tags1" />
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/t2_2_dark3"
+                        android:background="#CC000000"></LinearLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/t2_2_dark1"
+            android:background="#CC000000"></LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/t2_2_text1"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp" />
+    </FrameLayout>
+
+</LinearLayout>

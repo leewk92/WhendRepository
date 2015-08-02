@@ -22,6 +22,10 @@
     <string name="title_activity_a0_0__open_acitivity">A0_0_OpenAcitivity</string>
     <string name="title_activity_t1_welcome">t1_welcome</string>
     <string name="title_activity_t2_tagfollowing">t2_tagfollowing</string>
+    <string name="title_activity_t2_2_tagfollowing">T2_2_tagfollowing</string>
+    <string name="title_activity_t2_3_tagfollowing">T2_3_tagfollowing</string>
+    <string name="title_activity_t3_search">T3_search</string>
+    <string name="title_activity_t3_2_upload">T3_2_upload</string>
 
 
 </resources>

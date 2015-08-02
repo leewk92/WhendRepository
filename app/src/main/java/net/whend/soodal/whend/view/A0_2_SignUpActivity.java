@@ -1,13 +1,9 @@
 package net.whend.soodal.whend.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -16,18 +12,14 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
-import net.whend.soodal.whend.tutorial.t1_welcome;
+import net.whend.soodal.whend.tutorial.T1_welcome;
 import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.CalendarProviderUtil;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
-
-import java.util.concurrent.ExecutionException;
 
 /** 이 클래스는 마치 서버와 데이터 주고받기 튜토리얼
  * Created by wonkyung on 15. 7. 13.
@@ -404,7 +396,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                     a.doExecution();
 */
 
-                    Intent intent = new Intent(mContext, t1_welcome.class);
+                    Intent intent = new Intent(mContext, T1_welcome.class);
                     intent.putExtra("text", String.valueOf("URL"));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);

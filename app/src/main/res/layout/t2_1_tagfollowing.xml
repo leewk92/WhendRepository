@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.whend.soodal.whend.tutorial.T2_tagfollowing">
+    tools:context="net.whend.soodal.whend.tutorial.T2_1_tagfollowing">
 
 
     <FrameLayout
@@ -650,21 +650,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/t2_text1"
             android:textColor="#FFFFFF"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:textSize="20dp"
+            android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/t2_text2"
             android:textColor="#FFFFFF"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="50dp" />
+            android:layout_marginBottom="50dp"
+            android:textSize="15dp" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -676,7 +678,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#212121">
+                android:background="#727272">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -699,7 +701,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#212121">
+                android:background="#727272"
+                android:clickable="false">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/textview_press"
+                    android:clickable="true"></FrameLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -708,7 +717,17 @@
                     android:layout_weight="1"
                     android:id="@+id/t2_tab2"
                     android:src="@drawable/menu_search"
-                    android:background="#212121" />
+                    android:clickable="false" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#CC000000"
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/t2_dark3" >
+
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="30dp"
@@ -716,6 +735,7 @@
                     android:id="@+id/t2_finger"
                     android:layout_gravity="bottom|right"
                     android:src="@drawable/finger_point_turned" />
+
             </FrameLayout>
 
             <FrameLayout
@@ -725,35 +745,11 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="42dp"
                     android:layout_weight="1"
                     android:id="@+id/t2_tab3"
                     android:src="@drawable/menu_importcalendar"
-                    android:background="#212121" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#CC000000"
-                    android:focusableInTouchMode="false"
-                    android:id="@+id/t2_dark3" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="#212121">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:id="@+id/t2_tab4"
-                    android:src="@drawable/menu_notice"
-                    android:background="#212121" />
+                    android:background="#727272" />
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -762,22 +758,22 @@
                     android:background="#CC000000"
                     android:focusableInTouchMode="false"
                     android:id="@+id/t2_dark4" />
+
             </FrameLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#212121">
+                android:background="#727272">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:id="@+id/t2_tab5"
-                    android:src="@drawable/menu_setting"
-                    android:background="#212121" />
+                    android:id="@+id/t2_tab4"
+                    android:src="@drawable/menu_notice" />
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -786,6 +782,29 @@
                     android:background="#CC000000"
                     android:focusableInTouchMode="false"
                     android:id="@+id/t2_dark5" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#727272">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:id="@+id/t2_tab5"
+                    android:src="@drawable/menu_setting" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#CC000000"
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/t2_dark6" />
             </FrameLayout>
 
         </LinearLayout>
