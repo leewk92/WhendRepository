@@ -643,7 +643,28 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#CC000000"></LinearLayout>
+            android:background="#CC000000"
+            android:focusableInTouchMode="false"
+            android:id="@+id/t2_dark1"></LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/t2_text1"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/t2_text2"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="50dp" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -664,6 +685,14 @@
                     android:layout_weight="1"
                     android:id="@+id/t2_tab1"
                     android:src="@drawable/menu_mainhome" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#CC000000"
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/t2_dark2" />
             </FrameLayout>
 
             <FrameLayout
@@ -680,6 +709,13 @@
                     android:id="@+id/t2_tab2"
                     android:src="@drawable/menu_search"
                     android:background="#212121" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/t2_finger"
+                    android:layout_gravity="bottom|right"
+                    android:src="@drawable/finger_point_turned" />
             </FrameLayout>
 
             <FrameLayout
@@ -689,11 +725,19 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="45dp"
                     android:layout_weight="1"
                     android:id="@+id/t2_tab3"
                     android:src="@drawable/menu_importcalendar"
                     android:background="#212121" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#CC000000"
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/t2_dark3" />
             </FrameLayout>
 
             <FrameLayout
@@ -710,6 +754,14 @@
                     android:id="@+id/t2_tab4"
                     android:src="@drawable/menu_notice"
                     android:background="#212121" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#CC000000"
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/t2_dark4" />
             </FrameLayout>
 
             <FrameLayout
@@ -726,6 +778,14 @@
                     android:id="@+id/t2_tab5"
                     android:src="@drawable/menu_setting"
                     android:background="#212121" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#CC000000"
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/t2_dark5" />
             </FrameLayout>
 
         </LinearLayout>
