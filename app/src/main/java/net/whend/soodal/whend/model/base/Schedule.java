@@ -76,6 +76,7 @@ public class Schedule {
         this.uploaded_username="";
         this.photo_dir_fromweb="";
         this.user_photo = "";
+        this.allday=false;
     }
 
     public int getComment_count() {

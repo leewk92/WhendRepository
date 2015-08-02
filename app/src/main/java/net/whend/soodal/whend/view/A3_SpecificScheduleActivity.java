@@ -407,7 +407,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     s.setLocation((tmp_ith.getString("location")));
                     s.setComment_count((tmp_ith.getInt("count_comment")));
                     s.setUser_photo(tmp_ith.getString("user_photo") == "null" ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
-
+                    s.setAllday(tmp_ith.getBoolean("all_day"));
                     cs = new Concise_Schedule(s);
                     cs.setIsLike(tmp_ith.getInt("like") == 1 ? true : false);
                     cs.setIsFollow(tmp_ith.getInt("follow") == 1 ? true : false);

@@ -204,6 +204,9 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     CSchedule_list.get(pos).clickFollow();
                     fcv.setText(String.valueOf(CSchedule_list.get(pos).getFollow_count()));
                     iv.setImageResource(R.drawable.export_to_calendar_onclick);
+                    Log.d("follow_start_time", CSchedule_list.get(pos).getSchedule().getStarttime_ms() + "");
+                    Log.d("follow_end_time",CSchedule_list.get(pos).getSchedule().getEndtime_ms()+"");
+                    Log.d("follow_allday",CSchedule_list.get(pos).getSchedule().getAllday()+"");
                     cpu.addScheduleToInnerCalendar(CSchedule_list.get(pos));
                     notifyDataSetChanged();
                 }
@@ -259,7 +262,11 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ((TextView)v.findViewById(R.id.user_fullname)).setText(CSchedule_list.get(position).getUsername());
         ((TextView)v.findViewById(R.id.title)).setText(CSchedule_list.get(position).getTitle());
         ((TextView)v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
-        ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
+        if(CSchedule_list.get(position).getSchedule().getAllday()==false)
+            ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
+        else
+            ((TextView)v.findViewById(R.id.time)).setText("종일 일정");
+
         ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
         ((TextView)v.findViewById(R.id.like_count)).setText(String.valueOf(CSchedule_list.get(position).getLike_count()));
         ((TextView)v.findViewById(R.id.follow_count)).setText(String.valueOf(CSchedule_list.get(position).getFollow_count()));
@@ -312,8 +319,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
           // holder.memo_photo_vh.setBackgroundColor(Color.BLACK);
 
             // 6개의 기본이미지
-            Random random = new Random();
-            int color = random.nextInt(4);
+            int color = position%5;
             switch (color){
                 case 0:
                     holder.memo_photo_vh.setImageResource(R.drawable.memo_photo_default6);

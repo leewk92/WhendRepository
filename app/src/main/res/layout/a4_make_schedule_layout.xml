@@ -69,11 +69,28 @@
             android:textSize="12dp"
             android:layout_marginTop="5dp" />
 
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="종일 일정 "
+                android:textSize="12dp"
+                android:layout_marginLeft="5dp"/>
+
+            <CheckBox
+                android:id="@+id/allday_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/upload_starttime"
             >
 
@@ -102,21 +119,28 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="25dp" />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/time"
-                android:layout_gravity="center_vertical"/>
-
-            <TextView
-                android:id="@+id/time_start"
+            <LinearLayout
+                android:id="@+id/time_start_visiblelayout"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:hint="시간 입력"
-                android:textSize="12dp"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/time"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/time_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:hint="시간 입력"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    />
+            </LinearLayout>
+
 
 
         </LinearLayout>
@@ -157,21 +181,27 @@
                     />
 
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/time"
-                    android:layout_gravity="center_vertical"/>
-
-                <TextView
-                    android:id="@+id/time_end"
+                <LinearLayout
+                    android:id="@+id/time_end_visiblelayout"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:hint="시간 입력"
-                    android:textSize="12dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    />
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/time"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/time_end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:hint="시간 입력"
+                        android:textSize="12dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        />
+                </LinearLayout>
+
 
             </LinearLayout>
 

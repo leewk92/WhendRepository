@@ -101,12 +101,11 @@ public class Concise_Schedule {
         this.time_start = df.getTime();
         this.date = df.getDate();
         this.time = df.getTime();
+        this.s.setStarttime_ms(df.getDatetime_ms());
 
         df = new DateTimeFormatter(s.getEndtime());
         this.date_end = df.getDate();
         this.time_end = df.getTime();
-
-        this.s.setStarttime_ms(df.getDatetime_ms());
         this.s.setEndtime_ms(df.getDatetime_ms());
     }
     // like 전환 함수
