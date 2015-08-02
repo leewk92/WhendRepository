@@ -62,16 +62,24 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
     public void onBindViewHolder(Upload_ViewHolder holder, int position) {
         final Upload_Schedule schedule = Schedule_list.get(position);
 
+        // 시작날짜와 끝날자가 같으면 없애버리기
         if(schedule.getDateStart().equals(schedule.getDateEnd())){
             holder.vDate_dash.setVisibility(View.GONE);
             holder.vDate_end.setVisibility(View.GONE);
         }
 
+
+        // 시작시간과 끝시간이 같으면 없애버리리
         if(schedule.getTime_end().equals(schedule.getTime_start())){
             holder.vTime_dash.setVisibility(View.GONE);
             holder.vTime_end.setVisibility(View.GONE);
         }
 
+        holder.vDate_dash.setVisibility(View.GONE);
+        holder.vDate_end.setVisibility(View.GONE);
+
+        holder.vTime_dash.setVisibility(View.GONE);
+        holder.vTime_end.setVisibility(View.GONE);
 
         holder.vDate_start.setText(schedule.getDateStart());
         holder.vDate_end.setText(schedule.getDateEnd());
