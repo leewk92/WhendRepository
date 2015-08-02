@@ -70,7 +70,8 @@ public class F2_Search extends Fragment implements ScrollViewListener {
     private Toolbar toolbar;
     static String nextURL;
     public QuiltView quiltView;
-    private JSONObject outputSchedulesJson;
+//    private JSONObject outputSchedulesJson;
+    private JSONArray outputSchedulesJson;
     Grid_Search_Adapter mgrid_search_adapter;
     private View rootView;
 
@@ -253,7 +254,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
                 super.onPostExecute(result);
 
                 try{
-                    outputSchedulesJson = getOutputJsonObject();
+    /*                outputSchedulesJson = getOutputJsonObject();
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
@@ -274,8 +275,29 @@ public class F2_Search extends Fragment implements ScrollViewListener {
                         Grid_Search_Schedule gs = new Grid_Search_Schedule(h);
                         arrayGSchedule.add(gs);
                         mgrid_search_adapter.notifyDataSetChanged();
-                    }
+                    }*/
+                    outputSchedulesJson = getOutputJsonArray();
+             //       JSONArray results = outputSchedulesJson.getJSONArray("results");
+                    JSONObject tmp_ith;
+             //       nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i<outputSchedulesJson.length() ;i++){
+                        HashTag h = new HashTag();
+                        tmp_ith = outputSchedulesJson.getJSONObject(i);
 
+                        h.setId(tmp_ith.getInt("id"));
+                        h.setTitle(tmp_ith.getString("title"));
+                        h.setFollower_count(tmp_ith.getInt("follower_count"));
+                        h.setPhoto((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        h.setContent(tmp_ith.getString("content"));
+                        h.setCount_schedule(tmp_ith.getInt("count_schedule"));
+                        h.setCount_upcoming_schedule(tmp_ith.getInt("count_upcoming_schedule"));
+                        h.setIs_Follow(tmp_ith.getInt("is_follow")==1?true:false);
+
+
+                        Grid_Search_Schedule gs = new Grid_Search_Schedule(h);
+                        arrayGSchedule.add(gs);
+                        mgrid_search_adapter.notifyDataSetChanged();
+                    }
                     for(int i=0; i< mgrid_search_adapter.getCount(); i++)
                         quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
                 }catch(Exception e){
