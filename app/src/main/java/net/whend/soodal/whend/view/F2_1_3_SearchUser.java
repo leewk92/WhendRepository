@@ -76,7 +76,10 @@ public class F2_1_3_SearchUser extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    Toast.makeText(getActivity(), search_text.getText().toString(), Toast.LENGTH_SHORT).show();
+   //                 Toast.makeText(getActivity(), search_text.getText().toString(), Toast.LENGTH_SHORT).show();
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url+search_text.getText(),"GET");
+                    a.doExecution();
+
                     return true;
                 } else {
 
@@ -84,7 +87,7 @@ public class F2_1_3_SearchUser extends Fragment {
                 return false;
             }
         });
-        search_text.addTextChangedListener(new TextWatcher() {
+  /*      search_text.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url + search_text.getText(), "GET");
@@ -104,7 +107,7 @@ public class F2_1_3_SearchUser extends Fragment {
 
                 // TODO Auto-generated method stub
             }
-        });
+        });*/
 
     }
 

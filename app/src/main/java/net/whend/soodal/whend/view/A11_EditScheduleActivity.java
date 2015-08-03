@@ -201,8 +201,7 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
             time_end.setText(sEndTime);
         if(sLocation != null)
             location.setText(sLocation);
-        if(sContent != null)
-            title.setText(sContent);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
         toolbar.setTitle("");
