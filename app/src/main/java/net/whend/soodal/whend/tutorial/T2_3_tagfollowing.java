@@ -1,15 +1,16 @@
 package net.whend.soodal.whend.tutorial;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ public class T2_3_tagfollowing extends AppCompatActivity {
 
     ImageView t2_like, t2_finger, t2_export, t2_finger2;
     TextView t2_text;
+    Button t2_next;
     LinearLayout t2_dark1, t2_dark2, t2_dark3, t2_dark4, t2_dark5, t2_dark6;
     Animation fade_in, fade_out, blink, blink2;
     int i=0;
@@ -74,7 +76,7 @@ public class T2_3_tagfollowing extends AppCompatActivity {
                 break;
 
             case 4:
-
+                i++;
                 t2_dark1.clearAnimation();
                 t2_dark2.clearAnimation();
                 t2_dark3.clearAnimation();
@@ -96,17 +98,29 @@ public class T2_3_tagfollowing extends AppCompatActivity {
                 break;
 
             case 5:
+                break;
+
+            case 6:
                 i++;
 
                 t2_finger.clearAnimation();
                 t2_finger.setVisibility(View.INVISIBLE);
 
-                t2_text.setText("축제 태그를 팔로우했습니다\n마이페이지-팔로잉에서 확인하세요.");
+                t2_text.setText("축제 태그를 팔로우했습니다\n마이페이지-팔로잉에서 확인할 수 있습니다.");
                 t2_text.startAnimation(fade_in);
 
                 break;
 
-            case 6:
+            case 7:
+                i++;
+                t2_next.startAnimation(fade_in);
+                t2_next.setVisibility(View.VISIBLE);
+                break;
+
+            case 8:
+                break;
+
+            case 9:
                 i++;
                 t2_text.setText("일정을 캘린더에 직접 넣어보겠습니다.");
                 t2_text.startAnimation(fade_in);
@@ -119,7 +133,7 @@ public class T2_3_tagfollowing extends AppCompatActivity {
 
                 break;
 
-            case 7:
+            case 10:
                 t2_text.startAnimation(fade_out);
                 t2_text.setVisibility(View.INVISIBLE);
                 t2_dark1.setVisibility(View.INVISIBLE);
@@ -133,7 +147,7 @@ public class T2_3_tagfollowing extends AppCompatActivity {
 
                 break;
 
-            case 8:
+            case 11:
                 i++;
                 t2_text.setText("자신의 캘린더에 해당 일정이 추가되었습니다.\n캘린더에서 확인하세요.\n다시 눌러 일정을 뺄 수도 있습니다.");
                 t2_text.startAnimation(fade_in);
@@ -146,7 +160,16 @@ public class T2_3_tagfollowing extends AppCompatActivity {
                 t2_dark5.setVisibility(View.INVISIBLE);
                 break;
 
-            case 9:
+            case 12:
+                i++;
+                t2_next.startAnimation(fade_in);
+                t2_next.setVisibility(View.VISIBLE);
+                break;
+
+            case 13:
+                break;
+
+            case 14:
                 i++;
                 Intent i = new Intent(T2_3_tagfollowing.this, T3_1_upload.class);
                 startActivity(i);
@@ -165,6 +188,9 @@ public class T2_3_tagfollowing extends AppCompatActivity {
         fade_out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
         blink = AnimationUtils.loadAnimation(this, R.anim.blink);
         blink2 = AnimationUtils.loadAnimation(this, R.anim.blink2);
+
+        t2_next = (Button) findViewById(R.id.t2_next);
+        t2_next.setVisibility(View.INVISIBLE);
 
         t2_dark1 = (LinearLayout) findViewById(R.id.t2_3_dark1);
         t2_dark2 = (LinearLayout) findViewById(R.id.t2_3_dark2);
@@ -189,7 +215,7 @@ public class T2_3_tagfollowing extends AppCompatActivity {
 
         t2_finger2.setVisibility(View.INVISIBLE);
 
-        t2_like.setOnClickListener(new View.OnClickListener(){
+        t2_like.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -204,6 +230,16 @@ public class T2_3_tagfollowing extends AppCompatActivity {
             public void onClick(View view) {
                 t2_export.setImageDrawable(getResources().getDrawable(R.drawable.export_to_calendar_onclick));
                 i++;
+            }
+        });
+
+        t2_next.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                i++;
+                t2_next.startAnimation(fade_out);
+                t2_next.setVisibility(View.INVISIBLE);
             }
         });
     }

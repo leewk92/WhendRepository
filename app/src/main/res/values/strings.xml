@@ -28,6 +28,8 @@
     <string name="title_activity_t2_3_tagfollowing">T2_3_tagfollowing</string>
     <string name="title_activity_t3_search">T3_search</string>
     <string name="title_activity_t3_2_upload">T3_2_upload</string>
+    <string name="title_activity_s1__ready">S1_Ready</string>
+    <string name="title_activity_s2__version">S2_Version</string>
 
 
 </resources>

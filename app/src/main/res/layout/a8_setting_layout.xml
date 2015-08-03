@@ -60,7 +60,8 @@
                     android:textColor="#212121"
                     android:background="@drawable/textview_press"
                     android:textIsSelectable="false"
-                    android:clickable="true" />
+                    android:clickable="true"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -76,7 +77,9 @@
                     android:id="@+id/setting_qna"
                     android:padding="15dp"
                     android:textColor="#212121"
-                    android:clickable="true" />
+                    android:background="@drawable/textview_press"
+                    android:clickable="true"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -119,7 +122,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    />
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -135,7 +139,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -151,7 +156,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -194,7 +200,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -210,7 +217,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -252,7 +260,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -268,7 +277,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -286,7 +296,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -327,7 +338,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -343,7 +355,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -360,7 +373,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -378,7 +392,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="Review_Tutorial"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -418,7 +433,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="Version"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -434,7 +450,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -452,7 +469,8 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
-                    android:background="@drawable/textview_press" />
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
 
                 <LinearLayout
                     android:orientation="vertical"

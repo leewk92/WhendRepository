@@ -3,7 +3,6 @@ package net.whend.soodal.whend.view;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.tutorial.t1_welcome;
 import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
+import net.whend.soodal.whend.view.setting.S1_Preparing;
 
 public class A8_SettingActivity extends AppCompatActivity {
     public Context mContext = this;
@@ -68,7 +69,7 @@ public class A8_SettingActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 String url = "http://119.81.176.245/rest-auth/logout/";
-                                HTTPRestfulUtilizerExtender_logout hl = new HTTPRestfulUtilizerExtender_logout(mContext, url, "POST",new Bundle());
+                                HTTPRestfulUtilizerExtender_logout hl = new HTTPRestfulUtilizerExtender_logout(mContext, url, "POST", new Bundle());
                                 hl.doExecution();
                                 dialog.cancel();
                             }
@@ -87,6 +88,30 @@ public class A8_SettingActivity extends AppCompatActivity {
 
     }
 
+    //버튼의 리스너담당
+    public void OnPreparing(View view)
+    {
+        Intent intent = new Intent(A8_SettingActivity.this, S1_Preparing.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+    }
+
+    //버튼의 리스너담당
+    public void Review_Tutorial(View view)
+    {
+        Intent intent = new Intent(A8_SettingActivity.this, t1_welcome.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+        finish();
+    }
+
+    public void Version(View view)
+    {
+        Intent intent = new Intent(A8_SettingActivity.this, t1_welcome.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

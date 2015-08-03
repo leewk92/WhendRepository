@@ -1,7 +1,5 @@
 package net.whend.soodal.whend.view;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,9 +18,6 @@ import android.widget.Toast;
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.WriteComment_Adapter;
 import net.whend.soodal.whend.model.base.Comment;
-import net.whend.soodal.whend.model.base.Schedule;
-import net.whend.soodal.whend.model.top.Concise_Schedule;
-import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
@@ -218,7 +211,7 @@ public class A6_WriteCommentActivity extends AppCompatActivity {
                         s.setContents(tmp_ith.getString("content"));
                         s.setWrite_username(tmp_ith.getString("user_name"));
                         s.setWrite_userid(tmp_ith.getInt("user_id"));
-                     //   s.setUser_photo(tmp_ith.getString("user_photo")  == "null" ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
+                        //s.setUser_photo(tmp_ith.getString("user_photo")  == "null" ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
                         tmpComment_list.add(s);
 
                     }

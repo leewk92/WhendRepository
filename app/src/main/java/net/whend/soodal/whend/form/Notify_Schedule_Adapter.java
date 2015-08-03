@@ -1,18 +1,14 @@
 package net.whend.soodal.whend.form;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.Notify_Schedule;
-import net.whend.soodal.whend.view.A3_SpecificScheduleActivity;
 
 import java.util.ArrayList;
 
@@ -49,11 +45,32 @@ public class Notify_Schedule_Adapter extends ArrayAdapter<Notify_Schedule> {
     }
 
 
-    public void AdjustDataToLayout(View v, int position) {
+    public void AdjustDataToLayout(View v, final int position) {
         ((TextView)v.findViewById(R.id.actor_name)).setText(NT_Schedule_list.get(position).getActor_name());
+
+
+        /*//유저이름 클릭시 액티비티 but 안됨, id가 아닌듯
+        ((TextView)v.findViewById(R.id.actor_name)).setOnClickListener(new View.OnClickListener(){
+
+
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, A2_UserProfileActivity.class);
+
+
+                Activity activity = (Activity) context;
+                activity.startActivity(intent);
+
+                activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
+            }
+
+        });*/
         ((TextView)v.findViewById(R.id.verb)).setText(NT_Schedule_list.get(position).getVerb());
         ((TextView)v.findViewById(R.id.description)).setText(NT_Schedule_list.get(position).getDescription());
         //((TextView)v.findViewById(R.id.datetime)).setText(NT_Schedule_list.get(position).getDate() +NT_Schedule_list.get(position).getTime() );
+
+
     }
 }
 

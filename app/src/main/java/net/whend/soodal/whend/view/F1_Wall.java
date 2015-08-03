@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
@@ -24,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
@@ -46,7 +44,7 @@ public class F1_Wall extends Fragment {
     private ListView listview;
     private ArrayList<Concise_Schedule> arrayCSchedule = new ArrayList<Concise_Schedule>();
     private Concise_Schedule_Adapter concise_schedule_adapter;
-    private TextView mainactivity_title;
+    private TextView mainactivity_title, f1_text;
     LinearLayout search_layout, setting_layout;
     ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
@@ -71,6 +69,8 @@ public class F1_Wall extends Fragment {
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();
 
+
+
         listview.setOnScrollListener(new EndlessScrollListener());
 
     }
@@ -80,6 +80,7 @@ public class F1_Wall extends Fragment {
         super.onDestroyView();
         arrayCSchedule.clear();
         concise_schedule_adapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -91,6 +92,8 @@ public class F1_Wall extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
     //    String url = "http://119.81.176.245/schedules/";
     //    arrayCSchedule.clear();
@@ -162,6 +165,8 @@ public class F1_Wall extends Fragment {
         // View 할당
         rootview = inflater.inflate(R.layout.f1_wall_layout, container, false);
         listview = (ListView)rootview.findViewById(R.id.listview_concise_schedule);
+        f1_text = (TextView) rootview.findViewById(R.id.f1_text);
+        f1_text.setVisibility(View.INVISIBLE);
         //listview.setOnScrollListener(new EndlessScrollListener());
 
         concise_schedule_adapter = new Concise_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayCSchedule);
@@ -244,6 +249,9 @@ public class F1_Wall extends Fragment {
                 try{
                     HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(getActivity(),nextURL,"GET");
                     b.doExecution();
+
+
+
                 }catch(Exception e){
 
                 }
@@ -318,6 +326,10 @@ public class F1_Wall extends Fragment {
                         arrayCSchedule.add(cs);
                         concise_schedule_adapter.notifyDataSetChanged();
                     }
+                    if(arrayCSchedule.isEmpty())
+                        f1_text.setVisibility(View.VISIBLE);
+                    else
+                        f1_text.setVisibility(View.INVISIBLE);
                     listview.setClickable(false);
                 }catch(Exception e){
 
@@ -388,6 +400,13 @@ public class F1_Wall extends Fragment {
                         arrayCSchedule.add(cs);
                         concise_schedule_adapter.notifyDataSetChanged();
                     }listview.setClickable(true);
+
+
+                    if(arrayCSchedule.isEmpty())
+                        f1_text.setVisibility(View.VISIBLE);
+                    else
+                        f1_text.setVisibility(View.INVISIBLE);
+
 
                 }catch(Exception e){
 

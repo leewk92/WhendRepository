@@ -15,4 +15,15 @@
         android:listSelector="@drawable/listview_selector">
     </ListView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="표시할 일정이 없어요.\n태그를 팔로우 해보세요!"
+        android:id="@+id/f1_text"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:textColor="@android:color/black" />
+
 </FrameLayout>

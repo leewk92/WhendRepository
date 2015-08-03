@@ -108,10 +108,14 @@
             android:name=".view.A11_EditScheduleActivity"
             android:label="@string/title_activity_a11__editscheduleactivity" >
         </activity>
-
         <activity
-            android:name=".tutorial.T1_welcome"
+            android:name=".tutorial.t1_welcome"
             android:label="@string/title_activity_t1_welcome" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".tutorial.T2_1_tagfollowing"
@@ -132,6 +136,14 @@
         <activity
             android:name=".tutorial.T3_2_upload"
             android:label="@string/title_activity_t2_tagfollowing" >
+        </activity>
+        <activity
+            android:name=".view.setting.S1_Preparing"
+            android:label="@string/title_activity_s1__ready" >
+        </activity>
+        <activity
+            android:name=".view.setting.S2_Version"
+            android:label="@string/title_activity_s2__version" >
         </activity>
     </application>
 

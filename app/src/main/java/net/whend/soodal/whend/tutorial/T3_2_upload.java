@@ -1,11 +1,9 @@
 package net.whend.soodal.whend.tutorial;
 
 import android.content.Intent;
-import android.media.Image;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -87,7 +85,7 @@ public class T3_2_upload extends AppCompatActivity {
 
             case 6:
                 i++;
-                t3_text1.setText("튜토리얼이 끝났습니다.\nWhenD와 친구들과 일정을 공유하세요!");
+                t3_text1.setText("튜토리얼이 끝났습니다.\nWhenD와 함께 친구들과의 일정을 공유하세요!");
                 t3_text1.startAnimation(fade_in);
                 t3_text1.setVisibility(View.VISIBLE);
 

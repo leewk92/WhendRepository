@@ -1,15 +1,16 @@
 package net.whend.soodal.whend.tutorial;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +21,8 @@ public class T2_1_tagfollowing extends AppCompatActivity {
 
     ImageView t2_tab1, t2_tab2, t2_tab3, t2_tab4, t2_tab5;
     ImageView t2_finger;
-    TextView t2_text1, t2_text2;
+    Button t2_next;
+    TextView t2_text1, t2_text2, t2_text3;
     LinearLayout t2_dark1, t2_dark2, t2_dark3, t2_dark4, t2_dark5, t2_dark6;
     Animation fade_in, fade_out, blink;
     int i = 0;
@@ -36,8 +38,10 @@ public class T2_1_tagfollowing extends AppCompatActivity {
 
         switch (i) {
             case 0:
+                i++;
                 break;
             case 1:
+                i++;
                 t2_dark1.setVisibility(View.VISIBLE);
                 t2_dark2.setVisibility(View.VISIBLE);
                 t2_dark3.setVisibility(View.VISIBLE);
@@ -51,18 +55,37 @@ public class T2_1_tagfollowing extends AppCompatActivity {
                 break;
 
             case 2:
-
-                t2_text1.setText("팔로잉한 친구 및 태그의\n일정들이 올라옵니다.");
+                i++;
+                t2_text1.setText("팔로우한 친구 및 태그의\n일정들이 올라옵니다.");
                 t2_text1.startAnimation(fade_in);
                 break;
 
             case 3:
-
-                t2_text1.setText("가장 중요한 기능인\n검색 및 태그 팔로잉을 해보겠습니다.");
-                t2_text1.startAnimation(fade_in);
+                i++;
+                t2_text3.setText("팔로우 : 받아보기 하는 행동\n상대방의 소식을 받아보기위해 사용");
+                t2_text3.startAnimation(fade_in);
+                t2_text3.setVisibility(View.VISIBLE);
                 break;
 
             case 4:
+                i++;
+                t2_next.startAnimation(fade_in);
+                t2_next.setVisibility(View.VISIBLE);
+                break;
+
+            case 5:
+                break;
+
+            case 6:
+                i++;
+                t2_text3.setVisibility(View.INVISIBLE);
+                t2_next.setVisibility(View.INVISIBLE);
+                t2_text1.setText("가장 중요한 기능인\n검색 및 태그 팔로우를 해보겠습니다.");
+                t2_text1.startAnimation(fade_in);
+                break;
+
+            case 7:
+                i++;
                 t2_text1.startAnimation(fade_out);
 
                 t2_text1.setVisibility(View.INVISIBLE);
@@ -73,6 +96,9 @@ public class T2_1_tagfollowing extends AppCompatActivity {
                 t2_text2.startAnimation(fade_in);
                 t2_finger.setVisibility(View.VISIBLE);
                 t2_finger.startAnimation(blink);
+                break;
+
+            case 8:
                 break;
 
 
@@ -116,11 +142,16 @@ public class T2_1_tagfollowing extends AppCompatActivity {
 
         t2_text1 = (TextView) findViewById(R.id.t2_text1);
         t2_text2 = (TextView) findViewById(R.id.t2_text2);
+        t2_text3 = (TextView) findViewById(R.id.t2_text3);
 
         t2_text1.setVisibility(View.INVISIBLE);
         t2_text2.setVisibility(View.INVISIBLE);
+        t2_text3.setVisibility(View.INVISIBLE);
 
-        t2_tab2.setOnClickListener(new View.OnClickListener(){
+        t2_next = (Button) findViewById(R.id.t2_next);
+        t2_next.setVisibility(View.INVISIBLE);
+
+        t2_tab2.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -131,6 +162,16 @@ public class T2_1_tagfollowing extends AppCompatActivity {
             }
         });
 
+
+        t2_next.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                i++;
+                t2_next.startAnimation(fade_out);
+                t2_next.setVisibility(View.INVISIBLE);
+            }
+        });
 
     }
 
@@ -162,11 +203,12 @@ public class T2_1_tagfollowing extends AppCompatActivity {
 
         Thread myThread = new Thread(new Runnable() {
             public void run() {
-                for (; i < 10; i++) {
+                while(i>=0) {
                     try {
 
                         handler.sendMessage(handler.obtainMessage());
                         Thread.sleep(3000);
+
                     } catch (Throwable t) {
                     }
                 }

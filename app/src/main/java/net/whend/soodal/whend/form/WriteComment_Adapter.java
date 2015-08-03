@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.Comment;
+import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
 
 import java.util.ArrayList;
@@ -77,11 +77,12 @@ public class WriteComment_Adapter extends Comment_Adapter {
         ((TextView) v.findViewById(R.id.comment_writer)).setText(Comment_list.get(position).getWrite_username());
         ((TextView) v.findViewById(R.id.comment_content)).setText(Comment_list.get(position).getContents());
         if(Comment_list.get(position).getUser_photo()!="") {
-            Picasso.with(context).load(Comment_list.get(position).getUser_photo()).into((ImageView) v.findViewById(R.id.user_photo));
+            Picasso.with(context).load(Comment_list.get(position).getUser_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
 
         }else{
             // 기본이미지 로드.
-            user_photo.setImageResource(R.drawable.userimage_default);
+            user_photo.setVisibility(View.GONE);
+            //user_photo.setImageResource(R.drawable.userimage_default);
         }
     }
 
