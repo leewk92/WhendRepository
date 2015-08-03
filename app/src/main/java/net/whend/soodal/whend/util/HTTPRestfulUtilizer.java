@@ -283,7 +283,7 @@ public class HTTPRestfulUtilizer {
             // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
 
-            //se.consumeContent();
+           // se.consumeContent();
 
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
