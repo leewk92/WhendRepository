@@ -21,6 +21,7 @@ import net.whend.soodal.whend.tutorial.t1_welcome;
 import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.view.setting.S1_Preparing;
+import net.whend.soodal.whend.view.setting.S2_Version;
 
 public class A8_SettingActivity extends AppCompatActivity {
     public Context mContext = this;
@@ -107,7 +108,7 @@ public class A8_SettingActivity extends AppCompatActivity {
 
     public void Version(View view)
     {
-        Intent intent = new Intent(A8_SettingActivity.this, t1_welcome.class);
+        Intent intent = new Intent(A8_SettingActivity.this, S2_Version.class);
         startActivity(intent);
         overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
 
