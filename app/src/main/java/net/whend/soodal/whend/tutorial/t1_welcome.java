@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,8 +53,6 @@ public class t1_welcome extends AppCompatActivity {
                 t1_text.setText("아래 버튼을 눌러주세요.");
                 t1_text.startAnimation(fade_in);
                 next_btn.setVisibility(View.VISIBLE);
-                next_btn.startAnimation(fade_in);
-
                 break;
 
             case 3:
@@ -88,6 +87,7 @@ public class t1_welcome extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent i = new Intent(t1_welcome.this, T2_1_tagfollowing.class);
+
                 startActivity(i);
                 overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 finish();
@@ -111,6 +111,7 @@ public class t1_welcome extends AppCompatActivity {
                                 }
                                 catch (Throwable t) {
                                 }
+
                 }
             }
         });
