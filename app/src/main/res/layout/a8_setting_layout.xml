@@ -122,6 +122,7 @@
                     android:padding="15dp"
                     android:textColor="#212121"
                     android:clickable="true"
+                    android:onClick="Profile"
                     android:background="@drawable/textview_press"
                     />
 

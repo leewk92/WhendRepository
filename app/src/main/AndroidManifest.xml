@@ -140,6 +140,10 @@
             android:name=".view.setting.S2_Version"
             android:label="@string/title_activity_s2__version" >
         </activity>
+        <activity
+            android:name=".view.setting.S3_Profile"
+            android:label="@string/title_activity_s3__profile" >
+        </activity>
     </application>
 
 </manifest>

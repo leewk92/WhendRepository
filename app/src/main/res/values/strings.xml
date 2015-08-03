@@ -30,6 +30,7 @@
     <string name="title_activity_t3_2_upload">T3_2_upload</string>
     <string name="title_activity_s1__ready">S1_Ready</string>
     <string name="title_activity_s2__version">S2_Version</string>
+    <string name="title_activity_s3__profile">S3_Profile</string>
 
 
 </resources>

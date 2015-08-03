@@ -1,5 +1,6 @@
 package net.whend.soodal.whend.view.setting;
 
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -7,18 +8,18 @@ import android.view.MenuItem;
 
 import net.whend.soodal.whend.R;
 
-public class S2_Version extends AppCompatActivity {
+public class S3_Profile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.s2_version);
+        setContentView(R.layout.s3_profile);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_s2__version, menu);
+        getMenuInflater().inflate(R.menu.menu_s3__profile, menu);
         return true;
     }
 
