@@ -55,6 +55,10 @@ public class F5_2_MyLikeSchedules extends Fragment {
     public void onResume() {
         super.onResume();
         arrayCSchedule.clear();
+        try{
+            concise_schedule_adapter.notifyDataSetChanged();
+        }catch(Exception e){}
+
         String url2 = "http://119.81.176.245/userinfos/" +user_id+"/like_schedules/";
         HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(getActivity(),url2,"GET");
         b.doExecution();

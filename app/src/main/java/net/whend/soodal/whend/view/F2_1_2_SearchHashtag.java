@@ -54,6 +54,9 @@ public class F2_1_2_SearchHashtag extends Fragment {
     public void onResume() {
         super.onResume();
         SHashtag_list.clear();
+        try{
+            searchHashTag_adapter.notifyDataSetChanged();
+        }catch (Exception e){}
         String url =  "http://119.81.176.245/hashtags/all/?search=";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();

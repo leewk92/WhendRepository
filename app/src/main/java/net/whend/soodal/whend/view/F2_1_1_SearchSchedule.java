@@ -59,6 +59,9 @@ public class F2_1_1_SearchSchedule extends Fragment {
     public void onResume() {
         super.onResume();
         arrayCSchedule.clear();
+        try{
+            searchSchedule_adapter.notifyDataSetChanged();
+        }catch (Exception e){}
         String url =  "http://119.81.176.245/schedules/all/?search=";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();

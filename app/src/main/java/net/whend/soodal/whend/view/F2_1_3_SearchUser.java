@@ -55,6 +55,9 @@ public class F2_1_3_SearchUser extends Fragment {
     public void onResume() {
         super.onResume();
         SUser_list.clear();
+        try{
+            searchUser_adapter.notifyDataSetChanged();
+        }catch (Exception e){}
         String url =  "http://119.81.176.245/userinfos/all/?search=";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();
@@ -129,6 +132,7 @@ public class F2_1_3_SearchUser extends Fragment {
 
                 Intent intent = new Intent(getActivity(), A2_UserProfileActivity.class);
                 intent.putExtra("id", SUser_list.get(position).getUser().getId());
+
                 startActivity(intent);
             }
         });

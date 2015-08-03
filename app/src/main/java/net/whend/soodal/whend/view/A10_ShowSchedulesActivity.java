@@ -162,13 +162,17 @@ public class A10_ShowSchedulesActivity extends AppCompatActivity {
                         s.setUploaded_username(tmp_ith.getString("user_name"));
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        Log.d("photo_dir", s.getPhoto_dir_fromweb());
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
+                        s.setComment_count((tmp_ith.getInt("count_comment")));
+                        s.setLocation((tmp_ith.getString("location")));
                         s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
-
+                        s.setAllday((tmp_ith.getBoolean("all_day")));
+                        s.setMaster((tmp_ith.getInt("master") == 1 ? true : false));
                         Concise_Schedule cs = new Concise_Schedule(s);
                         cs.setIsLike((tmp_ith.getInt("like")==1)?true:false);
-                        cs.setIsFollow((tmp_ith.getInt("follow")==1)?true:false);
+                        cs.setIsFollow((tmp_ith.getInt("follow") == 1) ? true : false);
 
                         arrayCSchedule.add(cs);
                         concise_schedule_adapter.notifyDataSetChanged();
@@ -228,14 +232,17 @@ public class A10_ShowSchedulesActivity extends AppCompatActivity {
                         s.setUploaded_username(tmp_ith.getString("user_name"));
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        Log.d("photo_dir", s.getPhoto_dir_fromweb());
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
+                        s.setComment_count((tmp_ith.getInt("count_comment")));
+                        s.setLocation((tmp_ith.getString("location")));
                         s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
-
+                        s.setAllday((tmp_ith.getBoolean("all_day")));
+                        s.setMaster((tmp_ith.getInt("master") == 1 ? true : false));
                         Concise_Schedule cs = new Concise_Schedule(s);
                         cs.setIsLike((tmp_ith.getInt("like")==1)?true:false);
-                        cs.setIsFollow((tmp_ith.getInt("follow")==1)?true:false);
-
+                        cs.setIsFollow((tmp_ith.getInt("follow") == 1) ? true : false);
                         arrayCSchedule.add(cs);
                         concise_schedule_adapter.notifyDataSetChanged();
                     }
