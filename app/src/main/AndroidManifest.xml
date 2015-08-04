@@ -12,6 +12,11 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="net.whend.soodal.whend.permission.C2D_MESSAGE" />
+    <permission
+        android:name="net.whend.soodal.whend.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
 
     <application
         android:allowBackup="true"
@@ -108,8 +113,9 @@
             android:name=".view.A11_EditScheduleActivity"
             android:label="@string/title_activity_a11__editscheduleactivity" >
         </activity>
+
         <activity
-            android:name=".tutorial.t1_welcome"
+            android:name=".tutorial.T1_welcome"
             android:label="@string/title_activity_t1_welcome" >
         </activity>
         <activity
@@ -132,6 +138,7 @@
             android:name=".tutorial.T3_2_upload"
             android:label="@string/title_activity_t2_tagfollowing" >
         </activity>
+
         <activity
             android:name=".view.setting.S1_Preparing"
             android:label="@string/title_activity_s1__ready" >
@@ -144,6 +151,35 @@
             android:name=".view.setting.S3_Profile"
             android:label="@string/title_activity_s3__profile" >
         </activity>
+    
+
+        <!-- GCM Receivers -->
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="net.whend.soodal.whend" />
+
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="net.whend.soodal.whend.util.gcm.MyGcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+
+        </service>
+        <service
+            android:name="net.whend.soodal.whend.util.gcm.MyInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

@@ -70,9 +70,12 @@ public class F2_Search extends Fragment implements ScrollViewListener {
     private Toolbar toolbar;
     static String nextURL;
     public QuiltView quiltView;
-//    private JSONObject outputSchedulesJson;
-    private JSONArray outputSchedulesJson;
+    private JSONObject outputSchedulesJson;
+//    private JSONArray outputSchedulesJson;
     Grid_Search_Adapter mgrid_search_adapter;
+    boolean loading=true;
+    int threshold=350;
+    int page=0;
     private View rootView;
 
         public F2_Search() {
@@ -98,8 +101,12 @@ public class F2_Search extends Fragment implements ScrollViewListener {
     @Override
     public void onResume(){
         super.onResume();
+        loading=true;
+        page=0;
+        threshold=350;
+
         arrayGSchedule.clear();
-       // quiltView.removeAllViews();
+       // quiltView.removeAllViews();//
         try{
             quiltView.refresh();
         }catch(Exception e){}
@@ -249,7 +256,21 @@ public class F2_Search extends Fragment implements ScrollViewListener {
 
     @Override
     public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
-        Toast.makeText(getActivity(),"scrolled",Toast.LENGTH_SHORT);
+
+        Log.d("scroll_y",y+" " + oldy);
+        Log.d("scroll_position",scrollView.getVerticalScrollbarPosition()+"");
+        Log.d("scroll_Y",scrollView.getY()+"");
+        Log.d("scroll_getHeight",scrollView.getHeight()+"");
+        if(y > threshold && loading){
+
+            loading = false;
+            String url = "http://119.81.176.245/hashtags/";
+            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),nextURL,"GET");
+            a.doExecution();
+            threshold = threshold +1200;
+            Log.d("scroll_threshold",threshold +"");
+        }
+        //Toast.makeText(getActivity(),"scrolled",Toast.LENGTH_SHORT);
     }
 
 
@@ -283,7 +304,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
                 super.onPostExecute(result);
 
                 try{
-    /*                outputSchedulesJson = getOutputJsonObject();
+                    outputSchedulesJson = getOutputJsonObject();
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
@@ -293,7 +314,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
 
                         h.setId(tmp_ith.getInt("id"));
                         h.setTitle(tmp_ith.getString("title"));
-                        h.setFollower_count(tmp_ith.getInt("follower_count"));
+                        h.setFollower_count(tmp_ith.getInt("count_follower"));
                         h.setPhoto((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
                         h.setContent(tmp_ith.getString("content"));
                         h.setCount_schedule(tmp_ith.getInt("count_schedule"));
@@ -304,9 +325,9 @@ public class F2_Search extends Fragment implements ScrollViewListener {
                         Grid_Search_Schedule gs = new Grid_Search_Schedule(h);
                         arrayGSchedule.add(gs);
                         mgrid_search_adapter.notifyDataSetChanged();
-                    }*/
+                    }
 
-                    outputSchedulesJson = getOutputJsonArray();
+            /*        outputSchedulesJson = getOutputJsonArray();
              //       JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONObject tmp_ith;
              //       nextURL = outputSchedulesJson.getString("next");
@@ -327,14 +348,16 @@ public class F2_Search extends Fragment implements ScrollViewListener {
                         Grid_Search_Schedule gs = new Grid_Search_Schedule(h);
                         arrayGSchedule.add(gs);
                         mgrid_search_adapter.notifyDataSetChanged();
-                    }
-                    for(int i=0; i< mgrid_search_adapter.getCount(); i++) {
+                    }*/
+
+                    for(int i=10*page; i< mgrid_search_adapter.getCount(); i++) {
                         quiltView.addPatchView(mgrid_search_adapter.getView(i, null, null));
                     }
                 }catch(Exception e){
 
                 }
-
+                loading = true;
+                page++;
             }
         }
     }

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
-import net.whend.soodal.whend.tutorial.t1_welcome;
+import net.whend.soodal.whend.tutorial.T1_welcome;
 import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.CalendarProviderUtil;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
@@ -397,7 +397,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                     a.doExecution();
 */
 
-                    Intent intent = new Intent(mContext, t1_welcome.class);
+                    Intent intent = new Intent(mContext, T1_welcome.class);
                     intent.putExtra("username", appPrefs.getUsername());
 
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

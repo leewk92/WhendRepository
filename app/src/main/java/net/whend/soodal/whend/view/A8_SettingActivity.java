@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
-import net.whend.soodal.whend.tutorial.t1_welcome;
+import net.whend.soodal.whend.tutorial.T1_welcome;
 import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.view.setting.S1_Preparing;
@@ -101,7 +101,7 @@ public class A8_SettingActivity extends AppCompatActivity {
     //버튼의 리스너담당
     public void Review_Tutorial(View view)
     {
-        Intent intent = new Intent(A8_SettingActivity.this, t1_welcome.class);
+        Intent intent = new Intent(A8_SettingActivity.this, T1_welcome.class);
         startActivity(intent);
         overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
         finish();
