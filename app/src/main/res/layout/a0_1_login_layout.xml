@@ -89,6 +89,17 @@
             android:layout_marginLeft="-5dip"
             android:layout_marginRight="-5dip" />
 
+<!--
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_facebook"
+            android:layout_widt="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="-5dip"
+            android:layout_marginRight="-5dip" />
+-->
+
     </LinearLayout>
 
     <TextView

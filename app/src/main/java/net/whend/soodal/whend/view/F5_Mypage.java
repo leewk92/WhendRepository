@@ -366,6 +366,7 @@ public class F5_Mypage extends Fragment {
 //                    inputBundle.putIntegerArrayList("following_schedule",u.getFollowing_schedule_AL());
 //                    inputBundle.putIntegerArrayList("following_user", u.getFollowing_user_AL());
 //                    inputBundle.putIntegerArrayList("like_schedule", u.getLike_schedule_AL());
+                    appPrefs.setPhoto(ImageAbsolutePath);
                     HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(getActivity(),url,"PUT",inputBundle,ImageAbsolutePath);
                     a.doExecution();
 

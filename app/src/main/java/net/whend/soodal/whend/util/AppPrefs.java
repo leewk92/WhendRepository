@@ -15,7 +15,8 @@ public class AppPrefs {
  private String caljson_str = null;
  private String password = "password";
  private String user_id = "user_id";
-
+ private String gcm_token = "gcm_token";
+ private String photo= "photo";
 public AppPrefs(Context context){
  this.appSharedPrefs = context.getSharedPreferences(USER_PREFS, Activity.MODE_PRIVATE);
  this.prefsEditor = appSharedPrefs.edit();
@@ -63,12 +64,24 @@ public String getToken() {
 
 
  public String getCaljson_str (){
-	 return appSharedPrefs.getString(caljson_str,"");
+	 return appSharedPrefs.getString(caljson_str, "");
  }
  public void setCaljson_str(String _caljson_str){
 	 prefsEditor.putString(caljson_str, _caljson_str);
  }
- 
- 
- 
+
+ public String getGcm_token(){
+  return appSharedPrefs.getString(gcm_token,"");
+ }
+ public void setGcm_token(String _gcm_token){
+  prefsEditor.putString(gcm_token, _gcm_token);
+ }
+
+ public String getPhoto(){
+  return appSharedPrefs.getString(photo,"");
+ }
+ public void setPhoto(String _photo){
+  prefsEditor.putString(gcm_token, _photo);
+ }
+
 }

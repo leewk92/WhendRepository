@@ -20,7 +20,6 @@
     <string name="title_activity_a9__showfollowingobjectsactivity">A9_ShowFollowingObjectsActivity</string>
     <string name="title_activity_a10__showschedulesactivity">A10_ShowSchedulesActivity</string>
     <string name="title_activity_a11__editscheduleactivity">A11_EditScheduleActivity</string>
-    title_activity_a11__editscheduleactivity
     <string name="title_activity_a0_0__open_acitivity">A0_0_OpenAcitivity</string>
     <string name="title_activity_t1_welcome">t1_welcome</string>
     <string name="title_activity_t2_tagfollowing">t2_tagfollowing</string>
@@ -31,6 +30,6 @@
     <string name="title_activity_s1__ready">S1_Ready</string>
     <string name="title_activity_s2__version">S2_Version</string>
     <string name="title_activity_s3__profile">S3_Profile</string>
-
+    <string name="facebook_app_id">116068332072286</string>
 
 </resources>

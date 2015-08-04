@@ -74,7 +74,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
 //    private JSONArray outputSchedulesJson;
     Grid_Search_Adapter mgrid_search_adapter;
     boolean loading=true;
-    int threshold=350;
+    int threshold=250;
     int page=0;
     private View rootView;
 
