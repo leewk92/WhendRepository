@@ -77,7 +77,7 @@ public class HTTPRestfulUtilizer {
         this.url = url;
         this.HTTPRestType = HTTPRestType;
         this.inputBundle = inputBundle;
-        Log.d("HTTP Constructor url", url);
+//        Log.d("HTTP Constructor url", url);
         task = new HttpAsyncTask();
         // new HttpAsyncTask().execute(url,HTTPRestType);
     }
@@ -87,7 +87,7 @@ public class HTTPRestfulUtilizer {
         this.url = url;
         this.HTTPRestType = HTTPRestType;
         task = new HttpAsyncTask();
-        Log.d("HTTP Constructor url",url);
+     //   Log.d("HTTP Constructor url",url);
         // new HttpAsyncTask().execute(url,HTTPRestType);
     }
  /*
@@ -145,10 +145,10 @@ public class HTTPRestfulUtilizer {
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
-            Log.d("firstjson",json);
+ //           Log.d("firstjson",json);
             json = json.replace("\"[", "[");
             json = json.replace("]\"", "]");
-            Log.d("secondjson", json);
+  //          Log.d("secondjson", json);
             // ** Alternative way to convert Person object to JSON string usin Jackson Lib
             // ObjectMapper mapper = new ObjectMapper();
             // json = mapper.writeValueAsString(person);
@@ -179,7 +179,7 @@ public class HTTPRestfulUtilizer {
                 httpPut.setHeader("Authorization","Token "+token);
             }
             // 8. Execute PUT request to the given URL
-            Log.d("contents",convertInputStreamToString(httpPut.getEntity().getContent()));
+ //           Log.d("contents",convertInputStreamToString(httpPut.getEntity().getContent()));
             HttpResponse httpResponse = httpclient.execute(httpPut);
 
             // 9. receive response as inputStream
@@ -188,7 +188,7 @@ public class HTTPRestfulUtilizer {
             // 10. convert inputstream to string
             if(inputStream != null) {
                 result = convertInputStreamToString(inputStream);
-                Log.d("HTTP PUT ResultStream", result);
+//                Log.d("HTTP PUT ResultStream", result);
             }else {
                 result = "Did not work!";
                 Log.d("HTTP PUT ResultStream", result);
@@ -241,15 +241,15 @@ public class HTTPRestfulUtilizer {
             JSONObject jsonObject = new JSONObject();
             for( String key : bundle.keySet()){
                 jsonObject.accumulate(key, bundle.get(key));
-                Log.d("key,value", key + " " + bundle.get(key));
+ //               Log.d("key,value", key + " " + bundle.get(key));
             }
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
-            Log.d("firstjson",json);
+ //           Log.d("firstjson",json);
             json = json.replace("\"[", "[");
             json = json.replace("]\"", "]");
-            Log.d("secondjson", json);
+//            Log.d("secondjson", json);
             // ** Alternative way to convert Person object to JSON string usin Jackson Lib
             // ObjectMapper mapper = new ObjectMapper();
             // json = mapper.writeValueAsString(person);
@@ -291,7 +291,7 @@ public class HTTPRestfulUtilizer {
             // 10. convert inputstream to string
             if(inputStream != null) {
                 result = convertInputStreamToString(inputStream);
-                Log.d("HTTP POST ResultStream", result);
+//                Log.d("HTTP POST ResultStream", result);
             }else {
                 result = "Did not work!";
                 Log.d("HTTP POST ResultStream", result);
@@ -348,7 +348,7 @@ public class HTTPRestfulUtilizer {
             // 10. convert inputstream to string
             if(inputStream != null) {
                 result = convertInputStreamToString(inputStream);
-                Log.d("HTTP GET ResultStream", result);
+//                Log.d("HTTP GET ResultStream", result);
             }
             else {
                 result = "Did not work!";
@@ -518,10 +518,10 @@ public class HTTPRestfulUtilizer {
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
-            Log.d("firstjson",json);
+//            Log.d("firstjson",json);
             json = json.replace("\"[", "[");
             json = json.replace("]\"", "]");
-            Log.d("secondjson", json);
+ //           Log.d("secondjson", json);
             // ** Alternative way to convert Person object to JSON string usin Jackson Lib
             // ObjectMapper mapper = new ObjectMapper();
             // json = mapper.writeValueAsString(person);
@@ -559,10 +559,10 @@ public class HTTPRestfulUtilizer {
             // 10. convert inputstream to string
             if(inputStream != null) {
                 result = convertInputStreamToString(inputStream);
-                Log.d("HTTP POST ResultStream", result);
+//                Log.d("HTTP POST ResultStream", result);
             }else {
                 result = "Did not work!";
-                Log.d("HTTP POST ResultStream", result);
+ //               Log.d("HTTP POST ResultStream", result);
             }
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
@@ -696,7 +696,7 @@ public class HTTPRestfulUtilizer {
         StringEntity se = new StringEntity(StrTotal);
         se.setContentEncoding("UTF-8");
         httpPost.setEntity(se);
-        Log.d("postData", StrTotal);
+//        Log.d("postData", StrTotal);
         return httpPost;
     }
 
@@ -727,7 +727,7 @@ public class HTTPRestfulUtilizer {
             wr.writeBytes("Content-Disposition: form-data; name=\"photo\"; filename=\"image.jpg\"\r\n");
             wr.writeBytes("Content-Type: application/octet-stream\r\n\r\n");
 
-            Log.d("upload path", filePath);
+//            Log.d("upload path", filePath);
             FileInputStream fileInputStream = new FileInputStream(filePath);
             int bytesAvailable = fileInputStream.available();
             int maxBufferSize = 1024;
@@ -747,7 +747,7 @@ public class HTTPRestfulUtilizer {
             fileInputStream.close();
 
             wr.writeBytes("\r\n--" + boundary + "--\r\n");
-            Log.d("inputData",wr.toString());
+//            Log.d("inputData",wr.toString());
             wr.flush();
             DataInputStream is = new DataInputStream(con.getInputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -757,7 +757,7 @@ public class HTTPRestfulUtilizer {
             while ((line = reader.readLine()) != null) {
                 sb.append(line + "\n");
             }
-            Log.d("HTTP Post ResultStream" , sb.toString());
+ //           Log.d("HTTP Post ResultStream" , sb.toString());
             outputString = sb.toString();
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
