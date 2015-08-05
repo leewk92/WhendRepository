@@ -8,8 +8,9 @@
 
     <TextView
         android:layout_gravity="center"
-        android:text="준비중입니다." android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" />
+        android:text="준비중인 기능입니다.\n\n나날이 발전하는 웬디!\n얼른 더 좋은 모습으로 찾아 뵙겠습니다.\n감사합니다" android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:id="@+id/textview" />
 
 </RelativeLayout>
