@@ -20,7 +20,7 @@ import net.whend.soodal.whend.view.MainActivity;
 
 public class T3_2_upload extends AppCompatActivity {
 
-    LinearLayout t3_dark1, t3_dark2;
+    LinearLayout t3_dark1, t3_dark2, t3_dark3;
     Animation fade_in, fade_out, blink;
     ImageView t3_finger;
     TextView t3_text1;
@@ -76,8 +76,10 @@ public class T3_2_upload extends AppCompatActivity {
                 t3_text1.setVisibility(View.INVISIBLE);
 
                 t3_dark1.setVisibility(View.INVISIBLE);
-                t3_dark2.startAnimation(fade_in);
-                t3_dark2.setVisibility(View.VISIBLE);
+                t3_dark2.setVisibility(View.INVISIBLE);
+                t3_dark3.startAnimation(fade_in);
+                t3_dark3.setVisibility(View.VISIBLE);
+
 
                 t3_finger.setVisibility(View.VISIBLE);
                 t3_finger.setAnimation(blink);
@@ -90,7 +92,7 @@ public class T3_2_upload extends AppCompatActivity {
                 t3_text1.setVisibility(View.VISIBLE);
 
                 t3_dark1.setVisibility(View.VISIBLE);
-                t3_dark2.setVisibility(View.INVISIBLE);
+                t3_dark3.setVisibility(View.INVISIBLE);
 
                 t3_finger.setVisibility(View.INVISIBLE);
 
@@ -119,6 +121,7 @@ public class T3_2_upload extends AppCompatActivity {
         username= appPrefs.getUsername();
         t3_dark1 = (LinearLayout)findViewById(R.id.t3_dark1);
         t3_dark2 = (LinearLayout)findViewById(R.id.t3_dark2);
+        t3_dark3 = (LinearLayout)findViewById(R.id.t3_dark3);
 
         t3_dark2.setVisibility(View.INVISIBLE);
 

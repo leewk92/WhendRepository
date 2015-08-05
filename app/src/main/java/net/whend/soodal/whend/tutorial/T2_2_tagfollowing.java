@@ -54,7 +54,7 @@ public class T2_2_tagfollowing extends AppCompatActivity {
 
             case 3:
 
-                t2_2_text.setText("인기있는 '#축제' 태그를\n팔로잉 해봅시다.");
+                t2_2_text.setText("인기있는 '#축제' 태그를\n팔로우 해봅시다.");
                 t2_2_text.startAnimation(fade_in);
                 break;
 

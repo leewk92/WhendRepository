@@ -62,7 +62,7 @@ public class T2_1_tagfollowing extends AppCompatActivity {
 
             case 3:
                 i++;
-                t2_text3.setText("팔로우 : 받아보기 하는 행동\n상대방의 소식을 받아보기위해 사용");
+                t2_text3.setText("팔로우 : 받아보기 하는 행동\n상대방의 소식을 받아보기 위해 사용");
                 t2_text3.startAnimation(fade_in);
                 t2_text3.setVisibility(View.VISIBLE);
                 break;
@@ -91,7 +91,7 @@ public class T2_1_tagfollowing extends AppCompatActivity {
                 t2_text1.setVisibility(View.INVISIBLE);
                 t2_dark3.setVisibility(View.GONE);
 
-                t2_text2.setText("두번째 탭인 검색 탭을 클릭하세요.");
+                t2_text2.setText("두 번째 탭인 검색 탭을 클릭하세요.");
                 t2_text2.setVisibility(View.VISIBLE);
                 t2_text2.startAnimation(fade_in);
                 t2_finger.setVisibility(View.VISIBLE);

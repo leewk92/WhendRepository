@@ -40,12 +40,12 @@ public class T1_welcome extends AppCompatActivity {
             case 0:
                 i++;
                 next_btn.setVisibility(View.INVISIBLE);
-                t1_text.setText("WhenD를 처음 가입한 " + username + "님\n환영합니다.");
+                t1_text.setText("WhenD에 처음 가입한 " + username + "님\n환영합니다.");
                 t1_text.startAnimation(fade_in);
                 break;
             case 1:
                 i++;
-                t1_text.setText("유익하고 재밌는 WhenD 이용을 위해\n간단한 튜토리얼을 준비했어요.");
+                t1_text.setText("WhenD 이용을 위해\n재밌고 간단한 튜토리얼을 준비했어요.");
                 t1_text.startAnimation(fade_in);
                 break;
             case 2:
@@ -53,11 +53,12 @@ public class T1_welcome extends AppCompatActivity {
                 t1_text.setText("아래 버튼을 눌러주세요.");
                 t1_text.startAnimation(fade_in);
                 next_btn.setVisibility(View.VISIBLE);
+                t1_finger.setVisibility(View.VISIBLE);
+                t1_finger.startAnimation(blink);
                 break;
 
             case 3:
-                t1_finger.setVisibility(View.VISIBLE);
-                t1_finger.startAnimation(blink);
+                break;
 
 
         }

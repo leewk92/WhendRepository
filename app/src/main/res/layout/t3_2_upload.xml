@@ -282,6 +282,13 @@
 
                     </FrameLayout>
 
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/t3_dark3"
+                        android:background="#CC000000"></LinearLayout>
+
                     <ImageButton
                         android:id="@+id/fab_image_button"
                         android:layout_width="@dimen/fab_button_diameter"
