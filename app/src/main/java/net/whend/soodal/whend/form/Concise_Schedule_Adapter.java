@@ -41,7 +41,17 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     private ArrayList<Concise_Schedule> CSchedule_list;
     private Context context;
     ImageView memo_photo, user_photo;
+    // 리스너 함수들
+    View user_clickableLayout;
 
+    ImageView like_button ;
+    ImageView follow_button;
+    ImageView comment_button;
+    View schedulefollow_user_clickablelayout;
+    View schedulelike_user_clickablelayout;
+    TextView like_count ;
+    TextView follow_count;
+    ImageView edit;
     public Concise_Schedule_Adapter(Context context, int textViewResourceId, ArrayList<Concise_Schedule> lists){
         super(context, textViewResourceId, lists);
         this.CSchedule_list = lists;
@@ -59,36 +69,20 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
 
         // 리스너 함수들
-        View user_clickableLayout = (View)v.findViewById(R.id.user_clickableLayout);
+        user_clickableLayout = (View)v.findViewById(R.id.user_clickableLayout);
         //View comment_writer = (View)v.findViewById(R.id.comment_writer);
-        ImageView like_button = (ImageView)v.findViewById(R.id.like_button);
-        ImageView follow_button = (ImageView)v.findViewById(R.id.follow_button);
-        ImageView comment_button = (ImageView)v.findViewById(R.id.comment_button);
+        like_button = (ImageView)v.findViewById(R.id.like_button);
+        follow_button = (ImageView)v.findViewById(R.id.follow_button);
+        comment_button = (ImageView)v.findViewById(R.id.comment_button);
         memo_photo = (ImageView)v.findViewById(R.id.memo_photo);
         user_photo = (ImageView)v.findViewById(R.id.user_photo);
-        View schedulefollow_user_clickablelayout = (View)v.findViewById(R.id.schedulefollow_user_clickablelayout);
-        View schedulelike_user_clickablelayout = (View)v.findViewById(R.id.schedulelike_user_clickablelayout);
-        TextView like_count = (TextView)v.findViewById(R.id.like_count);
-        TextView follow_count = (TextView)v.findViewById(R.id.follow_count);
-        ImageView edit = (ImageView)v.findViewById(R.id.edit);
-
-        try {
-            EditClieckListener(edit,position);
-            UserProfileClickListener(user_clickableLayout, position);
-            //UserProfileClickListener(comment_writer,position);
-            LikeButtonClickListener(like_button, like_count, position);
-            WriteCommentClickListener(comment_button, position);
-            FollowButtonClickListener(follow_button, follow_count, position);
-            WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout, position);
-            WhoLikesScheduleClickListener(schedulelike_user_clickablelayout, position);
-        }catch(Exception e){
-            Intent intent = new Intent(context, MainActivity.class);
-            
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+        schedulefollow_user_clickablelayout = (View)v.findViewById(R.id.schedulefollow_user_clickablelayout);
+        schedulelike_user_clickablelayout = (View)v.findViewById(R.id.schedulelike_user_clickablelayout);
+        like_count = (TextView)v.findViewById(R.id.like_count);
+        follow_count = (TextView)v.findViewById(R.id.follow_count);
+        edit = (ImageView)v.findViewById(R.id.edit);
 
 
-        }
 
         ViewHolder holder = new ViewHolder();
         holder.memo_photo_vh = (ImageView) v.findViewById(R.id.memo_photo);
@@ -402,6 +396,15 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     break;
 
             }
+
+            EditClieckListener(edit,position);
+            UserProfileClickListener(user_clickableLayout, position);
+            //UserProfileClickListener(comment_writer,position);
+            LikeButtonClickListener(like_button, like_count, position);
+            WriteCommentClickListener(comment_button, position);
+            FollowButtonClickListener(follow_button, follow_count, position);
+            WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout, position);
+            WhoLikesScheduleClickListener(schedulelike_user_clickablelayout, position);
 
 
         }

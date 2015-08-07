@@ -44,9 +44,17 @@ public class A2_UserProfileActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a2_userprofile_layout);
+
 
         Intent intent=new Intent(this.getIntent());
         user_id=intent.getIntExtra("id",0);                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
@@ -82,24 +90,24 @@ public class A2_UserProfileActivity extends AppCompatActivity {
         schedule_count_clickablelayout.setClickable(false);
         follower_count_clickablelayout.setClickable(false);
         following_count_clickablelayout.setClickable(false);
+        follow_button.setClickable(false);
 
-        FollowerClickListener(follower_count_clickablelayout);
-        FollowingClickListener(following_count_clickablelayout);
-        ScheduleClickListener(schedule_count_clickablelayout);
-        LikeButtonClickListener(follow_button, mContext);
+
+
     }
 
     // 좋아요 누를 때 리스너
     public void LikeButtonClickListener(ImageView follow_button, Context mContext){
         final Context context = mContext;
         final ImageView iv = follow_button;
+
         follow_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("isFollow",su.getIsFollow()+"");
                 if (su.getIsFollow() == false) {
-  //                  Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
-   //                 toast1.show();
+                    //                  Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+                    //                 toast1.show();
                     su.clickFollow();
                     iv.setImageResource(R.drawable.like_on);
 
@@ -109,8 +117,8 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                     ((TextView)findViewById(R.id.follower_count)).setText(String.valueOf(su.getUser().getCount_follower()));
 
                 } else if (su.getIsFollow() == true) {
-   //                 Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
-   //                 toast2.show();
+                    //                 Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+                    //                 toast2.show();
                     su.clickFollow();
                     iv.setImageResource(R.drawable.like);
 
@@ -123,6 +131,8 @@ public class A2_UserProfileActivity extends AppCompatActivity {
 
             }
         });
+
+
 
     }
 
@@ -270,7 +280,7 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                 schedule_count_clickablelayout.setClickable(true);
                 follower_count_clickablelayout.setClickable(true);
                 following_count_clickablelayout.setClickable(true);
-
+                follow_button.setClickable(true);
                 if(su.isFollow() == true)
                     ((ImageView)findViewById(R.id.follow_button)).setImageResource(R.drawable.like_on);
                 else
@@ -282,6 +292,10 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                     // 기본이미지 로드.
                     user_photo.setImageResource(R.drawable.userimage_default);
                 }
+                FollowerClickListener(follower_count_clickablelayout);
+                FollowingClickListener(following_count_clickablelayout);
+                ScheduleClickListener(schedule_count_clickablelayout);
+                LikeButtonClickListener(follow_button, mContext);
             }
         }
     }

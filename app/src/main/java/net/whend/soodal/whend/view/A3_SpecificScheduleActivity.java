@@ -50,6 +50,16 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
     static String nextURL;
     private ArrayList<Comment> Comment_list = new ArrayList<Comment>();
     private ImageView memo_photo,user_photo;
+    ImageView edit;
+    View user_clickableLayout;
+    ImageView like_button;
+    ImageView follow_button;
+    ImageView comment_button ;
+    View schedulefollow_user_clickablelayout ;
+    View schedulelike_user_clickablelayout;
+    TextView like_count;
+    TextView follow_count;
+
     public void onBackPressed(){
         finish();
         overridePendingTransition(R.anim.abc_popup_enter, R.anim.push_right_out);
@@ -101,24 +111,17 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
 
         // 리스너 함수들
 
-        View user_clickableLayout = (View)findViewById(R.id.user_clickableLayout);
-        ImageView like_button = (ImageView)findViewById(R.id.like_button);
-        ImageView follow_button = (ImageView)findViewById(R.id.follow_button);
-        ImageView comment_button = (ImageView)findViewById(R.id.comment_button);
-        View schedulefollow_user_clickablelayout = (View)findViewById(R.id.schedulefollow_user_clickablelayout);
-        View schedulelike_user_clickablelayout = (View)findViewById(R.id.schedulelike_user_clickablelayout);
-        TextView like_count = (TextView)findViewById(R.id.like_count);
-        TextView follow_count = (TextView)findViewById(R.id.follow_count);
+        user_clickableLayout = (View)findViewById(R.id.user_clickableLayout);
+        like_button = (ImageView)findViewById(R.id.like_button);
+        follow_button = (ImageView)findViewById(R.id.follow_button);
+        comment_button = (ImageView)findViewById(R.id.comment_button);
+        schedulefollow_user_clickablelayout = (View)findViewById(R.id.schedulefollow_user_clickablelayout);
+        schedulelike_user_clickablelayout = (View)findViewById(R.id.schedulelike_user_clickablelayout);
+        like_count = (TextView)findViewById(R.id.like_count);
+        follow_count = (TextView)findViewById(R.id.follow_count);
         memo_photo = (ImageView)findViewById(R.id.memo_photo);
         user_photo = (ImageView)findViewById(R.id.user_photo);
 
-        EditClieckListener(edit);
-        UserProfileClickListener(user_clickableLayout);
-        LikeButtonClickListener(like_button, like_count);
-        FollowButtonClickListener(follow_button, follow_count);
-        WriteCommentClickListener(comment_button);
-        WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout);
-        WhoLikesScheduleClickListener(schedulelike_user_clickablelayout);
 
     }
 
@@ -359,7 +362,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.user_fullname)).setText(cs.getUsername());
         ((TextView) findViewById(R.id.title)).setText(cs.getTitle());
-        ImageView edit = (ImageView) findViewById(R.id.edit);
+        edit = (ImageView) findViewById(R.id.edit);
         if(cs.getSchedule().isMaster() == true){
             edit.setVisibility(View.VISIBLE);
             edit.setClickable(true);
@@ -501,6 +504,14 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     HTTPRestfulUtilizerExtender_comment a = new HTTPRestfulUtilizerExtender_comment(getmContext(), url_comment,"GET");
                     a.doExecution();
+
+                    EditClieckListener(edit);
+                    UserProfileClickListener(user_clickableLayout);
+                    LikeButtonClickListener(like_button, like_count);
+                    FollowButtonClickListener(follow_button, follow_count);
+                    WriteCommentClickListener(comment_button);
+                    WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout);
+                    WhoLikesScheduleClickListener(schedulelike_user_clickablelayout);
 
                 }catch(Exception e){
                 }

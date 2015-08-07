@@ -74,7 +74,7 @@ public class A7_SpecificHashTagActivity extends Activity {
             Picasso.with(this).load(photo).into(title_photo);
         }
 */
-        LikeButtonClickListener(follow_button);
+
         follow_button.setClickable(false);
 /*
         title_view.setText("#" +title);
@@ -342,8 +342,9 @@ public class A7_SpecificHashTagActivity extends Activity {
                     if(!photo.equals("")) {
                         Picasso.with(getmContext()).load(photo).into(title_photo);
                     }
-
+                    LikeButtonClickListener(follow_button);
                     follow_button.setClickable(true);
+
                 }catch(Exception e){
 
                 }
