@@ -69,7 +69,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-
+            signupButton_view.setClickable(false);
             Bundle inputBundle = new Bundle();
             inputBundle.putCharSequence("username",username_view.getText());
             inputBundle.putCharSequence("email",email_view.getText());
@@ -204,7 +204,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                         toast1.setGravity(0,0,100);
                         toast1.show();
                         canRegister=false;
-                    }
+                    }signupButton_view.setClickable(true);
 
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
                 try{
@@ -214,7 +214,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                         toast1.setGravity(0,0,100);
                         toast1.show();
                         canRegister=false;
-                    }
+                    }signupButton_view.setClickable(true);
 
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
                 try{
@@ -229,7 +229,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                         toast1.setGravity(0,0,100);
                         toast1.show();
                         canRegister=false;
-                    }
+                    }signupButton_view.setClickable(true);
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
 
                 try{
@@ -241,10 +241,11 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                         canRegister=false;
                     }else if(tmp_password1.contentEquals("[\"Password must be a minimum of 6 characters.\"]")){
                         Toast toast1 = Toast.makeText(mContext, "비밀번호는 6자 이상이어야 합니다.", Toast.LENGTH_SHORT);
-                        toast1.setGravity(0,0,100);
+                        toast1.setGravity(0, 0, 100);
                         toast1.show();
                         canRegister=false;
-                    }
+
+                    }signupButton_view.setClickable(true);
 
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
 
@@ -255,6 +256,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                         toast1.setGravity(0,0,100);
                         toast1.show();
                         canRegister=false;
+                        signupButton_view.setClickable(true);
                     }
 
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
@@ -274,6 +276,8 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
 
                 }catch(Exception e){
                     Log.d("Catch Exception",e+"");
+                }finally{
+
                 }
 
 
@@ -402,7 +406,9 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
 
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
+                    signupButton_view.setClickable(true);
                     finish();
+
                 }catch(Exception e){}
 
             }

@@ -24,10 +24,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.util.AnalyticsApplication;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
@@ -37,7 +42,8 @@ import java.util.ArrayList;
 
 // ToolBar 숨기기 Reference : https://mzgreen.github.io/2015/02/15/How-to-hideshow-Toolbar-when-list-is-scroling%28part1%29/
 public class F1_Wall extends Fragment {
-
+    public static GoogleAnalytics analytics;
+    Tracker mTracker;
 
     private FragmentTabHost mTabHost;
     private View rootview;
@@ -68,10 +74,13 @@ public class F1_Wall extends Fragment {
         String url = "http://119.81.176.245/schedules/";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();
-
-
-
         listview.setOnScrollListener(new EndlessScrollListener());
+      //  mTracker.setScreenName("Image~" + "F1_WALL");
+      //  mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+///
+
+
+
 
     }
 
@@ -92,7 +101,8 @@ public class F1_Wall extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //AnalyticsApplication application = (AnalyticsApplication).getApplicationContext().getTracker();
+        //mTracker= ((AnalyticsApplication) getActivity().getApplication()).getDefaultTracker();
 
 
     //    String url = "http://119.81.176.245/schedules/";

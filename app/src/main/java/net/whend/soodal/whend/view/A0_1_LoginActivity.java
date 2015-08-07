@@ -216,7 +216,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-
+            loginButton_view.setClickable(false);
             Bundle inputBundle = new Bundle();
             inputBundle.putCharSequence("username",username_view.getText());
             inputBundle.putCharSequence("password",password_view.getText());
@@ -360,6 +360,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     Toast toast1 = Toast.makeText(mContext, "존재하지 않는 아이디거나 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT);
                     toast1.setGravity(0,0,100);
                     toast1.show();
+                    loginButton_view.setClickable(true);
+                }finally{
 
                 }
 
@@ -431,6 +433,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     Log.d("login exception",e.toString());
 
 
+                }finally{
+                    loginButton_view.setClickable(true);
                 }
 
             }

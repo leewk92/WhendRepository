@@ -55,6 +55,9 @@ public class F5_Mypage extends Fragment {
     EditText search_text;
     JSONObject outputSchedulesJson;
     private View rootView;
+    View schedule_count_clickablelayout;
+    View follower_count_clickablelayout;
+    View following_count_clickablelayout;
     User u = new User();
     public F5_Mypage() {
         // Required empty public constructor
@@ -188,12 +191,17 @@ public class F5_Mypage extends Fragment {
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),rootView,url,"GET");
         a.doExecution();
 
-        View schedule_count_clickablelayout = rootView.findViewById(R.id.schedule_count_clickablelayout);
-        View follower_count_clickablelayout = rootView.findViewById(R.id.follower_count_clickablelayout);
-        View following_count_clickablelayout = rootView.findViewById(R.id.following_count_clickablelayout);
+        schedule_count_clickablelayout = rootView.findViewById(R.id.schedule_count_clickablelayout);
+        follower_count_clickablelayout = rootView.findViewById(R.id.follower_count_clickablelayout);
+        following_count_clickablelayout = rootView.findViewById(R.id.following_count_clickablelayout);
         ScheduleClickListener(schedule_count_clickablelayout);
         FollowerClickListener(follower_count_clickablelayout);
         FollowingClickListener(following_count_clickablelayout);
+
+        schedule_count_clickablelayout.setClickable(false);
+        follower_count_clickablelayout.setClickable(false);
+        following_count_clickablelayout.setClickable(false);
+
         return rootView;
     }
     // 게시물 누를때 리스너
@@ -337,6 +345,12 @@ public class F5_Mypage extends Fragment {
                     // 기본이미지 로드.
                     user_photo.setImageResource(R.drawable.userimage_default);
                 }
+
+
+                schedule_count_clickablelayout.setClickable(true);
+                follower_count_clickablelayout.setClickable(true);
+                following_count_clickablelayout.setClickable(true);
+
             }
         }
     }

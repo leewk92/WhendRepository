@@ -805,12 +805,10 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                             String url = "http://119.81.176.245/schedules/";
                             HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest, ImageAbsolutePath);
                             a.doExecution();
-
                         }
                     }
                 }catch(Exception e){
                 }
-
             }
         }
     }

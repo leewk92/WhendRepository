@@ -35,6 +35,11 @@ public class A2_UserProfileActivity extends AppCompatActivity {
     private FragmentTabHost mTabHost;
     private int user_id;
     private ImageView user_photo;
+
+    View schedule_count_clickablelayout;
+    View follower_count_clickablelayout;
+    View following_count_clickablelayout;
+    ImageView follow_button;
     public void onBackPressed(){
         finish();
         overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
@@ -69,11 +74,14 @@ public class A2_UserProfileActivity extends AppCompatActivity {
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this,url,"GET");
         a.doExecution();
 
-        View schedule_count_clickablelayout = findViewById(R.id.schedule_count_clickablelayout);
-        View follower_count_clickablelayout = findViewById(R.id.follower_count_clickablelayout);
-        View following_count_clickablelayout =findViewById(R.id.following_count_clickablelayout);
-        ImageView follow_button = (ImageView)findViewById(R.id.follow_button);
+        schedule_count_clickablelayout = findViewById(R.id.schedule_count_clickablelayout);
+        follower_count_clickablelayout = findViewById(R.id.follower_count_clickablelayout);
+        following_count_clickablelayout = findViewById(R.id.following_count_clickablelayout);
+        follow_button = (ImageView)findViewById(R.id.follow_button);
         user_photo = (ImageView)findViewById(R.id.user_photo);
+        schedule_count_clickablelayout.setClickable(false);
+        follower_count_clickablelayout.setClickable(false);
+        following_count_clickablelayout.setClickable(false);
 
         FollowerClickListener(follower_count_clickablelayout);
         FollowingClickListener(following_count_clickablelayout);
@@ -258,6 +266,10 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                 ((TextView)findViewById(R.id.follower_count)).setText(u.getCount_follower() + "");
                 ((TextView) findViewById(R.id.schedule_count)).setText(u.getCount_uploaded_schedule() + "");
                 ((TextView)findViewById(R.id.following_count)).setText(String.valueOf(u.getCount_following_hashtag() + u.getCount_following_user()));
+
+                schedule_count_clickablelayout.setClickable(true);
+                follower_count_clickablelayout.setClickable(true);
+                following_count_clickablelayout.setClickable(true);
 
                 if(su.isFollow() == true)
                     ((ImageView)findViewById(R.id.follow_button)).setImageResource(R.drawable.like_on);

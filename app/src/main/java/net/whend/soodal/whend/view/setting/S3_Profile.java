@@ -37,8 +37,8 @@ public class S3_Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.s3_profile);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
-        toolbar.setTitle("");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_profile);
+        toolbar.setTitle(" ");
 
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back_s);
@@ -127,7 +127,7 @@ public class S3_Profile extends AppCompatActivity {
         man.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
-                gender.setText("³²¼º");
+                gender.setText("ï¿½ï¿½ï¿½ï¿½");
                 gender_select.startAnimation(fade_out);
                 gender_select.setVisibility(View.GONE);
 
@@ -155,7 +155,7 @@ public class S3_Profile extends AppCompatActivity {
         woman.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
-                gender.setText("¿©¼º");
+                gender.setText("ï¿½ï¿½ï¿½ï¿½");
                 gender_select.startAnimation(fade_out);
                 gender_select.setVisibility(View.GONE);
 
@@ -183,7 +183,7 @@ public class S3_Profile extends AppCompatActivity {
         etc.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
-                gender.setText("±âÅ¸");
+                gender.setText("ï¿½ï¿½Å¸");
 
                 gender_select.startAnimation(fade_out);
                 gender_select.setVisibility(View.GONE);

@@ -117,7 +117,7 @@ public class A8_SettingActivity extends AppCompatActivity {
 
     public void Profile(View view)
     {
-        Intent intent = new Intent(A8_SettingActivity.this, S3_Profile.class);
+        Intent intent = new Intent(A8_SettingActivity.this, S1_Preparing.class);
         startActivity(intent);
         overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
 

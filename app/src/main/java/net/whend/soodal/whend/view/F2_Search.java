@@ -23,10 +23,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Grid_Search_Adapter;
 import net.whend.soodal.whend.model.base.HashTag;
 import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
+import net.whend.soodal.whend.util.AnalyticsApplication;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.observablescrollview.ObservableScrollView;
 import net.whend.soodal.whend.util.observablescrollview.ScrollViewListener;
@@ -50,7 +55,8 @@ import java.util.ArrayList;
  */
 public class F2_Search extends Fragment implements ScrollViewListener {
     // TODO: Rename parameter arguments, choose names that match
-
+    public static GoogleAnalytics analytics;
+    public static Tracker mTracker;
     private FragmentTabHost mTabHost;
     ArrayList<Grid_Search_Schedule> arrayGSchedule = new ArrayList<Grid_Search_Schedule>();
     private Grid_Search_Adapter grid_search_adapter;
@@ -100,7 +106,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         super.onResume();
         loading=true;
         page=0;
-        threshold=350;
+        threshold=250;
         //threshold
 
         arrayGSchedule.clear();
@@ -114,11 +120,17 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         String url = "http://119.81.176.245/hashtags/";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
         a.doExecution();
+
+   //     mTracker.setScreenName("Image~" + "F2_Search");
+  //      mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+   //     AnalyticsApplication application = (AnalyticsApplication)getActivity().getApplication();
+  //      mTracker= application.getDefaultTracker();
 
 
 
@@ -265,7 +277,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
             String url = "http://119.81.176.245/hashtags/";
             HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),nextURL,"GET");
             a.doExecution();
-            threshold = threshold +1200;
+            threshold = threshold +270*3;
             Log.d("scroll_threshold",threshold +"");
         }
         //Toast.makeText(getActivity(),"scrolled",Toast.LENGTH_SHORT);

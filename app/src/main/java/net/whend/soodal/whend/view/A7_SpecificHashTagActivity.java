@@ -75,6 +75,7 @@ public class A7_SpecificHashTagActivity extends Activity {
         }
 */
         LikeButtonClickListener(follow_button);
+        follow_button.setClickable(false);
 /*
         title_view.setText("#" +title);
         follower_count_view.setText(follower_count+"");
@@ -342,6 +343,7 @@ public class A7_SpecificHashTagActivity extends Activity {
                         Picasso.with(getmContext()).load(photo).into(title_photo);
                     }
 
+                    follow_button.setClickable(true);
                 }catch(Exception e){
 
                 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,8 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.view.MainActivity;
 
 public class T2_3_tagfollowing extends AppCompatActivity {
 
@@ -242,6 +245,14 @@ public class T2_3_tagfollowing extends AppCompatActivity {
                 t2_next.setVisibility(View.INVISIBLE);
             }
         });
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.what == 0) {
+                    mFlag = false;
+                }
+            }
+        };
     }
 
     @Override
@@ -283,5 +294,31 @@ public class T2_3_tagfollowing extends AppCompatActivity {
         });
 
         myThread.start();
+    }
+
+    // 핸들러, 플래그 선언 for back key로 종료
+    private Handler mHandler;
+    private boolean mFlag = false;
+
+
+    //2초안에 백키 눌르면 종료
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(!mFlag) {
+                Toast.makeText(this, "'뒤로'버튼을 한번 더 누르시면 튜토리얼이 종료됩니다.", Toast.LENGTH_SHORT).show();
+                mFlag = true;
+                mHandler.sendEmptyMessageDelayed(0, 2000);
+                return false;
+            } else {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("text", String.valueOf("URL"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+                finish();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
