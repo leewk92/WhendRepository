@@ -46,6 +46,8 @@ public class A7_SpecificHashTagActivity extends Activity {
     Context context = this;
     TextView title_view,follower_count_view,schedule_count_view,uploaded_schedule_count_view;
     ImageView follow_button,title_photo;
+    View follower_count_clickablelayout,comming_count_clickablelayout,schedule_count_clickablelayout;
+    HashTag h = new HashTag();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,9 @@ public class A7_SpecificHashTagActivity extends Activity {
         uploaded_schedule_count_view = (TextView)findViewById(R.id.comming_count);
         follow_button = (ImageView)findViewById(R.id.follow_button);
 
+        follower_count_clickablelayout = (View)findViewById(R.id.follower_count_clickablelayout);
+        comming_count_clickablelayout = (View)findViewById(R.id.comming_count_clickablelayout);
+        schedule_count_clickablelayout = (View)findViewById(R.id.schedule_count_clickablelayout);
         title_photo=(ImageView)findViewById(R.id.photo);
 /*
         if(!photo.equals("")) {
@@ -184,6 +189,19 @@ public class A7_SpecificHashTagActivity extends Activity {
 
     }
 
+    // 팔로워 누를때 리스너
+    public void FollowerClickListener(View follower_count_clickablelayout){
+        follower_count_clickablelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(A7_SpecificHashTagActivity.this, A5_WhoFollowsScheduleActivity.class);
+                intent.putExtra("url", "http://119.81.176.245/hashtags/"+h.getId()+"/followers/");
+                startActivity(intent);
+            }
+        });
+
+    }
 
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
 
@@ -320,7 +338,6 @@ public class A7_SpecificHashTagActivity extends Activity {
                     JSONObject tmp_ith=outputSchedulesJson;
                    // nextURL = outputSchedulesJson.getString("next");
 
-                    HashTag h = new HashTag();
 
                     h.setId(tmp_ith.getInt("id"));
                     title= (tmp_ith.getString("title"));
@@ -344,13 +361,14 @@ public class A7_SpecificHashTagActivity extends Activity {
                     }
                     LikeButtonClickListener(follow_button);
                     follow_button.setClickable(true);
-
+                    FollowerClickListener(follower_count_clickablelayout);
                 }catch(Exception e){
 
                 }
             }
         }
     }
+
 
 
 }

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import net.whend.soodal.whend.R;
@@ -30,7 +31,7 @@ public class A5_WhoFollowsScheduleActivity extends AppCompatActivity {
     JSONObject outputSchedulesJson;
     ScheduleFollow_User_Adapter adapter;
     static String nextURL;
-
+    Context mContext = this;
     public void onBackPressed(){
         finish();
         overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
@@ -62,12 +63,59 @@ public class A5_WhoFollowsScheduleActivity extends AppCompatActivity {
         adapter = new ScheduleFollow_User_Adapter(this,R.layout.item_schedulefollow_user,User_list);
         listview = (ListView)findViewById(R.id.listview_schedulefollow_user);
         listview.setAdapter(adapter);
-
-
+        listview.setOnScrollListener(new EndlessScrollListener());
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this,url,"GET");
         a.doExecution();
 
     }
+
+
+    // 끝없이 로딩 하는거
+    public class EndlessScrollListener implements AbsListView.OnScrollListener {
+
+        private int visibleThreshold = 2;
+        private int currentPage = 0;
+        private int previousTotal = 0;
+        private boolean loading = true;
+
+        public EndlessScrollListener() {
+
+        }
+        public EndlessScrollListener(int visibleThreshold) {
+            this.visibleThreshold = visibleThreshold;
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem,
+                             int visibleItemCount, int totalItemCount) {
+
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                    currentPage++;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                // I load the next page of gigs using a background task,
+                // but you can call any function here.
+                Log.d("lastItemScrolled", "true");
+                try{
+                    if(nextURL != "null"){
+                        HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(mContext, nextURL,"GET");
+                        //              b.doExecution();
+                    }
+                }catch(Exception e){
+
+                }
+                loading = true;
+            }
+        }
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        }
+    }
+
 
     class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
 

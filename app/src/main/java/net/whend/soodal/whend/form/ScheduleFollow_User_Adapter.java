@@ -98,8 +98,8 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
             public void onClick(View v) {
 
                 if (User_list.get(pos).getIsFollow() == false) {
-                    Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
-                    toast1.show();
+ //                   Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+  //                  toast1.show();
                     User_list.get(pos).clickFollow();
                     iv.setImageResource(R.drawable.like_on);
 
@@ -109,8 +109,8 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
                 //    ((TextView) rv.findViewById(R.id.follower_count)).setText(String.valueOf(User_list.get(pos).getUser().getCount_follower()));
 
                 } else if (User_list.get(pos).getIsFollow() == true) {
-                    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
-                    toast2.show();
+    //                Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+    //                toast2.show();
                     User_list.get(pos).clickFollow();
                     iv.setImageResource(R.drawable.like);
 
