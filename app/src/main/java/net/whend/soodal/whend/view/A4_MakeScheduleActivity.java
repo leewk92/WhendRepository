@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +17,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,11 +36,20 @@ import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.DateTimeFormatter;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import static java.lang.Thread.sleep;
@@ -519,8 +530,10 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                 hashtags_title[i - 1] = tmpArray[i].split(" ")[0];
                 Log.d("hashtags_title_array",hashtags_title[i-1]);
             }
-
-            searchHashtags();
+            String url_getHashtagsId = "http://119.81.176.245/hashtags/getid/";
+            HTTPRestfulUtilizerExtender_getHashtagsId a = new HTTPRestfulUtilizerExtender_getHashtagsId(this,url_getHashtagsId,"POST",hashtags_title);
+            a.doExecution();
+           // searchHashtags();
         }
         if (tmpArray.length==1){      //hash tag가 없을 때
             Toast.makeText(this,"태그를 하나 이상 입력해주세요!",Toast.LENGTH_SHORT).show();
@@ -848,7 +861,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             protected String doInBackground(String... strings) {
                 String url = strings[0];
                 String sHTTPRestType = strings[1];
-                setOutputString(POST(url,getInputBundle()));
+                setOutputString(POST(url, getInputBundle()));
 
                 return getOutputString();
             }
@@ -1042,5 +1055,204 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
         }
     }
+
+
+
+    // for 해시태그 검색
+    class HTTPRestfulUtilizerExtender_getHashtagsId extends HTTPRestfulUtilizer {
+        String[] hashtag_title_inner;
+
+        public HTTPRestfulUtilizerExtender_getHashtagsId(Context mContext, String url, String HTTPRestType, String[] hashtags_title) {
+            this.hashtag_title_inner = hashtags_title.clone();
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+
+
+        public String POST_hashtag(String url, JSONArray tmp){
+            InputStream inputStream = null;
+            String result = "";
+            try {
+
+                // 1. create HttpClient
+                HttpClient httpclient = new DefaultHttpClient();
+
+                // 2. make POST request to the given URL
+                HttpPost httpPost = new HttpPost(url);
+
+                String json = "";
+
+                json =tmp.toString();
+                          Log.d("hashjson", json);
+                // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+                // ObjectMapper mapper = new ObjectMapper();
+                // json = mapper.writeValueAsString(person);
+
+                // 5. set json to StringEntity
+
+                StringEntity se = new StringEntity(json,"UTF-8");
+
+
+                //MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
+
+                //multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+                // multipartEntity.addBinaryBody("someName", file, ContentType.create("image/jpeg"), file.getName());
+                //multipartEntity.addPart("content", json);
+                //multipartEntity.addTextBody("content",json);
+                // 6. set httpPost Entity
+                httpPost.setEntity(se);
+                //httpPost.setEntity(multipartEntity.build());
+
+                // 7. Set some headers to inform server about the type of the content
+
+
+                httpPost.setHeader("Accept", "application/json;charset=utf-8");
+                httpPost.setHeader("Content-type", "application/json");
+                AppPrefs appPrefs = new AppPrefs(getmContext());
+                String token = appPrefs.getToken();
+                if( token != ""){
+                    httpPost.setHeader("Authorization","Token "+token);
+                }
+                // 8. Execute POST request to the given URL
+                HttpResponse httpResponse = httpclient.execute(httpPost);
+
+                // se.consumeContent();
+
+                // 9. receive response as inputStream
+                inputStream = httpResponse.getEntity().getContent();
+
+                // 10. convert inputstream to string
+                if(inputStream != null) {
+                    result = convertInputStreamToString(inputStream);
+                    //              Log.d("HTTP POST ResultStream", result);
+                }else {
+                    result = "Did not work!";
+                    Log.d("HTTP POST ResultStream", result);
+                }
+            } catch (Exception e) {
+                Log.d("InputStream", e.getLocalizedMessage());
+            }
+
+            // 11. return result
+            this.outputString = result;
+            try {
+                outputJsonObject = new JSONObject(outputString);
+            }catch (Exception e){
+                outputJsonObject = new JSONObject();
+            }
+
+            try {
+                outputJsonArray = new JSONArray(outputString);
+
+            }catch (Exception e){
+                outputJsonArray = new JSONArray();
+            }
+
+            return result;
+        }
+
+
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                if(progress.isShowing()==false)
+                    progress = ProgressDialog.show(getmContext(), "일정올리기",
+                            "일정을 올리는 중입니다.", true);
+
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                JSONArray tmp = new JSONArray();
+
+                for(int i=0; i<hashtag_title_inner.length; i++){
+                    JSONObject tj = new JSONObject();
+                    try{
+                        tj.put("title",hashtag_title_inner[i]);
+                        tmp.put(tj);
+                    }catch(Exception e){}
+                }
+
+                setOutputString(POST_hashtag(url,tmp));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try{
+
+                    JSONArray outputJsonArray = getOutputJsonArray();
+                    for(int i=0; i<outputJsonArray.length(); i++){
+                        JSONObject tmp = outputJsonArray.getJSONObject(i);
+                        hashtags_id.add(tmp.getInt("id"));
+                    }
+
+
+                    if(all_day_boolean){
+                        all_day_int=1;
+                    }else all_day_int=0;
+
+                    inputBundle_forRequest.putCharSequence("title",title.getText());
+                    inputBundle_forRequest.putCharSequence("memo", memo.getText());
+                    inputBundle_forRequest.putCharSequence("location",location.getText());
+                    inputBundle_forRequest.putCharSequence("all_day",all_day_int+"");
+                    if(hashtags_id.size() !=0){
+                        inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
+                    }
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTimeInMillis(0);
+                    if(all_day_boolean==false)
+                        cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start,0);
+                    else
+                        cal.set(YEAR_start, MONTH_start - 1, DAY_start, HOUR_start, MINUTE_start, 0);
+                    Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
+                    Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
+                    cal.setTimeInMillis((cal.getTimeInMillis() / 1000) * 1000);
+                    DateTimeFormatter dtf = new DateTimeFormatter(cal.getTimeInMillis());
+                    inputBundle_forRequest.putCharSequence("start_time", dtf.getOutputString());
+                    Log.d("getTimeinString", dtf.getOutputString());
+
+
+                    if(all_day_boolean==false)
+                        cal.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end,0);
+                    else
+                        cal.set(YEAR_end, MONTH_end-1, DAY_end+1, HOUR_end, MINUTE_end,0);
+
+                    Log.d("getTimeinInt", YEAR_start + " " + MONTH_start + " " + DAY_start + " " + HOUR_start + " " + MINUTE_start + "");
+                    Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
+                    cal.setTimeInMillis((cal.getTimeInMillis() / 1000) * 1000);
+                    dtf = new DateTimeFormatter(cal.getTimeInMillis());
+                    inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
+                    Log.d("getTimeinString",dtf.getOutputString());
+
+                    String url = "http://119.81.176.245/schedules/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest, ImageAbsolutePath);
+                    a.doExecution();
+
+
+                }catch(Exception e){
+                }
+            }
+        }
+    }
+
+
 
 }

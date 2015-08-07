@@ -41,16 +41,16 @@ import java.net.URLConnection;
  */
 public class HTTPRestfulUtilizer {
 
-    private String url;
-    private static Bundle inputBundle;
-    private static JSONArray outputJsonArray;
-    private static JSONObject outputJsonObject;
-    private String HTTPRestType;
-    private static String outputString;
-    private String token;
-    private Context mContext;
+    public String url;
+    public static Bundle inputBundle;
+    public static JSONArray outputJsonArray;
+    public static JSONObject outputJsonObject;
+    public String HTTPRestType;
+    public static String outputString;
+    public String token;
+    public Context mContext;
     public HttpAsyncTask task;
-    private String photo=null;
+    public String photo=null;
     public String getToken() {
         return token;
     }
@@ -436,7 +436,7 @@ public class HTTPRestfulUtilizer {
 
 
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+    public static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String line = "";
         String result = "";
