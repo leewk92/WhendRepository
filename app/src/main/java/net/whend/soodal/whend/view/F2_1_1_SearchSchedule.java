@@ -129,18 +129,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
         listview = (ListView)rootview.findViewById(R.id.listview_searchschedule);
         searchSchedule_adapter = new SearchSchedule_Adapter(getActivity(), R.layout.item_searchschedule, arrayCSchedule);
         listview.setAdapter(searchSchedule_adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3) {
-                // TODO Auto-generated method stub
-
-                Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
-                intent.putExtra("id", arrayCSchedule.get(position).getId());
-                startActivity(intent);
-            }
-        });
         listview.setOnScrollListener(new EndlessScrollListener());
         return rootview;
     }
@@ -242,6 +231,18 @@ public class F2_1_1_SearchSchedule extends Fragment {
                         arrayCSchedule.add(cs);
                         searchSchedule_adapter.notifyDataSetChanged();
                     }
+                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> arg0, View arg1,
+                                                int position, long arg3) {
+                            // TODO Auto-generated method stub
+
+                            Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
+                            intent.putExtra("id", arrayCSchedule.get(position).getId());
+                            startActivity(intent);
+                        }
+                    });
                     listview.setClickable(true);
                 }catch(Exception e){
 

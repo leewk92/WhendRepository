@@ -123,19 +123,7 @@ public class F2_1_3_SearchUser extends Fragment {
         listview = (ListView)rootview.findViewById(R.id.listview_searchuser);
         searchUser_adapter =  new SearchUser_Adapter(getActivity(), R.layout.item_searchuser, SUser_list);
         listview.setAdapter(searchUser_adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3) {
-                // TODO Auto-generated method stub
-
-                Intent intent = new Intent(getActivity(), A2_UserProfileActivity.class);
-                intent.putExtra("id", SUser_list.get(position).getUser().getId());
-
-                startActivity(intent);
-            }
-        });
         listview.setOnScrollListener(new EndlessScrollListener());
         return rootview;
     }
@@ -234,6 +222,19 @@ public class F2_1_3_SearchUser extends Fragment {
                         SUser_list.add(su);
                         searchUser_adapter.notifyDataSetChanged();
                     }
+                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> arg0, View arg1,
+                                                int position, long arg3) {
+                            // TODO Auto-generated method stub
+
+                            Intent intent = new Intent(getActivity(), A2_UserProfileActivity.class);
+                            intent.putExtra("id", SUser_list.get(position).getUser().getId());
+
+                            startActivity(intent);
+                        }
+                    });
                     listview.setClickable(true);
                 }catch(Exception e){
 

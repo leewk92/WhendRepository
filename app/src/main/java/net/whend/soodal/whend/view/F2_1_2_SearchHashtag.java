@@ -122,25 +122,7 @@ public class F2_1_2_SearchHashtag extends Fragment {
         listview = (ListView)rootview.findViewById(R.id.listview_searchhashtag);
         searchHashTag_adapter = new SearchHashTag_Adapter(getActivity(), R.layout.item_searchhashtag, SHashtag_list);
         listview.setAdapter(searchHashTag_adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3) {
-                // TODO Auto-generated method stub
-
-                Intent intent = new Intent(getActivity(), A7_SpecificHashTagActivity.class);
-                intent.putExtra("id", SHashtag_list.get(position).getHashTag().getId());
-                intent.putExtra("title", SHashtag_list.get(position).getHashTag().getTitle());
-                intent.putExtra("follower_count", SHashtag_list.get(position).getHashTag().getFollower_count());
-                intent.putExtra("photo", SHashtag_list.get(position).getHashTag().getPhoto());
-                intent.putExtra("count_schedule", SHashtag_list.get(position).getHashTag().getCount_schedule());
-                intent.putExtra("count_upcoming_schedule", SHashtag_list.get(position).getHashTag().getCount_upcoming_schedule());
-                intent.putExtra("is_follow",SHashtag_list.get(position).getHashTag().is_Follow());
-                Log.d("is_follow",SHashtag_list.get(position).getHashTag().is_Follow()+"");
-                startActivity(intent);
-            }
-        });
         listview.setOnScrollListener(new EndlessScrollListener());
         return rootview;
     }
@@ -246,6 +228,26 @@ public class F2_1_2_SearchHashtag extends Fragment {
                         SHashtag_list.add(sh);
                         searchHashTag_adapter.notifyDataSetChanged();
                     }
+
+                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> arg0, View arg1,
+                                                int position, long arg3) {
+                            // TODO Auto-generated method stub
+
+                            Intent intent = new Intent(getActivity(), A7_SpecificHashTagActivity.class);
+                            intent.putExtra("id", SHashtag_list.get(position).getHashTag().getId());
+                            intent.putExtra("title", SHashtag_list.get(position).getHashTag().getTitle());
+                            intent.putExtra("follower_count", SHashtag_list.get(position).getHashTag().getFollower_count());
+                            intent.putExtra("photo", SHashtag_list.get(position).getHashTag().getPhoto());
+                            intent.putExtra("count_schedule", SHashtag_list.get(position).getHashTag().getCount_schedule());
+                            intent.putExtra("count_upcoming_schedule", SHashtag_list.get(position).getHashTag().getCount_upcoming_schedule());
+                            intent.putExtra("is_follow", SHashtag_list.get(position).getHashTag().is_Follow());
+                            Log.d("is_follow", SHashtag_list.get(position).getHashTag().is_Follow() + "");
+                            startActivity(intent);
+                        }
+                    });
                     listview.setClickable(true);
                 }catch(Exception e){
 
