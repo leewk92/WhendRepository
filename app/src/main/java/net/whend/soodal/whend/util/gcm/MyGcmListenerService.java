@@ -109,7 +109,7 @@ public class MyGcmListenerService extends GcmListenerService {
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
             Context context = getApplicationContext();
-            int duration = Toast.LENGTH_LONG;
+            int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, message_static, duration);
             toast.show();
             message_static = null;
