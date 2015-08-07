@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
@@ -32,7 +33,7 @@ public class A10_ShowSchedulesActivity extends AppCompatActivity {
     private ArrayList<Concise_Schedule> arrayCSchedule = new ArrayList<Concise_Schedule>();
     private Concise_Schedule_Adapter concise_schedule_adapter;
     static String nextURL;
-
+    TextView f1_text;
 
     public void onBackPressed(){
         finish();
@@ -70,6 +71,8 @@ public class A10_ShowSchedulesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        f1_text = (TextView)findViewById(R.id.f1_text);
+        f1_text.setVisibility(View.INVISIBLE);
     }
 
     // 끝없이 로딩 하는거
@@ -177,7 +180,10 @@ public class A10_ShowSchedulesActivity extends AppCompatActivity {
                         arrayCSchedule.add(cs);
                         concise_schedule_adapter.notifyDataSetChanged();
                     }
-
+                    if(arrayCSchedule.isEmpty())
+                        f1_text.setVisibility(View.VISIBLE);
+                    else
+                        f1_text.setVisibility(View.INVISIBLE);
                 }catch(Exception e){
 
                 }
