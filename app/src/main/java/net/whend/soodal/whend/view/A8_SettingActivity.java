@@ -214,8 +214,7 @@ public class A8_SettingActivity extends AppCompatActivity {
                         toast1.show();
 
                         Intent intent = new Intent(mContext, A0_1_LoginActivity.class);
-
-                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         mContext.startActivity(intent);
                         finish();
                     }

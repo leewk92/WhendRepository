@@ -249,7 +249,7 @@ public class HTTPRestfulUtilizer {
  //           Log.d("firstjson",json);
             json = json.replace("\"[", "[");
             json = json.replace("]\"", "]");
-//            Log.d("secondjson", json);
+  //          Log.d("secondjson", json);
             // ** Alternative way to convert Person object to JSON string usin Jackson Lib
             // ObjectMapper mapper = new ObjectMapper();
             // json = mapper.writeValueAsString(person);
@@ -291,7 +291,7 @@ public class HTTPRestfulUtilizer {
             // 10. convert inputstream to string
             if(inputStream != null) {
                 result = convertInputStreamToString(inputStream);
-//                Log.d("HTTP POST ResultStream", result);
+  //              Log.d("HTTP POST ResultStream", result);
             }else {
                 result = "Did not work!";
                 Log.d("HTTP POST ResultStream", result);

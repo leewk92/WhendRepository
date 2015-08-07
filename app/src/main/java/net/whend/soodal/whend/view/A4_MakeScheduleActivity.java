@@ -497,7 +497,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             completed_num=0;
             //Log.d("make_memo",memo.getText().toString());
             if(memo.getText().toString().contentEquals("")){
-                Toast.makeText(this,"메모나 그를 입력하세요!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"태그를 하나 이상 입력해주세요!",Toast.LENGTH_SHORT).show();
             }
             parseMemo(memo.getText() + "");
 
@@ -521,8 +521,11 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             }
 
             searchHashtags();
-        }else{      //hash tag가 없을 때
-
+        }
+        if (tmpArray.length==1){      //hash tag가 없을 때
+            Toast.makeText(this,"태그를 하나 이상 입력해주세요!",Toast.LENGTH_SHORT).show();
+            /*
+            Log.d("nono","nono");
 
             if(all_day_boolean){
                 all_day_int=1;
@@ -534,9 +537,9 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             inputBundle_forRequest.putInt("all_day", all_day_int);
             Log.d("all_day",all_day_int+"");
             Log.d("updateLocation", location.getText() + "");
-            /* if(hashtags_id.size() !=0){
-                inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
-            }*/
+            // if(hashtags_id.size() !=0){
+         //       inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
+            }//
             Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(0);
             if(all_day_boolean==false)
@@ -562,7 +565,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
             String url = "http://119.81.176.245/schedules/";
             HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this,url,"POST",inputBundle_forRequest, ImageAbsolutePath);
-            a.doExecution();
+            a.doExecution();*/
         }
     }
     public void searchHashtags(){
