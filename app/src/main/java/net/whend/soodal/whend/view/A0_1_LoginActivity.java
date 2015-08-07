@@ -55,7 +55,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
     private String email;
     private String password;
     private Context mContext;
-    //private LoginButton loginButton;
+ //   private LoginButton loginButton;
     CallbackManager callbackManager;
     String fb_id, fb_email, fb_name;
 
@@ -83,7 +83,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             }
         });
 
-        //loginButton = (LoginButton) findViewById(R.id.login_facebook);
+//        loginButton = (LoginButton) findViewById(R.id.login_facebook);
         loginButton_view.setOnClickListener(loginButtonListener);
         signupButton_view.setOnClickListener(signupButtonListener);
 
@@ -105,7 +105,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             }
         });
 
-        /*
+/*
 //facebook login button
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions(Arrays.asList("public_profile", "user_friends"));
@@ -199,7 +199,6 @@ public class A0_1_LoginActivity extends AppCompatActivity {
 
     }
 
-
     public View.OnClickListener signupButtonListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -234,8 +233,6 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             // 이렇게 해야 동기화 끝나고 행동을 함.
             HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(mContext, url,"POST",inputBundle);
             a.doExecution();
-
-
         }
     };
 

@@ -98,8 +98,8 @@ public class A2_UserProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("isFollow",su.getIsFollow()+"");
                 if (su.getIsFollow() == false) {
-                    Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
-                    toast1.show();
+  //                  Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+   //                 toast1.show();
                     su.clickFollow();
                     iv.setImageResource(R.drawable.like_on);
 
@@ -109,8 +109,8 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                     ((TextView)findViewById(R.id.follower_count)).setText(String.valueOf(su.getUser().getCount_follower()));
 
                 } else if (su.getIsFollow() == true) {
-                    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
-                    toast2.show();
+   //                 Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+   //                 toast2.show();
                     su.clickFollow();
                     iv.setImageResource(R.drawable.like);
 

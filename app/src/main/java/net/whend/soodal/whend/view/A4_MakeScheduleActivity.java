@@ -495,7 +495,10 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         if (id == R.id.action_upload) {
 
             completed_num=0;
-
+            //Log.d("make_memo",memo.getText().toString());
+            if(memo.getText().toString().contentEquals("")){
+                Toast.makeText(this,"메모나 그를 입력하세요!",Toast.LENGTH_SHORT).show();
+            }
             parseMemo(memo.getText() + "");
 
             return true;

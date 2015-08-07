@@ -23,16 +23,20 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmListenerService;
+import com.google.android.gms.nearby.messages.Message;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.view.MainActivity;
 
 public class MyGcmListenerService extends GcmListenerService {
-
+    private static String message_static;
     private static final String TAG = "MyGcmListenerService";
 
     /**
@@ -88,5 +92,34 @@ public class MyGcmListenerService extends GcmListenerService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+
+        message_static = "WhenD : " + message;
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+
+                handler.sendEmptyMessage(0);
+            }
+        });
+        thread.start();
     }
+
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            Context context = getApplicationContext();
+            int duration = Toast.LENGTH_LONG;
+            Toast toast = Toast.makeText(context, message_static, duration);
+            toast.show();
+            message_static = null;
+        }
+
+
+    };
+
+
+
 }
+
+
