@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.User;
 import net.whend.soodal.whend.model.top.Search_User;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
@@ -61,7 +62,6 @@ public class A2_UserProfileActivity extends AppCompatActivity {
         Log.d("user_id",user_id+"");
     //    TextView textView=(TextView)findViewById(R.id.textview);
     //    textView.setText(s);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.user_toolbar);
         setSupportActionBar(toolbar);
 

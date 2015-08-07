@@ -183,10 +183,8 @@ public class A7_SpecificHashTagActivity extends Activity {
                     ((TextView) findViewById(R.id.follower_count)).setText(String.valueOf(follower_count));
 
                 }
-
             }
         });
-
     }
 
     // 팔로워 누를때 리스너

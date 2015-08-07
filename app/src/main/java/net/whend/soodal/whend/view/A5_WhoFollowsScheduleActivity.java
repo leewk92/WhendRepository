@@ -73,7 +73,7 @@ public class A5_WhoFollowsScheduleActivity extends AppCompatActivity {
     // 끝없이 로딩 하는거
     public class EndlessScrollListener implements AbsListView.OnScrollListener {
 
-        private int visibleThreshold = 2;
+        private int visibleThreshold = 5;
         private int currentPage = 0;
         private int previousTotal = 0;
         private boolean loading = true;
@@ -103,7 +103,7 @@ public class A5_WhoFollowsScheduleActivity extends AppCompatActivity {
                 try{
                     if(nextURL != "null"){
                         HTTPRestfulUtilizerExtender b = new HTTPRestfulUtilizerExtender(mContext, nextURL,"GET");
-                        //              b.doExecution();
+                         b.doExecution();
                     }
                 }catch(Exception e){
 
