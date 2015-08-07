@@ -67,7 +67,7 @@ public class Notify_Schedule_Adapter extends ArrayAdapter<Notify_Schedule> {
 
         });*/
         ((TextView)v.findViewById(R.id.verb)).setText(NT_Schedule_list.get(position).getVerb());
-        ((TextView)v.findViewById(R.id.description)).setText(NT_Schedule_list.get(position).getDescription());
+        ((TextView)v.findViewById(R.id.description)).setText(NT_Schedule_list.get(position).getDescription()=="null"?"":NT_Schedule_list.get(position).getDescription());
         //((TextView)v.findViewById(R.id.datetime)).setText(NT_Schedule_list.get(position).getDate() +NT_Schedule_list.get(position).getTime() );
 
 
