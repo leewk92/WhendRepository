@@ -57,7 +57,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
     private String email;
     private String password;
     private Context mContext;
- //   private LoginButton loginButton;
+    private LoginButton loginButton;
     CallbackManager callbackManager;
     String fb_id, fb_email, fb_name;
 
@@ -78,7 +78,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
         loginButton_view = (Button) findViewById(R.id.login_button);
         signupButton_view = (Button) findViewById(R.id.signup_button);
 
-        login_facebook = (Button) findViewById(R.id.login_facebook);
+/*        login_facebook = (Button) findViewById(R.id.login_facebook);
         login_facebook.setOnClickListener(new View.OnClickListener()    {
             @Override
             public void onClick (View v){
@@ -88,8 +88,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                 toast1.show();
             }
         });
-
-//        loginButton = (LoginButton) findViewById(R.id.login_facebook);
+*/
+        loginButton = (LoginButton) findViewById(R.id.login_facebook);
         loginButton_view.setOnClickListener(loginButtonListener);
         signupButton_view.setOnClickListener(signupButtonListener);
 
@@ -119,7 +119,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             }
         };
 
-/*
+
 //facebook login button
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions(Arrays.asList("public_profile", "user_friends"));
@@ -209,9 +209,9 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             Log.d("FB", "requestCode  " + requestCode);
             Log.d("FB", "resultCode" + resultCode);
             Log.d("FB", "data  " + data.toString());
-        }*/
+        }
 
-    }
+ //   }
     //2초안에 백키 눌르면 종료
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
