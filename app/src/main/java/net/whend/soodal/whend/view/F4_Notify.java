@@ -242,14 +242,16 @@ public class F4_Notify extends Fragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
+                            // target_id가 있으면 스페시픽으로 보냄
                             if(arrayNTchedule.get(position).getTarget_id() != -1){
                                 Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
                                 intent.putExtra("id", arrayNTchedule.get(position).getTarget_id());
                                 startActivity(intent);
                                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
 
-
-                            } else if (arrayNTchedule.get(position).getTarget_id() == -1){
+                            // 없으면 -1을 넣고 사용자정보로 보냄냄
+                           } else if (arrayNTchedule.get(position).getTarget_id() == -1){
                                 Intent intent = new Intent(getActivity(), A2_UserProfileActivity.class);
                                 intent.putExtra("id", arrayNTchedule.get(position).getUser_id());
                                 startActivity(intent);
