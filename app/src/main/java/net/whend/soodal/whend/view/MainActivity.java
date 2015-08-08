@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText search_text;
     private ImageView search_btn;
     private ImageView back_btn;
+    private AppPrefs appPrefs;
+    BadgeView unread_count;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
@@ -65,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
         //gcm
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
+
+        if(appPrefs.getUnreadNotificationCount() > 0){
+            unread_count.setText(appPrefs.getUnreadNotificationCount() + "");
+            if (unread_count.isShown())
+                unread_count.show();
+            else
+                unread_count.show(true);
+        }
     }
 
     @Override
@@ -74,12 +85,11 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         // gcm
-        AppPrefs appPrefs = new AppPrefs(this);
+        appPrefs = new AppPrefs(this);
         if(appPrefs.getGcm_token()==""){
             registBroadcastReceiver();
             getInstanceIdToken();
         }
-
 
         search_text = (EditText) findViewById(R.id.search_text);
         search_btn = (ImageView) findViewById(R.id.search_btn);
@@ -104,10 +114,21 @@ public class MainActivity extends AppCompatActivity {
                 F2_Search.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator(""),
                 F3_Upload.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("tab4").setIndicator("", getApplicationContext().getResources().getDrawable(R.drawable.menu_notice)),
+
+        View notify_view = LayoutInflater.from(MainActivity.this).inflate(R.layout.notify_tab, null);
+        unread_count = new BadgeView(this, notify_view.findViewById(R.id.notify_icon_layout) );
+        unread_count.setTextSize(10);
+        unread_count.setBadgeMargin(0, 15);
+        unread_count.setBadgePosition(BadgeView.POSITION_TOP_LEFT);
+
+        mTabHost.addTab(mTabHost.newTabSpec("tab4").setIndicator(notify_view),
                 F4_Notify.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("tab5").setIndicator("", getApplicationContext().getResources().getDrawable(R.drawable.menu_mypage)),
                 F5_Mypage.class, null);
+
+
+
+
 
         mTabHost.getTabWidget().setStripEnabled(false);
         mTabHost.getTabWidget().setDividerDrawable(null);
@@ -115,6 +136,12 @@ public class MainActivity extends AppCompatActivity {
         mTabHost.getTabWidget().getChildAt(2).setBackground(getApplicationContext().getResources().getDrawable(R.drawable.menu_importcalendar));
 
         for (int i = 0; i < mTabHost.getTabWidget().getChildCount(); i++) {
+
+            if(appPrefs.getUnreadNotificationCount() > 0){
+                unread_count.setText(appPrefs.getUnreadNotificationCount() + "");
+                unread_count.show(true);
+            }
+
             if(i==2)
                 mTabHost.getTabWidget().getChildAt(i).setBackground(getApplicationContext().getResources().getDrawable(R.drawable.menu_importcalendar));
             else
@@ -125,6 +152,23 @@ public class MainActivity extends AppCompatActivity {
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
+
+                if (mTabHost.getCurrentTab() == 3) {
+                    appPrefs.setUnreadNotificationCount(0);
+                    if (unread_count.isShown())
+                        unread_count.hide(true);
+                    else
+                        unread_count.hide();
+                } else {
+                    if (appPrefs.getUnreadNotificationCount() > 0) {
+                        unread_count.setText(appPrefs.getUnreadNotificationCount() + "");
+                        if (unread_count.isShown())
+                            unread_count.show();
+                        else
+                            unread_count.show(true);
+                    }
+                }
+
                 for (int i = 0; i < mTabHost.getTabWidget().getChildCount(); i++) {
                     if (i == 2)
                         mTabHost.getTabWidget().getChildAt(i).setBackground(getApplicationContext().getResources().getDrawable(R.drawable.menu_importcalendar));
@@ -137,20 +181,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        AppPrefs appprefs1 = new AppPrefs(this);
-
-        TabWidget tabs = (TabWidget) findViewById(android.R.id.tabs);
-        BadgeView unread_count = new BadgeView(this, tabs, 3);
-        unread_count.setText(appprefs1.getUnreadNotificationCount()+"");
-        unread_count.show();
-
-
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.what == 0) {
+                    mFlag = false;
+                }
+            }
+        };
     }
 
 
 
-     /* Instance ID를 이용하여 디바이스 토큰을 가져오는 RegistrationIntentService를 실행한다.
-     */
+    /* Instance ID를 이용하여 디바이스 토큰을 가져오는 RegistrationIntentService를 실행한다.
+    */
     public void getInstanceIdToken() {
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
