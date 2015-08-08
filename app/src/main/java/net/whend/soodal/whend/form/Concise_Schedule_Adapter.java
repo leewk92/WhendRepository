@@ -156,17 +156,13 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
             Intent intent = new Intent(context, A2_UserProfileActivity.class);
             intent.putExtra("id", CSchedule_list.get(position).getUser_id());
-            Log.d("conciseUserClick","id : " + CSchedule_list.get(position).getUser_id() + " name : " + CSchedule_list.get(position).getUsername());
+            Log.d("conciseUserClick","id : " + CSchedule_list.get(position).getSchedule().getUploaded_user_id() + " name : " + CSchedule_list.get(position).getUsername());
             Activity activity = (Activity) context;
             activity.startActivity(intent);
 
             activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
-
-
-
             }
         });
-
     }
 
     // 받아보기 15명 누를 때 리스너
@@ -175,7 +171,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, A5_WhoFollowsScheduleActivity.class);
-                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/" + CSchedule_list.get(position).getId() + "/followers/"));       // 나중에 해결
+                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/" + CSchedule_list.get(position).getSchedule().getUploaded_user_id() + "/followers/"));       // 나중에 해결
                 context.startActivity(intent);
             }
         });
@@ -188,7 +184,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, A5_WhoFollowsScheduleActivity.class);
-                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/"+ CSchedule_list.get(position).getId()+"/like_users/"));       // 나중에 해결
+                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/"+ CSchedule_list.get(position).getSchedule().getUploaded_user_id()+"/like_users/"));       // 나중에 해결
                 context.startActivity(intent);
             }
         });
@@ -215,7 +211,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     CSchedule_list.get(pos).clickLike();
                     lcv.setText(String.valueOf(CSchedule_list.get(pos).getLike_count()));
                     iv.setImageResource(R.drawable.like_on);
-                    notifyDataSetChanged();
+    //                notifyDataSetChanged();
                 }
                 else if(CSchedule_list.get(pos).getIsLike() == true){
                 //    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
@@ -226,7 +222,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     CSchedule_list.get(pos).clickLike();
                     lcv.setText(String.valueOf(CSchedule_list.get(pos).getLike_count()));
                     iv.setImageResource(R.drawable.like);
-                    notifyDataSetChanged();
+  //                  notifyDataSetChanged();
                 }
 
             }
@@ -259,7 +255,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     Log.d("follow_end_time",CSchedule_list.get(pos).getSchedule().getEndtime_ms()+"");
                     Log.d("follow_allday",CSchedule_list.get(pos).getSchedule().getAllday()+"");
                     cpu.addScheduleToInnerCalendar(CSchedule_list.get(pos));
-                    notifyDataSetChanged();
+ //                   notifyDataSetChanged();
                 }
                 else if(CSchedule_list.get(pos).getIsFollow() == true){
                 //    Toast toast2 = Toast.makeText(context, "Follow Button Unclicked", Toast.LENGTH_SHORT);
@@ -272,7 +268,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     iv.setImageResource(R.drawable.exporttocalendar);
 
                     cpu.deleteScheduleFromInnerCalendar(CSchedule_list.get(pos));
-                    notifyDataSetChanged();
+  //                  notifyDataSetChanged();
                 }
 
             }
@@ -294,7 +290,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                 activity.startActivity(intent);
 
                 activity.overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
-                notifyDataSetChanged();
+   //             notifyDataSetChanged();
             }
         });
 
@@ -429,7 +425,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         a.doSomething();
         ((TextView)v.findViewById(R.id.memo)).setBackgroundResource(a.getGeneratedId());
 */
-        notifyDataSetChanged();
+  //      notifyDataSetChanged();
     }
 
 

@@ -88,8 +88,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                 toast1.show();
             }
         });
-/*
-        loginButton = (LoginButton) findViewById(R.id.login_facebook);
+
+  //      loginButton = (LoginButton) findViewById(R.id.login_facebook);
         loginButton_view.setOnClickListener(loginButtonListener);
         signupButton_view.setOnClickListener(signupButtonListener);
 
@@ -119,7 +119,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             }
         };
 
-
+/*
 //facebook login button
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions(Arrays.asList("public_profile", "user_friends"));
