@@ -156,7 +156,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
             Intent intent = new Intent(context, A2_UserProfileActivity.class);
             intent.putExtra("id", CSchedule_list.get(position).getUser_id());
-
+            Log.d("conciseUserClick","id : " + CSchedule_list.get(position).getUser_id() + " name : " + CSchedule_list.get(position).getUsername());
             Activity activity = (Activity) context;
             activity.startActivity(intent);
 

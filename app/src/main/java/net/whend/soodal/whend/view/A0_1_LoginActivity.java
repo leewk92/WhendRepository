@@ -59,7 +59,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
     private Context mContext;
     private LoginButton loginButton;
     CallbackManager callbackManager;
-    String fb_id, fb_email, fb_name;
+    String fb_id, fb_email, fb_name, fb_picture;
 
     // 핸들러, 플래그 선언 for back key로 종료
     private Handler mHandler;
@@ -78,7 +78,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
         loginButton_view = (Button) findViewById(R.id.login_button);
         signupButton_view = (Button) findViewById(R.id.signup_button);
 
-/*        login_facebook = (Button) findViewById(R.id.login_facebook);
+        login_facebook = (Button) findViewById(R.id.login_facebook);
         login_facebook.setOnClickListener(new View.OnClickListener()    {
             @Override
             public void onClick (View v){
@@ -88,7 +88,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                 toast1.show();
             }
         });
-*/
+/*
         loginButton = (LoginButton) findViewById(R.id.login_facebook);
         loginButton_view.setOnClickListener(loginButtonListener);
         signupButton_view.setOnClickListener(signupButtonListener);
@@ -141,10 +141,11 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         // Application code
                         try {
-                            fb_id = (String) response.getJSONObject().get("id");//페이스북 아이디값
-                            fb_name = (String) response.getJSONObject().get("name");//페이스북 이름
+                            fb_id = (String) response.getJSONObject().get("id").toString();//페이스북 아이디값
+                            fb_name = (String) response.getJSONObject().get("name").toString();//페이스북 이름
+                            fb_picture = (String) response.getJSONObject().get("picture").toString();
                            // email = (String) response.getJSONObject().get("email");//이메일
-                            Log.d("FB_object",object.toString());
+                            Log.d("FB_picture",fb_picture);
 
                         } catch (JSONException e) {
                         // TODO Auto-generated catch block
@@ -154,7 +155,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     }
                 });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender, birthday");
+                parameters.putString("fields", "id,name,email,gender, birthday,picture");
                 request.setParameters(parameters);
                 request.executeAsync();
 
@@ -210,8 +211,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             Log.d("FB", "resultCode" + resultCode);
             Log.d("FB", "data  " + data.toString());
         }
-
- //   }
+*/
+    }
     //2초안에 백키 눌르면 종료
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
