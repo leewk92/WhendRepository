@@ -291,7 +291,7 @@ public class HTTPRestfulUtilizer {
             // 10. convert inputstream to string
             if(inputStream != null) {
                 result = convertInputStreamToString(inputStream);
-  //              Log.d("HTTP POST ResultStream", result);
+                Log.d("HTTP POST ResultStream", result);
             }else {
                 result = "Did not work!";
                 Log.d("HTTP POST ResultStream", result);
@@ -348,7 +348,7 @@ public class HTTPRestfulUtilizer {
             // 10. convert inputstream to string
             if(inputStream != null) {
                 result = convertInputStreamToString(inputStream);
-//                Log.d("HTTP GET ResultStream", result);
+                Log.d("HTTP GET ResultStream", result);
             }
             else {
                 result = "Did not work!";

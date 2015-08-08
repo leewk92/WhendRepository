@@ -59,6 +59,7 @@ public class F2_1_SearchOnFocus extends Fragment {
         mTabHost.addTab(mTabHost.newTabSpec("searchuser").setIndicator("유저"),
                 F2_1_3_SearchUser.class, null);
 
+
         return rootView;
     }
 

@@ -57,31 +57,22 @@ public class F2_1_2_SearchHashtag extends Fragment {
         try{
             searchHashTag_adapter.notifyDataSetChanged();
         }catch (Exception e){}
-        String url =  "http://119.81.176.245/hashtags/all/?search=";
+        final String url =  "http://119.81.176.245/hashtags/all/?search=";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();
-    }
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        final String url = "http://119.81.176.245/hashtags/all/?search=";
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
-        a.doExecution();
 
 
         search_text = (EditText)(getParentFragment().getParentFragment().getActivity().findViewById(R.id.search_text));
-        // search_text 검색시 이벤트
-
         search_text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-          //          Toast.makeText(getActivity(), search_text.getText().toString(), Toast.LENGTH_SHORT).show();
-                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url+search_text.getText(),"GET");
+                    //          Toast.makeText(getActivity(), search_text.getText().toString(), Toast.LENGTH_SHORT).show();
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url + search_text.getText(), "GET");
                     a.doExecution();
                     return true;
                 } else {
@@ -90,6 +81,16 @@ public class F2_1_2_SearchHashtag extends Fragment {
                 return false;
             }
         });
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // search_text 검색시 이벤트
+
+
   /*      search_text.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
