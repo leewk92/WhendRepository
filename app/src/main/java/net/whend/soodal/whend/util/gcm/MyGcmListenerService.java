@@ -20,12 +20,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 
 import android.support.v4.app.NotificationCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -80,6 +84,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.icon_03)
                 .setContentTitle("WhenD")
@@ -87,6 +94,12 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
+
+
+        Bitmap large_icon = getLargeIcon();
+        if(large_icon!=null){
+            notificationBuilder.setLargeIcon(large_icon);
+        }
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -120,6 +133,18 @@ public class MyGcmListenerService extends GcmListenerService {
 
 
 
+    public Bitmap getLargeIcon(){
+        BitmapDrawable bmpdrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.icon_03);
+        Bitmap bitmap = bmpdrawable.getBitmap();
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float target_px = 30f * getResources().getDisplayMetrics().density;
+        float multiplier=metrics.density/3f;
+
+        bitmap = bitmap.createScaledBitmap(bitmap, (int)target_px, (int)target_px, false);
+
+        return bitmap;
+    }
 }
 
 

@@ -207,6 +207,7 @@ public class F4_Notify extends Fragment {
                     for(int i=0; i<results.length() ;i++){
                         Notify_Schedule ns = new Notify_Schedule();
                         tmp_ith = results.getJSONObject(i);
+
                         ns.setActor_name(tmp_ith.getString("actor_name"));
                         ns.setVerb(tmp_ith.getString("verb"));
                         ns.setDescription(tmp_ith.getString("description"));
