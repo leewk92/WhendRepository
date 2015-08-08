@@ -37,10 +37,12 @@ import com.google.android.gms.gcm.GcmListenerService;
 import com.google.android.gms.nearby.messages.Message;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.view.MainActivity;
 
 public class MyGcmListenerService extends GcmListenerService {
     private static String message_static;
+    public static int unreadNotificationCount;
     private static final String TAG = "MyGcmListenerService";
 
     /**
@@ -125,6 +127,12 @@ public class MyGcmListenerService extends GcmListenerService {
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, message_static, duration);
             toast.show();
+
+            AppPrefs appPrefs = new AppPrefs(getApplicationContext());
+            int count =  appPrefs.getUnreadNotificationCount();
+            count++;
+            appPrefs.setUnreadNotificationCount(count);
+
             message_static = null;
         }
 

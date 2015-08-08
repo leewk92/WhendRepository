@@ -12,15 +12,15 @@ import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
@@ -28,14 +28,13 @@ import com.facebook.appevents.AppEventsLogger;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.util.AppPrefs;
-import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.gcm.QuickstartPreferences;
 import net.whend.soodal.whend.util.gcm.RegistrationIntentService;
 
-import android.content.BroadcastReceiver;
 import android.support.v4.content.LocalBroadcastManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.readystatesoftware.viewbadger.BadgeView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 F3_Upload.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("tab4").setIndicator("", getApplicationContext().getResources().getDrawable(R.drawable.menu_notice)),
                 F4_Notify.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("tab5").setIndicator("", getApplicationContext().getResources().getDrawable(R.drawable.menu_setting)),
+        mTabHost.addTab(mTabHost.newTabSpec("tab5").setIndicator("", getApplicationContext().getResources().getDrawable(R.drawable.menu_mypage)),
                 F5_Mypage.class, null);
 
         mTabHost.getTabWidget().setStripEnabled(false);
@@ -138,16 +137,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if(msg.what == 0) {
-                    mFlag = false;
-                }
-            }
-        };
+        AppPrefs appprefs1 = new AppPrefs(this);
 
-
+        TabWidget tabs = (TabWidget) findViewById(android.R.id.tabs);
+        BadgeView unread_count = new BadgeView(this, tabs, 3);
+        unread_count.setText(appprefs1.getUnreadNotificationCount()+"");
+        unread_count.show();
 
 
     }

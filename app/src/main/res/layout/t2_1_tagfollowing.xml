@@ -819,7 +819,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:id="@+id/t2_tab5"
-                    android:src="@drawable/menu_setting" />
+                    android:src="@drawable/menu_mypage" />
 
                 <LinearLayout
                     android:orientation="horizontal"

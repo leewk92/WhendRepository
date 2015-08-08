@@ -21,6 +21,7 @@ import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.CalendarProviderUtil;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
+
 /** 이 클래스는 마치 서버와 데이터 주고받기 튜토리얼
  * Created by wonkyung on 15. 7. 13.
  */
@@ -33,6 +34,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
     private String email;
     private String password;
     private Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

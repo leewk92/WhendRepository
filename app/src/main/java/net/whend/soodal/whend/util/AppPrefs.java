@@ -17,6 +17,7 @@ public class AppPrefs {
  private String user_id = "user_id";
  private String gcm_token = "gcm_token";
  private String photo= "photo";
+ private String unreadNotificationCount = "unreadNotificationCount";
 public AppPrefs(Context context){
  this.appSharedPrefs = context.getSharedPreferences(USER_PREFS, Activity.MODE_PRIVATE);
  this.prefsEditor = appSharedPrefs.edit();
@@ -84,4 +85,11 @@ public String getToken() {
   prefsEditor.putString(gcm_token, _photo);
  }
 
+ public int getUnreadNotificationCount(){
+  return appSharedPrefs.getInt(unreadNotificationCount, 5);
+ }
+
+ public void setUnreadNotificationCount(int _unreadNotificationCount){
+  prefsEditor.putInt(unreadNotificationCount, _unreadNotificationCount).commit();
+ }
 }
