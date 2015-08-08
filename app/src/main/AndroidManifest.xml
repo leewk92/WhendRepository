@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="net.whend.soodal.whend.permission.C2D_MESSAGE" />
+
     <permission
         android:name="net.whend.soodal.whend.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
@@ -22,12 +23,10 @@
         android:allowBackup="true"
         android:icon="@drawable/icon_03"
         android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        >
-
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+            android:value="@string/facebook_app_id" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -125,7 +124,6 @@
             android:name=".view.A11_EditScheduleActivity"
             android:label="@string/title_activity_a11__editscheduleactivity" >
         </activity>
-
         <activity
             android:name=".tutorial.T1_welcome"
             android:label="@string/title_activity_t1_welcome" >
@@ -150,7 +148,6 @@
             android:name=".tutorial.T3_2_upload"
             android:label="@string/title_activity_t2_tagfollowing" >
         </activity>
-
         <activity
             android:name=".view.setting.S1_Preparing"
             android:label="@string/title_activity_s1__ready" >
@@ -165,67 +162,78 @@
         </activity>
         <!-- GCM Receivers -->
 
-
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="net.whend.soodal.whend" />
 
+                <category android:name="net.whend.soodal.whend" />
             </intent-filter>
         </receiver>
 
-        <!-- Optionally, register AnalyticsReceiver and AnalyticsService to support background
-             dispatching on non-Google Play devices -->
-        <receiver android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true">
+        <!--
+             Optionally, register AnalyticsReceiver and AnalyticsService to support background
+             dispatching on non-Google Play devices
+        -->
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true" >
             <intent-filter>
                 <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
             </intent-filter>
         </receiver>
-        <service android:name="com.google.android.gms.analytics.AnalyticsService"
-            android:enabled="true"
-            android:exported="false"/>
 
-        <!-- Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
-             installation campaign reporting -->
-        <receiver android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:exported="true">
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!--
+             Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
+             installation campaign reporting
+        -->
+        <receiver
+            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
+
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
-
-
-
         <service
-            android:name="net.whend.soodal.whend.util.gcm.MyGcmListenerService"
+            android:name=".util.gcm.MyGcmListenerService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
-
         </service>
         <service
-            android:name="net.whend.soodal.whend.util.gcm.MyInstanceIDListenerService"
-            android:exported="false">
+            android:name=".util.gcm.MyInstanceIDListenerService"
+            android:exported="false" >
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
         <service
-            android:name="net.whend.soodal.whend.util.gcm.RegistrationIntentService"
-            android:exported="false"></service>
+            android:name=".util.gcm.RegistrationIntentService"
+            android:exported="false" />
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
-
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".view.A0_3_SignUpFromFacebook"
+            android:label="@string/title_activity_a0_3__sign_up_from_facebook" >
+        </activity>
+        <activity
+            android:name=".view.setting.S4_Password"
+            android:label="@string/title_activity_s4__password" >
+        </activity>
     </application>
 
 </manifest>

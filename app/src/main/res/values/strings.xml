@@ -31,5 +31,7 @@
     <string name="title_activity_s2__version">S2_Version</string>
     <string name="title_activity_s3__profile">S3_Profile</string>
     <string name="facebook_app_id">116068332072286</string>
+    <string name="title_activity_a0_3__sign_up_from_facebook">A0_3_SignUpFromFacebook</string>
+    <string name="title_activity_s4__password">S4_Password</string>
 
 </resources>
