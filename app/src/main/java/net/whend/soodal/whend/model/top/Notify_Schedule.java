@@ -68,11 +68,19 @@ public class Notify_Schedule {
 
     }
 */
+    int user_id, target_id;
     String actor_name, verb, description;
     String timestamp;
     String date,time;
     long timestamp_ms;
 
+    public int getTarget_id() {
+        return target_id;
+    }
+
+    public void setTarget_id(int target_id) {
+        this.target_id = target_id;
+    }
     public String getTimestamp() {
         return timestamp;
     }
@@ -145,5 +153,13 @@ public class Notify_Schedule {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 }

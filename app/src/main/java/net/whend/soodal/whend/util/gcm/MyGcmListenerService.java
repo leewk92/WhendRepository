@@ -89,7 +89,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.icon_03)
-                .setContentTitle("WhenD")
+                .setContentTitle("whenD")
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

@@ -38,14 +38,9 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="#0288D1"
                 android:textSize="12dp"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:layout_gravity="center_vertical"
-                android:textSize="12dp"
-                />
+                android:textStyle="bold"
+                android:clickable="true" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,7 +71,6 @@
                 android:id="@+id/description"
                 android:layout_gravity="center_vertical"
                 android:textColor="#b6b6b6"
-                android:layout_marginLeft="5dp"
                 android:textSize="12dp"
                 />
 

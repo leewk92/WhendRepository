@@ -1,6 +1,7 @@
 package net.whend.soodal.whend.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -96,12 +98,16 @@ public class F4_Notify extends Fragment {
         notify_listview.setAdapter(notify_schedule_adapter);
 
 
+
+
         notify_listview.setOnScrollListener(new EndlessScrollListener());
 
 
         back_btn.setVisibility(View.GONE);
         search_layout.setVisibility(View.GONE);
         setting_layout.setVisibility(View.GONE);
+
+
 
 
 
@@ -208,10 +214,13 @@ public class F4_Notify extends Fragment {
                         Notify_Schedule ns = new Notify_Schedule();
                         tmp_ith = results.getJSONObject(i);
 
+
+                        ns.setUser_id(tmp_ith.getInt("actor_id"));
                         ns.setActor_name(tmp_ith.getString("actor_name"));
                         ns.setVerb(tmp_ith.getString("verb"));
                         ns.setDescription(tmp_ith.getString("description"));
                         ns.setTimestamp(tmp_ith.getString("timestamp"));
+                        ns.setTarget_id((tmp_ith.getString("target_id"))=="null"?-1:tmp_ith.getInt("target_id"));
 
 
                         AppPrefs appPrefs = new AppPrefs(getActivity());
@@ -221,8 +230,36 @@ public class F4_Notify extends Fragment {
 
 
                         arrayNTchedule.add(ns);
+                        notify_schedule_adapter.notifyDataSetChanged();
                     }
-                    notify_schedule_adapter.notifyDataSetChanged();
+
+
+                    // 내용 클릭 리스너
+
+                    notify_listview.setClickable(true);
+                    notify_listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            if(arrayNTchedule.get(position).getTarget_id() != -1){
+                                Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
+                                intent.putExtra("id", arrayNTchedule.get(position).getTarget_id());
+                                startActivity(intent);
+                                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
+
+
+                            } else if (arrayNTchedule.get(position).getTarget_id() == -1){
+                                Intent intent = new Intent(getActivity(), A2_UserProfileActivity.class);
+                                intent.putExtra("id", arrayNTchedule.get(position).getUser_id());
+                                startActivity(intent);
+
+                                getActivity().overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
+                            }
+
+                        }
+                    });
+
                 }catch(Exception e){
 
                 }
@@ -270,10 +307,13 @@ public class F4_Notify extends Fragment {
                     for(int i=0; i<results.length() ;i++){
                         Notify_Schedule ns = new Notify_Schedule();
                         tmp_ith = results.getJSONObject(i);
+
+                        ns.setUser_id(tmp_ith.getInt("actor_id"));
                         ns.setActor_name(tmp_ith.getString("actor_name"));
                         ns.setVerb(tmp_ith.getString("verb"));
                         ns.setDescription(tmp_ith.getString("description"));
                         ns.setTimestamp(tmp_ith.getString("timestamp"));
+                        ns.setTarget_id((tmp_ith.getString("target_id"))=="null"?-1:tmp_ith.getInt("target_id"));
 
 
                         AppPrefs appPrefs = new AppPrefs(getActivity());
@@ -285,8 +325,33 @@ public class F4_Notify extends Fragment {
 
 
                         arrayNTchedule.add(ns);
+                        notify_schedule_adapter.notifyDataSetChanged();
                     }
-                    notify_schedule_adapter.notifyDataSetChanged();
+
+                    notify_listview.setClickable(true);
+                    notify_listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            if(arrayNTchedule.get(position).getTarget_id() != -1){
+                                Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
+                                intent.putExtra("id", arrayNTchedule.get(position).getTarget_id());
+                                startActivity(intent);
+                                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
+
+
+                            } else if (arrayNTchedule.get(position).getTarget_id() == -1){
+                                Intent intent = new Intent(getActivity(), A2_UserProfileActivity.class);
+                                intent.putExtra("id", arrayNTchedule.get(position).getUser_id());
+                                startActivity(intent);
+
+                                getActivity().overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
+                            }
+
+                        }
+                    });
+
                 }catch(Exception e){
 
                 }
