@@ -38,6 +38,8 @@ import com.google.android.gms.nearby.messages.Message;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.util.AppPrefs;
+import net.whend.soodal.whend.view.A2_UserProfileActivity;
+import net.whend.soodal.whend.view.A3_SpecificScheduleActivity;
 import net.whend.soodal.whend.view.MainActivity;
 
 public class MyGcmListenerService extends GcmListenerService {
@@ -56,6 +58,14 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("actor_name") + data.getString("verb");
+
+
+        /* 잘 모르겠다 데이터 어디서 받아오는지....
+        String target_type = data.getString("target_type") == "null"? "follow": data.getString("target_type");
+
+        int target_id = data.getString("target_id") == "null"? data.getInt("actor_id"): data.getInt("target_id");
+
+        Log.d("TYPE",target_type); */
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
 
@@ -71,6 +81,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * that a message was received.
          */
         sendNotification(message);
+        //sendNotification(message, target_type, target_id);
     }
     // [END receive_message]
 
@@ -80,7 +91,11 @@ public class MyGcmListenerService extends GcmListenerService {
      * @param message GCM message received.
      */
     private void sendNotification(String message) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = null;
+
+
+            intent = new Intent(this, MainActivity.class);
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -118,6 +133,57 @@ public class MyGcmListenerService extends GcmListenerService {
         thread.start();
     }
 
+
+    /* 인텐트 구분한거 근데 힘들다
+    private void sendNotification(String message, String target_type, int target_id) {
+        Intent intent = null;
+
+        if(target_type.equals("schedule")) {
+            intent = new Intent(this, A3_SpecificScheduleActivity.class);
+            intent.putExtra("id", target_id);
+        }else if(target_type.equals("follow")){
+            intent = new Intent(this, A2_UserProfileActivity.class);
+            intent.putExtra("id", target_id);
+        }else{
+            intent = new Intent(this, MainActivity.class);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code , intent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.icon_03)
+                .setContentTitle("whenD")
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+
+
+        Bitmap large_icon = getLargeIcon();
+        if(large_icon!=null){
+            notificationBuilder.setLargeIcon(large_icon);
+        }
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(0 /* ID of notification , notificationBuilder.build());
+
+        message_static = "WhenD : " + message;
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+
+                handler.sendEmptyMessage(0);
+            }
+        });
+        thread.start();
+    }*/
+
     private Handler handler = new Handler() {
 
         @Override
@@ -146,7 +212,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Bitmap bitmap = bmpdrawable.getBitmap();
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
-        float target_px = 30f * getResources().getDisplayMetrics().density;
+        float target_px = 32f * getResources().getDisplayMetrics().density;
         float multiplier=metrics.density/3f;
 
         bitmap = bitmap.createScaledBitmap(bitmap, (int)target_px, (int)target_px, false);

@@ -241,7 +241,6 @@ public class T2_3_tagfollowing extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 i++;
-                t2_next.startAnimation(fade_out);
                 t2_next.setVisibility(View.INVISIBLE);
             }
         });

@@ -40,7 +40,7 @@
 
 
             <LinearLayout
-                android:visibility="gone"
+
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -73,6 +73,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="고객 센터(QnA)"
@@ -84,6 +85,7 @@
                     android:onClick="OnPreparing"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -152,6 +154,7 @@
                     android:background="#b6b6b6" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="공개 범위 설정"
@@ -163,6 +166,7 @@
                     android:onClick="OnPreparing"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -336,6 +340,7 @@
                     android:background="#b6b6b6" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="타임존 설정"
@@ -347,6 +352,7 @@
                     android:onClick="OnPreparing"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -373,6 +379,26 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="일정 알람 설정"
+                    android:id="@+id/setting_alarm"
+                    android:padding="15dp"
+                    android:textColor="#212121"
+                    android:clickable="true"
+                    android:background="@drawable/textview_press"
+                    android:onClick="OnPreparing"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#b6b6b6"
+                    />
+
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="위치 정보 설정"
                     android:id="@+id/setting_gps"
                     android:padding="15dp"
@@ -382,6 +408,7 @@
                     android:onClick="OnPreparing"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -448,6 +475,7 @@
                     android:background="#b6b6b6" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="오픈소스 라이선스"
@@ -459,6 +487,7 @@
                     android:onClick="OnPreparing"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -467,6 +496,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="개인정보 취급방침"
@@ -478,6 +508,7 @@
                     android:onClick="OnPreparing"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"

@@ -332,6 +332,16 @@
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/t3_text2"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:autoText="false" />
     </FrameLayout>
 
 

@@ -68,18 +68,17 @@ public class T2_1_tagfollowing extends AppCompatActivity {
                 t2_text3.setText("팔로우 : 받아보기 하는 행동\n상대방의 소식을 받아보기 위해 사용");
                 t2_text3.startAnimation(fade_in);
                 t2_text3.setVisibility(View.VISIBLE);
-                break;
-
-            case 4:
-                i++;
                 t2_next.startAnimation(fade_in);
                 t2_next.setVisibility(View.VISIBLE);
                 break;
 
-            case 5:
+            case 4:
+
                 break;
 
-            case 6:
+
+
+            case 5:
                 i++;
                 t2_text3.setVisibility(View.INVISIBLE);
                 t2_next.setVisibility(View.INVISIBLE);
@@ -87,7 +86,7 @@ public class T2_1_tagfollowing extends AppCompatActivity {
                 t2_text1.startAnimation(fade_in);
                 break;
 
-            case 7:
+            case 6:
                 i++;
                 t2_text1.startAnimation(fade_out);
 
@@ -101,7 +100,7 @@ public class T2_1_tagfollowing extends AppCompatActivity {
                 t2_finger.startAnimation(blink);
                 break;
 
-            case 8:
+            case 7:
                 break;
 
 
@@ -171,8 +170,8 @@ public class T2_1_tagfollowing extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 i++;
-                t2_next.startAnimation(fade_out);
                 t2_next.setVisibility(View.INVISIBLE);
+                handler.sendMessage(handler.obtainMessage());
             }
         });
         mHandler = new Handler() {

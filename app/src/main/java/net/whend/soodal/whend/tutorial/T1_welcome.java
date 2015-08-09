@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -28,6 +29,8 @@ public class T1_welcome extends AppCompatActivity {
     Button next_btn;
     Animation fade_in, fade_out, blink;
     String username;
+    Thread myThread;
+    boolean screentouched = false;
     int i = 0;
 
     Handler handler = new Handler(){
@@ -67,6 +70,15 @@ public class T1_welcome extends AppCompatActivity {
         }
 
     }
+
+    // 터치시 다음 화면 이동
+    /*
+    @Override
+    public boolean onTouchEvent(MotionEvent e){
+        handler.sendMessage(handler.obtainMessage());
+
+        return true;
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,20 +125,22 @@ public class T1_welcome extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Thread myThread=new Thread(new Runnable() {
+        myThread=new Thread(new Runnable() {
             public void run() {
-                while( i >=0){
+                while (i >= 0) {
+
                     try {
-
-                        handler.sendMessage(handler.obtainMessage());
+                         handler.sendMessage(handler.obtainMessage());
                         Thread.sleep(3000);
-
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                    catch (Throwable t) {
-                    }
-
                 }
+
+
+
             }
+
         });
 
         myThread.start();

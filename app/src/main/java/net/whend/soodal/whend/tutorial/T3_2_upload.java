@@ -25,7 +25,7 @@ public class T3_2_upload extends AppCompatActivity {
     LinearLayout t3_dark1, t3_dark2, t3_dark3;
     Animation fade_in, fade_out, blink;
     ImageView t3_finger;
-    TextView t3_text1;
+    TextView t3_text1,t3_text2;
     int i=0;
     String username;
     Handler handler = new Handler(){
@@ -60,6 +60,7 @@ public class T3_2_upload extends AppCompatActivity {
                 t3_dark1.setVisibility(View.INVISIBLE);
                 t3_dark2.startAnimation(fade_in);
                 t3_dark2.setVisibility(View.VISIBLE);
+                t3_dark3.setVisibility(View.INVISIBLE);
                 break;
 
             case 4:
@@ -90,8 +91,11 @@ public class T3_2_upload extends AppCompatActivity {
             case 6:
                 i++;
                 t3_text1.setText("튜토리얼이 끝났습니다.\nWhenD와 함께 친구들과의 일정을 공유하세요!");
+                t3_text2.setText("홈화면으로 이동합니다.");
                 t3_text1.startAnimation(fade_in);
                 t3_text1.setVisibility(View.VISIBLE);
+                t3_text2.startAnimation(fade_in);
+                t3_text2.setVisibility(View.VISIBLE);
 
                 t3_dark1.setVisibility(View.VISIBLE);
                 t3_dark3.setVisibility(View.INVISIBLE);
@@ -135,6 +139,9 @@ public class T3_2_upload extends AppCompatActivity {
         t3_finger.setVisibility(View.INVISIBLE);
 
         t3_text1 = (TextView) findViewById(R.id.t3_text);
+        t3_text2 = (TextView) findViewById(R.id.t3_text2);
+
+        t3_text2.setVisibility(View.INVISIBLE);
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
