@@ -70,10 +70,28 @@ public class Notify_Schedule {
 */
     int user_id, target_id;
     String actor_name, verb, description;
+    String target_type;
     String timestamp;
     String date,time;
+    boolean unread;
     long timestamp_ms;
 
+
+    public boolean isUnread() {
+        return unread;
+    }
+
+    public void setUnread(boolean unread) {
+        this.unread = unread;
+    }
+
+    public String getTarget_type() {
+        return target_type;
+    }
+
+    public void setTarget_type(String target_type) {
+        this.target_type = target_type;
+    }
     public int getTarget_id() {
         return target_id;
     }

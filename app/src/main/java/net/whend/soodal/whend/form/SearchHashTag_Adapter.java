@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,12 +44,54 @@ public class SearchHashTag_Adapter extends ArrayAdapter<Search_HashTag> {
 
         // 리스너 함수들
         ImageView follow_button = (ImageView) v.findViewById(R.id.follow_button);
+        LinearLayout follow_button_layout = (LinearLayout) v.findViewById(R.id.follow_button_layout);
+        LikeButtonClickListener2(follow_button_layout,v,position);
         LikeButtonClickListener(follow_button,v, position);
 
         return v;
     }
 
     // 좋아요 누를 때 리스너
+    public void LikeButtonClickListener2(LinearLayout follow_button_layout,View rootview ,int position) {
+        final View rv = rootview;
+        final int pos = position;
+        final ImageView iv = (ImageView) rootview.findViewById(R.id.follow_button);
+
+        final LinearLayout layout = follow_button_layout;
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (SHashTag_list.get(pos).getIsFollow() == false) {
+                    //                 Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+                    //                 toast1.show();
+                    SHashTag_list.get(pos).clickFollow();
+                    iv.setImageResource(R.drawable.like_on);
+
+                    String url = "http://119.81.176.245/hashtags/" + SHashTag_list.get(pos).getHashTag().getId() + "/follow/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url, "PUT");
+                    a.doExecution();
+                    ((TextView) rv.findViewById(R.id.follower_count)).setText(String.valueOf(SHashTag_list.get(pos).getHashTag().getFollower_count()));
+
+
+                } else if (SHashTag_list.get(pos).getIsFollow() == true) {
+                    //                Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+                    //                toast2.show();
+                    SHashTag_list.get(pos).clickFollow();
+                    iv.setImageResource(R.drawable.like);
+
+                    String url = "http://119.81.176.245/hashtags/" + SHashTag_list.get(pos).getHashTag().getId() + "/follow/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url, "PUT");
+                    a.doExecution();
+                    ((TextView) rv.findViewById(R.id.follower_count)).setText(String.valueOf(SHashTag_list.get(pos).getHashTag().getFollower_count()));
+
+                }
+
+            }
+        });
+
+    }
+
     public void LikeButtonClickListener(ImageView follow_button,View rootview ,int position) {
         final View rv = rootview;
         final int pos = position;
@@ -58,8 +101,8 @@ public class SearchHashTag_Adapter extends ArrayAdapter<Search_HashTag> {
             public void onClick(View v) {
 
                 if (SHashTag_list.get(pos).getIsFollow() == false) {
-   //                 Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
-   //                 toast1.show();
+                    //                 Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+                    //                 toast1.show();
                     SHashTag_list.get(pos).clickFollow();
                     iv.setImageResource(R.drawable.like_on);
 
@@ -70,8 +113,8 @@ public class SearchHashTag_Adapter extends ArrayAdapter<Search_HashTag> {
 
 
                 } else if (SHashTag_list.get(pos).getIsFollow() == true) {
-    //                Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
-    //                toast2.show();
+                    //                Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+                    //                toast2.show();
                     SHashTag_list.get(pos).clickFollow();
                     iv.setImageResource(R.drawable.like);
 
@@ -86,6 +129,7 @@ public class SearchHashTag_Adapter extends ArrayAdapter<Search_HashTag> {
         });
 
     }
+
 
     public void AdjustDataToLayout(View v, int position) {
         int count_schedule = SHashTag_list.get(position).getHashTag().getCount_schedule();

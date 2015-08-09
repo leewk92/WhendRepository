@@ -110,7 +110,7 @@
         android:layout_marginRight="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="0.3dp"
         android:background="#b6b6b6">
 
 

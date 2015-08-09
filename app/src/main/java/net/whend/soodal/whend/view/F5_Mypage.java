@@ -179,9 +179,9 @@ public class F5_Mypage extends Fragment {
         mTabHost.setTop(120);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("MY"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("내가 넣은 일정"),
                 F5_1_MyTimeline.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("관심"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("관심있는 일정"),
                 F5_2_MyLikeSchedules.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("분석"),
                 F5_3_Analysis.class, null);

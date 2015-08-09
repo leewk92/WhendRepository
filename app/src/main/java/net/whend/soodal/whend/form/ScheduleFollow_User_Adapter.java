@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,14 +44,17 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
         }
         user_photo = (ImageView)v.findViewById(R.id.user_photo);
 
+
         AdjustDataToLayout(v,position);
 
         // 리스너 함수들
         View user = (View) v.findViewById(R.id.user_clickableLayout);
         ImageView follow_button = (ImageView) v.findViewById(R.id.follow_button);
+        LinearLayout follow_button_layout = (LinearLayout) v.findViewById(R.id.follow_button_layout);
 
         UserProfileClickListener(user, position);
         LikeButtonClickListener(follow_button, v, position);
+        LikeButtonClickListener2(follow_button_layout, v, position);
 
         return v;
     }
@@ -89,11 +93,12 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
 
 
     // 좋아요 누를 때 리스너
-    public void LikeButtonClickListener(ImageView follow_button,View rootView, int position){
+    public void LikeButtonClickListener2(LinearLayout follow_button_layout,View rootView, int position){
         final View rv = rootView;
         final int pos = position;
-        final ImageView iv = follow_button;
-        follow_button.setOnClickListener(new View.OnClickListener() {
+        final LinearLayout layout = follow_button_layout;
+        final ImageView iv = (ImageView) rv.findViewById(R.id.follow_button);
+        layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -118,6 +123,42 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
                     HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url, "PUT");
                     a.doExecution();
               //      ((TextView) rv.findViewById(R.id.follower_count)).setText(String.valueOf(User_list.get(pos).getUser().getCount_follower()));
+
+                }
+
+            }
+        });
+
+    }
+    public void LikeButtonClickListener(ImageView follow_button,View rootView, int position){
+        final View rv = rootView;
+        final int pos = position;
+        final ImageView iv = follow_button;
+        follow_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (User_list.get(pos).getIsFollow() == false) {
+                    //                   Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
+                    //                  toast1.show();
+                    User_list.get(pos).clickFollow();
+                    iv.setImageResource(R.drawable.like_on);
+
+                    String url = "http://119.81.176.245/userinfos/" + User_list.get(pos).getUser().getId() + "/follow/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url, "PUT");
+                    a.doExecution();
+                    //    ((TextView) rv.findViewById(R.id.follower_count)).setText(String.valueOf(User_list.get(pos).getUser().getCount_follower()));
+
+                } else if (User_list.get(pos).getIsFollow() == true) {
+                    //                Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
+                    //                toast2.show();
+                    User_list.get(pos).clickFollow();
+                    iv.setImageResource(R.drawable.like);
+
+                    String url = "http://119.81.176.245/userinfos/" + User_list.get(pos).getUser().getId() + "/follow/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url, "PUT");
+                    a.doExecution();
+                    //      ((TextView) rv.findViewById(R.id.follower_count)).setText(String.valueOf(User_list.get(pos).getUser().getCount_follower()));
 
                 }
 

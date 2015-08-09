@@ -13,9 +13,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/user_clickableLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
@@ -80,14 +80,30 @@
 
                 </LinearLayout>
 
-            <ImageView
-                android:id="@+id/follow_button"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/like"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="25dp" />
-        </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/follow_button_layout">
+
+                    <ImageView
+                        android:id="@+id/follow_button"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/like"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_vertical|right" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

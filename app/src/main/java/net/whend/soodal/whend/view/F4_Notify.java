@@ -220,8 +220,9 @@ public class F4_Notify extends Fragment {
                         ns.setVerb(tmp_ith.getString("verb"));
                         ns.setDescription(tmp_ith.getString("description"));
                         ns.setTimestamp(tmp_ith.getString("timestamp"));
-                        ns.setTarget_id((tmp_ith.getString("target_id"))=="null"?-1:tmp_ith.getInt("target_id"));
-
+                        ns.setTarget_type(tmp_ith.getString("target_type"));
+                        ns.setTarget_id((tmp_ith.getString("target_id")) == "null" ? -1 : tmp_ith.getInt("target_id"));
+                        ns.setUnread(tmp_ith.getBoolean("unread"));
 
                         AppPrefs appPrefs = new AppPrefs(getActivity());
 
@@ -315,7 +316,9 @@ public class F4_Notify extends Fragment {
                         ns.setVerb(tmp_ith.getString("verb"));
                         ns.setDescription(tmp_ith.getString("description"));
                         ns.setTimestamp(tmp_ith.getString("timestamp"));
-                        ns.setTarget_id((tmp_ith.getString("target_id"))=="null"?-1:tmp_ith.getInt("target_id"));
+                        ns.setTarget_type(tmp_ith.getString("target_type"));
+                        ns.setTarget_id((tmp_ith.getString("target_id"))=="null" ? -1 : tmp_ith.getInt("target_id"));
+                        ns.setUnread(tmp_ith.getBoolean("unread"));
 
 
                         AppPrefs appPrefs = new AppPrefs(getActivity());
@@ -336,14 +339,14 @@ public class F4_Notify extends Fragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                            if(arrayNTchedule.get(position).getTarget_id() != -1){
+                            if(arrayNTchedule.get(position).getTarget_type().equals("schedule")){
                                 Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
                                 intent.putExtra("id", arrayNTchedule.get(position).getTarget_id());
                                 startActivity(intent);
                                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
 
 
-                            } else if (arrayNTchedule.get(position).getTarget_id() == -1){
+                            } else if (arrayNTchedule.get(position).getTarget_id() == -1 || arrayNTchedule.get(position).getTarget_type().equals("user info") ){
                                 Intent intent = new Intent(getActivity(), A2_UserProfileActivity.class);
                                 intent.putExtra("id", arrayNTchedule.get(position).getUser_id());
                                 startActivity(intent);
