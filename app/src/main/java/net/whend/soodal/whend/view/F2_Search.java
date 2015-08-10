@@ -24,14 +24,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Grid_Search_Adapter;
 import net.whend.soodal.whend.model.base.HashTag;
 import net.whend.soodal.whend.model.top.Grid_Search_Schedule;
-import net.whend.soodal.whend.util.AnalyticsApplication;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.observablescrollview.ObservableScrollView;
 import net.whend.soodal.whend.util.observablescrollview.ScrollViewListener;
@@ -110,6 +108,16 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         //threshold
 
         arrayGSchedule.clear();
+        mgrid_search_adapter.notifyDataSetChanged();
+
+        //첫번째 뜨는거 지우기 -> 실패
+        try{
+            if(quiltView.views.get(0) != null)
+                quiltView.removeQuilt(quiltView.views.get(0));
+        }catch(Exception e){}
+
+        //quiltView.removeViewAt(0);
+        Log.d("count",mgrid_search_adapter.getCount()+"");
         //quiltView.removeAllViews();
         try{
             quiltView.refresh();
@@ -185,7 +193,6 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         search_btn.setVisibility(View.VISIBLE);
         search_text.setVisibility(View.VISIBLE);
         setting_layout.setVisibility(View.GONE);
-
 
 
         // 기본 frame layout 설정

@@ -3,25 +3,22 @@ package net.whend.soodal.whend.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Concise_Schedule_Adapter;
-import net.whend.soodal.whend.form.Specific_Schedule_Adapter;
 import net.whend.soodal.whend.model.base.HashTag;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
-import net.whend.soodal.whend.model.top.Search_HashTag;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
 import org.json.JSONArray;
@@ -95,6 +92,7 @@ public class A7_SpecificHashTagActivity extends Activity {
         listview = (ListView) findViewById(R.id.listview_schedule);
         listview.setAdapter(adapter);
 
+        listview.setOnScrollListener(new EndlessScrollListener());
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             /*
                         @Override
@@ -302,7 +300,49 @@ public class A7_SpecificHashTagActivity extends Activity {
         }
     }
 
+    // 엔드리스 스크롤 리스너
+    public class EndlessScrollListener implements AbsListView.OnScrollListener {
 
+        private int visibleThreshold = 2;
+        private int currentPage = 0;
+        private int previousTotal = 0;
+        private boolean loading = true;
+
+        public EndlessScrollListener() {
+
+        }
+        public EndlessScrollListener(int visibleThreshold) {
+            this.visibleThreshold = visibleThreshold;
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem,
+                             int visibleItemCount, int totalItemCount) {
+
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                    currentPage++;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                // I load the next page of gigs using a background task,
+                // but you can call any function here.
+                Log.d("lastItemScrolled", "true");
+                try{
+                    HTTPRestfulUtilizerExtender_loadmore b = new HTTPRestfulUtilizerExtender_loadmore(A7_SpecificHashTagActivity.this,nextURL,"GET");
+                    b.doExecution();
+                }catch(Exception e){
+
+                }
+                loading = true;
+            }
+        }
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        }
+    }
 
     class HTTPRestfulUtilizerExtender_hashtags extends HTTPRestfulUtilizer {
 
@@ -365,6 +405,76 @@ public class A7_SpecificHashTagActivity extends Activity {
                     LikeButtonClickListener(follow_button);
                     follow_button.setClickable(true);
                     FollowerClickListener(follower_count_clickablelayout);
+                }catch(Exception e){
+
+                }
+            }
+        }
+    }
+
+    class HTTPRestfulUtilizerExtender_loadmore extends HTTPRestfulUtilizer {
+
+        // Constructor for GET
+        public HTTPRestfulUtilizerExtender_loadmore(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try{
+                    Log.d("comein","comein");
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONArray results = outputSchedulesJson.getJSONArray("results");
+                    JSONObject tmp_ith;
+                    nextURL = outputSchedulesJson.getString("next");
+                    for(int i=0; i< results.length() ;i++){
+                        Schedule s = new Schedule();
+                        tmp_ith = results.getJSONObject(i);
+                        s.setId(tmp_ith.getInt("id"));
+                        s.setTitle(tmp_ith.getString("title"));
+                        s.setStarttime(tmp_ith.getString("start_time"));
+                        s.setEndtime(tmp_ith.getString("end_time"));
+                        s.setMemo(tmp_ith.getString("memo"));
+                        s.setUploaded_username(tmp_ith.getString("user_name"));
+                        s.setUploaded_user_id(tmp_ith.getInt("user_id"));
+                        s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        Log.d("photo_dir", s.getPhoto_dir_fromweb());
+                        s.setFollow_count((tmp_ith.getInt("count_follow")));
+                        s.setLike_count((tmp_ith.getInt("count_like")));
+                        s.setComment_count((tmp_ith.getInt("count_comment")));
+                        s.setLocation((tmp_ith.getString("location")));
+                        s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
+                        s.setAllday((tmp_ith.getBoolean("all_day")));
+                        s.setMaster((tmp_ith.getInt("master") == 1 ? true : false));
+                        Concise_Schedule cs = new Concise_Schedule(s);
+                        cs.setIsLike((tmp_ith.getInt("like")==1)?true:false);
+                        cs.setIsFollow((tmp_ith.getInt("follow") == 1) ? true : false);
+
+                        CSchedule_list.add(cs);
+                        adapter.notifyDataSetChanged();
+                    }
+
                 }catch(Exception e){
 
                 }

@@ -10,12 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.ScheduleFollow_User;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
@@ -88,6 +88,11 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
         }else{
             // 기본이미지 로드.
             user_photo.setImageResource(R.drawable.userimage_default);
+        }
+
+        AppPrefs appPrefs = new AppPrefs(context);
+        if(appPrefs.getUsername().equals(User_list.get(position).getUsername()) ){
+            (v.findViewById(R.id.follow_button)).setVisibility(View.INVISIBLE);
         }
     }
 
@@ -194,6 +199,7 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
             }
             @Override
             protected void onPostExecute(String result) {
+
                 super.onPostExecute(result);
 
             }

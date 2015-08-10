@@ -1,7 +1,6 @@
 package net.whend.soodal.whend.form;
 
 import android.content.Context;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.Search_User;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
@@ -151,6 +150,11 @@ public class SearchUser_Adapter extends ArrayAdapter<Search_User> {
         }else{
             // 기본이미지 로드.
             user_photo.setImageResource(R.drawable.userimage_default);
+        }
+
+        AppPrefs appPrefs = new AppPrefs(context);
+        if(appPrefs.getUsername().equals(SUser_list.get(position).getUsername()) ){
+            (v.findViewById(R.id.follow_button)).setVisibility(View.INVISIBLE);
         }
     }
 

@@ -22,24 +22,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-
 import android.support.v4.app.NotificationCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmListenerService;
-import com.google.android.gms.nearby.messages.Message;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.util.AppPrefs;
-import net.whend.soodal.whend.view.A2_UserProfileActivity;
-import net.whend.soodal.whend.view.A3_SpecificScheduleActivity;
 import net.whend.soodal.whend.view.MainActivity;
 
 public class MyGcmListenerService extends GcmListenerService {
@@ -60,7 +55,7 @@ public class MyGcmListenerService extends GcmListenerService {
         String message = data.getString("actor_name") + data.getString("verb");
 
 
-        /* 잘 모르겠다 데이터 어디서 받아오는지....
+        /* 잘 모르겠다 데이터 어디서 받아오는지.... 이거 해결하면 바로 8번 해결가능
         String target_type = data.getString("target_type") == "null"? "follow": data.getString("target_type");
 
         int target_id = data.getString("target_id") == "null"? data.getInt("actor_id"): data.getInt("target_id");
