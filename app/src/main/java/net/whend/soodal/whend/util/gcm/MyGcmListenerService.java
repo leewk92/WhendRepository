@@ -78,7 +78,9 @@ public class MyGcmListenerService extends GcmListenerService {
          */
         final AppPrefs appPrefs = new AppPrefs(this);
 
-        if(appPrefs.getPush_setting())
+
+        //푸시알리 설정이 true, 그리고 나랑 이름이 다를 때만 받음
+        if(appPrefs.getPush_setting() && !(appPrefs.getUsername().equals(data.getString("actor_name"))))
           sendNotification(message);
 
         //sendNotification(message, target_type, target_id);
@@ -192,10 +194,10 @@ public class MyGcmListenerService extends GcmListenerService {
             int duration = Toast.LENGTH_SHORT;
 
             AppPrefs appPrefs = new AppPrefs(getApplicationContext());
-            if(appPrefs.getPush_setting()) {
+
                 Toast toast = Toast.makeText(context, message_static, duration);
                 toast.show();
-            }
+
 
             int count =  appPrefs.getUnreadNotificationCount();
             count++;
