@@ -1,5 +1,6 @@
 package net.whend.soodal.whend.form;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -59,7 +60,11 @@ public class Comment_Adapter extends ArrayAdapter<Comment> {
             public void onClick(View v) {
                 Intent intent = new Intent(context, A2_UserProfileActivity.class);
                 intent.putExtra("id", String.valueOf(Comment_list.get(position).getWrite_userid()));
-                context.startActivity(intent);
+
+                Activity activity = (Activity) context;
+                activity.startActivity(intent);
+
+                activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
             }
         });
 

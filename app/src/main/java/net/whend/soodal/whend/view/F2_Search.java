@@ -110,7 +110,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         //threshold
 
         arrayGSchedule.clear();
-       // quiltView.removeAllViews();//
+        //quiltView.removeAllViews();
         try{
             quiltView.refresh();
         }catch(Exception e){}
