@@ -106,7 +106,7 @@ public class A10_ShowSchedulesActivity extends AppCompatActivity {
                 // but you can call any function here.
                 Log.d("lastItemScrolled", "true");
                 try{
-                    HTTPRestfulUtilizerExtender_loadmore b = new HTTPRestfulUtilizerExtender_loadmore(A10_ShowSchedulesActivity.this,nextURL,"POST");
+                    HTTPRestfulUtilizerExtender_loadmore b = new HTTPRestfulUtilizerExtender_loadmore(A10_ShowSchedulesActivity.this,nextURL,"GET");
                     b.doExecution();
                 }catch(Exception e){
 
