@@ -60,11 +60,32 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        View v = convertView;
 
+        ViewHolder holder = null;
+        View v = convertView;
         if (v == null) {
+
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = li.inflate(R.layout.item_concise_schedule, null);
+
+            v = li.inflate(R.layout.item_concise_schedule,parent, false);
+            holder = new ViewHolder();
+            holder.memo_photo_vh = (ImageView) v.findViewById(R.id.memo_photo);
+            holder.user_photo_vh = (ImageView) v.findViewById(R.id.user_photo);
+            holder.edit_vh = (ImageView)v.findViewById(R.id.edit);
+            holder.user_fullname_vh = (TextView)v.findViewById(R.id.user_fullname);
+            holder.title_vh = (TextView)v.findViewById(R.id.title);
+            holder.date_vh = (TextView)v.findViewById(R.id.date);
+            holder.time_vh = (TextView)v.findViewById(R.id.time);
+            holder.memo_vh = (TextView)v.findViewById(R.id.memo);
+            holder.like_count_vh = (TextView)v.findViewById(R.id.like_count);
+            holder.follow_count_vh = (TextView)v.findViewById(R.id.follow_count);
+            holder.location_vh = (TextView)v.findViewById(R.id.location);
+            holder.comment_count_vh = (TextView)v.findViewById(R.id.comment_count);
+            holder.like_button_vh = (ImageView)v.findViewById(R.id.like_button);
+            holder.follow_button_vh = (ImageView)v.findViewById(R.id.follow_button);
+            v.setTag(holder);
+        } else{
+            holder = (ViewHolder) v.getTag();
         }
 
 
@@ -84,14 +105,11 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
 
 
-        ViewHolder holder = new ViewHolder();
-        holder.memo_photo_vh = (ImageView) v.findViewById(R.id.memo_photo);
-        holder.user_photo_vh = (ImageView) v.findViewById(R.id.user_photo);
         v.setTag(holder);
 
-        try{
+       // try{
             AdjustDataToLayout(v,position,holder);
-        }catch(Exception e){}
+        //}catch(Exception e){}
 
         return v;
     }
@@ -149,14 +167,15 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     }
 
     // 유저 이름 누를 때 리스너
-    public void UserProfileClickListener(View userview,final int position){
+    public void UserProfileClickListener(View userview,int position){
+        final int position_f = position;
         userview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             Intent intent = new Intent(context, A2_UserProfileActivity.class);
-            intent.putExtra("id", CSchedule_list.get(position).getUser_id());
-            Log.d("conciseUserClick","id : " + CSchedule_list.get(position).getSchedule().getUploaded_user_id() + " name : " + CSchedule_list.get(position).getUsername());
+            intent.putExtra("id", CSchedule_list.get(position_f).getUser_id());
+            Log.d("conciseUserClick","id : " + CSchedule_list.get(position_f).getSchedule().getUploaded_user_id() + " name : " + CSchedule_list.get(position_f).getUsername());
             Activity activity = (Activity) context;
             activity.startActivity(intent);
 
@@ -183,6 +202,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         schedulelike_user_clickablelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("clicked id",CSchedule_list.get(position).getSchedule().getUploaded_user_id()+"");
                 Intent intent = new Intent(context, A5_WhoFollowsScheduleActivity.class);
                 intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/"+ CSchedule_list.get(position).getSchedule().getUploaded_user_id()+"/like_users/"));       // 나중에 해결
                 context.startActivity(intent);
@@ -202,14 +222,14 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             @Override
             public void onClick(View v) {
 
-                if(CSchedule_list.get(pos).getIsLike() == false){
+                if(getItem(pos).getIsLike() == false){
                 //    Toast toast1 = Toast.makeText(context, "Like Button Clicked", Toast.LENGTH_SHORT);
                 //    toast1.show();
-                    String url = "http://119.81.176.245/schedules/"+CSchedule_list.get(pos).getId()+"/like/";
+                    String url = "http://119.81.176.245/schedules/"+getItem(pos).getSchedule().getId()+"/like/";
                     HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url,"PUT");
                     a.doExecution();
-                    CSchedule_list.get(pos).clickLike();
-                    lcv.setText(String.valueOf(CSchedule_list.get(pos).getLike_count()));
+                    getItem(pos).clickLike();
+                    lcv.setText(String.valueOf(getItem(pos).getLike_count()));
                     iv.setImageResource(R.drawable.like_on);
     //                notifyDataSetChanged();
                 }
@@ -233,7 +253,9 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     // 받아보기 누를 때 리스너
     public void FollowButtonClickListener(ImageView followbutton, TextView follow_count, int position){
 
-        final int pos = position;
+//        final int pos = position;
+
+       // final int pos = followbutton.getTag()
         final ImageView iv = followbutton;
         final TextView fcv = follow_count;
         followbutton.setOnClickListener(new View.OnClickListener() {
@@ -241,7 +263,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             CalendarProviderUtil cpu = new CalendarProviderUtil(context);
             @Override
             public void onClick(View v) {
-
+                int pos = Integer.valueOf(v.getTag().toString());
                 if(CSchedule_list.get(pos).getIsFollow() == false){
                 //    Toast toast1 = Toast.makeText(context, "Follow Button Clicked", Toast.LENGTH_SHORT);
                 //    toast1.show();
@@ -253,7 +275,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     iv.setImageResource(R.drawable.export_to_calendar_onclick);
                     Log.d("follow_start_time", CSchedule_list.get(pos).getSchedule().getStarttime_ms() + "");
                     Log.d("follow_end_time",CSchedule_list.get(pos).getSchedule().getEndtime_ms()+"");
-                    Log.d("follow_allday",CSchedule_list.get(pos).getSchedule().getAllday()+"");
+                    Log.d("follow_allday", CSchedule_list.get(pos).getSchedule().getAllday() + "");
                     cpu.addScheduleToInnerCalendar(CSchedule_list.get(pos));
  //                   notifyDataSetChanged();
                 }
@@ -299,45 +321,62 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     static class ViewHolder {
         ImageView memo_photo_vh;
         ImageView user_photo_vh;
+        ImageView edit_vh;
+        TextView user_fullname_vh;
+        TextView title_vh;
+        TextView date_vh;
+        TextView time_vh;
+        TextView memo_vh;
+        TextView like_count_vh;
+        TextView follow_count_vh;
+        TextView location_vh;
+        TextView comment_count_vh;
+        ImageView like_button_vh;
+        ImageView follow_button_vh;
+
+        View user_clickableLayout_vh;
+
         int position;
     }
 
 
     // 레이아웃에 데이터 적용
     public void AdjustDataToLayout(final View v,int position, ViewHolder holder){
-        ImageView edit = (ImageView) v.findViewById(R.id.edit);
-        if(CSchedule_list.get(position).getSchedule().isMaster() == true){
-            edit.setVisibility(View.VISIBLE);
-            edit.setClickable(true);
-        }else {
-            edit.setVisibility(View.INVISIBLE);
-            edit.setClickable(false);
-        }
-        ((TextView)v.findViewById(R.id.user_fullname)).setText(CSchedule_list.get(position).getUsername());
-        ((TextView)v.findViewById(R.id.title)).setText(CSchedule_list.get(position).getTitle());
-        ((TextView) v.findViewById(R.id.date)).setText(CSchedule_list.get(position).getDate());
-        if(CSchedule_list.get(position).getSchedule().getAllday()==false)
-            ((TextView)v.findViewById(R.id.time)).setText(CSchedule_list.get(position).getTime());
-        else
-            ((TextView)v.findViewById(R.id.time)).setText("하루 종일");
+        Log.d("position_adjust", position + "");
 
-        ((TextView)v.findViewById(R.id.memo)).setText(CSchedule_list.get(position).getMemo());
-        ((TextView)v.findViewById(R.id.like_count)).setText(String.valueOf(CSchedule_list.get(position).getLike_count()));
-        ((TextView)v.findViewById(R.id.follow_count)).setText(String.valueOf(CSchedule_list.get(position).getFollow_count()));
-        ((TextView)v.findViewById(R.id.location)).setText(String.valueOf(CSchedule_list.get(position).getLocation()) == null ? "" : CSchedule_list.get(position).getLocation())
+        if(CSchedule_list.get(position).getSchedule().isMaster() == true){
+            holder.edit_vh.setVisibility(View.VISIBLE);
+            holder.edit_vh.setClickable(true);
+
+        }else {
+            holder.edit_vh.setVisibility(View.INVISIBLE);
+            holder.edit_vh.setClickable(false);
+        }
+        holder.user_fullname_vh.setText(CSchedule_list.get(position).getUsername());
+        holder.title_vh.setText(CSchedule_list.get(position).getTitle());
+        holder.date_vh.setText(CSchedule_list.get(position).getDate());
+        if(CSchedule_list.get(position).getSchedule().getAllday()==false)
+            holder.time_vh.setText(CSchedule_list.get(position).getTime());
+        else
+            holder.time_vh.setText("하루 종일");
+
+        holder.memo_vh.setText(CSchedule_list.get(position).getMemo());
+        holder.like_count_vh.setText(String.valueOf(CSchedule_list.get(position).getLike_count()));
+        holder.follow_count_vh.setText(String.valueOf(CSchedule_list.get(position).getFollow_count()));
+        holder.location_vh.setText(String.valueOf(CSchedule_list.get(position).getLocation()) == null ? "" : CSchedule_list.get(position).getLocation())
         ;
-        ((TextView)v.findViewById(R.id.comment_count)).setText(String.valueOf(CSchedule_list.get(position).getComment_count()));
+        holder.comment_count_vh.setText(String.valueOf(CSchedule_list.get(position).getComment_count()));
         Log.d("location_view", String.valueOf(CSchedule_list.get(position).getLocation()));
         Log.d("like", String.valueOf(CSchedule_list.get(position).getIsLike()));
         if(CSchedule_list.get(position).getIsLike() == true)
-            ((ImageView)v.findViewById(R.id.like_button)).setImageResource(R.drawable.like_on);
+            holder.like_button_vh.setImageResource(R.drawable.like_on);
         else
-            ((ImageView)v.findViewById(R.id.like_button)).setImageResource(R.drawable.like);
+            holder.like_button_vh.setImageResource(R.drawable.like);
 
         if(CSchedule_list.get(position).getIsFollow() == true)
-            ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.export_to_calendar_onclick);
+            holder.follow_button_vh.setImageResource(R.drawable.export_to_calendar_onclick);
         else
-            ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.exporttocalendar);
+            holder.follow_button_vh.setImageResource(R.drawable.exporttocalendar);
 
 
         if(CSchedule_list.get(position).getPhoto_dir_fromweb()!="") {
@@ -393,17 +432,27 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
             }
 
-            EditClieckListener(edit,position);
-            UserProfileClickListener(user_clickableLayout, position);
-            //UserProfileClickListener(comment_writer,position);
-            LikeButtonClickListener(like_button, like_count, position);
-            WriteCommentClickListener(comment_button, position);
-            FollowButtonClickListener(follow_button, follow_count, position);
-            WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout, position);
-            WhoLikesScheduleClickListener(schedulelike_user_clickablelayout, position);
-
-
         }
+
+
+        holder.edit_vh.setTag(position);
+        holder.follow_button_vh.setTag(position);
+        holder.memo_photo_vh.setTag(position);
+        holder.time_vh.setTag(position);
+        holder.like_button_vh.setTag(position);
+        holder.user_fullname_vh.setTag(position);
+        holder.like_button_vh.getTag(position);
+
+        EditClieckListener(holder.edit_vh, position);
+        UserProfileClickListener(user_clickableLayout, position);
+        //UserProfileClickListener(comment_writer,position);
+        LikeButtonClickListener(holder.like_button_vh, like_count, position);
+        WriteCommentClickListener(comment_button, position);
+        FollowButtonClickListener(holder.follow_button_vh, follow_count, position);
+        WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout, position);
+        WhoLikesScheduleClickListener(schedulelike_user_clickablelayout, position);
+
+
 
         if(CSchedule_list.get(position).getUser_photo()!="") {
          //   Picasso.with(context).load(CSchedule_list.get(position).getUser_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));

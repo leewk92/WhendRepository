@@ -110,6 +110,9 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         arrayGSchedule.clear();
         mgrid_search_adapter.notifyDataSetChanged();
 
+
+        for(int i=0; i< mgrid_search_adapter.getCount(); i++)
+            quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
         //첫번째 뜨는거 지우기 -> 실패
         try{
             if(quiltView.views.get(0) != null)
@@ -122,6 +125,8 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         try{
             quiltView.refresh();
         }catch(Exception e){}
+
+
         quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
         quiltView.setChildPadding(-3);
 
@@ -139,11 +144,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         super.onCreate(savedInstanceState);
    //     AnalyticsApplication application = (AnalyticsApplication)getActivity().getApplication();
   //      mTracker= application.getDefaultTracker();
-
-
-
-    }
-
+  }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -265,8 +266,7 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         });
 
 
-        ObservableScrollView scrollView = (ObservableScrollView) rootView.findViewById(R.id.quilt_scroll);
-        scrollView.setScrollViewListener(this);
+
 
         return rootView;
     }
@@ -371,6 +371,11 @@ public class F2_Search extends Fragment implements ScrollViewListener {
                         quiltView.addPatchView(mgrid_search_adapter.getView(i, null, null));
                     }
                 }catch(Exception e){
+
+                }finally{
+
+                    ObservableScrollView scrollView = (ObservableScrollView) rootView.findViewById(R.id.quilt_scroll);
+                    scrollView.setScrollViewListener(F2_Search.this);
 
                 }
                 loading = true;

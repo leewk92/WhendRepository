@@ -1,6 +1,7 @@
 package net.whend.soodal.whend.view;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -64,7 +65,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
     // 핸들러, 플래그 선언 for back key로 종료
     private Handler mHandler;
     private boolean mFlag = false;
-
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
         loginButton_view = (Button) findViewById(R.id.login_button);
         signupButton_view = (Button) findViewById(R.id.signup_button);
 
+        progress = new ProgressDialog(this);
+/*
         login_facebook = (Button) findViewById(R.id.login_facebook);
         login_facebook.setOnClickListener(new View.OnClickListener()    {
             @Override
@@ -88,8 +91,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                 toast1.show();
             }
         });
-
-  //      loginButton = (LoginButton) findViewById(R.id.login_facebook);
+*/
+        loginButton = (LoginButton) findViewById(R.id.login_facebook);
         loginButton_view.setOnClickListener(loginButtonListener);
         signupButton_view.setOnClickListener(signupButtonListener);
 
@@ -119,7 +122,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             }
         };
 
-/*
+
 //facebook login button
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions(Arrays.asList("public_profile", "user_friends"));
@@ -130,11 +133,13 @@ public class A0_1_LoginActivity extends AppCompatActivity {
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(final LoginResult loginResult) {
                 // App code
                 Log.d("FBToken", loginResult.getAccessToken().getToken());
                 Log.d("FBUserId", loginResult.getAccessToken().getUserId());
                 Log.d("FBSources", loginResult.getAccessToken().getSource().toString());
+
+
 
                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
@@ -145,7 +150,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                             fb_name = (String) response.getJSONObject().get("name").toString();//페이스북 이름
                             fb_picture = (String) response.getJSONObject().get("picture").toString();
                            // email = (String) response.getJSONObject().get("email");//이메일
-                            Log.d("FB_picture",fb_picture);
+                            Log.d("FB_name",fb_name);
 
                         } catch (JSONException e) {
                         // TODO Auto-generated catch block
@@ -178,6 +183,21 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+/*
+                            Intent intent = new Intent(mContext, A0_3_SignUpFromFacebook.class);
+                            intent.putExtra("data", jsonArray.toString());
+                            intent.putExtra("fb_id",fb_id);
+                            intent.putExtra("fb_name", fb_name);
+                            intent.putExtra("fb_picture", fb_picture);
+
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mContext.startActivity(intent);
+                            finish();*/
+                            Bundle inputBundle = new Bundle();
+                            inputBundle.putCharSequence("access_token",loginResult.getAccessToken().getToken());
+                            String facebookUrl = "http://119.81.176.245/rest-auth/facebook/";
+                            HTTPRestfulUtilizerExtender_facebookLogin a = new HTTPRestfulUtilizerExtender_facebookLogin(mContext,facebookUrl,"POST",inputBundle);
+                            a.doExecution();
                         }
                     }
                 );
@@ -211,8 +231,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             Log.d("FB", "resultCode" + resultCode);
             Log.d("FB", "data  " + data.toString());
         }
-*/
-    }
+
+//    }
     //2초안에 백키 눌르면 종료
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -445,7 +465,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     cpu.addAccountOfCalendar();
 
                     Toast toast1 = Toast.makeText(mContext, "로그인 성공.", Toast.LENGTH_SHORT);
-                    toast1.setGravity(0,0,100);
+                    toast1.setGravity(0, 0, 100);
                     toast1.show();
 
                     Intent intent = new Intent(mContext, MainActivity.class);
@@ -456,7 +476,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
 
 
                 }catch(Exception e){
-                    Log.d("login exception",e.toString());
+                    Log.d("login exception", e.toString());
 
 
                 }finally{
@@ -466,6 +486,186 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    class HTTPRestfulUtilizerExtender_facebookLogin extends HTTPRestfulUtilizer{
+
+        // Constructor for POST
+        public HTTPRestfulUtilizerExtender_facebookLogin(Context mContext, String url, String HTTPRestType, Bundle inputBundle) {
+            setInputBundle(inputBundle);
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+
+            @Override
+            protected void onPreExecute() {
+/*
+                if(progress.isShowing()==false)
+                    progress = ProgressDialog.show(getmContext(), "facebook 로그인",
+                            "facebook 로그인 중입니다.", true);
+*/
+                super.onPreExecute();
+            }
+
+
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(POST(url, inputBundle));
+
+                return getOutputString();
+
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+
+                try{
+
+                    //       JSONObject tmpJson = new JSONObject(getOutputString());
+                    //       String token = tmpJson.getString("key");
+                    String token = getOutputJsonObject().getString("key");
+                    //               result_view.setText(result);
+                    // 유저네임과 토큰을 저장.
+                    AppPrefs appPrefs = new AppPrefs(mContext);
+                //    appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
+                //    appPrefs.setPassword(getInputBundle().getCharSequence("password").toString());
+                    appPrefs.setToken(token);
+                    String setUserIdUrl = "http://119.81.176.245/userid/";
+                    Bundle inputBundle_fb2 = new Bundle();
+                    inputBundle_fb2.putCharSequence("username", fb_name.replaceAll(" ",""));
+                    Log.d("changeUsername",fb_name);
+                    // save user id
+                    HTTPRestfulUtilizerExtender_facebookLogin2 d = new HTTPRestfulUtilizerExtender_facebookLogin2(mContext,setUserIdUrl,"PUT",inputBundle_fb2);
+                    d.doExecution();
+
+                }catch(Exception e){
+                    Toast toast1 = Toast.makeText(mContext, "facebook 로그인 실패", Toast.LENGTH_SHORT);
+                    toast1.setGravity(0,0,100);
+                    toast1.show();
+                    loginButton_view.setClickable(true);
+                }finally{
+
+                }
+            }
+        }
+    }
+
+    class HTTPRestfulUtilizerExtender_facebookLogin2 extends HTTPRestfulUtilizer{
+
+        // Constructor for PUT
+        public HTTPRestfulUtilizerExtender_facebookLogin2(Context mContext, String url, String HTTPRestType,Bundle inputBundle) {
+            setInputBundle(inputBundle);
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+
+            @Override
+            protected void onPreExecute() {
+
+                super.onPreExecute();
+            }
+
+
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(PUT(url, inputBundle));
+
+                return getOutputString();
+
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                String getUserIdUrl = "http://119.81.176.245/userinfos/";
+                // save user id
+                AppPrefs appPrefs = new AppPrefs(mContext);
+                appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
+
+                HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(mContext,getUserIdUrl,"GET");
+                a.doExecution();
+
+     //           progress.dismiss();
+
+            }
+        }
+    }
+
+    class HTTPRestfulUtilizerExtender_facebookLogin3 extends HTTPRestfulUtilizer{
+
+        // Constructor for PUT
+        public HTTPRestfulUtilizerExtender_facebookLogin3(Context mContext, String url, String HTTPRestType,Bundle inputBundle) {
+            setInputBundle(inputBundle);
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+
+            @Override
+            protected void onPreExecute() {
+
+                super.onPreExecute();
+            }
+
+
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(PUT(url, inputBundle));
+
+                return getOutputString();
+
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                String getUserIdUrl = "http://119.81.176.245/userinfos/";
+                // save user id
+                AppPrefs appPrefs = new AppPrefs(mContext);
+                appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
+
+                HTTPRestfulUtilizerExtender2 a = new HTTPRestfulUtilizerExtender2(mContext,getUserIdUrl,"GET");
+                a.doExecution();
+
+
+            }
+        }
+    }
+
 
 
 }

@@ -3,6 +3,7 @@ package net.whend.soodal.whend.form;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +60,8 @@ public class Comment_Adapter extends ArrayAdapter<Comment> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, A2_UserProfileActivity.class);
-                intent.putExtra("id", String.valueOf(Comment_list.get(position).getWrite_userid()));
-
+                intent.putExtra("id", Comment_list.get(position).getWrite_userid());
+                Log.d("commentUserId", Comment_list.get(position).getWrite_userid()+"");
                 Activity activity = (Activity) context;
                 activity.startActivity(intent);
 

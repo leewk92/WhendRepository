@@ -1,5 +1,6 @@
 package net.whend.soodal.whend.view;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +11,26 @@ import net.whend.soodal.whend.R;
 
 public class A0_3_SignUpFromFacebook extends AppCompatActivity {
 
+    private String data;
+    private String fb_id;
+    private String fb_name;
+    private String fb_picture;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a0_3_sign_up_from_facebook);
+
+        Intent intent = new Intent(this.getIntent());
+        intent.getStringExtra("data");
+        intent.getStringExtra("fb_id");
+        intent.getStringExtra("fb_name");
+        intent.getStringExtra("fb_picture");
+
+
+
+
+
     }
 
     @Override

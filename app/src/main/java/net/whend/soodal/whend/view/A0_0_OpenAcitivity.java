@@ -116,6 +116,15 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
                     finish();
                 }
 
+                try{
+                    String tmp_password1 = getOutputJsonObject().getString("password");
+                    if(tmp_password1.contentEquals("[\"This field may not be blank.\"]")){
+                        Intent i = new Intent(A0_0_OpenAcitivity.this, A0_1_LoginActivity.class);
+                        startActivity(i);
+                        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+                    }
+
+                }catch(Exception e){Log.d("Catch Exception",e+"");}
 
                 try{
 

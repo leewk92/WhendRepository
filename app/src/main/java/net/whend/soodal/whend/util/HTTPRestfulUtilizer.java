@@ -145,7 +145,7 @@ public class HTTPRestfulUtilizer {
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
- //           Log.d("firstjson",json);
+            Log.d("firstjson_PUT",json);
             json = json.replace("\"[", "[");
             json = json.replace("]\"", "]");
   //          Log.d("secondjson", json);
@@ -188,7 +188,7 @@ public class HTTPRestfulUtilizer {
             // 10. convert inputstream to string
             if(inputStream != null) {
                 result = convertInputStreamToString(inputStream);
-//                Log.d("HTTP PUT ResultStream", result);
+                Log.d("HTTP PUT ResultStream", result);
             }else {
                 result = "Did not work!";
                 Log.d("HTTP PUT ResultStream", result);

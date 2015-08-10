@@ -66,11 +66,13 @@ public class F1_Wall extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         nextURL=null;
         arrayCSchedule.clear();
         try{
             concise_schedule_adapter.notifyDataSetChanged();
         }catch(Exception e){}
+
         String url = "http://119.81.176.245/schedules/";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();
@@ -177,12 +179,13 @@ public class F1_Wall extends Fragment {
         listview = (ListView)rootview.findViewById(R.id.listview_concise_schedule);
         f1_text = (TextView) rootview.findViewById(R.id.f1_text);
         f1_text.setVisibility(View.INVISIBLE);
-        //listview.setOnScrollListener(new EndlessScrollListener());
+       // listview.setOnScrollListener(new EndlessScrollListener());
+
 
         concise_schedule_adapter = new Concise_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayCSchedule);
         listview.setAdapter(concise_schedule_adapter);
         listview.setClickable(false);
-        listview.setSmoothScrollbarEnabled(true);
+
         return rootview;
     }
 
@@ -251,6 +254,13 @@ public class F1_Wall extends Fragment {
             task.execute(getUrl(),getHTTPRestType());
         }
         class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
             @Override
             protected String doInBackground(String... strings) {
                 String url = strings[0];
