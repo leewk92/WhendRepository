@@ -35,6 +35,8 @@ import com.google.android.gms.gcm.GcmListenerService;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.util.AppPrefs;
+import net.whend.soodal.whend.view.A2_UserProfileActivity;
+import net.whend.soodal.whend.view.A3_SpecificScheduleActivity;
 import net.whend.soodal.whend.view.MainActivity;
 
 public class MyGcmListenerService extends GcmListenerService {
@@ -55,14 +57,13 @@ public class MyGcmListenerService extends GcmListenerService {
         String message = data.getString("actor_name") + data.getString("verb");
 
 
-        /* 잘 모르겠다 데이터 어디서 받아오는지.... 이거 해결하면 바로 8번 해결가능
-        String target_type = data.getString("target_type") == "null"? "follow": data.getString("target_type");
+        //String target_type = data.getString("target_type") == "null"? "follow": data.getString("target_type");
 
-        int target_id = data.getString("target_id") == "null"? data.getInt("actor_id"): data.getInt("target_id");
+        //int target_id = data.getString("target_id") == "null"? data.getInt("actor_id"): data.getInt("target_id");
 
-        Log.d("TYPE",target_type); */
-        Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
+        //Log.d("TYPE",target_type);
+        //Log.d(TAG, "From: " + from);
+        //Log.d(TAG, "Message: " + message);
 
         /**
          * Production applications would usually process the message here.
@@ -75,7 +76,11 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+        final AppPrefs appPrefs = new AppPrefs(this);
+
+        if(appPrefs.getPush_setting())
+          sendNotification(message);
+
         //sendNotification(message, target_type, target_id);
     }
     // [END receive_message]
@@ -129,7 +134,6 @@ public class MyGcmListenerService extends GcmListenerService {
     }
 
 
-    /* 인텐트 구분한거 근데 힘들다
     private void sendNotification(String message, String target_type, int target_id) {
         Intent intent = null;
 
@@ -143,7 +147,7 @@ public class MyGcmListenerService extends GcmListenerService {
             intent = new Intent(this, MainActivity.class);
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code , intent,
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -167,7 +171,7 @@ public class MyGcmListenerService extends GcmListenerService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification , notificationBuilder.build());
+        notificationManager.notify(0 /* ID of notification*/ , notificationBuilder.build());
 
         message_static = "WhenD : " + message;
         Thread thread = new Thread(new Runnable() {
@@ -177,7 +181,7 @@ public class MyGcmListenerService extends GcmListenerService {
             }
         });
         thread.start();
-    }*/
+    }
 
     private Handler handler = new Handler() {
 
@@ -186,10 +190,13 @@ public class MyGcmListenerService extends GcmListenerService {
             super.handleMessage(msg);
             Context context = getApplicationContext();
             int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, message_static, duration);
-            toast.show();
 
             AppPrefs appPrefs = new AppPrefs(getApplicationContext());
+            if(appPrefs.getPush_setting()) {
+                Toast toast = Toast.makeText(context, message_static, duration);
+                toast.show();
+            }
+
             int count =  appPrefs.getUnreadNotificationCount();
             count++;
             appPrefs.setUnreadNotificationCount(count);

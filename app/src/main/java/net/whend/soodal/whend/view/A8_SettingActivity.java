@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class A8_SettingActivity extends AppCompatActivity {
     public Context mContext = this;
     ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
+    private Switch push_onoff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class A8_SettingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+        final AppPrefs appPrefs = new AppPrefs(this);
 
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -55,6 +59,32 @@ public class A8_SettingActivity extends AppCompatActivity {
         TextView setting_logout = (TextView)findViewById(R.id.setting_logout);
         LogoutListener(setting_logout);
 
+        push_onoff = (Switch) findViewById(R.id.push_switch);
+
+        if(appPrefs.getPush_setting())
+            push_onoff.setChecked(true);
+        else
+            push_onoff.setChecked(false);
+
+        push_onoff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+
+                if(isChecked){
+                    appPrefs.setPush_setting(true);
+                    Toast toast = Toast.makeText(getApplicationContext(), "푸시 알림이 표시됩니다", Toast.LENGTH_SHORT);
+                    toast.show();
+                }else{
+                    appPrefs.setPush_setting(false);
+                    Toast toast = Toast.makeText(getApplicationContext(), "푸시 알림이 표시되지 않습니다", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+            }
+        });
+
     }
 
     // 로그아웃 리스너
@@ -65,7 +95,7 @@ public class A8_SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
-                builder1.setMessage("정말 로그아웃 하시겠습니까?");
+                builder1.setMessage("로그아웃 하시겠습니까?\n어플리케이션 개인 설정 정보도 지워집니다.");
                 builder1.setCancelable(true);
                 builder1.setPositiveButton("로그아웃 하기",
                         new DialogInterface.OnClickListener() {

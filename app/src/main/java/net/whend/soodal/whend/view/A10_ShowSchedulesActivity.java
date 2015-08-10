@@ -72,6 +72,7 @@ public class A10_ShowSchedulesActivity extends AppCompatActivity {
             }
         });
         f1_text = (TextView)findViewById(R.id.f1_text);
+        f1_text.setText("회원님이 올린 일정이 없습니다\n일정올리기로 일정을 올려보세요!");
         f1_text.setVisibility(View.INVISIBLE);
     }
 

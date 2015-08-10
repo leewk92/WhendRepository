@@ -358,16 +358,41 @@
                     android:layout_height="0.5dp"
                     android:background="#b6b6b6" />
 
-                <TextView
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="푸시 알림 설정"
-                    android:id="@+id/setting_push"
-                    android:padding="15dp"
-                    android:textColor="#212121"
-                    android:clickable="true"
-                    android:background="@drawable/textview_press"
-                    android:onClick="OnPreparing"/>
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="푸시 알림"
+                        android:id="@+id/setting_push"
+                        android:padding="15dp"
+                        android:textColor="#212121"
+                        android:clickable="false"
+                        android:background="@drawable/textview_press"
+                        />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right">
+
+                        <Switch
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="10dp"
+                            android:checked="false"
+                            android:id="@+id/push_switch"
+                            android:textOn="켜기"
+                            android:textOff="끄기" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:orientation="vertical"

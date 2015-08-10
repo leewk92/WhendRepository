@@ -186,6 +186,15 @@ public class F5_Mypage extends Fragment {
         mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("분석"),
                 F5_3_Analysis.class, null);
 
+        TextView x = (TextView) mTabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+        x.setTextSize(10);
+        x = (TextView) mTabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
+        x.setTextSize(10);
+        x = (TextView) mTabHost.getTabWidget().getChildAt(2).findViewById(android.R.id.title);
+        x.setTextSize(10);
+
+
+
         String url = "http://119.81.176.245/userinfos/";
 
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),rootView,url,"GET");

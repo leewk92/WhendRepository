@@ -12,7 +12,7 @@
 
     <TextView
 
-        android:text="일정 정보 플랫폼 서비스"
+        android:text="일정 정보 플랫폼"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
