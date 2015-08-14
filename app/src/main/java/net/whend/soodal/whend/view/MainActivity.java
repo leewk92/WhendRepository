@@ -29,8 +29,14 @@ import com.facebook.appevents.AppEventsLogger;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.util.AppPrefs;
+import net.whend.soodal.whend.util.BaseContainerFragment;
 import net.whend.soodal.whend.util.gcm.QuickstartPreferences;
 import net.whend.soodal.whend.util.gcm.RegistrationIntentService;
+import net.whend.soodal.whend.view.ContainerFragment.F1_Wall_Container;
+import net.whend.soodal.whend.view.ContainerFragment.F2_Search_Container;
+import net.whend.soodal.whend.view.ContainerFragment.F3_Upload_Container;
+import net.whend.soodal.whend.view.ContainerFragment.F4_Notify_Container;
+import net.whend.soodal.whend.view.ContainerFragment.F5_Mypage_Container;
 
 import android.support.v4.content.LocalBroadcastManager;
 import com.google.android.gms.common.ConnectionResult;
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView search_btn;
     private ImageView back_btn;
     private AppPrefs appPrefs;
+    private int previousTab;
     BadgeView unread_count;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -83,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        initView();
+    }
+
+    private void initView(){
 
         // gcm
         appPrefs = new AppPrefs(this);
@@ -148,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 mTabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#727272"));
         }
         mTabHost.getTabWidget().getChildAt(mTabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#212121"));
+        previousTab = 0;
 
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
@@ -177,6 +189,15 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 mTabHost.getTabWidget().getChildAt(mTabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#212121")); //selected
+
+
+
+                /// 뻘짓..... 컨테이너를 이용한 status 저장을 구현하려고했으나 실패
+/*
+                ((BaseContainerFragment)getSupportFragmentManager().findFragmentByTag("tab"+(previousTab+1))).replaceFragmentByIndex(mTabHost.getCurrentTab(), false);
+
+                Log.e("Previous",""+previousTab);*/
+
             }
         });
 
@@ -264,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -278,6 +300,29 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    /*
+    @Override
+    public void onBackPressed() {
+        boolean isPopFragment = false;
+        String currentTabTag = mTabHost.getCurrentTabTag();
+        Log.d("Tag",currentTabTag);
+        if (currentTabTag.equals("tab1")) {
+            isPopFragment = ((BaseContainerFragment)getSupportFragmentManager().findFragmentByTag("tab1")).popFragment();
+        } else if (currentTabTag.equals("tab2")) {
+            isPopFragment = ((BaseContainerFragment)getSupportFragmentManager().findFragmentByTag("tab2")).popFragment();
+        } else if (currentTabTag.equals("tab3")) {
+            isPopFragment = ((BaseContainerFragment)getSupportFragmentManager().findFragmentByTag("tab3")).popFragment();
+        } else if (currentTabTag.equals("tab4")) {
+            isPopFragment = ((BaseContainerFragment)getSupportFragmentManager().findFragmentByTag("tab4")).popFragment();
+        } else if (currentTabTag.equals("tab5")) {
+            isPopFragment = ((BaseContainerFragment)getSupportFragmentManager().findFragmentByTag("tab5")).popFragment();
+        }
+        if (!isPopFragment) {
+            finish();
+        }
+    }
+    */
 
 
 }

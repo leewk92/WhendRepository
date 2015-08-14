@@ -34,53 +34,47 @@
         android:layout_marginRight="16dp">
 
         <LinearLayout
-            android:id="@+id/user_clickableLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="5dp"
-            android:clickable="true"
-            android:layout_marginBottom="15dp">
-
-            <ImageView
-                android:id="@+id/user_photo"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/userimage_default"
-                />
-            <TextView
-                android:id="@+id/user_fullname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="이원경"
-                android:textStyle="bold"
-                android:textSize="12dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                />
-        </LinearLayout>
-
-        <EditText
-            android:theme="@style/Theme.App.Base"
-            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="일정 제목 입력"
-            android:textSize="12dp"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:hint="일정 제목"
+                android:textSize="12dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical|right"
+                android:id="@+id/textView29" />
+
+            <EditText
+                android:theme="@style/Theme.App.Base"
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12dp" />
+        </LinearLayout>
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:text="종일 일정 "
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:hint="종일 일정"
                 android:textSize="12dp"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical|right"
+                android:id="@+id/textView30" />
 
             <CheckBox
+                android:theme="@style/Theme.App.Base"
                 android:id="@+id/allday_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -95,19 +89,20 @@
             >
 
             <TextView
-                android:layout_width="30dp"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:hint="시작"
                 android:textSize="12dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="26dp"
                 android:gravity="center_vertical|right" />
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/date"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                 />
 
             <TextView
                 android:id="@+id/date_start"
@@ -154,12 +149,12 @@
             >
 
                 <TextView
-                    android:layout_width="30dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:hint="끝"
                     android:textSize="12dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="26dp"
                     android:gravity="center_vertical|right"
                     />
 
@@ -253,6 +248,7 @@
             android:clickable="true" />
 
         <EditText
+            android:theme="@style/Theme.App.Base"
             android:id="@+id/memo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -80,7 +80,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
 
         //푸시알리 설정이 true, 그리고 나랑 이름이 다를 때만 받음
-        if(appPrefs.getPush_setting() && !(appPrefs.getUsername().equals(data.getString("actor_name"))))
+        if(appPrefs.getPush_setting() )
           sendNotification(message);
 
         //sendNotification(message, target_type, target_id);
@@ -99,8 +99,16 @@ public class MyGcmListenerService extends GcmListenerService {
             intent = new Intent(this, MainActivity.class);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+        intent.putExtra("fromGCM", true);
+
+        int unique_id = (int) System.currentTimeMillis();
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, unique_id /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
+
+
+
+
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
