@@ -36,6 +36,9 @@ public class User {
     */
 
     private String username; // user 이름 (WK)
+    private String realname;
+    private String firstname;
+    private String lastname;
     private int id;
     //    private String first_name;
 //    private String last_name;
@@ -44,6 +47,8 @@ public class User {
 //    private boolean is_active;
 //    private String date_joined;
     private String user_photo;                   // Download photo on cache directory (WK)
+    private String gender;
+    private String status;
     //    private String created_at;
 //    private String updated_at;
 //    private String login_at;
@@ -52,6 +57,7 @@ public class User {
     private int count_following_hashtag;    // 받아보고 있는 hashtag 수 (WK)
     private int count_follower;             // 몇명이 나를 follow 하고 있는지, follower수 (WK)
     private int count_uploaded_schedule;
+
     private int[] following_user;
     private int[] following_hashtag;
     private int[] following_schedule;
@@ -219,5 +225,39 @@ public class User {
     }
 
 
+    public String getRealname() {
+        return firstname+lastname;
+    }
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

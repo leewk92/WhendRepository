@@ -298,6 +298,9 @@ public class F5_Mypage extends Fragment {
                     u.setCount_following_hashtag(tmp_ith.getInt("count_following_hashtag"));
                     u.setCount_follower(tmp_ith.getInt("count_follower"));
                     u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));
+
+                    u.setFirstname(tmp_ith.getString("first_name"));
+                    u.setLastname(tmp_ith.getString("last_name"));
 /*                    JSONArray tmpjsonarray = tmp_ith.getJSONArray("following_user");
                     if(tmpjsonarray!=null) {
                         int[] following_user = new int[tmpjsonarray.length()];
@@ -347,6 +350,7 @@ public class F5_Mypage extends Fragment {
                 ((TextView)v.findViewById(R.id.follower_count)).setText(u.getCount_follower() + "");
                 ((TextView)v.findViewById(R.id.schedule_count)).setText(u.getCount_uploaded_schedule() + "");
                 ((TextView)v.findViewById(R.id.following_count)).setText(String.valueOf(u.getCount_following_hashtag() + u.getCount_following_user()));
+                ((TextView)v.findViewById(R.id.realname)).setText(u.getRealname());
                 if(u.getUser_photo()!="") {
                     Picasso.with(getActivity()).load(u.getUser_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
 
@@ -365,7 +369,7 @@ public class F5_Mypage extends Fragment {
     }
 
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivitymImageCaptureUri(int requestCode, int resultCode, Intent data) {
 
 
         if (resultCode == getActivity().RESULT_OK) {

@@ -79,6 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/user_name"
+                        android:textSize="14dp"
                         android:padding="10dp" />
 
                     <LinearLayout
@@ -89,13 +90,37 @@
                         android:background="#B6b6b6"
                         android:layout_marginTop="10dp"></LinearLayout>
 
-                    <EditText
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/name"
-                        android:padding="10dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@android:color/transparent"/>
+                        android:layout_marginTop="10dp">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:id="@+id/first_name"
+                            android:padding="10dp"
+                            android:textSize="14dp"
+
+                            android:background="@android:color/transparent"
+                            android:hint="성" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:id="@+id/last_name"
+                            android:padding="10dp"
+                            android:textSize="14dp"
+
+                            android:background="@android:color/transparent"
+                            android:hint="이름" />
+
+                    </LinearLayout>
+
+
+
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -108,16 +133,17 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/photo_upload"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="3.5">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:id="@+id/user_photo"
-
+                        android:src="@drawable/userimage_default"
                         android:layout_gravity="center_horizontal" />
 
                     <TextView
@@ -158,8 +184,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="이메일"
-                        android:id="@+id/textView_email"
+                        android:text="상태"
+                        android:id="@+id/textView_status"
                         android:padding="10dp"
                         android:layout_marginTop="20dp"
                         android:textColor="#0288D1" />
@@ -167,8 +193,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="전화"
-                        android:id="@+id/textView_phone"
+                        android:text="이메일"
+                        android:id="@+id/textView_email"
                         android:padding="10dp"
                         android:layout_marginTop="20dp"
                         android:textColor="#0288D1" />
@@ -184,6 +210,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/gender"
+
                         android:padding="10dp" />
 
                     <LinearLayout
@@ -200,6 +227,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="5dp"
+                            android:textSize="14dp"
                             android:layout_marginLeft="5dp"
                             android:text="남성"
                             android:id="@+id/man" />
@@ -211,6 +239,7 @@
                             android:text="여성"
                             android:id="@+id/woman" />
                         <RadioButton
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -233,7 +262,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:id="@+id/email"
+                        android:id="@+id/status"
+                        android:textSize="14dp"
                         android:padding="10dp"
                         android:layout_marginTop="10dp" />
 
@@ -244,12 +274,13 @@
                         android:layout_marginRight="20dp"
                         android:background="#B6b6b6"
                         android:layout_marginTop="10dp"
-                        android:id="@+id/linear_email" />
+                        android:id="@+id/linear_status" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/phone"
+                        android:id="@+id/email"
+                        android:textSize="14dp"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
                         android:background="@android:color/transparent"/>
@@ -261,30 +292,13 @@
                         android:layout_marginRight="20dp"
                         android:background="#B6b6b6"
                         android:layout_marginTop="10dp"
-                        android:id="@+id/linear_phone" />
+                        android:id="@+id/linear_email" />
                 </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/s3_dark"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#CC000000">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="프로필 수정은 준비 중인 기능입니다.\n이용해 주셔서 감사합니다."
-                android:id="@+id/textView26"
-                android:layout_gravity="center_vertical"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp"
-                android:gravity="center" />
-        </LinearLayout>
+        
     </FrameLayout>
 
 </LinearLayout>

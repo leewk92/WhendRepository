@@ -881,6 +881,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                         }else all_day_int=0;
 
 
+
                         inputBundle_forRequest.putCharSequence("title",title.getText());
                         inputBundle_forRequest.putCharSequence("memo", memo.getText());
                         inputBundle_forRequest.putCharSequence("location",location.getText());
