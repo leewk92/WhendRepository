@@ -80,7 +80,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
         signupButton_view = (Button) findViewById(R.id.signup_button);
 
         progress = new ProgressDialog(this);
-/*
+
         login_facebook = (Button) findViewById(R.id.login_facebook);
         login_facebook.setOnClickListener(new View.OnClickListener()    {
             @Override
@@ -91,7 +91,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                 toast1.show();
             }
         });
-*/
+
         loginButton = (LoginButton) findViewById(R.id.login_facebook);
         loginButton_view.setOnClickListener(loginButtonListener);
         signupButton_view.setOnClickListener(signupButtonListener);
@@ -122,7 +122,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             }
         };
 
-
+/*
 //facebook login button
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions(Arrays.asList("public_profile", "user_friends"));
@@ -183,16 +183,16 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-/*
-                            Intent intent = new Intent(mContext, A0_3_SignUpFromFacebook.class);
-                            intent.putExtra("data", jsonArray.toString());
-                            intent.putExtra("fb_id",fb_id);
-                            intent.putExtra("fb_name", fb_name);
-                            intent.putExtra("fb_picture", fb_picture);
 
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            mContext.startActivity(intent);
-                            finish();*/
+//                            Intent intent = new Intent(mContext, A0_3_SignUpFromFacebook.class);
+//                            intent.putExtra("data", jsonArray.toString());
+//                            intent.putExtra("fb_id",fb_id);
+//                            intent.putExtra("fb_name", fb_name);
+//                            intent.putExtra("fb_picture", fb_picture);
+
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            mContext.startActivity(intent);
+//                            finish();
                             Bundle inputBundle = new Bundle();
                             inputBundle.putCharSequence("access_token",loginResult.getAccessToken().getToken());
                             String facebookUrl = "http://119.81.176.245/rest-auth/facebook/";
@@ -231,8 +231,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             Log.d("FB", "resultCode" + resultCode);
             Log.d("FB", "data  " + data.toString());
         }
-
-//    }
+*/
+    }
     //2초안에 백키 눌르면 종료
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

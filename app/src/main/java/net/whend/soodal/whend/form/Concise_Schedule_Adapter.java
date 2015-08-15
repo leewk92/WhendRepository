@@ -83,6 +83,10 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             holder.comment_count_vh = (TextView)v.findViewById(R.id.comment_count);
             holder.like_button_vh = (ImageView)v.findViewById(R.id.like_button);
             holder.follow_button_vh = (ImageView)v.findViewById(R.id.follow_button);
+            holder.user_clickableLayout_vh = (View)v.findViewById(R.id.user_clickableLayout);
+            holder.schedulefollow_user_clickablelayout_vh = (View)v.findViewById(R.id.schedulefollow_user_clickablelayout);
+            holder.schedulelike_user_clickablelayout_vh = (View)v.findViewById(R.id.schedulelike_user_clickablelayout);
+
             v.setTag(holder);
         } else{
             holder = (ViewHolder) v.getTag();
@@ -108,7 +112,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         v.setTag(holder);
 
        // try{
-            AdjustDataToLayout(v,position,holder);
+        AdjustDataToLayout(v,position,holder);
         //}catch(Exception e){}
 
         return v;
@@ -335,6 +339,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         ImageView follow_button_vh;
 
         View user_clickableLayout_vh;
+        View schedulefollow_user_clickablelayout_vh;
+        View schedulelike_user_clickablelayout_vh;
 
         int position;
     }
@@ -441,16 +447,15 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         holder.time_vh.setTag(position);
         holder.like_button_vh.setTag(position);
         holder.user_fullname_vh.setTag(position);
-        holder.like_button_vh.getTag(position);
 
         EditClieckListener(holder.edit_vh, position);
-        UserProfileClickListener(user_clickableLayout, position);
+        UserProfileClickListener(holder.user_clickableLayout_vh, position);
         //UserProfileClickListener(comment_writer,position);
         LikeButtonClickListener(holder.like_button_vh, like_count, position);
         WriteCommentClickListener(comment_button, position);
         FollowButtonClickListener(holder.follow_button_vh, follow_count, position);
-        WhoFollowsScheduleClickListener(schedulefollow_user_clickablelayout, position);
-        WhoLikesScheduleClickListener(schedulelike_user_clickablelayout, position);
+        WhoFollowsScheduleClickListener(holder.schedulefollow_user_clickablelayout_vh, position);
+        WhoLikesScheduleClickListener(holder.schedulelike_user_clickablelayout_vh, position);
 
 
 
