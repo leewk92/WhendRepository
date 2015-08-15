@@ -145,7 +145,7 @@
                     android:textColor="#212121"
                     android:clickable="true"
                     android:background="@drawable/textview_press"
-                    android:onClick="OnPreparing"/>
+                    android:onClick="Password"/>
 
                 <LinearLayout
                     android:orientation="vertical"
