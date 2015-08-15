@@ -58,7 +58,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
     private String email;
     private String password;
     private Context mContext;
-    private LoginButton loginButton;
+//    private LoginButton loginButton;
     CallbackManager callbackManager;
     String fb_id, fb_email, fb_name, fb_picture;
 
@@ -92,7 +92,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginButton = (LoginButton) findViewById(R.id.login_facebook);
+//        loginButton = (LoginButton) findViewById(R.id.login_facebook);
         loginButton_view.setOnClickListener(loginButtonListener);
         signupButton_view.setOnClickListener(signupButtonListener);
 
