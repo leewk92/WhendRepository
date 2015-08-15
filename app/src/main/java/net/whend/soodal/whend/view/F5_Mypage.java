@@ -64,6 +64,27 @@ public class F5_Mypage extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        String url = "http://119.81.176.245/userinfos/";
+
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),rootView,url,"GET");
+        a.doExecution();
+
+        schedule_count_clickablelayout = rootView.findViewById(R.id.schedule_count_clickablelayout);
+        follower_count_clickablelayout = rootView.findViewById(R.id.follower_count_clickablelayout);
+        following_count_clickablelayout = rootView.findViewById(R.id.following_count_clickablelayout);
+        ScheduleClickListener(schedule_count_clickablelayout);
+        FollowerClickListener(follower_count_clickablelayout);
+        FollowingClickListener(following_count_clickablelayout);
+
+        schedule_count_clickablelayout.setClickable(false);
+        follower_count_clickablelayout.setClickable(false);
+        following_count_clickablelayout.setClickable(false);
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -195,21 +216,7 @@ public class F5_Mypage extends Fragment {
 
 
 
-        String url = "http://119.81.176.245/userinfos/";
 
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),rootView,url,"GET");
-        a.doExecution();
-
-        schedule_count_clickablelayout = rootView.findViewById(R.id.schedule_count_clickablelayout);
-        follower_count_clickablelayout = rootView.findViewById(R.id.follower_count_clickablelayout);
-        following_count_clickablelayout = rootView.findViewById(R.id.following_count_clickablelayout);
-        ScheduleClickListener(schedule_count_clickablelayout);
-        FollowerClickListener(follower_count_clickablelayout);
-        FollowingClickListener(following_count_clickablelayout);
-
-        schedule_count_clickablelayout.setClickable(false);
-        follower_count_clickablelayout.setClickable(false);
-        following_count_clickablelayout.setClickable(false);
 
         return rootView;
     }
