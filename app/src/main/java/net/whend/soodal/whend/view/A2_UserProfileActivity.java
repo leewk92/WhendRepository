@@ -58,6 +58,8 @@ public class A2_UserProfileActivity extends AppCompatActivity {
 
 
         Intent intent=new Intent(this.getIntent());
+        AppPrefs appPrefs = new AppPrefs(this);
+
         user_id=intent.getIntExtra("id",0);                   // 훗날 유저 정보를 받기위한 URL을 받아올 때 사용할것이니라.
         Log.d("user_id",user_id+"");
     //    TextView textView=(TextView)findViewById(R.id.textview);
@@ -70,12 +72,19 @@ public class A2_UserProfileActivity extends AppCompatActivity {
         mTabHost.setup(this, getSupportFragmentManager() , R.id.realtabcontent);
         Bundle inputBundle = new Bundle();
         inputBundle.putInt("id",user_id);
-        mTabHost.addTab(mTabHost.newTabSpec("searchschedule").setIndicator("MY"),
+        mTabHost.addTab(mTabHost.newTabSpec("searchschedule").setIndicator("넣은 일정"),
                 F5_1_MyTimeline.class, inputBundle);
-        mTabHost.addTab(mTabHost.newTabSpec("searchhashtag").setIndicator("관심"),
+        mTabHost.addTab(mTabHost.newTabSpec("searchhashtag").setIndicator("관심 일정"),
                 F5_2_MyLikeSchedules.class, inputBundle);
-        mTabHost.addTab(mTabHost.newTabSpec("analysis").setIndicator("분석"),
-                F5_3_Analysis.class, null);
+        //mTabHost.addTab(mTabHost.newTabSpec("analysis").setIndicator("분석"), F5_3_Analysis.class, null);
+
+        TextView x = (TextView) mTabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+        x.setTextSize(10);
+        x = (TextView) mTabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
+        x.setTextSize(10);
+        //x = (TextView) mTabHost.getTabWidget().getChildAt(2).findViewById(android.R.id.title);
+        //x.setTextSize(10);
+
 
         String url = "http://119.81.176.245/userinfos/"+user_id;
 
@@ -86,6 +95,10 @@ public class A2_UserProfileActivity extends AppCompatActivity {
         follower_count_clickablelayout = findViewById(R.id.follower_count_clickablelayout);
         following_count_clickablelayout = findViewById(R.id.following_count_clickablelayout);
         follow_button = (ImageView)findViewById(R.id.follow_button);
+
+        if (user_id == appPrefs.getUser_id())
+            follow_button.setVisibility(View.GONE);
+
         user_photo = (ImageView)findViewById(R.id.user_photo);
         schedule_count_clickablelayout.setClickable(false);
         follower_count_clickablelayout.setClickable(false);
@@ -223,6 +236,10 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                     u.setCount_follower(tmp_ith.getInt("count_follower"));
                     u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));
 
+                    u.setFirstname(tmp_ith.getString("first_name"));
+                    u.setLastname(tmp_ith.getString("last_name"));
+                    u.setStatus(tmp_ith.getString("status"));
+
 /*                    JSONArray tmpjsonarray = tmp_ith.getJSONArray("following_user");
                     if(tmpjsonarray!=null) {
                         int[] following_user = new int[tmpjsonarray.length()];
@@ -276,6 +293,9 @@ public class A2_UserProfileActivity extends AppCompatActivity {
                 ((TextView)findViewById(R.id.follower_count)).setText(u.getCount_follower() + "");
                 ((TextView) findViewById(R.id.schedule_count)).setText(u.getCount_uploaded_schedule() + "");
                 ((TextView)findViewById(R.id.following_count)).setText(String.valueOf(u.getCount_following_hashtag() + u.getCount_following_user()));
+
+                ((TextView)findViewById(R.id.realname)).setText(u.getRealname());
+                ((TextView)findViewById(R.id.status)).setText(u.getStatus());
 
                 schedule_count_clickablelayout.setClickable(true);
                 follower_count_clickablelayout.setClickable(true);
