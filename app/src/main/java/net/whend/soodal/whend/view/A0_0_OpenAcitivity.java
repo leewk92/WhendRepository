@@ -84,7 +84,7 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 AppPrefs appPrefs = new AppPrefs(mContext);
-                appPrefs.setToken("");
+               // appPrefs.setToken("");
 
                 super.onPreExecute();
             }
@@ -117,11 +117,25 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
                 }
 
                 try{
+                    AppPrefs appPrefs = new AppPrefs(mContext);
                     String tmp_password1 = getOutputJsonObject().getString("password");
                     if(tmp_password1.contentEquals("[\"This field may not be blank.\"]")){
-                        Intent i = new Intent(A0_0_OpenAcitivity.this, A0_1_LoginActivity.class);
-                        startActivity(i);
-                        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+                        if(appPrefs.getUsername().contentEquals("")==false) {
+                            Log.d("TokenToken",appPrefs.getToken());
+                            Log.d("TokenId",appPrefs.getUsername());
+                            Log.d("TokenIdId",appPrefs.getUser_id()+"");
+                            Intent i = new Intent(A0_0_OpenAcitivity.this, MainActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(i);
+                            overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+                            finish();
+                        }else{
+                            Intent i = new Intent(A0_0_OpenAcitivity.this, A0_1_LoginActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(i);
+                            overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+                            finish();
+                        }
                     }
 
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
@@ -190,6 +204,7 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
+
 
                 try{
                     int user_id = getOutputJsonObject().getInt("user_id");

@@ -251,12 +251,15 @@ public class A8_SettingActivity extends AppCompatActivity {
                         appPrefs.setGcm_token("");
                         appPrefs.setPhoto("");
                         appPrefs.setUser_id(0);
+
                         Toast toast1 = Toast.makeText(mContext, "로그아웃 하였습니다.", Toast.LENGTH_SHORT);
                         toast1.show();
 
                         Intent intent = new Intent(mContext, A0_1_LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         mContext.startActivity(intent);
+
+
                         finish();
                     }
 

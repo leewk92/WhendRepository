@@ -75,6 +75,10 @@
             android:label="@string/title_activity_a0__2__signupactivity" >
         </activity>
         <activity
+            android:name=".view.A0_4_FacebookFriendActivity"
+            android:label="@string/title_activity_a0__4__facebookfriendactivity" >
+        </activity>
+        <activity
             android:name=".view.MainActivity"
             android:label="@string/title_activity_mainactivity"
             android:windowSoftInputMode="adjustPan|adjustResize" >
