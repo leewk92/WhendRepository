@@ -832,6 +832,75 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="5dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/skip_layout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="튜토리얼은 약 1분정도 소요됩니다.\n메인화면으로 이동하시겠습니까?"
+                    android:id="@+id/skip_warning"
+                    android:background="#03A9F4"
+                    android:padding="10dp"
+                    android:textColor="#FFFFFF" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp">
+
+                    <Button
+                        android:theme="@style/ColoredButtonOrange"
+                        android:layout_marginLeft="-5dip"
+                        android:layout_marginTop="-5dip"
+                        android:layout_marginBottom="-5dip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="네"
+                        android:id="@+id/skip_yes"
+                        android:textColor="#FFFFFF"
+                        android:padding="10dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="-2dip" />
+
+                    <Button
+                        android:theme="@style/ColoredButtonOrange"
+                        android:layout_marginRight="-5dip"
+                        android:layout_marginTop="-5dip"
+                        android:layout_marginBottom="-5dip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="아니오"
+                        android:id="@+id/skip_no"
+                        android:textColor="#FFFFFF"
+                        android:padding="10dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="-2dip" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Skip"
+                android:id="@+id/skip"
+                android:padding="10dp"
+                android:textColor="#B6B6B6"
+                android:layout_gravity="bottom|right"
+                android:clickable="true" />
+        </LinearLayout>
+
     </FrameLayout>
 
 </RelativeLayout>

@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +29,12 @@ public class T3_1_upload extends AppCompatActivity {
     LinearLayout t2_dark1, t2_dark2, t2_dark3, t2_dark4, t2_dark5, t2_dark6;
     Animation fade_in, fade_out, blink;
     int i = 0;
+
+    TextView skip;
+    Button skip_yes, skip_no;
+    LinearLayout skip_layout;
+
+    boolean screentouched = false;
 
     Handler handler = new Handler(){
         @Override
@@ -70,6 +78,18 @@ public class T3_1_upload extends AppCompatActivity {
         }
     }
 
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent e){
+        if(e.getAction() == MotionEvent.ACTION_UP){
+            handler.sendMessage(handler.obtainMessage());
+            screentouched = true;
+            return true;
+        }
+
+        return false;
+    }
 
 
     @Override
@@ -130,6 +150,54 @@ public class T3_1_upload extends AppCompatActivity {
                 }
             }
         };
+
+        // skip 부분
+        skip_layout = (LinearLayout) findViewById(R.id.skip_layout);
+        skip_layout.setVisibility(View.GONE);
+        skip = (TextView) findViewById(R.id.skip);
+        skip_yes = (Button) findViewById(R.id.skip_yes);
+        skip_no = (Button) findViewById(R.id.skip_no);
+
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (skip_layout.getVisibility() != View.VISIBLE) {
+                    skip_layout.setVisibility(View.VISIBLE);
+                    Animation slide_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_left_in_skip);
+                    skip_layout.startAnimation(slide_in);
+
+
+                } else {
+
+                    Animation slide_out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_right_out_skip);
+                    skip_layout.startAnimation(slide_out);
+                    skip_layout.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        skip_yes.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("text", String.valueOf("URL"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+                finish();
+            }
+        });
+
+        skip_no.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Animation slide_out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_right_out_skip);
+                skip_layout.startAnimation(slide_out);
+                skip_layout.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     @Override
@@ -165,6 +233,13 @@ public class T3_1_upload extends AppCompatActivity {
 
                         handler.sendMessage(handler.obtainMessage());
                         Thread.sleep(3000);
+
+
+                        while(screentouched){
+                            screentouched=false;
+                            Thread.sleep(3000);
+                        }
+
                     } catch (Throwable t) {
                     }
                 }
