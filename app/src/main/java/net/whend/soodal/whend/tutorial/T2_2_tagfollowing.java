@@ -47,8 +47,10 @@ public class T2_2_tagfollowing extends AppCompatActivity {
 
         switch (i) {
             case 0:
+                i++;
                 break;
             case 1:
+                i++;
                 t2_dark1.setVisibility(View.VISIBLE);
 
 
@@ -58,18 +60,19 @@ public class T2_2_tagfollowing extends AppCompatActivity {
                 break;
 
             case 2:
-
+                i++;
                 t2_2_text.setText("WhenD의 인기있는 태그나\n최신 태그들이 올라옵니다.");
                 t2_2_text.startAnimation(fade_in);
                 break;
 
             case 3:
-
+                i++;
                 t2_2_text.setText("인기있는 '#축제' 태그를\n팔로우 해봅시다.");
                 t2_2_text.startAnimation(fade_in);
                 break;
 
             case 4:
+                i++;
                 t2_2_text.startAnimation(fade_out);
                 t2_dark1.setVisibility(View.INVISIBLE);
                 t2_dark2.setVisibility(View.VISIBLE);
@@ -79,6 +82,9 @@ public class T2_2_tagfollowing extends AppCompatActivity {
                 t2_2_text.setText("축제 태그를 클릭하세요.");
                 t2_2_finger.setVisibility(View.VISIBLE);
                 t2_2_finger.startAnimation(blink);
+                break;
+
+            case 5:
                 break;
 
         }
@@ -122,10 +128,13 @@ public class T2_2_tagfollowing extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(T2_2_tagfollowing.this, T2_3_tagfollowing.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
-                finish();
+                if (i==5){
+                    Intent i = new Intent(T2_2_tagfollowing.this, T2_3_tagfollowing.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+                    finish();
+                }
+
             }
         });
         mHandler = new Handler() {
@@ -214,7 +223,7 @@ public class T2_2_tagfollowing extends AppCompatActivity {
 
         Thread myThread = new Thread(new Runnable() {
             public void run() {
-                for (; i < 5; i++) {
+                while(i>=0) {
                     try {
 
                         handler.sendMessage(handler.obtainMessage());

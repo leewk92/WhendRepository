@@ -118,19 +118,14 @@ public class T2_3_tagfollowing extends AppCompatActivity {
 
                 t2_text.setText("축제 태그를 팔로우했습니다\n마이페이지-팔로잉에서 확인할 수 있습니다.");
                 t2_text.startAnimation(fade_in);
-
-                break;
-
-            case 7:
-                i++;
                 t2_next.startAnimation(fade_in);
                 t2_next.setVisibility(View.VISIBLE);
                 break;
 
-            case 8:
+            case 7:
                 break;
 
-            case 9:
+            case 8:
                 i++;
                 t2_text.setText("일정을 캘린더에 직접 넣어보겠습니다.");
                 t2_text.startAnimation(fade_in);
@@ -143,7 +138,7 @@ public class T2_3_tagfollowing extends AppCompatActivity {
 
                 break;
 
-            case 10:
+            case 9:
                 t2_text.startAnimation(fade_out);
                 t2_text.setVisibility(View.INVISIBLE);
                 t2_dark1.setVisibility(View.INVISIBLE);
@@ -157,7 +152,7 @@ public class T2_3_tagfollowing extends AppCompatActivity {
 
                 break;
 
-            case 11:
+            case 10:
                 i++;
                 t2_text.setText("자신의 캘린더에 해당 일정이 추가되었습니다.\n캘린더에서 확인하세요.\n다시 눌러 일정을 뺄 수도 있습니다.");
                 t2_text.startAnimation(fade_in);
@@ -168,18 +163,14 @@ public class T2_3_tagfollowing extends AppCompatActivity {
                 t2_dark3.setVisibility(View.INVISIBLE);
                 t2_dark4.setVisibility(View.VISIBLE);
                 t2_dark5.setVisibility(View.INVISIBLE);
-                break;
-
-            case 12:
-                i++;
                 t2_next.startAnimation(fade_in);
                 t2_next.setVisibility(View.VISIBLE);
                 break;
 
-            case 13:
+            case 11:
                 break;
 
-            case 14:
+            case 12:
                 i++;
                 Intent i = new Intent(T2_3_tagfollowing.this, T3_1_upload.class);
                 startActivity(i);

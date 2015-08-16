@@ -47,8 +47,10 @@ public class T3_1_upload extends AppCompatActivity {
 
         switch (i) {
             case 0:
+                i++;
                 break;
             case 1:
+                i++;
                 t2_dark1.setVisibility(View.VISIBLE);
                 t2_dark2.setVisibility(View.VISIBLE);
                 t2_dark3.setVisibility(View.VISIBLE);
@@ -56,12 +58,13 @@ public class T3_1_upload extends AppCompatActivity {
                 t2_dark5.setVisibility(View.VISIBLE);
                 t2_dark6.setVisibility(View.VISIBLE);
 
-                t2_text1.setText("마지막으로 (휴!)\n일정 올리기를 해보겠습니다.");
+                t2_text1.setText("마지막으로\n일정 올리기를 해보겠습니다.");
                 t2_text1.setVisibility(View.VISIBLE);
                 t2_text1.startAnimation(fade_in);
                 break;
 
             case 2:
+                i++;
                 t2_text1.startAnimation(fade_out);
 
                 t2_text1.setVisibility(View.INVISIBLE);
@@ -228,7 +231,7 @@ public class T3_1_upload extends AppCompatActivity {
 
         Thread myThread = new Thread(new Runnable() {
             public void run() {
-                for (; i < 10; i++) {
+                while (i>=0){
                     try {
 
                         handler.sendMessage(handler.obtainMessage());
