@@ -39,6 +39,7 @@ public class Schedule {
     private String location;            // It'll be adjusted to Google(or Daum) Map API soon (WK)
     private String photo_dir;           // Download photo on cache directory (WK)
     private String photo_dir_fromweb;
+    private String photo_full_fromweb;
     private boolean allday;
     private String timezone;
 //    private String created_at;        // Client doesn't need this field (WK)각
@@ -237,5 +238,13 @@ public class Schedule {
 
     public void setUser_photo(String user_photo) {
         this.user_photo = user_photo;
+    }
+
+    public String getPhoto_full_fromweb() {
+        return photo_full_fromweb;
+    }
+
+    public void setPhoto_full_fromweb(String photo_full_fromweb) {
+        this.photo_full_fromweb = photo_full_fromweb;
     }
 }

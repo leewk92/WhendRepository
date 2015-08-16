@@ -8,6 +8,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -262,7 +263,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
                             // 이미지 잘라내기 위한 크기
 
-
+                            /*
                             float density  = getResources().getDisplayMetrics().density;
 
                             float width_dp = (float) getResources().getDisplayMetrics().widthPixels / density;
@@ -278,7 +279,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                             intent.putExtra("aspectY", 100);
 
                             intent.putExtra("outputX", (int)(ratio*100));
-                            intent.putExtra("outputY",  100);
+                            intent.putExtra("outputY",  100);*/
 
                             try {
                                 intent.putExtra("return-data", true);
@@ -290,13 +291,13 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
                         } else if (item == 1) { //갤러리에서 가져오기
 
+                            Intent intent = new Intent(Intent.ACTION_PICK);
+                            intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                            intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(intent, TAKE_FROM_GALLERY);
 
-                            Intent intent = new Intent();
-                            // Gallery 호출
-                            intent.setType("image/*");
-                            intent.setAction(Intent.ACTION_GET_CONTENT);
                             // 잘라내기 셋팅
-
+                            /*
                             float density  = getResources().getDisplayMetrics().density;
 
                             float width_dp = (float) getResources().getDisplayMetrics().widthPixels / density;
@@ -313,14 +314,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
                             intent.putExtra("outputX", (int)(ratio*100));
                             intent.putExtra("outputY",  100);
+                            */
 
-                            try {
-                                intent.putExtra("return-data", true);
-                                startActivityForResult(Intent.createChooser(intent,
-                                        "Complete action using"), TAKE_FROM_GALLERY);
-                            } catch (ActivityNotFoundException e) {
-                                // Do nothing for now
-                            }
                         }
 
                     }
@@ -351,19 +346,24 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                 Bundle extras = data.getExtras();
                 mImageCaptureUri = data.getData(); // Get data from selected photo
 
-                if (extras != null) {
-                    Bitmap photo = extras.getParcelable("data");
+                Bitmap photo = null;
+                try {
+                    photo = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                     schedule_photo.setImageBitmap(photo);
+                    Cursor c = getContentResolver().query(Uri.parse(mImageCaptureUri.toString()),null,null,null,null);
+                    c.moveToNext();
+                    ImageAbsolutePath = c.getString(c.getColumnIndex(MediaStore.MediaColumns.DATA));
 
-                    ImageAbsolutePath = createImageFromBitmap(photo);
 
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+
             }else if (requestCode == TAKE_FROM_CAMERA) {
                 Bundle extras2 = data.getExtras();
                 if (extras2 != null) {
                     Bitmap photo = extras2.getParcelable("data");
                     schedule_photo.setImageBitmap(photo);
-
                     ImageAbsolutePath = createImageFromBitmap(photo);
                 }
             }

@@ -30,6 +30,7 @@ public class Concise_Schedule {
     private String location;
     private String photo_dir;
     private String photo_dir_fromweb;
+    private String photo_full_fromweb;
     private String memo;
     private int like_count;
     private String best_friend_like;
@@ -58,6 +59,7 @@ public class Concise_Schedule {
         //this.location = s.getLocation();
         this.photo_dir = "";
         this.photo_dir_fromweb = s.getPhoto_dir_fromweb();
+        this.photo_full_fromweb = s.getPhoto_full_fromweb();
         this.memo = s.getMemo();
         this.like_count = s.getLike_count();
         this.follow_count = s.getFollow_count();
@@ -312,5 +314,13 @@ public class Concise_Schedule {
 
     public void setUser_photo(String user_photo) {
         this.user_photo = user_photo;
+    }
+
+    public String getPhoto_full_fromweb() {
+        return photo_full_fromweb;
+    }
+
+    public void setPhoto_full_fromweb(String photo_full_fromweb) {
+        this.photo_full_fromweb = photo_full_fromweb;
     }
 }

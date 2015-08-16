@@ -1,6 +1,7 @@
 package net.whend.soodal.whend.view;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,9 +9,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -53,6 +57,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
     ImageView edit;
     View user_clickableLayout;
     ImageView like_button;
+    ImageView full_screen;
     ImageView follow_button;
     ImageView comment_button ;
     View schedulefollow_user_clickablelayout ;
@@ -115,6 +120,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         like_button = (ImageView)findViewById(R.id.like_button);
         follow_button = (ImageView)findViewById(R.id.follow_button);
         comment_button = (ImageView)findViewById(R.id.comment_button);
+        full_screen = (ImageView) findViewById(R.id.fullscreen_image);
         schedulefollow_user_clickablelayout = (View)findViewById(R.id.schedulefollow_user_clickablelayout);
         schedulelike_user_clickablelayout = (View)findViewById(R.id.schedulelike_user_clickablelayout);
         like_count = (TextView)findViewById(R.id.like_count);
@@ -122,7 +128,25 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         memo_photo = (ImageView)findViewById(R.id.memo_photo);
         user_photo = (ImageView)findViewById(R.id.user_photo);
 
+        full_screen.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View v) {
+                if(cs.getPhoto_full_fromweb()!="") {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(A3_SpecificScheduleActivity.this, R.style.AppCompatAlertDialogStyle2));
+                    LayoutInflater factory = LayoutInflater.from(A3_SpecificScheduleActivity.this);
+                    final View view = factory.inflate(R.layout.d2_fullscreen_image, null);
+
+                    ImageView temp = (ImageView) view.findViewById(R.id.image);
+                    Picasso.with(A3_SpecificScheduleActivity.this).load(cs.getPhoto_full_fromweb()).into(temp);
+
+                    builder.setView(view);
+
+                    builder.show();
+                }
+            }
+        });
     }
 
     // 끝없이 로딩 하는거
@@ -484,6 +508,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     s.setUploaded_username(tmp_ith.getString("user_name"));
                     s.setUploaded_user_id(tmp_ith.getInt("user_id"));
                     s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                    s.setPhoto_full_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo"));
                     s.setFollow_count((tmp_ith.getInt("count_follow")));
                     s.setLike_count((tmp_ith.getInt("count_like")));
                     s.setLocation((tmp_ith.getString("location")));

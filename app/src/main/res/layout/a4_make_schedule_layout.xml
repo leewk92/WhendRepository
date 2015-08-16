@@ -245,7 +245,8 @@
             android:layout_height="120dp"
             android:id="@+id/schedule_photo"
             android:background="#b6b6b6"
-            android:clickable="true" />
+            android:clickable="true"
+            android:scaleType="centerCrop" />
 
         <EditText
             android:theme="@style/Theme.App.Base"

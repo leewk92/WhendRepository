@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     ImageView like_button ;
     ImageView follow_button;
     ImageView comment_button;
+    ImageView full_screen;
     View schedulefollow_user_clickablelayout;
     View schedulelike_user_clickablelayout;
     TextView like_count ;
@@ -86,6 +88,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             holder.user_clickableLayout_vh = (View)v.findViewById(R.id.user_clickableLayout);
             holder.schedulefollow_user_clickablelayout_vh = (View)v.findViewById(R.id.schedulefollow_user_clickablelayout);
             holder.schedulelike_user_clickablelayout_vh = (View)v.findViewById(R.id.schedulelike_user_clickablelayout);
+            holder.full_screen_vh = (ImageView) v.findViewById(R.id.fullscreen_image);
 
             v.setTag(holder);
         } else{
@@ -106,8 +109,6 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         like_count = (TextView)v.findViewById(R.id.like_count);
         follow_count = (TextView)v.findViewById(R.id.follow_count);
         edit = (ImageView)v.findViewById(R.id.edit);
-
-
 
         v.setTag(holder);
 
@@ -194,7 +195,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, A5_WhoFollowsScheduleActivity.class);
-                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/" + CSchedule_list.get(position).getSchedule().getUploaded_user_id() + "/followers/"));       // 나중에 해결
+                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/" + CSchedule_list.get(position).getSchedule().getId() + "/followers/"));       // 나중에 해결
                 context.startActivity(intent);
             }
         });
@@ -206,9 +207,10 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         schedulelike_user_clickablelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("clicked id",CSchedule_list.get(position).getSchedule().getUploaded_user_id()+"");
+                Log.d("clicked schedule",CSchedule_list.get(position).getSchedule().getTitle());
+                Log.d("clicked position",position+"");
                 Intent intent = new Intent(context, A5_WhoFollowsScheduleActivity.class);
-                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/"+ CSchedule_list.get(position).getSchedule().getUploaded_user_id()+"/like_users/"));       // 나중에 해결
+                intent.putExtra("url", String.valueOf("http://119.81.176.245/schedules/"+ CSchedule_list.get(position).getSchedule().getId()+"/like_users/"));       // 나중에 해결
                 context.startActivity(intent);
             }
         });
@@ -337,6 +339,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         TextView comment_count_vh;
         ImageView like_button_vh;
         ImageView follow_button_vh;
+        ImageView full_screen_vh;
 
         View user_clickableLayout_vh;
         View schedulefollow_user_clickablelayout_vh;
@@ -347,7 +350,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
 
     // 레이아웃에 데이터 적용
-    public void AdjustDataToLayout(final View v,int position, ViewHolder holder){
+    public void AdjustDataToLayout(final View v, final int position, ViewHolder holder){
         Log.d("position_adjust", position + "");
 
         if(CSchedule_list.get(position).getSchedule().isMaster() == true){
@@ -447,6 +450,9 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         holder.time_vh.setTag(position);
         holder.like_button_vh.setTag(position);
         holder.user_fullname_vh.setTag(position);
+        holder.schedulefollow_user_clickablelayout_vh.setTag(position);
+        holder.schedulelike_user_clickablelayout_vh.setTag(position);
+        holder.full_screen_vh.setTag(position);
 
         EditClieckListener(holder.edit_vh, position);
         UserProfileClickListener(holder.user_clickableLayout_vh, position);
@@ -456,6 +462,28 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         FollowButtonClickListener(holder.follow_button_vh, follow_count, position);
         WhoFollowsScheduleClickListener(holder.schedulefollow_user_clickablelayout_vh, position);
         WhoLikesScheduleClickListener(holder.schedulelike_user_clickablelayout_vh, position);
+
+
+        holder.full_screen_vh.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (CSchedule_list.get(position).getPhoto_full_fromweb() != "") {
+
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.AppCompatAlertDialogStyle2));
+                    LayoutInflater factory = LayoutInflater.from(context);
+                    final View view = factory.inflate(R.layout.d2_fullscreen_image, null);
+
+                    ImageView temp = (ImageView) view.findViewById(R.id.image);
+                    Picasso.with(context).load(CSchedule_list.get(position).getPhoto_full_fromweb()).into(temp);
+
+                    builder.setView(view);
+
+                    builder.show();
+                }
+            }
+        });
 
 
 
