@@ -481,16 +481,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     ImageView temp = (ImageView) view.findViewById(R.id.image);
                     Picasso.with(context).load(CSchedule_list.get(position).getPhoto_full_fromweb()).into(temp);
 
-
-                    Dialog d = builder.setView(view).create();
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(d.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    d.show();
-                    d.getWindow().setAttributes(lp);
-
-                    //builder.show();
+                    builder.setView(view);
+                    builder.show();
                 }
             }
         });

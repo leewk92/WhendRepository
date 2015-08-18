@@ -142,14 +142,9 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     ImageView temp = (ImageView) view.findViewById(R.id.image);
                     Picasso.with(A3_SpecificScheduleActivity.this).load(cs.getPhoto_full_fromweb()).into(temp);
 
+                    builder.setView(view);
+                    builder.show();
 
-                    Dialog d = builder.setView(view).create();
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(d.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    d.show();
-                    d.getWindow().setAttributes(lp);
                 }
             }
         });

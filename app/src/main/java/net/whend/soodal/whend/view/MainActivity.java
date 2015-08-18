@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -137,10 +138,6 @@ public class MainActivity extends AppCompatActivity {
         mTabHost.addTab(mTabHost.newTabSpec("tab5").setIndicator("", getApplicationContext().getResources().getDrawable(R.drawable.menu_mypage)),
                 F5_Mypage.class, null);
 
-
-
-
-
         mTabHost.getTabWidget().setStripEnabled(false);
         mTabHost.getTabWidget().setDividerDrawable(null);
 
@@ -197,7 +194,21 @@ public class MainActivity extends AppCompatActivity {
                 ((BaseContainerFragment)getSupportFragmentManager().findFragmentByTag("tab"+(previousTab+1))).replaceFragmentByIndex(mTabHost.getCurrentTab(), false);
 
                 Log.e("Previous",""+previousTab);*/
-
+                /*
+                FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+                if (tabId.equals("tab1")){
+                    t.replace(R.id.realtabcontent, new F1_Wall());
+                }else if (tabId.equals("tab2")){
+                    t.replace(R.id.realtabcontent, new F2_Search());
+                }else if (tabId.equals("tab3")){
+                    t.replace(R.id.realtabcontent, new F3_Upload());
+                }else if (tabId.equals("tab4")){
+                    t.replace(R.id.realtabcontent, new F4_Notify());
+                }else if (tabId.equals("tab5")){
+                    t.replace(R.id.realtabcontent, new F5_Mypage());
+                }
+                t.addToBackStack(null);
+                t.commit();*/
             }
         });
 
