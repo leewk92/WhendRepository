@@ -246,6 +246,7 @@ public class A7_SpecificHashTagActivity extends Activity {
                         s.setUploaded_username(tmp_ith.getString("user_name"));
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        s.setPhoto_full_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo"));
                         Log.d("photo_dir", s.getPhoto_dir_fromweb());
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));

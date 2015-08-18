@@ -7,8 +7,10 @@
     <ImageView
         android:id ="@+id/image"
         android:src="@drawable/whend_actionbar"
-        android:scaleType="fitXY"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:scaleType="centerInside"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:padding="5dp"/>
 
 </LinearLayout>

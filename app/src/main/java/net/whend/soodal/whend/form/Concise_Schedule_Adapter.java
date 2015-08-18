@@ -1,5 +1,7 @@
 package net.whend.soodal.whend.form;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -478,9 +481,16 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     ImageView temp = (ImageView) view.findViewById(R.id.image);
                     Picasso.with(context).load(CSchedule_list.get(position).getPhoto_full_fromweb()).into(temp);
 
-                    builder.setView(view);
 
-                    builder.show();
+                    Dialog d = builder.setView(view).create();
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(d.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    d.show();
+                    d.getWindow().setAttributes(lp);
+
+                    //builder.show();
                 }
             }
         });
