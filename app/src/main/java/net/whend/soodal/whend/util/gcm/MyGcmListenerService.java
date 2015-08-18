@@ -80,7 +80,8 @@ public class MyGcmListenerService extends GcmListenerService {
 
 
         //푸시알리 설정이 true, 그리고 나랑 이름이 다를 때만 받음
-        if(appPrefs.getPush_setting() )
+        //if(appPrefs.getPush_setting() && !data.getString("actor_name").equals(appPrefs.getUsername().toString()))
+        if(appPrefs.getPush_setting())
           sendNotification(message);
 
         //sendNotification(message, target_type, target_id);

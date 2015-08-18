@@ -88,8 +88,7 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
 
 
         AppPrefs appPrefs = new AppPrefs(this);
-        TextView username = (TextView)findViewById(R.id.user_fullname);
-        username.setText(appPrefs.getUsername());
+
 
         all_day = (CheckBox) findViewById(R.id.allday_checkbox);
         date_start = (TextView) findViewById(R.id.date_start);
