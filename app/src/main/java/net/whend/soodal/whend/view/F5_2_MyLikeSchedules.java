@@ -275,6 +275,7 @@ public class F5_2_MyLikeSchedules extends Fragment {
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
                         s.setLocation((tmp_ith.getString("location")));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        s.setPhoto_full_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo"));
                         s.setUser_photo((tmp_ith.getString("user_photo") == "null") ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
                         s.setAllday((tmp_ith.getBoolean("all_day")));
                         s.setMaster((tmp_ith.getInt("master")==1?true:false));

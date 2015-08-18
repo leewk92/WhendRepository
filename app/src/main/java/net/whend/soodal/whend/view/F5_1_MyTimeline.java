@@ -2,17 +2,11 @@ package net.whend.soodal.whend.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -206,6 +200,7 @@ public class F5_1_MyTimeline extends Fragment {
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
                         s.setLocation((tmp_ith.getString("location")));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
+                        s.setPhoto_full_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo"));
                         s.setFollow_count((tmp_ith.getInt("count_follow")));
                         s.setLike_count((tmp_ith.getInt("count_like")));
                         s.setComment_count((tmp_ith.getInt("count_comment")));

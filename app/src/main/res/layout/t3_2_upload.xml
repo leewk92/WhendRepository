@@ -354,7 +354,9 @@
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/skip_layout">
+                android:id="@+id/skip_layout"
+                android:background="#77000000"
+                android:padding="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
