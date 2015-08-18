@@ -9,7 +9,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -478,8 +481,22 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     LayoutInflater factory = LayoutInflater.from(context);
                     final View view = factory.inflate(R.layout.d2_fullscreen_image, null);
 
+                    DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+
+                    float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+                    float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+
+
+
+                    int targetwidthpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, (int)(dpWidth*0.9), context.getResources().getDisplayMetrics());
+                    int targetheightpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, (int) (dpHeight * 0.9), context.getResources().getDisplayMetrics());
+
+
+
                     ImageView temp = (ImageView) view.findViewById(R.id.image);
-                    Picasso.with(context).load(CSchedule_list.get(position).getPhoto_full_fromweb()).into(temp);
+                    temp.getLayoutParams().width = targetwidthpx;
+                    temp.getLayoutParams().height = targetheightpx;
+                    Picasso.with(context).load(CSchedule_list.get(position).getPhoto_full_fromweb()).fit().centerInside().into(temp);
 
                     builder.setView(view);
                     builder.show();
