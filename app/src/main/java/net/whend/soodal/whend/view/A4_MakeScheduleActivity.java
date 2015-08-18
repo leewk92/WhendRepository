@@ -11,13 +11,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.text.style.ImageSpan;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -31,6 +34,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.util.AppPrefs;
@@ -256,10 +261,19 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int item) {
                         if (item == 0) { //카메라에서 찍기
 
+
+                            Intent intent = new Intent();
+
+                            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                            //intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                            //intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                            startActivityForResult(intent, TAKE_FROM_CAMERA);
+
                             // 카메라 호출
-                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
+                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());*/
 
                             // 이미지 잘라내기 위한 크기
 
@@ -281,13 +295,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                             intent.putExtra("outputX", (int)(ratio*100));
                             intent.putExtra("outputY",  100);*/
 
-                            try {
-                                intent.putExtra("return-data", true);
-                                startActivityForResult(Intent.createChooser(intent,
-                                        "Complete action using"), TAKE_FROM_CAMERA);
-                            } catch (ActivityNotFoundException e) {
-                                // Do nothing for now
-                            }
+
 
                         } else if (item == 1) { //갤러리에서 가져오기
 
@@ -349,23 +357,34 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                 Bitmap photo = null;
                 try {
                     photo = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                    schedule_photo.setImageBitmap(photo);
+                    //schedule_photo.setImageBitmap(photo);
+                    Picasso.with(getApplicationContext()).load(mImageCaptureUri).fit().centerCrop().into(schedule_photo);
                     Cursor c = getContentResolver().query(Uri.parse(mImageCaptureUri.toString()),null,null,null,null);
                     c.moveToNext();
                     ImageAbsolutePath = c.getString(c.getColumnIndex(MediaStore.MediaColumns.DATA));
-
+                    c.close();
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
             }else if (requestCode == TAKE_FROM_CAMERA) {
-                Bundle extras2 = data.getExtras();
-                if (extras2 != null) {
-                    Bitmap photo = extras2.getParcelable("data");
-                    schedule_photo.setImageBitmap(photo);
-                    ImageAbsolutePath = createImageFromBitmap(photo);
-                }
+
+                Bundle extras = data.getExtras();
+                mImageCaptureUri = data.getData(); // Get data from selected photo
+
+                    Picasso.with(getApplicationContext()).load(mImageCaptureUri).fit().centerCrop().into(schedule_photo);
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContentResolver().query(mImageCaptureUri, filePathColumn, null, null, null);
+
+                    if(cursor.moveToFirst()) {
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        ImageAbsolutePath = cursor.getString(columnIndex);
+                    }
+                    Log.d("Path",ImageAbsolutePath);
+
+                    cursor.close();
+
             }
         }
     }
