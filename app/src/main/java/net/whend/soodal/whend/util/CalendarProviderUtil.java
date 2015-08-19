@@ -31,12 +31,12 @@ public class CalendarProviderUtil {
     private ArrayList<Schedule> innerScheduleList = new ArrayList<Schedule>();
     private Context mContext;
     private long whendCalendarId;
-    private int amount=15;     // 가져올 일정 개수
+    private int amount=15;     // 가져올 일정  개수
     public static final String[] CALENDAR_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0
             CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
             CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
-            CalendarContract.Calendars.OWNER_ACCOUNT,                  // 3
+            CalendarContract.Calendars.OWNER_ACCOUNT,                 // 3
             CalendarContract.Calendars.NAME
     };
     // The indices for the projection array above.
@@ -226,6 +226,8 @@ public class CalendarProviderUtil {
             values.put(CalendarContract.Events.ALL_DAY, cs.getSchedule().getAllday()==true?1:0);
             values.put(CalendarContract.Events.TITLE, cs.getTitle());
             values.put(CalendarContract.Events.DESCRIPTION, cs.getMemo());
+            if(appPrefs.getAlarm_setting())
+                values.put(CalendarContract.Events.HAS_ALARM, 1);
             values.put(CalendarContract.Events.CALENDAR_ID, calID);
             values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().toString());
 //            values.put(CalendarContract.Events.EVENT_TIMEZONE, "UTC");
@@ -240,6 +242,17 @@ public class CalendarProviderUtil {
             Log.d("add allday",cs.getSchedule().getAllday()+"");
             Log.d("add dtstart",cs.getSchedule().getStarttime_ms()+"");
             Log.d("add dtend",cs.getSchedule().getEndtime_ms()+"");
+
+            if(appPrefs.getAlarm_setting()){
+                ContentValues reminders = new ContentValues();
+                reminders.put(CalendarContract.Reminders.EVENT_ID,id);
+                reminders.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+                reminders.put(CalendarContract.Reminders.MINUTES, appPrefs.getAlarm_time());
+
+                Uri uri2 = cr.insert(CalendarContract.Reminders.CONTENT_URI, reminders);
+                Log.d("remainder added",appPrefs.getAlarm_time()+" mins before the event");
+            }
+
         }else{
             Log.d("repeated event","true");
         }
@@ -339,6 +352,8 @@ public class CalendarProviderUtil {
                 .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, accountType)
                 .build();
     }
+
+
     /*
     private void syncDeviceCalendar() throws JSONException {
 

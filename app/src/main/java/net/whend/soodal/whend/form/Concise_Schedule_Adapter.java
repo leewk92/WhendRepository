@@ -289,6 +289,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     Log.d("follow_end_time",CSchedule_list.get(pos).getSchedule().getEndtime_ms()+"");
                     Log.d("follow_allday", CSchedule_list.get(pos).getSchedule().getAllday() + "");
                     cpu.addScheduleToInnerCalendar(CSchedule_list.get(pos));
+                    Toast.makeText(context,"캘린더에 추가되었습니다",Toast.LENGTH_SHORT);
  //                   notifyDataSetChanged();
                 }
                 else if(CSchedule_list.get(pos).getIsFollow() == true){
@@ -302,6 +303,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     iv.setImageResource(R.drawable.exporttocalendar);
 
                     cpu.deleteScheduleFromInnerCalendar(CSchedule_list.get(pos));
+                    Toast.makeText(context, "캘린더에서 제거되었습니다", Toast.LENGTH_SHORT);
   //                  notifyDataSetChanged();
                 }
 

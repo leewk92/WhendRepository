@@ -238,6 +238,10 @@
             android:name=".view.setting.S4_Password"
             android:label="@string/title_activity_s4__password" >
         </activity>
+        <activity
+            android:name=".view.setting.S5_Alarm"
+            android:label="@string/title_activity_s5__alarm" >
+        </activity>
     </application>
 
 </manifest>

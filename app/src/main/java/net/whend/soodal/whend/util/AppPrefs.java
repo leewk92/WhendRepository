@@ -20,6 +20,7 @@ public class AppPrefs {
  private String unreadNotificationCount = "unreadNotificationCount";
  private String push_setting = "push_setting";
  private String alarm_setting = "alarm_setting";
+ private String alarm_time = "alarm_time";
 
  public AppPrefs(Context context) {
   this.appSharedPrefs = context.getSharedPreferences(USER_PREFS, Activity.MODE_PRIVATE);
@@ -119,7 +120,12 @@ public class AppPrefs {
   return appSharedPrefs.getBoolean(alarm_setting, true);
  }
 
- public void setAlarm_setting(Boolean _alarm_setting) {
+ public int getAlarm_time(){
+  return appSharedPrefs.getInt(alarm_time, 1400);
+ }
+
+ public void setAlarm_setting(Boolean _alarm_setting, int _alarm_time) {
   prefsEditor.putBoolean(alarm_setting, _alarm_setting).commit();
+  prefsEditor.putInt(alarm_time, _alarm_time).commit();
  }
 }

@@ -225,7 +225,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Bitmap bitmap = bmpdrawable.getBitmap();
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
-        float target_px = 32f * getResources().getDisplayMetrics().density;
+        float target_px = 36f * getResources().getDisplayMetrics().density;
         float multiplier=metrics.density/3f;
 
         bitmap = bitmap.createScaledBitmap(bitmap, (int)target_px, (int)target_px, false);

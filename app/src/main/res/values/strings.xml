@@ -35,5 +35,6 @@
     <string name="title_activity_a0_3__sign_up_from_facebook">A0_3_SignUpFromFacebook</string>
     <string name="title_activity_a0__4__facebookfriendactivity">A0_4_FacebookFriendActivity</string>
     <string name="title_activity_s4__password">S4_Password</string>
+    <string name="title_activity_s5__alarm">S5_Alarm</string>
 
 </resources>

@@ -85,7 +85,7 @@ public class S3_Profile extends AppCompatActivity {
         toolbar.setTitle(" ");
 
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back_s);
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -336,7 +336,7 @@ public class S3_Profile extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_s3__profile, menu);
+        getMenuInflater().inflate(R.menu.menu_s3_profile, menu);
         return true;
     }
 
