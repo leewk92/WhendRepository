@@ -119,9 +119,29 @@ public class AppPrefs {
  public Boolean getAlarm_setting() {
   return appSharedPrefs.getBoolean(alarm_setting, true);
  }
+ public String getAlarm_time_string() {
+  switch(getAlarm_time()){
+   case 0:
+    return null;
+   case 1440:
+    return "1일 전";
+   case 60:
+    return "1시간 전";
+   case 120:
+    return "2시간 전";
+   case 360:
+    return "6시간 전";
+   case 2880:
+    return "2일 전";
+   case 10080:
+    return "일주일 전";
+   default:
+    return getAlarm_time()+"분 전";
+  }
+ }
 
  public int getAlarm_time(){
-  return appSharedPrefs.getInt(alarm_time, 1400);
+  return appSharedPrefs.getInt(alarm_time, 1440);
  }
 
  public void setAlarm_setting(Boolean _alarm_setting, int _alarm_time) {

@@ -28,7 +28,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmListenerService;
@@ -204,8 +203,8 @@ public class MyGcmListenerService extends GcmListenerService {
 
             AppPrefs appPrefs = new AppPrefs(getApplicationContext());
 
-                Toast toast = Toast.makeText(context, message_static, duration);
-                toast.show();
+                //Toast toast = Toast.makeText(context, message_static, duration);
+               // toast.show();
 
 
             int count =  appPrefs.getUnreadNotificationCount();

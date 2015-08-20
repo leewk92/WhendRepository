@@ -1,11 +1,9 @@
 package net.whend.soodal.whend.view;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +14,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -31,6 +27,7 @@ import net.whend.soodal.whend.form.Comment_Adapter;
 import net.whend.soodal.whend.model.base.Comment;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.CalendarProviderUtil;
 import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.DateTimeFormatter;
@@ -366,6 +363,13 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     fcv.setText(String.valueOf(cs.getFollow_count()));
                     iv.setImageResource(R.drawable.export_to_calendar_onclick);
                     cpu.addScheduleToInnerCalendar(cs);
+
+                    AppPrefs appPrefs = new AppPrefs(mContext);
+                    if (appPrefs.getAlarm_setting())
+                        Toast.makeText(mContext, "캘린더에 추가되었습니다\n"+appPrefs.getAlarm_time_string()+"으로 알람이 설정되었습니다",Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(mContext, "캘린더에 추가되었습니다", Toast.LENGTH_SHORT).show();
+
                 } else if (cs.getIsFollow() == true) {
      //               Toast toast2 = Toast.makeText(mContext, "Follow Button Unclicked", Toast.LENGTH_SHORT);
     //                toast2.show();
@@ -377,6 +381,8 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                     iv.setImageResource(R.drawable.exporttocalendar);
 
                     cpu.deleteScheduleFromInnerCalendar(cs);
+                    Toast.makeText(mContext, "캘린더에서 제거되었습니다", Toast.LENGTH_SHORT).show();
+
                 }
 
             }

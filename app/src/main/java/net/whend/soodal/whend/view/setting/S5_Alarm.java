@@ -1,6 +1,5 @@
 package net.whend.soodal.whend.view.setting;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +23,7 @@ public class S5_Alarm extends AppCompatActivity {
     private Switch alarm_onoff;
     private Spinner time_list;
     private LinearLayout alarm_list;
-    private int time_before = 1400;
+    private int time_before = 1440;
 
     private String[] time = {
             "1일 전",
@@ -74,25 +73,25 @@ public class S5_Alarm extends AppCompatActivity {
                         int position = time_list.getSelectedItemPosition();
                         switch(position){
                             case 0:
-                                time_before = 1400;
+                                time_before = 1440; // 1day
                                 break;
                             case 1:
-                                time_before = 60;
+                                time_before = 60;  // 60mins
                                 break;
                             case 2:
                                 time_before = 120;
                                 break;
                             case 3:
-                                time_before = 360;
+                                time_before = 360; // 6 hours
                                 break;
                             case 4:
-                                time_before = 2800;
+                                time_before = 2880;
                                 break;
                             case 5:
-                                time_before = 9800;
+                                time_before = 10080; // 7days
                                 break;
                             default:
-                                time_before = 1400;
+                                time_before = 1440;
                                 break;
                         }
 
@@ -111,6 +110,29 @@ public class S5_Alarm extends AppCompatActivity {
 
         if(appPrefs.getAlarm_setting()) {
             alarm_onoff.setChecked(true);
+            switch(appPrefs.getAlarm_time()){
+                case 1440:
+                    time_list.setSelection(0);
+                    break;
+                case 60:
+                    time_list.setSelection(1);
+                    break;
+                case 120:
+                    time_list.setSelection(2);
+                    break;
+                case 360:
+                    time_list.setSelection(3);
+                    break;
+                case 2880:
+                    time_list.setSelection(4);
+                    break;
+                case 10080:
+                    time_list.setSelection(5);
+                    break;
+                default:
+                    time_list.setSelection(0);
+                    break;
+            }
             alarm_list.setVisibility(View.VISIBLE);
         }else {
             alarm_onoff.setChecked(false);
@@ -124,7 +146,7 @@ public class S5_Alarm extends AppCompatActivity {
                                          boolean isChecked) {
 
                 if (isChecked) {
-                    appPrefs.setAlarm_setting(true,1400);
+                    appPrefs.setAlarm_setting(true,1440);
                     alarm_list.setVisibility(View.VISIBLE);
                     alarm_list.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_down_in_rate));
                 } else {

@@ -1,22 +1,17 @@
 package net.whend.soodal.whend.form;
-import android.app.ActionBar;
+
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
+import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.CalendarProviderUtil;
 import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
@@ -37,7 +33,6 @@ import net.whend.soodal.whend.view.A6_WriteCommentActivity;
 import net.whend.soodal.whend.view.MainActivity;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Wall 에서 일정을 간단한 카드 형식 리스트로 보여주기 위한 어답터
@@ -289,7 +284,12 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     Log.d("follow_end_time",CSchedule_list.get(pos).getSchedule().getEndtime_ms()+"");
                     Log.d("follow_allday", CSchedule_list.get(pos).getSchedule().getAllday() + "");
                     cpu.addScheduleToInnerCalendar(CSchedule_list.get(pos));
-                    Toast.makeText(context,"캘린더에 추가되었습니다",Toast.LENGTH_SHORT);
+
+                    AppPrefs appPrefs = new AppPrefs(context);
+                    if (appPrefs.getAlarm_setting())
+                        Toast.makeText(context, "캘린더에 추가되었습니다\n"+appPrefs.getAlarm_time_string()+"으로 알람이 설정되었습니다",Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(context, "캘린더에 추가되었습니다", Toast.LENGTH_SHORT).show();
  //                   notifyDataSetChanged();
                 }
                 else if(CSchedule_list.get(pos).getIsFollow() == true){
@@ -303,7 +303,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     iv.setImageResource(R.drawable.exporttocalendar);
 
                     cpu.deleteScheduleFromInnerCalendar(CSchedule_list.get(pos));
-                    Toast.makeText(context, "캘린더에서 제거되었습니다", Toast.LENGTH_SHORT);
+                    Toast.makeText(context, "캘린더에서 제거되었습니다", Toast.LENGTH_SHORT).show();
   //                  notifyDataSetChanged();
                 }
 
