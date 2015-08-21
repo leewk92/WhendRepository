@@ -88,7 +88,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="기본 알람"
+                    android:text="알람 시각"
                     android:id="@+id/textView26"
                     android:padding="15dp"
                     android:textColor="#212121"
@@ -137,7 +137,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="개인 설정 전 알람 시간은 &apos;1일 전&apos; 입니다.\n알람 시각을 설정하실 수 있습니다."
+                android:text="설정 전 기본 알람 시간은 &apos;1일 전&apos; 입니다.\n알람 시각을 설정하실 수 있습니다."
                 android:id="@+id/textView32"
                 android:layout_marginTop="10dp"
                 android:gravity="center" />
