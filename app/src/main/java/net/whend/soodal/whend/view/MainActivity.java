@@ -43,7 +43,8 @@ import net.whend.soodal.whend.view.ContainerFragment.F5_Mypage_Container;
 import android.support.v4.content.LocalBroadcastManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.readystatesoftware.viewbadger.BadgeView;
+import net.whend.soodal.whend.util.BadgeView;
+//import com.readystatesoftware.viewbadger.BadgeView;
 
 
 public class MainActivity extends AppCompatActivity {

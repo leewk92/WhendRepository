@@ -15,7 +15,7 @@
 -->
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:interpolator="@android:anim/decelerate_interpolator">
-    <alpha android:fromAlpha="1.0" android:toAlpha="0.0" android:duration="75" />
+    <alpha android:fromAlpha="1.0" android:toAlpha="0.0" android:duration="250" />
     <rotate
         android:fromDegrees="0"
         android:toDegrees="180"
@@ -23,6 +23,6 @@
         android:toXScale="0.0"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:duration="75"
+        android:duration="250"
         />
 </set><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/lmp-mr1-supportlib-release/frameworks/support/v7/appcompat/res/anim/abc_fade_in.xml -->
