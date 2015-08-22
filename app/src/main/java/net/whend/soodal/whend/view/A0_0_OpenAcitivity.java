@@ -214,8 +214,8 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
                     appPrefs.setUser_id(user_id);
 
                     // creating account
-                    CalendarProviderUtil cpu = new CalendarProviderUtil(getmContext());
-                    cpu.addAccountOfCalendar();
+//                    CalendarProviderUtil cpu = new CalendarProviderUtil(getmContext());
+//                    cpu.addAccountOfCalendar();
 
                     Toast toast1 = Toast.makeText(mContext, "로그인 성공.", Toast.LENGTH_SHORT);
                     toast1.setGravity(0,0,100);

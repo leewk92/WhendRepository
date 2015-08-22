@@ -76,8 +76,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-         alert = new AlertDialog.Builder(A0_1_LoginActivity.this);
-
+        alert = new AlertDialog.Builder(A0_1_LoginActivity.this);
+        progress = new ProgressDialog(this);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
         loginButton_view = (Button) findViewById(R.id.login_button);
         signupButton_view = (Button) findViewById(R.id.signup_button);
 
-        progress = new ProgressDialog(this);
+
 /*
         login_facebook = (Button) findViewById(R.id.login_facebook);
         login_facebook.setOnClickListener(new View.OnClickListener()    {
@@ -152,13 +152,13 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                 Log.d("FBToken", loginResult.getAccessToken().getToken());
                 Log.d("FBUserId", loginResult.getAccessToken().getUserId());
                 Log.d("FBSources", loginResult.getAccessToken().getSource().toString());
-/*
-                AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
-                    @Override
-                    protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken newAccessToken) {
-                        updateWithToken(newAccessToken);
-                    }
-                };*/
+
+ //               AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+ //                   @Override
+ //                   protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken newAccessToken) {
+ //                       updateWithToken(newAccessToken);
+ //                   }
+ //               };
                 Log.d("where3","3");
                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
@@ -238,6 +238,10 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                                     String facebookUrl = "http://119.81.176.245/rest-auth/facebook/";
                                     HTTPRestfulUtilizerExtender_facebookLogin a = new HTTPRestfulUtilizerExtender_facebookLogin(mContext,facebookUrl,"POST", inputBundle);
                                     a.doExecution();
+
+                                    if(progress.isShowing()==false)
+                                        progress = ProgressDialog.show(A0_1_LoginActivity.this, "로그인",
+                                                "로그인 중입니다.", true);
                                 }
                             });
 
@@ -422,6 +426,10 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                 appPrefs.setToken("");
                 Log.d("where5", "5");
                 super.onPreExecute();
+
+                if(progress.isShowing()==false)
+                    progress = ProgressDialog.show(A0_1_LoginActivity.this, "로그인",
+                            "로그인 중입니다.", true);
             }
 
 
@@ -460,6 +468,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     toast1.setGravity(0,0,100);
                     toast1.show();
                     loginButton_view.setClickable(true);
+                    if(progress.isShowing())
+                        progress.dismiss();
                 }finally{
 
                 }
@@ -488,7 +498,6 @@ public class A0_1_LoginActivity extends AppCompatActivity {
 
             @Override
             protected void onPreExecute() {
-                Log.d("where6","6");
                 super.onPreExecute();
             }
 
@@ -514,8 +523,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     appPrefs.setUser_id(user_id);
 
                     // creating account
-                    CalendarProviderUtil cpu = new CalendarProviderUtil(getmContext());
-                    cpu.addAccountOfCalendar();
+//                    CalendarProviderUtil cpu = new CalendarProviderUtil(getmContext());
+//                    cpu.addAccountOfCalendar();
 
                     Toast toast1 = Toast.makeText(mContext, "로그인 성공.", Toast.LENGTH_SHORT);
                     toast1.setGravity(0, 0, 100);
@@ -535,6 +544,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
 
                 }finally{
                     loginButton_view.setClickable(true);
+                    if(progress.isShowing())
+                        progress.dismiss();
                 }
 
             }
@@ -565,7 +576,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             protected void onPreExecute() {
 /*
                 if(progress.isShowing()==false)
-                    progress = ProgressDialog.show(getmContext(), "facebook 로그인",
+                    progress = ProgressDialog.show(A0_1_LoginActivity.this, "facebook 로그인",
                             "facebook 로그인 중입니다.", true);
 */
                 super.onPreExecute();
@@ -587,7 +598,6 @@ public class A0_1_LoginActivity extends AppCompatActivity {
 
 
                 try{
-                    Log.d("where7","7");
                     //       JSONObject tmpJson = new JSONObject(getOutputString());
                     //       String token = tmpJson.getString("key");
                     String token = getOutputJsonObject().getString("key");
@@ -610,6 +620,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     toast1.setGravity(0,0,100);
                     toast1.show();
                     loginButton_view.setClickable(true);
+                    if(progress.isShowing())
+                        progress.dismiss();
                 }finally{
 
                 }
@@ -724,6 +736,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     intent.putExtra("facebookfriend", facebookfriend_jsonarray.toString());          //bundle data.
                     Log.d("facebookfriend_putExtra",facebookfriend_jsonarray.toString());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                     mContext.startActivity(intent);
                     finish();
 
@@ -733,6 +746,8 @@ public class A0_1_LoginActivity extends AppCompatActivity {
 
 
                 }finally{
+                    if(progress.isShowing())
+                        progress.dismiss();
                     loginButton_view.setClickable(true);
                 }
 

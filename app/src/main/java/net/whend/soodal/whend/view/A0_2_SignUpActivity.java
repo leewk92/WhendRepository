@@ -1,5 +1,6 @@
 package net.whend.soodal.whend.view;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +35,8 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
     private String email;
     private String password;
     private Context mContext;
+    private ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
         signupButton_view = (Button) findViewById(R.id.signup_button);
         signupButton_view.setOnClickListener(buttonListener);
         result_view = (TextView) findViewById(R.id.result);
-
+        progress = new ProgressDialog(this);
         password2_view.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -71,7 +74,7 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            signupButton_view.setClickable(false);
+//            signupButton_view.setClickable(false);
             Bundle inputBundle = new Bundle();
             inputBundle.putCharSequence("username",username_view.getText());
             inputBundle.putCharSequence("email",email_view.getText());
@@ -182,7 +185,9 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
             protected void onPreExecute() {
                 AppPrefs appPrefs = new AppPrefs(mContext);
                 appPrefs.setToken("");
-
+                if(progress.isShowing()==false)
+                    progress = ProgressDialog.show(A0_2_SignUpActivity.this, "회원가입",
+                            "회원가입 중입니다.", true);
                 super.onPreExecute();
             }
 
@@ -206,7 +211,9 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                         toast1.setGravity(0,0,100);
                         toast1.show();
                         canRegister=false;
-                    }signupButton_view.setClickable(true);
+                        if(progress.isShowing())
+                            progress.dismiss();
+                    }//signupButton_view.setClickable(true);
 
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
                 try{
@@ -216,7 +223,17 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                         toast1.setGravity(0,0,100);
                         toast1.show();
                         canRegister=false;
-                    }signupButton_view.setClickable(true);
+                        if(progress.isShowing())
+                            progress.dismiss();
+                    }else if(tmp_email.contentEquals("[\"A user is alreay registered with this e-mail address.\"]")){
+                        Toast toast1 = Toast.makeText(mContext, "이메일이 중복되었습니다.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0,0,100);
+                        toast1.show();
+                        canRegister=false;
+                        if(progress.isShowing())
+                            progress.dismiss();
+                    }
+                    //signupButton_view.setClickable(true);
 
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
                 try{
@@ -231,7 +248,9 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                         toast1.setGravity(0,0,100);
                         toast1.show();
                         canRegister=false;
-                    }signupButton_view.setClickable(true);
+                    }//signupButton_view.setClickable(true);
+                    if(progress.isShowing())
+                        progress.dismiss();
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
 
                 try{
@@ -241,14 +260,16 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                         toast1.setGravity(0,0,100);
                         toast1.show();
                         canRegister=false;
+
                     }else if(tmp_password1.contentEquals("[\"Password must be a minimum of 6 characters.\"]")){
                         Toast toast1 = Toast.makeText(mContext, "비밀번호는 6자 이상이어야 합니다.", Toast.LENGTH_SHORT);
                         toast1.setGravity(0, 0, 100);
                         toast1.show();
                         canRegister=false;
 
-                    }signupButton_view.setClickable(true);
-
+                    }//signupButton_view.setClickable(true);
+                    if(progress.isShowing())
+                        progress.dismiss();
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
 
                 try{
@@ -258,7 +279,9 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                         toast1.setGravity(0,0,100);
                         toast1.show();
                         canRegister=false;
-                        signupButton_view.setClickable(true);
+                        //signupButton_view.setClickable(true);
+                        if(progress.isShowing())
+                            progress.dismiss();
                     }
 
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
@@ -278,6 +301,8 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
 
                 }catch(Exception e){
                     Log.d("Catch Exception",e+"");
+                    if(progress.isShowing())
+                        progress.dismiss();
                 }finally{
 
                 }
@@ -312,7 +337,6 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                 String sHTTPRestType = strings[1];
                 setOutputString(POST(url, getInputBundle()));
                 return getOutputString();
-
             }
             @Override
             protected void onPostExecute(String result) {
@@ -343,6 +367,9 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
                     }
 
                 }catch(Exception e){}
+                finally{
+
+                }
 
             }
         }
@@ -408,10 +435,14 @@ public class A0_2_SignUpActivity extends AppCompatActivity {
 
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
-                    signupButton_view.setClickable(true);
+                    //signupButton_view.setClickable(true);
                     finish();
 
                 }catch(Exception e){}
+                finally{
+                    if(progress.isShowing())
+                        progress.dismiss();
+                }
 
             }
         }

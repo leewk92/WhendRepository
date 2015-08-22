@@ -209,7 +209,7 @@ public class F1_Wall extends Fragment {
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem,
                              int visibleItemCount, int totalItemCount) {
-            Log.d("loading,totalItemCount,pre",loading +" "+ totalItemCount +" " + previousTotal + "");
+          //  Log.d("loading,totalItemCount,pre",loading +" "+ totalItemCount +" " + previousTotal + "");
             if (loading) {
                 if (totalItemCount > previousTotal) {
                     loading = false;

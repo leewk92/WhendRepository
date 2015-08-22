@@ -33,7 +33,7 @@ public class A8_SettingActivity extends AppCompatActivity {
     ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
     private Switch push_onoff;
-
+    // public static MainActivity ma;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -265,10 +265,11 @@ public class A8_SettingActivity extends AppCompatActivity {
                         toast1.show();
 
                         Intent intent = new Intent(mContext, A0_1_LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         mContext.startActivity(intent);
-
-
+                       // ma.finish();
                         finish();
                     }
 
