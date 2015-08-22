@@ -167,9 +167,12 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                         try {
                             fb_id = (String) response.getJSONObject().get("id").toString();//페이스북 아이디값
                             fb_name = (String) response.getJSONObject().get("name").toString();//페이스북 이름
-                            fb_picture = (String) response.getJSONObject().get("picture").toString();
+                            fb_picture = (String) response.getJSONObject().getJSONObject("picture").getJSONObject("data").getString("url").toString();
                            // email = (String) response.getJSONObject().get("email");//이메일
                             Log.d("FB_name",fb_name);
+                            Log.d("Fb_picture",fb_picture);
+
+
 
                         } catch (JSONException e) {
                         // TODO Auto-generated catch block
@@ -207,51 +210,19 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-//                            Intent intent = new Intent(mContext, A0_3_SignUpFromFacebook.class);
-//                            intent.putExtra("data", jsonArray.toString());
-//                            intent.putExtra("fb_id",fb_id);
-//                            intent.putExtra("fb_name", fb_name);
-//                            intent.putExtra("fb_picture", fb_picture);
 
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            mContext.startActivity(intent);
-//                            finish();
+                            Bundle inputBundle = new Bundle();
+                            inputBundle.putCharSequence("access_token",loginResult.getAccessToken().getToken());
+                            String facebookUrl = "http://119.81.176.245/rest-auth/facebook/";
+                            HTTPRestfulUtilizerExtender_facebookLogin a = new HTTPRestfulUtilizerExtender_facebookLogin(mContext,facebookUrl,"POST", inputBundle);
+                            a.doExecution();
 
-// to get username
+                            AppPrefs appPrefs = new AppPrefs(mContext);
+                            appPrefs.setUsername("");
 
-                            alert.setTitle("WhenD 에서 사용할 계정 이름을 입력해주세요.");
-                            alert.setMessage("언제든지 마이페이지에서 계정 이름을 바꾸실 수 있습니다. ");
-
-// Set an EditText view to get user input
-                            final EditText input = new EditText(mContext);
-                            alert.setView(input);
-
-                            alert.setPositiveButton("사용하기", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    String value = input.getText().toString();
-                                    value.toString();
-                                    AppPrefs appPrefs = new AppPrefs(mContext);
-                                    appPrefs.setUsername(value.toString());
-// Do something with value!
-                                    Bundle inputBundle = new Bundle();
-                                    inputBundle.putCharSequence("access_token",loginResult.getAccessToken().getToken());
-                                    String facebookUrl = "http://119.81.176.245/rest-auth/facebook/";
-                                    HTTPRestfulUtilizerExtender_facebookLogin a = new HTTPRestfulUtilizerExtender_facebookLogin(mContext,facebookUrl,"POST", inputBundle);
-                                    a.doExecution();
-
-                                    if(progress.isShowing()==false)
-                                        progress = ProgressDialog.show(A0_1_LoginActivity.this, "로그인",
-                                                "로그인 중입니다.", true);
-                                }
-                            });
-
-                            alert.setNegativeButton("취소",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-// Canceled.
-                                        }
-                                    });
-                            alert.show();
+                            if(progress.isShowing()==false)
+                                progress = ProgressDialog.show(A0_1_LoginActivity.this, "",
+                                        "로그인 중입니다.", true);
 
 
                         }
@@ -622,6 +593,17 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     loginButton_view.setClickable(true);
                     if(progress.isShowing())
                         progress.dismiss();
+
+                    //                            Intent intent = new Intent(mContext, A0_3_SignUpFromFacebook.class);
+//                            intent.putExtra("data", jsonArray.toString());
+//                            intent.putExtra("fb_id",fb_id);
+//                            intent.putExtra("fb_name", fb_name);
+//                            intent.putExtra("fb_picture", fb_picture);
+
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            mContext.startActivity(intent);
+//                            finish();
+
                 }finally{
 
                 }
@@ -731,9 +713,11 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     cpu.addAccountOfCalendar();
 
 
-
-                    Intent intent = new Intent(mContext, A0_4_FacebookFriendActivity.class);
+                    Intent intent = new Intent(mContext, A0_3_SignUpFromFacebook.class);
+                    //Intent intent = new Intent(mContext, A0_4_FacebookFriendActivity.class);
                     intent.putExtra("facebookfriend", facebookfriend_jsonarray.toString());          //bundle data.
+                    intent.putExtra("fb_name",fb_name);
+                    intent.putExtra("fb_picture",fb_picture);
                     Log.d("facebookfriend_putExtra",facebookfriend_jsonarray.toString());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

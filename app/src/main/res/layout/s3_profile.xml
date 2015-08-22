@@ -75,7 +75,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2">
 
-                    <TextView
+                    <EditText
+
+                        android:background="@android:color/transparent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/user_name"

@@ -19,6 +19,7 @@ import net.whend.soodal.whend.form.ScheduleFollow_User_Adapter;
 import net.whend.soodal.whend.model.base.FacebookFriend;
 import net.whend.soodal.whend.model.base.User;
 import net.whend.soodal.whend.model.top.ScheduleFollow_User;
+import net.whend.soodal.whend.tutorial.T1_welcome;
 import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 
@@ -125,7 +126,7 @@ public class A0_4_FacebookFriendActivity extends AppCompatActivity {
             toast1.setGravity(0, 0, 100);
             toast1.show();
 
-            Intent intent = new Intent(A0_4_FacebookFriendActivity.this, MainActivity.class);
+            Intent intent = new Intent(A0_4_FacebookFriendActivity.this, T1_welcome.class);
             //intent.putExtra("text", String.valueOf("URL"));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);

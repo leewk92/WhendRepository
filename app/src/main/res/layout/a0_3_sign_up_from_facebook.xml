@@ -8,7 +8,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="250dp"
         android:id="@+id/imageView5"
         android:src="@drawable/whend_3_3_00_01"
         android:scaleType="centerCrop" />
@@ -19,15 +19,57 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/a03_fb_pic"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/userimage_default"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="반갑습니다! "
+                android:id="@+id/textView33"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/a03_fb_name"
+                android:textStyle="bold"
+                android:textColor="#3e5c99" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="님"
+                android:id="@+id/textView35"
+                android:textColor="#FFFFFF"
+                android:layout_marginRight="4dp" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="whenD에서 사용할 아이디를 입력해 주세요"
+            android:text="whenD에서 사용할 아이디를 입력해 주세요\n언제든지 계정 이름을 바꿀 수 있습니다."
             android:id="@+id/textView28"
             android:layout_gravity="center"
             android:layout_marginBottom="35dp"
+            android:gravity="center"
             android:padding="12dp"
             android:textSize="15sp"
             android:textColor="#FFFFFF"

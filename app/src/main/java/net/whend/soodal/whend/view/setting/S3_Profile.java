@@ -47,8 +47,8 @@ public class S3_Profile extends AppCompatActivity {
     private int TAKE_FROM_CAMERA = 1;
     private int TAKE_FROM_GALLERY = 2;
 
-    TextView user_name, gender;
-    EditText first_name, last_name, email, status;
+    TextView gender;
+    EditText first_name, last_name, email, status, user_name;
     LinearLayout gender_select;
     Animation fade_in, fade_out, blink;
     RadioButton man, woman, etc;
@@ -99,7 +99,7 @@ public class S3_Profile extends AppCompatActivity {
 
         progress = new ProgressDialog(this);
 
-        user_name = (TextView) findViewById(R.id.user_name);
+        user_name = (EditText) findViewById(R.id.user_name);
         user_photo = (ImageView) findViewById(R.id.user_photo);
 
         photo_upload = (LinearLayout) findViewById(R.id.photo_upload);
@@ -360,7 +360,7 @@ public class S3_Profile extends AppCompatActivity {
 
             AppPrefs appPrefs = new AppPrefs(this);
 
-            inputBundle_forid.putCharSequence("username",appPrefs.getUsername());
+            inputBundle_forid.putCharSequence("username",user_name.getText());
             inputBundle_forid.putCharSequence("first_name", first_name.getText());
             inputBundle_forid.putCharSequence("last_name", last_name.getText());
             inputBundle_forid.putCharSequence("email",email.getText());
