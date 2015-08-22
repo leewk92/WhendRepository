@@ -368,7 +368,7 @@ public class T3_2_upload extends AppCompatActivity {
                 mHandler.sendEmptyMessageDelayed(0, 2000);
                 return false;
             } else {
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, A0_5_TagFollowingStart.class);
                 intent.putExtra("text", String.valueOf("URL"));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
