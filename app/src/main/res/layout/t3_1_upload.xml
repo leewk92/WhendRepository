@@ -825,7 +825,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="튜토리얼은 약 1분정도 소요됩니다.\n메인화면으로 이동하시겠습니까?"
+                    android:text="튜토리얼은 약 1분정도 소요됩니다.\n이동하시겠습니까?"
                     android:id="@+id/skip_warning"
                     android:background="#03A9F4"
                     android:padding="10dp"

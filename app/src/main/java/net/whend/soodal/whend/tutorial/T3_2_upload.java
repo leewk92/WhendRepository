@@ -220,7 +220,14 @@ public class T3_2_upload extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent;
+
+                if(u.getCount_following_hashtag() < 3){
+                    intent = new Intent(getApplicationContext(), A0_5_TagFollowingStart.class);
+                }else{
+                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                }
+
                 intent.putExtra("text", String.valueOf("URL"));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

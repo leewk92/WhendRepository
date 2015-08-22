@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,7 +56,13 @@ public class Grid_Search_For_Start_Adapter extends ArrayAdapter<Search_HashTag> 
         TextView grid_text = (TextView)v.findViewById(R.id.gridsearch_text);
         LinearLayout tag_follow = (LinearLayout) v.findViewById(R.id.gridsearch_follow_layout);
 
+        following_hashtag_count = user.getCount_following_hashtag();
 
+
+        if (following_hashtag_count>=3)
+            ((A0_5_TagFollowingStart)context).findViewById(R.id.a0_5_toolbar_next).setVisibility(View.VISIBLE);
+        else
+            ((A0_5_TagFollowingStart)context).findViewById(R.id.a0_5_toolbar_next).setVisibility(View.GONE);
 
         if (grid_search_schedule.getHashTag() != null){
             //grid_image_string = grid_search_schedule.getTag().getPhoto();
@@ -72,6 +79,7 @@ public class Grid_Search_For_Start_Adapter extends ArrayAdapter<Search_HashTag> 
         final View rv = rootview;
         final int pos = position;
         final ImageView iv = (ImageView) rootview.findViewById(R.id.gridsearch_follow);
+        final ImageView next = (ImageView) ((A0_5_TagFollowingStart) context).findViewById(R.id.a0_5_toolbar_next);
 
         final LinearLayout layout = follow_button_layout;
         layout.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +98,10 @@ public class Grid_Search_For_Start_Adapter extends ArrayAdapter<Search_HashTag> 
 
                     following_hashtag_count++;
 
-                    if(following_hashtag_count>=3)
-                        ((A0_5_TagFollowingStart)context).findViewById(R.id.a0_5_toolbar_next).setVisibility(View.VISIBLE);
+                    if(following_hashtag_count>=3 && next.getVisibility() != View.VISIBLE) {
+                       next.setVisibility(View.VISIBLE);
+                       next.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_popup_enter));
+                    }
 
 
 
@@ -107,8 +117,10 @@ public class Grid_Search_For_Start_Adapter extends ArrayAdapter<Search_HashTag> 
 
                     following_hashtag_count--;
 
-                    if (following_hashtag_count<3)
-                        ((A0_5_TagFollowingStart)context).findViewById(R.id.a0_5_toolbar_next).setVisibility(View.GONE);
+                    if (following_hashtag_count<3 && next.getVisibility() == View.VISIBLE) {
+                        next.setVisibility(View.INVISIBLE);
+                        next.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_popup_exit));
+                    }
 
 
                 }
@@ -130,6 +142,11 @@ public class Grid_Search_For_Start_Adapter extends ArrayAdapter<Search_HashTag> 
         }else
             ((ImageView)v.findViewById(R.id.gridsearch_image)).setBackgroundColor(Color.parseColor("#000000"));
         notifyDataSetChanged();
+
+        if(GS_Schedule_list.get(position).getIsFollow() == true)
+            ((ImageView)v.findViewById(R.id.gridsearch_follow)).setImageResource(R.drawable.like_on);
+        else
+            ((ImageView)v.findViewById(R.id.gridsearch_follow)).setImageResource(R.drawable.like);
     }
 
 

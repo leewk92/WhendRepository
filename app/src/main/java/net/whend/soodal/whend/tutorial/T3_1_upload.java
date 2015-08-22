@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.view.A0_5_TagFollowingStart;
 import net.whend.soodal.whend.view.MainActivity;
 
 public class T3_1_upload extends AppCompatActivity {
@@ -183,7 +184,7 @@ public class T3_1_upload extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), A0_5_TagFollowingStart.class);
                 intent.putExtra("text", String.valueOf("URL"));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

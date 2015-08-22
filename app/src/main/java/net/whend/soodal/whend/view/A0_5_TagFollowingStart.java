@@ -54,7 +54,7 @@ public class A0_5_TagFollowingStart extends AppCompatActivity implements ScrollV
         grid_search_adapter.notifyDataSetChanged();
 
         quiltView = (QuiltView) findViewById(R.id.quilt);
-        quiltView.setChildPadding(-3);
+        quiltView.setChildPadding(-1);
 
         String url = "http://119.81.176.245/hashtags/";
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this,url,"GET");
