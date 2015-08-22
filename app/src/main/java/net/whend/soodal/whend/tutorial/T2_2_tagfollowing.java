@@ -78,7 +78,7 @@ public class T2_2_tagfollowing extends AppCompatActivity {
                 t2_dark2.setVisibility(View.VISIBLE);
                 t2_dark3.setVisibility(View.VISIBLE);
 
-
+                t2_2_image.setClickable(true);
                 t2_2_text.setText("축제 태그를 클릭하세요.");
                 t2_2_finger.setVisibility(View.VISIBLE);
                 t2_2_finger.startAnimation(blink);
@@ -124,6 +124,7 @@ public class T2_2_tagfollowing extends AppCompatActivity {
         t2_2_text = (TextView) findViewById(R.id.t2_2_text1);
 
         t2_2_image = (ImageView) findViewById(R.id.t2_2_image);
+        t2_2_image.setClickable(false);
         t2_2_image.setOnClickListener(new View.OnClickListener(){
 
             @Override

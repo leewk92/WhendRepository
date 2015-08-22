@@ -51,16 +51,14 @@ public class QuiltViewPatch implements Comparable{
 		Square
 	}
 	
+	public static QuiltViewPatch init2(int position, int column){
+
+		return create(Size.Big);
+	}
+
 	public static QuiltViewPatch init(int position, int column){
 
 		return init4(position);
-	}
-
-	private static QuiltViewPatch init3(int position){
-		if (position == 0)
-			return create(Size.Big);
-		else
-			return create(Size.Small);
 	}
 
 	private static QuiltViewPatch init4(int position){

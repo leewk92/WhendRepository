@@ -21,6 +21,7 @@ public class AppPrefs {
  private String push_setting = "push_setting";
  private String alarm_setting = "alarm_setting";
  private String alarm_time = "alarm_time";
+ private String follow_hashtag_count = "follow_hashtag_count";
 
  public AppPrefs(Context context) {
   this.appSharedPrefs = context.getSharedPreferences(USER_PREFS, Activity.MODE_PRIVATE);

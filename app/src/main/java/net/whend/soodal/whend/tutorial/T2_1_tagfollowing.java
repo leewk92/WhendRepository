@@ -88,8 +88,6 @@ public class T2_1_tagfollowing extends AppCompatActivity {
 
             case 5:
                 i++;
-                t2_text3.setVisibility(View.INVISIBLE);
-                t2_next.setVisibility(View.INVISIBLE);
                 t2_text1.setText("가장 중요한 기능인\n검색 및 태그 팔로우를 해보겠습니다.");
                 t2_text1.startAnimation(fade_in);
                 break;
@@ -189,8 +187,10 @@ public class T2_1_tagfollowing extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 i++;
-                t2_next.setVisibility(View.INVISIBLE);
-                handler.sendMessage(handler.obtainMessage());
+                t2_next.setVisibility(View.GONE);
+                t2_text3.setVisibility(View.GONE);
+                screentouched = true;
+                tutorial2();
             }
         });
         mHandler = new Handler() {

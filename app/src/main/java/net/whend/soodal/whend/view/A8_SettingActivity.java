@@ -44,6 +44,7 @@ public class A8_SettingActivity extends AppCompatActivity {
         TextView toolbartext = (TextView) findViewById(R.id.toolbar_textview);
         toolbartext.setText("설정");
 
+
         setSupportActionBar(toolbar);
 
 

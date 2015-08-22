@@ -66,6 +66,7 @@ public class F5_Mypage extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         String url = "http://119.81.176.245/userinfos/";
 
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),rootView,url,"GET");

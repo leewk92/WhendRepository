@@ -133,6 +133,12 @@ public class QuiltView extends FrameLayout implements OnGlobalLayoutListener {
 		quilt.addPatch(view);
 	}
 
+	public void addPatchView2(View view){
+
+		view.setPadding(padding, padding, padding, padding);
+		quilt.addPatch2(view);
+	}
+
 	public void addPatchesOnLayout(){
 		for(View view: views){
 

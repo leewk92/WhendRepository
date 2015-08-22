@@ -1,10 +1,12 @@
 package net.whend.soodal.whend.tutorial;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,9 +20,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.model.base.User;
 import net.whend.soodal.whend.util.AppPrefs;
+import net.whend.soodal.whend.util.CircleTransform;
+import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
+import net.whend.soodal.whend.view.A0_5_TagFollowingStart;
 import net.whend.soodal.whend.view.MainActivity;
+
+import org.json.JSONObject;
 
 public class T3_2_upload extends AppCompatActivity {
 
@@ -35,6 +45,8 @@ public class T3_2_upload extends AppCompatActivity {
     TextView skip;
     Button skip_yes, skip_no;
     LinearLayout skip_layout;
+    JSONObject outputSchedulesJson;
+    User u = new User();
 
     Handler handler = new Handler(){
         @Override
@@ -118,8 +130,15 @@ public class T3_2_upload extends AppCompatActivity {
 
             case 8:
                 i++;
-                Intent i = new Intent(T3_2_upload.this, MainActivity.class);
-                startActivity(i);
+                Intent intent;
+
+                if(u.getCount_following_hashtag() < 3){
+                    intent = new Intent(T3_2_upload.this, A0_5_TagFollowingStart.class);
+                }else{
+                    intent = new Intent(T3_2_upload.this, MainActivity.class);
+                }
+
+                startActivity(intent);
                 overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 finish();
                 break;
@@ -219,6 +238,65 @@ public class T3_2_upload extends AppCompatActivity {
                 skip_layout.setVisibility(View.INVISIBLE);
             }
         });
+
+        String url = "http://119.81.176.245/userinfos/";
+
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this,url,"GET");
+        a.doExecution();
+    }
+
+    class HTTPRestfulUtilizerExtender extends HTTPRestfulUtilizer {
+
+        // Constructor for GET
+        public HTTPRestfulUtilizerExtender(Context mContext, String url, String HTTPRestType) {
+            setmContext(mContext);
+            setUrl(url);
+            setHTTPRestType(HTTPRestType);
+            task = new HttpAsyncTaskExtenders();
+            Log.d("HTTP Constructor url", url);
+            // new HttpAsyncTask().execute(url,HTTPRestType);
+        }
+
+        @Override
+        public void doExecution(){
+            task.execute(getUrl(), getHTTPRestType());
+        }
+        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+            @Override
+            protected String doInBackground(String... strings) {
+                String url = strings[0];
+                String sHTTPRestType = strings[1];
+                setOutputString(GET(url));
+
+                return getOutputString();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try{
+                    outputSchedulesJson = getOutputJsonObject();
+                    JSONObject tmp_ith = outputSchedulesJson;
+
+
+                    tmp_ith = outputSchedulesJson;
+                    u.setId(tmp_ith.getInt("user_id"));
+                    u.setUsername(tmp_ith.getString("user_name"));
+                    u.setUser_photo(tmp_ith.getString("photo") == "null" ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".100x100.jpg");
+                    u.setCount_following_user(tmp_ith.getInt("count_following_user"));
+                    u.setCount_following_hashtag(tmp_ith.getInt("count_following_hashtag"));
+                    u.setCount_follower(tmp_ith.getInt("count_follower"));
+                    u.setCount_uploaded_schedule(tmp_ith.getInt("count_uploaded_schedule"));
+
+                    u.setFirstname(tmp_ith.getString("first_name"));
+                    u.setLastname(tmp_ith.getString("last_name"));
+                    u.setStatus(tmp_ith.getString("status"));
+                }catch(Exception e){
+
+                }
+
+            }
+        }
     }
 
     @Override

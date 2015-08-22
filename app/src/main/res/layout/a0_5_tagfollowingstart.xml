@@ -1,0 +1,94 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="net.whend.soodal.whend.view.A0_5_TagFollowingStart">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/a0_5_toolbar"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:minHeight="50dp"
+        android:background="#ff03a8f3"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/title"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="추천 태그"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/title2"
+                    android:textSize="10sp"
+                    android:text="(최소 3개의 태그를 팔로우하세요)"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/a0_5_toolbar_next"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical|right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_done_white_24dp"
+                    android:id="@+id/imageView15" />
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tagfollowing_grid">
+
+        <net.whend.soodal.whend.util.observablescrollview.ObservableScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/quilt_scroll" >
+
+            <net.whend.soodal.whend.util.quitview.QuiltView
+                android:id="@+id/quilt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dip"
+                app:scrollOrientation="vertical">
+
+            </net.whend.soodal.whend.util.quitview.QuiltView>
+        </net.whend.soodal.whend.util.observablescrollview.ObservableScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

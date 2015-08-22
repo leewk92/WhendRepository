@@ -242,6 +242,10 @@
             android:name=".view.setting.S5_Alarm"
             android:label="@string/title_activity_s5__alarm" >
         </activity>
+        <activity
+            android:name=".view.A0_5_TagFollowingStart"
+            android:label="@string/title_activity_a0_5__tag_following_start" >
+        </activity>
     </application>
 
 </manifest>

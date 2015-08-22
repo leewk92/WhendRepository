@@ -67,6 +67,9 @@ public class T2_3_tagfollowing extends AppCompatActivity {
 
                 t2_dark4.startAnimation(fade_out);
                 t2_dark4.setVisibility(View.INVISIBLE);
+                tutorial2_3();
+                screentouched = true;
+
                 break;
 
             case 3:
@@ -101,7 +104,7 @@ public class T2_3_tagfollowing extends AppCompatActivity {
 
                 t2_dark6.setVisibility(View.VISIBLE);
 
-
+                t2_like.setClickable(true);
                 t2_text.setText("축제 태그 팔로우 버튼을\n클릭하세요.");
                 t2_finger.setVisibility(View.VISIBLE);
                 t2_finger.startAnimation(blink);
@@ -227,6 +230,7 @@ public class T2_3_tagfollowing extends AppCompatActivity {
         t2_finger2 = (ImageView) findViewById(R.id.t2_3_finger2);
 
         t2_finger2.setVisibility(View.INVISIBLE);
+        t2_like.setClickable(false);
 
         t2_like.setOnClickListener(new View.OnClickListener() {
 
@@ -234,6 +238,9 @@ public class T2_3_tagfollowing extends AppCompatActivity {
             public void onClick(View view) {
                 t2_like.setImageDrawable(getResources().getDrawable(R.drawable.like_on));
                 i++;
+                t2_like.setClickable(false);
+                tutorial2_3();
+                screentouched = true;
             }
         });
 
@@ -243,6 +250,9 @@ public class T2_3_tagfollowing extends AppCompatActivity {
             public void onClick(View view) {
                 t2_export.setImageDrawable(getResources().getDrawable(R.drawable.export_to_calendar_onclick));
                 i++;
+                tutorial2_3();
+                screentouched = true;
+
             }
         });
 
@@ -251,7 +261,10 @@ public class T2_3_tagfollowing extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 i++;
-                t2_next.setVisibility(View.INVISIBLE);
+                t2_next.setVisibility(View.GONE);
+                t2_text.setVisibility(View.GONE);
+                tutorial2_3();
+                screentouched = true;
             }
         });
         mHandler = new Handler() {

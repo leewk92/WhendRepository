@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:id="@+id/grid_search_layout"
+
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="2dp"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="100dp"
+            android:minWidth="180dp"
+            android:id="@+id/gridsearch_image"
+            android:scaleType="centerCrop"
+            android:background="#000000" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#66000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gridsearch_text"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_gravity="left|center_vertical"
+            android:textColor="#ffffffff"
+            android:textIsSelectable="false"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:layout_marginLeft="12dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/gridsearch_follow_layout"
+            android:layout_marginRight="16dp"
+            android:gravity="right"
+            android:layout_gravity="right">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/gridsearch_follow"
+                android:src="@drawable/like"
+                android:layout_gravity="center_vertical|right" />
+        </LinearLayout>
+
+    </FrameLayout>
+</LinearLayout>

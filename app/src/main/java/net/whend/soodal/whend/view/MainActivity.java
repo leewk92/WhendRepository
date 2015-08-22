@@ -29,6 +29,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
 import net.whend.soodal.whend.R;
+import net.whend.soodal.whend.model.base.User;
 import net.whend.soodal.whend.util.AppPrefs;
 import net.whend.soodal.whend.util.BaseContainerFragment;
 import net.whend.soodal.whend.util.gcm.QuickstartPreferences;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
+
 
     // 핸들러, 플래그 선언 for back key로 종료
     private Handler mHandler;
