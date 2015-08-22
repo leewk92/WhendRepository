@@ -16,10 +16,13 @@ import android.view.ViewParent;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TabWidget;
 import android.widget.TextView;
+
+import net.whend.soodal.whend.R;
 
 /**
  * A simple text label view that can be applied as a "badge" to any given {@link View}.
@@ -119,13 +122,14 @@ public class BadgeView extends TextView {
 		setPadding(paddingPixels, 0, paddingPixels, 0);
 		setTextColor(DEFAULT_TEXT_COLOR);
 		
-		fadeIn = new AlphaAnimation(0, 1);
-		fadeIn.setInterpolator(new DecelerateInterpolator());
-		fadeIn.setDuration(100);
+		fadeIn = AnimationUtils.loadAnimation(context, R.anim.rotate_fade_in);
+		//new AlphaAnimation(0, 1);
+		//fadeIn.setInterpolator(new DecelerateInterpolator());
+		//fadeIn.setDuration(100);
 
-		fadeOut = new AlphaAnimation(1, 0);
-		fadeOut.setInterpolator(new AccelerateInterpolator());
-		fadeOut.setDuration(100);
+		fadeOut = AnimationUtils.loadAnimation(context, R.anim.rotate_fade_out);
+		//fadeOut.setInterpolator(new AccelerateInterpolator());
+		//fadeOut.setDuration(100);
 		
 		isShown = false;
 		
