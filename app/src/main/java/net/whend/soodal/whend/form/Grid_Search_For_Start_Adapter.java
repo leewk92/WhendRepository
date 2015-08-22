@@ -79,7 +79,7 @@ public class Grid_Search_For_Start_Adapter extends ArrayAdapter<Search_HashTag> 
         final View rv = rootview;
         final int pos = position;
         final ImageView iv = (ImageView) rootview.findViewById(R.id.gridsearch_follow);
-        final ImageView next = (ImageView) ((A0_5_TagFollowingStart) context).findViewById(R.id.a0_5_toolbar_next);
+        final LinearLayout next = (LinearLayout) ((A0_5_TagFollowingStart) context).findViewById(R.id.a0_5_toolbar_next);
 
         final LinearLayout layout = follow_button_layout;
         layout.setOnClickListener(new View.OnClickListener() {
