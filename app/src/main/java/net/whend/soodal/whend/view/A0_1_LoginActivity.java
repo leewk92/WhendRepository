@@ -428,7 +428,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                 super.onPreExecute();
 
                 if(progress.isShowing()==false)
-                    progress = ProgressDialog.show(A0_1_LoginActivity.this, "로그인",
+                    progress = ProgressDialog.show(A0_1_LoginActivity.this, "",
                             "로그인 중입니다.", true);
             }
 

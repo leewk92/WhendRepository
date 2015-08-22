@@ -488,7 +488,7 @@ public class S3_Profile extends AppCompatActivity {
                 super.onPreExecute();
 
                 if(progress.isShowing()==false)
-                    progress = ProgressDialog.show(getmContext(), "프로필 수정",
+                    progress = ProgressDialog.show(getmContext(), "",
                             "수정 중입니다.", true);
 
             }
