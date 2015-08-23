@@ -745,8 +745,8 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
                 super.onPreExecute();
 
                 if(progress.isShowing()==false)
-                    progress = ProgressDialog.show(getmContext(), "일정올리기",
-                            "일정을 올리는 중입니다.", true);
+                    progress = ProgressDialog.show(getmContext(), "",
+                            "일정을 수정하는 중입니다.", true);
 
             }
 

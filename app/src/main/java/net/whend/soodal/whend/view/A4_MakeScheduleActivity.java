@@ -771,7 +771,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                 super.onPreExecute();
 
                 if(progress.isShowing()==false)
-                    progress = ProgressDialog.show(getmContext(), "일정올리기",
+                    progress = ProgressDialog.show(getmContext(), "",
                             "일정을 올리는 중입니다.", true);
 
             }
