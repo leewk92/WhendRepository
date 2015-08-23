@@ -651,8 +651,7 @@ public class S3_Profile extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
-
+                S3_Profile.this.finish();
             }
 
         }

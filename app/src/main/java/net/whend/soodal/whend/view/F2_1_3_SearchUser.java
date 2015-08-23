@@ -55,6 +55,7 @@ public class F2_1_3_SearchUser extends Fragment {
     public void onResume() {
         super.onResume();
         SUser_list.clear();
+        nextURL = null;
         try{
             searchUser_adapter.notifyDataSetChanged();
         }catch (Exception e){}
@@ -80,6 +81,7 @@ public class F2_1_3_SearchUser extends Fragment {
                 return false;
             }
         });
+        listview.setOnScrollListener(new EndlessScrollListener());
     }
 
     @Override
@@ -124,7 +126,7 @@ public class F2_1_3_SearchUser extends Fragment {
         searchUser_adapter =  new SearchUser_Adapter(getActivity(), R.layout.item_searchuser, SUser_list);
         listview.setAdapter(searchUser_adapter);
 
-        listview.setOnScrollListener(new EndlessScrollListener());
+
         return rootview;
     }
 

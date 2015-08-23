@@ -82,6 +82,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
                 return false;
             }
         });
+        listview.setOnScrollListener(new EndlessScrollListener());
     }
 
 
@@ -129,7 +130,7 @@ public class F2_1_1_SearchSchedule extends Fragment {
         searchSchedule_adapter = new SearchSchedule_Adapter(getActivity(), R.layout.item_searchschedule, arrayCSchedule);
         listview.setAdapter(searchSchedule_adapter);
 
-        listview.setOnScrollListener(new EndlessScrollListener());
+
         return rootview;
     }
 

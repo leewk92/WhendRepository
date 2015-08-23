@@ -81,6 +81,7 @@ public class F2_1_2_SearchHashtag extends Fragment {
                 return false;
             }
         });
+        listview.setOnScrollListener(new EndlessScrollListener());
     }
 
 
@@ -124,7 +125,7 @@ public class F2_1_2_SearchHashtag extends Fragment {
         searchHashTag_adapter = new SearchHashTag_Adapter(getActivity(), R.layout.item_searchhashtag, SHashtag_list);
         listview.setAdapter(searchHashTag_adapter);
 
-        listview.setOnScrollListener(new EndlessScrollListener());
+
         return rootview;
     }
 
