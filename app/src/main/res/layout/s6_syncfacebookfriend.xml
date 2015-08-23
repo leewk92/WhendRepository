@@ -1,0 +1,132 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.whend.soodal.whend.view.setting.S6_SyncFacebookFriend">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar_syncfacebookfriend"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:minHeight="50dp"
+        android:background="#ff03a8f3"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        >
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/title"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="페이스북 친구찾기"
+            android:textColor="@android:color/white" />
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="최근 동기화 시간"
+                android:padding="15dp"
+                android:textColor="#212121"
+                android:clickable="false"
+                android:background="@drawable/textview_press"
+                />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/sync_time"
+                    android:text="2009년 4월 32일 16:00" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#b6b6b6"
+            />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/alarm_list">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="페이스북 친구 동기화"
+                    android:id="@+id/textView26"
+                    android:padding="15dp"
+                    android:textColor="#212121"
+                    android:clickable="false"
+                    android:background="@drawable/textview_press" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right">
+
+                    <ImageView
+                        android:id="@+id/sync_button"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src = "@drawable/ic_settings_backup_restore_black_24dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="페이스북 로그인을 하지 않은 유저는 \n 로그아웃 후 페이스북 로그인을 이용해 주시기 바랍니다."
+                android:id="@+id/textView32"
+                android:layout_marginTop="10dp"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="-5dip"
+            android:layout_marginRight="-5dip"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+</LinearLayout>

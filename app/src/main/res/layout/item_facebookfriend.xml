@@ -4,8 +4,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     >
 
     <LinearLayout
@@ -34,7 +32,7 @@
 
             <TextView
                 android:id="@+id/facebook_username"
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:text="WonkyungLee"
                 android:textSize="12dp"
@@ -60,7 +58,7 @@
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="님의 WhenD 계정은 "
+                android:text=" 의 WhenD 계정은 "
                 android:textStyle="bold"
                 android:textColor="#727272"
                 android:textSize="12dp"

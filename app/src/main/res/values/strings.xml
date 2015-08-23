@@ -36,6 +36,7 @@
     <string name="title_activity_a0__4__facebookfriendactivity">A0_4_FacebookFriendActivity</string>
     <string name="title_activity_s4__password">S4_Password</string>
     <string name="title_activity_s5__alarm">S5_Alarm</string>
+    <string name="title_activity_s6__syncfacebookfriend">S6_SyncFacebookFriend</string>
     <string name="title_activity_a0_5__tag_following_start">A0_5_TagFollowingStart</string>
 
 </resources>

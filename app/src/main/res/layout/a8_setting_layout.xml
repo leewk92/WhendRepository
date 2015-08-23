@@ -154,6 +154,23 @@
                     android:background="#b6b6b6" />
 
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="페이스북 친구 찾기"
+                    android:id="@+id/setting_facebook_friend"
+                    android:padding="15dp"
+                    android:textColor="#212121"
+                    android:clickable="true"
+                    android:background="@drawable/textview_press"
+                    android:onClick="SyncFacebookFriend"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#b6b6b6" />
+
+                <TextView
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -171,6 +188,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="#b6b6b6" />
+
+
+
+
 
             </LinearLayout>
 
@@ -261,16 +282,7 @@
                     android:layout_height="1.5dp"
                     android:background="#b6b6b6" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="페이스북 친구 찾기"
-                    android:id="@+id/setting_facebook_friend"
-                    android:padding="15dp"
-                    android:textColor="#212121"
-                    android:clickable="true"
-                    android:background="@drawable/textview_press"
-                    android:onClick="OnPreparing"/>
+
 
                 <LinearLayout
                     android:orientation="vertical"

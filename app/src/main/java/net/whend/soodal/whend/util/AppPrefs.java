@@ -5,36 +5,45 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
  
 public class AppPrefs {
- private static final String USER_PREFS = "net.whend.soodal.whend";
- private SharedPreferences appSharedPrefs;
- private Editor prefsEditor;
- private String token = "token";
- private String username = "username";
- private String mostRecentInnerCalendarEventId = "mostRecentInnerCalendarEventId";
- private String whendCalendarAccountId = "whendCalendarAccountId";
- private String caljson_str = null;
- private String password = "password";
- private String user_id = "user_id";
- private String gcm_token = "gcm_token";
- private String photo = "photo";
- private String unreadNotificationCount = "unreadNotificationCount";
- private String push_setting = "push_setting";
- private String alarm_setting = "alarm_setting";
- private String alarm_time = "alarm_time";
- private String follow_hashtag_count = "follow_hashtag_count";
+    private static final String USER_PREFS = "net.whend.soodal.whend";
+    private SharedPreferences appSharedPrefs;
+    private Editor prefsEditor;
+    private String token = "token";
+    private String username = "username";
+    private String mostRecentInnerCalendarEventId = "mostRecentInnerCalendarEventId";
+    private String whendCalendarAccountId = "whendCalendarAccountId";
+    private String caljson_str = null;
+    private String password = "password";
+    private String user_id = "user_id";
+    private String gcm_token = "gcm_token";
+    private String photo = "photo";
+    private String unreadNotificationCount = "unreadNotificationCount";
+    private String push_setting = "push_setting";
+    private String alarm_setting = "alarm_setting";
+    private String alarm_time = "alarm_time";
+    private String follow_hashtag_count = "follow_hashtag_count";
+    private String syncfacebookfriend_time = "syncfacebookfriend_time";
 
- public AppPrefs(Context context) {
-  this.appSharedPrefs = context.getSharedPreferences(USER_PREFS, Activity.MODE_PRIVATE);
-  this.prefsEditor = appSharedPrefs.edit();
- }
+    public AppPrefs(Context context) {
+    this.appSharedPrefs = context.getSharedPreferences(USER_PREFS, Activity.MODE_PRIVATE);
+    this.prefsEditor = appSharedPrefs.edit();
+    }
 
- public String getUsername() {
-  return appSharedPrefs.getString(username, "");
- }
+    public String getUsername() {
+        return appSharedPrefs.getString(username, "");
+    }
 
- public void setUsername(String _username) {
-  prefsEditor.putString(username, _username).commit();
- }
+    public void setUsername(String _username) {
+        prefsEditor.putString(username, _username).commit();
+    }
+
+    public String getSyncfacebookfriend_time() {
+        return appSharedPrefs.getString(syncfacebookfriend_time, "");
+    }
+
+    public void setSyncfacebookfriend_time(String _syncfacebookfriend) {
+        prefsEditor.putString(syncfacebookfriend_time, _syncfacebookfriend).commit();
+    }
 
  public String getPassword() {
   return appSharedPrefs.getString(password, "");
@@ -149,4 +158,6 @@ public class AppPrefs {
   prefsEditor.putBoolean(alarm_setting, _alarm_setting).commit();
   prefsEditor.putInt(alarm_time, _alarm_time).commit();
  }
+
+
 }

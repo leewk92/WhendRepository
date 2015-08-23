@@ -164,6 +164,10 @@
             android:name=".view.setting.S3_Profile"
             android:label="@string/title_activity_s3__profile" >
         </activity>
+        <activity
+            android:name=".view.setting.S6_SyncFacebookFriend"
+            android:label="@string/title_activity_s6__syncfacebookfriend" >
+        </activity>
         <!-- GCM Receivers -->
 
         <receiver

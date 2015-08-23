@@ -50,6 +50,8 @@ public class A0_4_FacebookFriendActivity extends AppCompatActivity {
     String uid[];
     String url = "http://119.81.176.245/rest-auth/social_login/getid/";
     int page=0;
+    int gotoNumber;
+
     public void onBackPressed(){
         finish();
         overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_fade_out);
@@ -61,7 +63,7 @@ public class A0_4_FacebookFriendActivity extends AppCompatActivity {
         setContentView(R.layout.a0_4_facebookfriend_layout);
 
         Intent intent=new Intent(this.getIntent());
-
+        gotoNumber = intent.getIntExtra("goto",1);
 
         try{
             facebookfriends = new JSONArray(intent.getStringExtra("facebookfriend"));
@@ -122,15 +124,28 @@ public class A0_4_FacebookFriendActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_done) {
 
-            Toast toast1 = Toast.makeText(mContext, "로그인 성공.", Toast.LENGTH_SHORT);
-            toast1.setGravity(0, 0, 100);
-            toast1.show();
 
-            Intent intent = new Intent(A0_4_FacebookFriendActivity.this, T1_welcome.class);
-            //intent.putExtra("text", String.valueOf("URL"));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(intent);
-            finish();
+
+            if(gotoNumber == 1){
+              //  Toast toast1 = Toast.makeText(mContext, "로그인 성공", Toast.LENGTH_SHORT);
+              //  toast1.setGravity(0, 0, 100);
+              //  toast1.show();
+
+                Intent intent = new Intent(A0_4_FacebookFriendActivity.this, T1_welcome.class);
+                //intent.putExtra("text", String.valueOf("URL"));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mContext.startActivity(intent);
+                finish();
+            }else if (gotoNumber ==2){
+                Intent intent = new Intent(A0_4_FacebookFriendActivity.this, MainActivity.class);
+                //intent.putExtra("text", String.valueOf("URL"));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mContext.startActivity(intent);
+                finish();
+            }
+
 
             return true;
         }

@@ -86,7 +86,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     long sDatetime_start,sDatetime_end;
     Bundle inputBundle_forRequest = new Bundle();
     ProgressDialog progress ;
-
+    private boolean canUpdate= true;
 
     public void onBackPressed(){
         finish();
@@ -680,6 +680,16 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                     }
 
                 }catch(Exception e){}
+                try{
+                    String title = getOutputJsonObject().getString("hashtag");
+                    if(title.contentEquals("[\"This field is required.\"]")){
+                        progress.dismiss();
+                        Toast.makeText(getmContext(),"메모에 해시태그를 하나 이상 입력해주세요!",Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                }
+
+
 
 /*
                 try{    // 올린 일정 받아보기 자동 설정
@@ -1185,7 +1195,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-
+                canUpdate = true;
                 if(progress.isShowing()==false)
                     progress = ProgressDialog.show(getmContext(), "일정올리기",
                             "일정을 올리는 중입니다.", true);
@@ -1214,6 +1224,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
+
                 try{
 
                     JSONArray outputJsonArray = getOutputJsonArray();
@@ -1230,7 +1241,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                     inputBundle_forRequest.putCharSequence("title",title.getText());
                     inputBundle_forRequest.putCharSequence("memo", memo.getText());
                     inputBundle_forRequest.putCharSequence("location",location.getText());
-                    inputBundle_forRequest.putCharSequence("all_day",all_day_int+"");
+                    inputBundle_forRequest.putCharSequence("all_day", all_day_int + "");
                     if(hashtags_id.size() !=0){
                         inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
                     }
@@ -1257,12 +1268,15 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                     Log.d("getTimeinMillis", cal.getTimeInMillis() + "");
                     cal.setTimeInMillis((cal.getTimeInMillis() / 1000) * 1000);
                     dtf = new DateTimeFormatter(cal.getTimeInMillis());
-                    inputBundle_forRequest.putCharSequence("end_time",dtf.getOutputString());
-                    Log.d("getTimeinString",dtf.getOutputString());
+                    inputBundle_forRequest.putCharSequence("end_time", dtf.getOutputString());
+                    Log.d("getTimeinString", dtf.getOutputString());
+
 
                     String url = "http://119.81.176.245/schedules/";
                     HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest, ImageAbsolutePath);
                     a.doExecution();
+
+
 
 
                 }catch(Exception e){

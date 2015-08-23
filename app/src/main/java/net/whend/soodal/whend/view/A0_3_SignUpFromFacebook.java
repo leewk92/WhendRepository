@@ -42,7 +42,7 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
     private TextView fb_name;
     private EditText user_name;
     private Button sign_up;
-
+    public boolean canResistor = true;
     private Context mContext;
 
     @Override
@@ -117,7 +117,7 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
 
             @Override
             protected void onPreExecute() {
-
+                canResistor = true;
                 super.onPreExecute();
             }
 
@@ -134,14 +134,44 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-                String getUserIdUrl = "http://119.81.176.245/userinfos/";
-                // save user id
-                AppPrefs appPrefs = new AppPrefs(mContext);
-                appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
 
-                HTTPRestfulUtilizerExtender_facebookLogin3 d = new HTTPRestfulUtilizerExtender_facebookLogin3(mContext,getUserIdUrl,"GET");
-                d.doExecution();
+                try{
+                    String tmp_username = getOutputJsonObject().getString("username");
+                    if(tmp_username.contentEquals("[\"This username is already taken. Please choose another.\"]")){
+                        Toast toast1 = Toast.makeText(mContext, "중복된 아이디입니다.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0, 0, 100);
+                        toast1.show();
+                        canResistor = false;
+                    }else if(tmp_username.contentEquals("[\"This field is required.\"]")){
+                        Toast toast1 = Toast.makeText(mContext, "아이디를 입력해주세요.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0, 0, 100);
+                        toast1.show();
+                        canResistor = false;
+                    }else if(tmp_username.contentEquals("[\"This field must be unique.\"]")){
+                        Toast toast1 = Toast.makeText(mContext, "중복된 아이디입니다.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0,0,100);
+                        toast1.show();
+                        canResistor = false;
+                    }else if(tmp_username.contains("Enter a valid username. This value may")){
+                        Toast toast1 = Toast.makeText(mContext, "영어로 아이디를 만들어주세요.", Toast.LENGTH_SHORT);
+                        toast1.setGravity(0,0,100);
+                        toast1.show();
+                        canResistor = false;
+                    }
+                    //signupButton_view.setClickable(true);
+                  //  if(progress.isShowing())
+                  //      progress.dismiss();
+                }catch(Exception e){Log.d("Catch Exception",e+"");}
 
+                if(canResistor == true) {
+                    String getUserIdUrl = "http://119.81.176.245/userinfos/";
+                    // save user id
+                    AppPrefs appPrefs = new AppPrefs(mContext);
+                    appPrefs.setUsername(getInputBundle().getCharSequence("username").toString());
+
+                    HTTPRestfulUtilizerExtender_facebookLogin3 d = new HTTPRestfulUtilizerExtender_facebookLogin3(mContext, getUserIdUrl, "GET");
+                    d.doExecution();
+                }
                 //           progress.dismiss();
 
             }
@@ -201,6 +231,7 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
                     //Intent intent = new Intent(mContext, A0_3_SignUpFromFacebook.class);
                     Intent intent = new Intent(mContext, A0_4_FacebookFriendActivity.class);
                     intent.putExtra("facebookfriend", facebookfriends.toString());          //bundle data.
+                    intent.putExtra("goto",1);
                     Log.d("facebookfriend_putExtra",facebookfriends.toString());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
