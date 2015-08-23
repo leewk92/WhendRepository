@@ -380,7 +380,8 @@ public class F5_Mypage extends Fragment {
     }
 
 
-    public void onActivitymImageCaptureUri(int requestCode, int resultCode, Intent data) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 
         if (resultCode == getActivity().RESULT_OK) {
