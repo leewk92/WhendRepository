@@ -53,7 +53,7 @@ public class MyGcmListenerService extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String message = data.getString("actor_name") +"님이 "+ data.getString("verb");
+        String message = data.getString("actor_name") +" "+ data.getString("verb");
 
 
         //String target_type = data.getString("target_type") == "null"? "follow": data.getString("target_type");
