@@ -4,24 +4,17 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
-import android.text.style.ImageSpan;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,7 +51,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import static java.lang.Thread.sleep;
 
 public class A4_MakeScheduleActivity extends AppCompatActivity {
 
@@ -525,7 +517,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             completed_num=0;
             //Log.d("make_memo",memo.getText().toString());
             if(memo.getText().toString().contentEquals("")){
-                Toast.makeText(this,"태그를 하나 이상 입력해주세요!",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"태그를 하나 이상 입력해주세요!",Toast.LENGTH_SHORT).show();
             }
             parseMemo(memo.getText() + "");
 
@@ -553,7 +545,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
            // searchHashtags();
         }
         if (tmpArray.length==1){      //hash tag가 없을 때
-            Toast.makeText(this,"태그를 하나 이상 입력해주세요!",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,"태그를 하나 이상 입력해주세요!",Toast.LENGTH_SHORT).show();
             /*
             Log.d("nono","nono");
 
@@ -657,36 +649,66 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
+                boolean error = false;
+
                 try{
                     String memo = getOutputJsonObject().getString("memo");
                     Log.d("memo",memo);
                     if(memo.contentEquals("[\"This field may not be blank.\"]")){
                         progress.dismiss();
-                        Toast.makeText(getmContext(),"메모를 입력하세요! ",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getmContext(),"메모를 입력하세요.",Toast.LENGTH_SHORT).show();
+                        error = true;
                     }
                     else{
                         progress.dismiss();
                         finish();
                         cancelable=false;
-                        Toast.makeText(getmContext(),"업로드합니다! ",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getmContext(),"업로드합니다!",Toast.LENGTH_SHORT).show();
                     }
                 }catch(Exception e){}
+
                 try{
                     String title = getOutputJsonObject().getString("title");
 
-                    if(title.contentEquals("[\"This field must be unique.\"]")){
+                    if(title.contentEquals("[\"This field may not be blank.\"]")){
                         progress.dismiss();
-                        Toast.makeText(getmContext(),"업로드에 실패하였습니다. ",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getmContext(),"제목을 입력해주세요.",Toast.LENGTH_SHORT).show();
+                        error = true;
+                    }else{
+                        progress.dismiss();
+                        finish();
+                        cancelable=false;
+                        Toast.makeText(getmContext(),"업로드합니다!",Toast.LENGTH_SHORT).show();
                     }
 
                 }catch(Exception e){}
+
                 try{
-                    String title = getOutputJsonObject().getString("hashtag");
-                    if(title.contentEquals("[\"This field is required.\"]")){
+                    String hashtag = getOutputJsonObject().getString("hashtag");
+                    if(hashtag.contentEquals("[\"This field is required.\"]")){
                         progress.dismiss();
-                        Toast.makeText(getmContext(),"메모에 해시태그를 하나 이상 입력해주세요!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getmContext(),"메모에 해시태그를 하나 이상 입력해주세요.",Toast.LENGTH_SHORT).show();
+                        error = true;
+                    }else{
+                        progress.dismiss();
+                        finish();
+                        cancelable=false;
+                        Toast.makeText(getmContext(),"업로드합니다!",Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
+                    if (!error){
+                        progress.dismiss();
+                        finish();
+                        cancelable=false;
+                        Toast.makeText(getmContext(),"업로드합니다! ",Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if (!error){
+                    progress.dismiss();
+                    finish();
+                    cancelable=false;
+                    Toast.makeText(getmContext(),"업로드합니다! ",Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -1197,7 +1219,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                 super.onPreExecute();
                 canUpdate = true;
                 if(progress.isShowing()==false)
-                    progress = ProgressDialog.show(getmContext(), "일정올리기",
+                    progress = ProgressDialog.show(getmContext(), "",
                             "일정을 올리는 중입니다.", true);
 
             }

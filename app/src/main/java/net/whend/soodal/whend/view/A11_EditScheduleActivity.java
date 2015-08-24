@@ -15,7 +15,6 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,7 +40,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import static java.lang.Thread.sleep;
 
 public class A11_EditScheduleActivity extends AppCompatActivity {
 
@@ -644,7 +642,7 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
                     Log.d("memo",memo);
                     if(memo.contentEquals("[\"This field may not be blank.\"]")){
                         progress.dismiss();
-                        Toast.makeText(getmContext(),"메모를 입력하세요! ",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getmContext(),"메모를 입력하세요.",Toast.LENGTH_SHORT).show();
                     }
                     else{
                         progress.dismiss();
@@ -652,7 +650,7 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         getmContext().startActivity(intent);
                         finish();
-                        Toast.makeText(getmContext(),"일정을 수정합니다! ",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getmContext(),"수정하였습니다.",Toast.LENGTH_SHORT).show();
                     }
                 }catch(Exception e){}
                 try{
