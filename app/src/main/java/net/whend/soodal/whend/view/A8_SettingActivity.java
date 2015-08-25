@@ -30,6 +30,7 @@ import net.whend.soodal.whend.view.setting.S3_Profile;
 import net.whend.soodal.whend.view.setting.S4_Password;
 import net.whend.soodal.whend.view.setting.S5_Alarm;
 import net.whend.soodal.whend.view.setting.S6_SyncFacebookFriend;
+import net.whend.soodal.whend.view.setting.S7_Test;
 
 public class A8_SettingActivity extends AppCompatActivity {
     public Context mContext = this;
@@ -158,7 +159,13 @@ public class A8_SettingActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
 
     }
+    public void Test(View view)
+    {
+        Intent intent = new Intent(A8_SettingActivity.this, S7_Test.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
 
+    }
     public void Password(View view)
     {
         Intent intent = new Intent(A8_SettingActivity.this, S4_Password.class);

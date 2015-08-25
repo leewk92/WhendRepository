@@ -38,5 +38,6 @@
     <string name="title_activity_s5__alarm">S5_Alarm</string>
     <string name="title_activity_s6__syncfacebookfriend">S6_SyncFacebookFriend</string>
     <string name="title_activity_a0_5__tag_following_start">A0_5_TagFollowingStart</string>
+    <string name="title_activity_s7__test">S7_Test</string>
 
 </resources>

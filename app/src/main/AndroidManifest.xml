@@ -250,6 +250,10 @@
             android:name=".view.A0_5_TagFollowingStart"
             android:label="@string/title_activity_a0_5__tag_following_start" >
         </activity>
+        <activity
+            android:name=".view.setting.S7_Test"
+            android:label="@string/title_activity_s7__test" >
+        </activity>
     </application>
 
 </manifest>
