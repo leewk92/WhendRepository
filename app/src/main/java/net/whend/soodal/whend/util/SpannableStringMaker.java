@@ -149,19 +149,25 @@ public class SpannableStringMaker {
                 super.onPostExecute(result);
                 outputJson = getOutputJsonObject();
                 try {
-                    JSONArray results = outputJson.getJSONArray("results");
-                    JSONObject hashtag = results.getJSONObject(0);
+                    int is_exist = outputJson.getInt("count");
+                    if(is_exist == 1){
+                        JSONArray results = outputJson.getJSONArray("results");
+                        JSONObject hashtag = results.getJSONObject(0);
 
-                    Intent intent = new Intent(mContext, A7_SpecificHashTagActivity.class);
-                    intent.putExtra("id", hashtag.getInt("id"));
-                    intent.putExtra("title",hashtag.getString("title"));
-                    intent.putExtra("follower_count",hashtag.getInt("count_follower"));
-                    intent.putExtra("photo",hashtag.getString("photo"));
-                    intent.putExtra("count_schedule",hashtag.getInt("count_schedule"));
-                    intent.putExtra("count_upcoming_schedule", hashtag.getInt("count_upcoming_schedule"));
-                    intent.putExtra("is_follow", hashtag.getInt("is_follow") == 1 ? true : false);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(intent);
+                        Intent intent = new Intent(mContext, A7_SpecificHashTagActivity.class);
+                        intent.putExtra("id", hashtag.getInt("id"));
+                        intent.putExtra("title",hashtag.getString("title"));
+                        intent.putExtra("follower_count",hashtag.getInt("count_follower"));
+                        intent.putExtra("photo",hashtag.getString("photo"));
+                        intent.putExtra("count_schedule",hashtag.getInt("count_schedule"));
+                        intent.putExtra("count_upcoming_schedule", hashtag.getInt("count_upcoming_schedule"));
+                        intent.putExtra("is_follow", hashtag.getInt("is_follow") == 1 ? true : false);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                    }else{
+                        Toast.makeText(mContext,"일정이 등록되지 않은 태그입니다",Toast.LENGTH_SHORT).show();
+                    }
+
 
                 }catch (JSONException e){
 
