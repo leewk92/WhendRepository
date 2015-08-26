@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
+import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -26,6 +28,8 @@ import net.whend.soodal.whend.util.CalendarProviderUtil;
 import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.util.PicassoImageTool;
+import net.whend.soodal.whend.util.SpannableStringMaker;
+import net.whend.soodal.whend.util.TextViewFixTouchConsume;
 import net.whend.soodal.whend.view.A11_EditScheduleActivity;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
 import net.whend.soodal.whend.view.A5_WhoFollowsScheduleActivity;
@@ -55,6 +59,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     TextView like_count ;
     TextView follow_count;
     ImageView edit;
+
+
     public Concise_Schedule_Adapter(Context context, int textViewResourceId, ArrayList<Concise_Schedule> lists){
         super(context, textViewResourceId, lists);
         this.CSchedule_list = lists;
@@ -69,7 +75,6 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         if (v == null) {
 
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             v = li.inflate(R.layout.item_concise_schedule,parent, false);
             holder = new ViewHolder();
             holder.memo_photo_vh = (ImageView) v.findViewById(R.id.memo_photo);
@@ -116,6 +121,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
        // try{
         AdjustDataToLayout(v,position,holder);
         //}catch(Exception e){}
+
 
         return v;
     }
@@ -377,11 +383,18 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         else
             holder.time_vh.setText("하루 종일");
 
-        holder.memo_vh.setText(CSchedule_list.get(position).getMemo());
+
+        SpannableStringMaker ssm = new SpannableStringMaker(context,CSchedule_list.get(position).getMemo());
+        holder.memo_vh.setText(ssm.getSs());
+
+        holder.memo_vh.setMovementMethod(TextViewFixTouchConsume.LocalLinkMovementMethod.getInstance());
+        holder.memo_vh.setHighlightColor(Color.TRANSPARENT);
+        holder.memo_vh.setFocusable(false);
+
+
         holder.like_count_vh.setText(String.valueOf(CSchedule_list.get(position).getLike_count()));
         holder.follow_count_vh.setText(String.valueOf(CSchedule_list.get(position).getFollow_count()));
-        holder.location_vh.setText(String.valueOf(CSchedule_list.get(position).getLocation()) == null ? "" : CSchedule_list.get(position).getLocation())
-        ;
+        holder.location_vh.setText(String.valueOf(CSchedule_list.get(position).getLocation()) == null ? "" : CSchedule_list.get(position).getLocation())        ;
         holder.comment_count_vh.setText(String.valueOf(CSchedule_list.get(position).getComment_count()));
         Log.d("location_view", String.valueOf(CSchedule_list.get(position).getLocation()));
         Log.d("like", String.valueOf(CSchedule_list.get(position).getIsLike()));

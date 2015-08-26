@@ -1,19 +1,26 @@
 package net.whend.soodal.whend.view.setting;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextPaint;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
+import net.whend.soodal.whend.view.A7_SpecificHashTagActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,8 +30,11 @@ public class S7_Test extends AppCompatActivity {
 
 
     private String[] hashtags_title;
+    private int[] hashtags_index;
     Button parse;
     EditText memo;
+    TextView memo_tv;
+    String text="#이원철 #연세대학교 #수달 회의하기 싫다 #유포니아 #회의";
     private static JSONObject outputJson;
 
 
@@ -33,7 +43,34 @@ public class S7_Test extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_s7__test);
 
-        parse = (Button) findViewById(R.id.parse);
+        memo_tv = (TextView) findViewById(R.id.parse_memo_text);
+        SpannableString ss = SpannableString.valueOf(text);
+        parseMemo(text);
+        parseIndex(text, hashtags_title);
+
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                startActivity(new Intent(S7_Test.this, A7_SpecificHashTagActivity.class));
+
+                //intent.putExtra("id", grid_search_schedule.getTag().getId());
+                //intent.putExtra("title",grid_search_schedule.getTag().getTitle());
+                //intent.putExtra("follower_count",grid_search_schedule.getTag().getFollower_count());
+                //intent.putExtra("photo",grid_search_schedule.getTag().getPhoto());
+                //intent.putExtra("count_schedule",grid_search_schedule.getTag().getCount_schedule());
+                //intent.putExtra("count_upcoming_schedule",grid_search_schedule.getTag().getCount_upcoming_schedule());
+                //intent.putExtra("is_follow",grid_search_schedule.getTag().is_Follow());
+                //context.startActivity(intent);
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+
+
+        /*parse = (Button) findViewById(R.id.parse);
         memo = (EditText) findViewById(R.id.parse_memo);
 
         parse.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +79,7 @@ public class S7_Test extends AppCompatActivity {
                 parseMemo(memo.getText().toString());
             }
 
-        });
+        });*/
 
     }
 
@@ -76,16 +113,17 @@ public class S7_Test extends AppCompatActivity {
 
             hashtags_title = new String[tmpArray.length - 1];
 
-            for (int i = 1; i < tmpArray.length; i++) {
+            for (int i = 1; i < tmpArray.length; i++)
                 hashtags_title[i - 1] = tmpArray[i].split(" ")[0];
+        }
+    }
 
-                String url = "http://119.81.176.245/hashtags/all/exact/?search="+hashtags_title[i-1];
-
-                HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(this, url,"GET",hashtags_title[i-1]);
-                a.doExecution();
-
-                Log.d("hashtags_title_array", hashtags_title[i - 1]);
-            }
+    public void parseIndex(String text, String[] tags){
+        hashtags_index = new int[tags.length*2];        //인덱스 배열의 짝수번째에는 시작 인덱스, 홀수번째는 끝 인덱스.
+        for (int i=0; i<2*tags.length; i++){
+            hashtags_index[i] = text.indexOf("#"+tags[i]);
+            hashtags_index[i+1] = hashtags_index[i] + tags[i].length();
+            i++;
         }
     }
 

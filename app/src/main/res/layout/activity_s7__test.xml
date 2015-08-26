@@ -20,4 +20,14 @@
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/parse" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/parse_memo_text"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="25dp"
+        android:textColorLink="#03A9F4"
+        android:textIsSelectable="false" />
 </RelativeLayout>

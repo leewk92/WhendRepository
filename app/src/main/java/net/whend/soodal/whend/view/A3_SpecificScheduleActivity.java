@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
+import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -32,6 +34,7 @@ import net.whend.soodal.whend.util.CalendarProviderUtil;
 import net.whend.soodal.whend.util.CircleTransform;
 import net.whend.soodal.whend.util.DateTimeFormatter;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
+import net.whend.soodal.whend.util.SpannableStringMaker;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -437,7 +440,11 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.time_end)).setText(cs.getTime_end());
         ((TextView) findViewById(R.id.comment_count)).setText(String.valueOf(cs.getComment_count()));
 
-        ((TextView) findViewById(R.id.memo)).setText(cs.getMemo());
+        SpannableStringMaker ssm = new SpannableStringMaker(getApplicationContext() ,cs.getMemo());
+        ((TextView) findViewById(R.id.memo)).setText(ssm.getSs());
+        ((TextView) findViewById(R.id.memo)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView) findViewById(R.id.memo)).setHighlightColor(Color.TRANSPARENT);
+
         ((TextView) findViewById(R.id.like_count)).setText(String.valueOf(cs.getLike_count()));
         ((TextView) findViewById(R.id.follow_count)).setText(String.valueOf(cs.getFollow_count()));
         if(cs.getIsLike() == true)

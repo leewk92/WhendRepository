@@ -63,6 +63,8 @@ public class F1_Wall extends Fragment {
         // Required empty public constructor
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -289,6 +291,9 @@ public class F1_Wall extends Fragment {
                         s.setStarttime(tmp_ith.getString("start_time"));
                         s.setEndtime(tmp_ith.getString("end_time"));
                         s.setMemo(tmp_ith.getString("memo"));
+
+
+
                         s.setUploaded_username(tmp_ith.getString("user_name"));
                         s.setUploaded_user_id(tmp_ith.getInt("user_id"));
                         s.setPhoto_dir_fromweb((tmp_ith.getString("photo") == "null") ? "" : tmp_ith.getString("photo").substring(0, tmp_ith.getString("photo").length() - 4) + ".800x200.jpg");
@@ -313,6 +318,7 @@ public class F1_Wall extends Fragment {
                         f1_text.setVisibility(View.INVISIBLE);
 
                     listview.setClickable(true);
+
                     listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         /*
                                     @Override
@@ -493,5 +499,7 @@ public class F1_Wall extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+
 
 }

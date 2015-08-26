@@ -38,7 +38,9 @@ public class Concise_Schedule {
     private int comment_count;
     private String best_friend_comment;
     private String best_comment;
-    private HashTag[] hashTags;         // 나중에 생각
+
+
+    private String[] hashTags_title;         // 나중에 생각
     private boolean isLike;         // 좋아요 상태 표시
     private boolean isFollow;       // 받아보기 상태 표시
 
@@ -253,9 +255,7 @@ public class Concise_Schedule {
     public int getLike_count() {
         return like_count;
     }
-    public HashTag[] getHashTags() {
-        return hashTags;
-    }
+
     public boolean getIsLike(){
         return isLike;
     }
@@ -289,9 +289,6 @@ public class Concise_Schedule {
     }
     public void setBest_comment(String best_comment) {
         this.best_comment = best_comment;
-    }
-    public void setHashTags(HashTag[] hashTags) {
-        this.hashTags = hashTags;
     }
     public void setIsLike(boolean isLike){
         this.isLike = isLike;
