@@ -36,6 +36,7 @@
                 android:layout_marginBottom="5dp"
                 android:textStyle="bold" />
             <TextView
+                android:textColorLink="#B3E5FC"
                 android:id="@+id/comment_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

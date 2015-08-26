@@ -3,6 +3,7 @@ package net.whend.soodal.whend.form;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.squareup.picasso.Picasso;
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.base.Comment;
 import net.whend.soodal.whend.util.CircleTransform;
+import net.whend.soodal.whend.util.SpannableStringMaker;
+import net.whend.soodal.whend.util.TextViewFixTouchConsume;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
 
 import java.util.ArrayList;
@@ -75,7 +78,14 @@ public class WriteComment_Adapter extends Comment_Adapter {
     public void AdjustDataToLayout(final View v, int position) {
 
         ((TextView) v.findViewById(R.id.comment_writer)).setText(Comment_list.get(position).getWrite_username());
-        ((TextView) v.findViewById(R.id.comment_content)).setText(Comment_list.get(position).getContents());
+
+        SpannableStringMaker ssm = new SpannableStringMaker(context,Comment_list.get(position).getContents());
+        ((TextView) v.findViewById(R.id.comment_content)).setText(ssm.getSs());
+
+        ((TextView) v.findViewById(R.id.comment_content)).setMovementMethod(TextViewFixTouchConsume.LocalLinkMovementMethod.getInstance());
+        ((TextView) v.findViewById(R.id.comment_content)).setHighlightColor(Color.TRANSPARENT);
+        ((TextView) v.findViewById(R.id.comment_content)).setFocusable(false);
+
         if(Comment_list.get(position).getUser_photo()!="") {
             Picasso.with(context).load(Comment_list.get(position).getUser_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
 
