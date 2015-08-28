@@ -144,7 +144,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                                 intent.putExtra("date_end", cs.getDate_end());
                                 intent.putExtra("time_start", cs.getTime_start());
                                 intent.putExtra("time_end", cs.getTime_end());
-                                intent.putExtra("title", cs.getTitle());
+                                intent.putExtra("content", cs.getTitle());
                                 intent.putExtra("location", cs.getLocation());
                                 intent.putExtra("datetime_start", cs.getSchedule().getStarttime_ms());
                                 intent.putExtra("datetime_end", cs.getSchedule().getEndtime_ms());

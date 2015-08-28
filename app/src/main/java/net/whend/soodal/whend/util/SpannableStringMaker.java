@@ -71,7 +71,11 @@ public class SpannableStringMaker {
         hashtags_index = new int[tags.length*2];        //인덱스 배열의 짝수번째에는 시작 인덱스, 홀수번째는 끝 인덱스.
         for (int i=0; i<tags.length; i++){
             int j= i*2;
-            hashtags_index[j] = text.indexOf("#"+tags[i]);
+            try {
+                hashtags_index[j] = text.indexOf("#" + tags[i], hashtags_index[j - 1]);
+            }catch(Exception e){
+                hashtags_index[j] = text.indexOf("#" + tags[i]);
+            }
             hashtags_index[j+1] = hashtags_index[j] + tags[i].length();
 
         }
@@ -164,7 +168,31 @@ public class SpannableStringMaker {
                         intent.putExtra("is_follow", hashtag.getInt("is_follow") == 1 ? true : false);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
-                    }else{
+                    }
+                    else if(is_exist >1){
+
+                        JSONArray results = outputJson.getJSONArray("results");
+                        for(int i=0; i<results.length(); i++){
+                            JSONObject hashtag = results.getJSONObject(i);
+                            if(hashtag.getString("title").contentEquals(hashtag_title)){
+
+                                Intent intent = new Intent(mContext, A7_SpecificHashTagActivity.class);
+                                intent.putExtra("id", hashtag.getInt("id"));
+                                intent.putExtra("title",hashtag.getString("title"));
+                                intent.putExtra("follower_count",hashtag.getInt("count_follower"));
+                                intent.putExtra("photo",hashtag.getString("photo"));
+                                intent.putExtra("count_schedule",hashtag.getInt("count_schedule"));
+                                intent.putExtra("count_upcoming_schedule", hashtag.getInt("count_upcoming_schedule"));
+                                intent.putExtra("is_follow", hashtag.getInt("is_follow") == 1 ? true : false);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                mContext.startActivity(intent);
+
+                            }
+                        }
+
+                    }
+
+                    else{
                         Toast.makeText(mContext,"일정이 등록되지 않은 태그입니다",Toast.LENGTH_SHORT).show();
                     }
 

@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -137,10 +138,11 @@ public class CalendarProviderUtil {
 
                 }
                 // datetime ms -> string
-                DateTimeFormatter dtf_starttime = new DateTimeFormatter(tmpSchedule.getStarttime_ms());
+                DateTimeFormatter dtf_starttime = new DateTimeFormatter(tmpSchedule.getStarttime_ms(),TimeZone.getTimeZone("UTC"));
+
                 tmpSchedule.setStarttime(dtf_starttime.getOutputString());
 
-                DateTimeFormatter dtf_endtime = new DateTimeFormatter(tmpSchedule.getEndtime_ms());
+                DateTimeFormatter dtf_endtime = new DateTimeFormatter(tmpSchedule.getEndtime_ms(),TimeZone.getTimeZone("UTC"));
                 tmpSchedule.setEndtime(dtf_endtime.getOutputString());
 
                 innerScheduleList.add(tmpSchedule);
@@ -220,8 +222,10 @@ public class CalendarProviderUtil {
 
             ContentResolver cr = mContext.getApplicationContext().getContentResolver();
             ContentValues values = new ContentValues();
-            values.put(CalendarContract.Events.DTSTART, (cs.getSchedule().getStarttime_ms()/1000)*1000);
-            values.put(CalendarContract.Events.DTEND, (cs.getSchedule().getEndtime_ms()/1000)*1000);
+            values.put(CalendarContract.Events.DTSTART, (new DateTimeFormatter().LocaleToUTC(cs.getSchedule().getStarttime_ms())));
+            values.put(CalendarContract.Events.DTEND, (new DateTimeFormatter().LocaleToUTC(cs.getSchedule().getEndtime_ms())));
+//           values.put(CalendarContract.Events.DTSTART, (cs.getSchedule().getStarttime_ms()/1000)*1000);
+//            values.put(CalendarContract.Events.DTEND, (cs.getSchedule().getEndtime_ms() / 1000)*1000);
 //            values.put(CalendarContract.Events.ALL_DAY, cs.getSchedule().getAllday());
             values.put(CalendarContract.Events.ALL_DAY, cs.getSchedule().getAllday()==true?1:0);
             values.put(CalendarContract.Events.TITLE, cs.getTitle());
@@ -229,7 +233,8 @@ public class CalendarProviderUtil {
             if(appPrefs.getAlarm_setting())
                 values.put(CalendarContract.Events.HAS_ALARM, 1);
             values.put(CalendarContract.Events.CALENDAR_ID, calID);
-            values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().toString());
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+            values.put(CalendarContract.Events.EVENT_LOCATION, cs.getSchedule().getLocation());
 //            values.put(CalendarContract.Events.EVENT_TIMEZONE, "UTC");
 
             // Uri creationUri = asSyncAdapter(CalendarContract.Events.CONTENT_URI, account.name, account.type);
@@ -259,6 +264,8 @@ public class CalendarProviderUtil {
     }
 
     public void deleteScheduleFromInnerCalendar(Concise_Schedule cs){
+        DateTimeFormatter dtf = new DateTimeFormatter();
+
         AppPrefs appPrefs = new AppPrefs(mContext);
         Uri uri_event = CalendarContract.Events.CONTENT_URI;
         ContentResolver cr_event = mContext.getContentResolver();
@@ -268,7 +275,7 @@ public class CalendarProviderUtil {
                 + CalendarContract.Events.DTSTART + " = ?))";
         String[] selectionArgs = new String[] {appPrefs.getWhendCalendarAccountId()+""
                 , cs.getTitle()
-                , cs.getSchedule().getStarttime_ms()+""};
+                , new DateTimeFormatter().LocaleToUTC((cs.getSchedule().getStarttime_ms() / 1000) * 1000)+""};
 
         Cursor cur_event = cr_event.query(uri_event, EVENT_PROJECTION, selection,selectionArgs, null);
 
@@ -352,6 +359,7 @@ public class CalendarProviderUtil {
                 .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, accountType)
                 .build();
     }
+
 
 
     /*
