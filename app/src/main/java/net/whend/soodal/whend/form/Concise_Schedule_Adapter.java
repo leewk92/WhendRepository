@@ -501,12 +501,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
                     float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
-
-
                     int targetwidthpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, (int)(dpWidth*0.9), context.getResources().getDisplayMetrics());
                     int targetheightpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, (int) (dpHeight * 0.9), context.getResources().getDisplayMetrics());
-
-
 
                     ImageView temp = (ImageView) view.findViewById(R.id.image);
                     temp.getLayoutParams().width = targetwidthpx;

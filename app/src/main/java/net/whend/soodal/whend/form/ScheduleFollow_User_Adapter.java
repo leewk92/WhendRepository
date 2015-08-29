@@ -29,6 +29,7 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
     private ArrayList<ScheduleFollow_User> User_list;
     private Context context;
     private ImageView user_photo;
+
     public ScheduleFollow_User_Adapter(Context context, int textViewResourceId, ArrayList<ScheduleFollow_User> lists) {
         super(context, textViewResourceId, lists);
         this.User_list = lists;
@@ -38,23 +39,28 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
+        ViewHolder holder = null;
         if (v == null) {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.item_schedulefollow_user, null);
+
+            holder = new ViewHolder();
+            holder.follow_button_vh = (ImageView) v.findViewById(R.id.follow_button);
+            holder.user_photo_vh = (ImageView) v.findViewById(R.id.user_photo);
+            holder.fullname_vh = (TextView)v.findViewById(R.id.fullname);
+            holder.user_clickablelayout_vh = v.findViewById(R.id.user_clickableLayout);
+            v.setTag(holder);
         }
+        else{
+            holder = (ViewHolder) v.getTag();
+        }
+
         user_photo = (ImageView)v.findViewById(R.id.user_photo);
 
 
-        AdjustDataToLayout(v,position);
+        AdjustDataToLayout(v, position, holder);
 
-        // 리스너 함수들
-        View user = (View) v.findViewById(R.id.user_clickableLayout);
-        ImageView follow_button = (ImageView) v.findViewById(R.id.follow_button);
-        LinearLayout follow_button_layout = (LinearLayout) v.findViewById(R.id.follow_button_layout);
 
-        UserProfileClickListener(user, position);
-        LikeButtonClickListener(follow_button, v, position);
-        LikeButtonClickListener2(follow_button_layout, v, position);
 
         return v;
     }
@@ -74,26 +80,43 @@ public class ScheduleFollow_User_Adapter extends ArrayAdapter<ScheduleFollow_Use
     }
 
 
-    public void AdjustDataToLayout(final View v, int position) {
+    static class ViewHolder {
+        ImageView user_photo_vh;
+        ImageView follow_button_vh;
+        TextView fullname_vh;
+        View user_clickablelayout_vh;
+        int position;
+    }
 
-        ((TextView) v.findViewById(R.id.fullname)).setText(User_list.get(position).getUsername());
+    public void AdjustDataToLayout(final View v, int position, ViewHolder holder) {
+
+        holder.fullname_vh.setText(User_list.get(position).getUsername());
         if(User_list.get(position).getIsFollow() == true)
-            ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.like_on);
+            holder.follow_button_vh.setImageResource(R.drawable.like_on);
         else
-            ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.like);
+            holder.follow_button_vh.setImageResource(R.drawable.like);
 
         if(User_list.get(position).getUser().getUser_photo()!="") {
-            Picasso.with(context).load(User_list.get(position).getUser().getUser_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
+            Picasso.with(context).load(User_list.get(position).getUser().getUser_photo()).transform(new CircleTransform()).into(holder.user_photo_vh);
 
         }else{
             // 기본이미지 로드.
-            user_photo.setImageResource(R.drawable.userimage_default);
+            holder.user_photo_vh.setImageResource(R.drawable.userimage_default);
         }
-
+/*
         AppPrefs appPrefs = new AppPrefs(context);
         if(appPrefs.getUsername().equals(User_list.get(position).getUsername()) ){
-            (v.findViewById(R.id.follow_button)).setVisibility(View.INVISIBLE);
-        }
+            holder.follow_button_vh.setVisibility(View.INVISIBLE);
+        }*/
+        holder.follow_button_vh.setTag(position);
+        holder.user_photo_vh.setTag(position);
+        holder.fullname_vh.setTag(position);
+
+        UserProfileClickListener(holder.user_clickablelayout_vh, position);
+        LikeButtonClickListener(holder.follow_button_vh, v, position);
+        //LikeButtonClickListener2(follow_button_layout, v, position);
+
+
     }
 
 
