@@ -63,7 +63,7 @@
                     android:background="@drawable/textview_press"
                     android:textIsSelectable="false"
                     android:clickable="true"
-                    android:onClick="OnPreparing"/>
+                    android:onClick="Test"/>
 
                 <LinearLayout
                     android:orientation="vertical"
