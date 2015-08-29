@@ -22,6 +22,8 @@ import net.whend.soodal.whend.model.top.Upload_Schedule;
 import net.whend.soodal.whend.util.CalendarProviderUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class A1_UploadActivity extends AppCompatActivity {
 
@@ -80,7 +82,19 @@ public class A1_UploadActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(A1_UploadActivity.this, A4_MakeScheduleActivity.class);
-
+                //intent.putExtra("date_start", schedule.getDateStart().toString());
+                //intent.putExtra("date_end", schedule.getDateEnd().toString());
+                //intent.putExtra("content", schedule.getContent().toString());
+                //intent.putExtra("time_start", schedule.getTime_start().toString());
+                //intent.putExtra("time_end", schedule.getTime_end().toString());
+                //intent.putExtra("location",schedule.getLocation().toString());
+                //intent.putExtra("text", String.valueOf("URL")); // 아마 유저정보...?
+                Calendar now_calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                intent.putExtra("datetime_start", now_calendar.getTimeInMillis());
+                //Log.d("datetime_start_upload", schedule.getSchedule().getStarttime_ms() + "");
+                intent.putExtra("datetime_end", now_calendar.getTimeInMillis());
+                //intent.putExtra("allday",schedule.getSchedule().getAllday());
+                //intent.putExtra("memo",schedule.getSchedule().getMemo());
 
                 startActivity(intent);
 

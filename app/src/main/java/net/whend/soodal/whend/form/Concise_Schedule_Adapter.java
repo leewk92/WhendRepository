@@ -144,7 +144,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                                 intent.putExtra("date_end", cs.getDate_end());
                                 intent.putExtra("time_start", cs.getTime_start());
                                 intent.putExtra("time_end", cs.getTime_end());
-                                intent.putExtra("title", cs.getTitle());
+                                intent.putExtra("content", cs.getTitle());
                                 intent.putExtra("location", cs.getLocation());
                                 intent.putExtra("datetime_start", cs.getSchedule().getStarttime_ms());
                                 intent.putExtra("datetime_end", cs.getSchedule().getEndtime_ms());
@@ -501,12 +501,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
                     float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
-
-
                     int targetwidthpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, (int)(dpWidth*0.9), context.getResources().getDisplayMetrics());
                     int targetheightpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, (int) (dpHeight * 0.9), context.getResources().getDisplayMetrics());
-
-
 
                     ImageView temp = (ImageView) view.findViewById(R.id.image);
                     temp.getLayoutParams().width = targetwidthpx;

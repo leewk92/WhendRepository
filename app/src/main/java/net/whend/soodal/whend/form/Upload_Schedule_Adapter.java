@@ -85,7 +85,7 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
         holder.vDate_end.setText(schedule.getDateEnd());
         holder.vContent.setText(schedule.getContent());
         holder.vTime_start.setText(schedule.getTime_start());
-        holder.vLocation.setText(schedule.getLocation());
+        holder.vLocation.setText(schedule.getLocation().toString());
         try {
             String tmpcolor = schedule.getSchedule().getColor();
             holder.vColor.setBackgroundColor(Color.parseColor("#"+tmpcolor));
@@ -108,6 +108,7 @@ public class Upload_Schedule_Adapter extends RecyclerView.Adapter<Upload_Schedul
                 Log.d("datetime_start_upload", schedule.getSchedule().getStarttime_ms() + "");
                 intent.putExtra("datetime_end",schedule.getSchedule().getEndtime_ms());
                 intent.putExtra("allday",schedule.getSchedule().getAllday());
+                intent.putExtra("memo",schedule.getSchedule().getMemo());
                 context.startActivity(intent);
             }
         });

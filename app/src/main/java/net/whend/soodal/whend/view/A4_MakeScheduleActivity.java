@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -51,6 +52,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class A4_MakeScheduleActivity extends AppCompatActivity {
 
@@ -59,22 +61,22 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
     private int REQ_CODE_SELECT_IMAGE = 100;
     private Uri mImageCaptureUri;
-    static private String ImageAbsolutePath=null;
+    private String ImageAbsolutePath;
     private String[] hashtags_title;
     private ArrayList<Integer> hashtags_id = new ArrayList<Integer>();
     private ImageView schedule_photo;
     private ImageView schedule_photo_add;
-    private static int YEAR_start,MONTH_start,DAY_start,HOUR_start,MINUTE_start;
-    private static int YEAR_end,MONTH_end,DAY_end,HOUR_end,MINUTE_end;
+    static int YEAR_start,MONTH_start,DAY_start,HOUR_start,MINUTE_start;
+    static int YEAR_end,MONTH_end,DAY_end,HOUR_end,MINUTE_end;
     static TextView date_start,time_start,date_end,time_end;
-    static int completed_num=0;
-    static boolean all_day_boolean;
-    static boolean cancelable = true;
+    int completed_num=0;
+    static boolean all_day_boolean=false;
+    boolean cancelable = true;
     int all_day_int;
     Boolean sAllday;
     EditText title,location,memo;
     CheckBox all_day;
-    String sStartDate, sEndDate, sContent, sLocation, sStartTime,sEndTime;
+    String sStartDate, sEndDate, sContent, sLocation, sStartTime,sEndTime,sMemo;
     long sDatetime_start,sDatetime_end;
     Bundle inputBundle_forRequest = new Bundle();
     ProgressDialog progress ;
@@ -89,7 +91,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         completed_num=0;
         View.OnClickListener photo_add;
-
+        ImageAbsolutePath=null;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a4_make_schedule_layout);
@@ -122,6 +124,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         sDatetime_start = intent.getLongExtra("datetime_start", 0);
         sDatetime_end = intent.getLongExtra("datetime_end", 0);
         sAllday = intent.getBooleanExtra("allday", false);
+        sMemo = intent.getStringExtra("memo");
         Log.d("intent allday",sAllday+"");
         if(sAllday == true){
             all_day.setChecked(true);
@@ -140,57 +143,108 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             DateTimeFormatter dtf = new DateTimeFormatter(sDatetime_start);
             date_start.setText(dtf.getDate());
             time_start.setText(dtf.getTime());
-
-            YEAR_start = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_start = dtf.getCalendar().get(Calendar.MONTH)+1;
-            DAY_start = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
-            HOUR_start = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
-            MINUTE_start = dtf.getCalendar().get(Calendar.MINUTE);
+            Calendar utc_calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            utc_calendar.setTimeInMillis(dtf.getCalendar().getTimeInMillis());
+            Log.d("calendar_utc", utc_calendar.getTimeZone().getID().toString());
+            //            dtf.getCalendar().setTimeZone(TimeZone.getTimeZone("UTC"));
+//            YEAR_start = dtf.getCalendar().get(Calendar.YEAR);
+//            MONTH_start = dtf.getCalendar().get(Calendar.MONTH)+1;
+//            DAY_start = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
+//            HOUR_start = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
+//            MINUTE_start = dtf.getCalendar().get(Calendar.MINUTE);
+            YEAR_start = utc_calendar.get(Calendar.YEAR);
+            MONTH_start = utc_calendar.get(Calendar.MONTH)+1;
+            DAY_start = utc_calendar.get(Calendar.DAY_OF_MONTH);
+            HOUR_start = utc_calendar.get(Calendar.HOUR_OF_DAY);
+            MINUTE_start = utc_calendar.get(Calendar.MINUTE);
         }else{
             // now
             DateTimeFormatter dtf = new DateTimeFormatter();
             date_start.setText(dtf.getDate());
             time_start.setText(dtf.getTime());
-            YEAR_start = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_start = dtf.getCalendar().get(Calendar.MONTH)+1;
-            DAY_start = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
-            HOUR_start = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
-            MINUTE_start = dtf.getCalendar().get(Calendar.MINUTE);
+            Calendar utc_calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            utc_calendar.setTimeInMillis(dtf.getCalendar().getTimeInMillis());
+            Log.d("calendar_utc",utc_calendar.getTime().toString());
+//            dtf.getCalendar().setTimeZone(TimeZone.getTimeZone("UTC"));
+
+//            YEAR_start = dtf.getCalendar().get(Calendar.YEAR);
+//            MONTH_start = dtf.getCalendar().get(Calendar.MONTH)+1;
+//            DAY_start = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
+//            HOUR_start = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
+//            MINUTE_start = dtf.getCalendar().get(Calendar.MINUTE);
+
+            YEAR_start = utc_calendar.get(Calendar.YEAR);
+            MONTH_start = utc_calendar.get(Calendar.MONTH)+1;
+            DAY_start = utc_calendar.get(Calendar.DAY_OF_MONTH);
+            HOUR_start = utc_calendar.get(Calendar.HOUR_OF_DAY);
+            MINUTE_start = utc_calendar.get(Calendar.MINUTE);
         }
         if(sDatetime_end != 0) {
             DateTimeFormatter dtf = new DateTimeFormatter(sDatetime_end);
-            date_end.setText(dtf.getDate());
-            time_end.setText(dtf.getTime());
-            YEAR_end = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_end = dtf.getCalendar().get(Calendar.MONTH)+1;
-            DAY_end = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
-            HOUR_end = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
-            MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
+
+            Calendar utc_calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            utc_calendar.setTimeInMillis(dtf.getCalendar().getTimeInMillis());
+            Log.d("calendar_utc", utc_calendar.getTimeZone().getID().toString());
+
+            //dtf.getCalendar().setTimeZone(TimeZone.getTimeZone("UTC"));
+
+            YEAR_end = utc_calendar.get(Calendar.YEAR);
+            MONTH_end = utc_calendar.get(Calendar.MONTH)+1;
+            HOUR_end = utc_calendar.get(Calendar.HOUR_OF_DAY);
+            MINUTE_end = utc_calendar.get(Calendar.MINUTE);
+            if(all_day_boolean) {
+                DAY_end = utc_calendar.get(Calendar.DAY_OF_MONTH) - 1;
+                Log.d("calendar_day_end",DAY_end+"");
+            }else {
+                DAY_end = utc_calendar.get(Calendar.DAY_OF_MONTH);
+            }
+            Calendar tmp_calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            tmp_calendar.set(YEAR_end,MONTH_end-1,DAY_end,HOUR_end,MINUTE_end,0);
+            Log.d("calendar_endtime",tmp_calendar.getTime().toString());
+            DateTimeFormatter dtf2 = new DateTimeFormatter(tmp_calendar.getTimeInMillis());
+            date_end.setText(dtf2.getDate());Log.d("calendar_dtf2date",dtf2.getDate());
+            time_end.setText(dtf2.getTime());
+
         }else{
             // now
             DateTimeFormatter dtf = new DateTimeFormatter();
+
+            Calendar utc_calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            utc_calendar.setTimeInMillis(dtf.getCalendar().getTimeInMillis());
+            Log.d("calendar_utc", utc_calendar.getTimeZone().getID().toString());
+
+            //dtf.getCalendar().setTimeZone(TimeZone.getTimeZone("UTC"));
+
+            YEAR_end = utc_calendar.get(Calendar.YEAR);
+            MONTH_end = utc_calendar.get(Calendar.MONTH)+1;
+            HOUR_end = utc_calendar.get(Calendar.HOUR_OF_DAY);
+            MINUTE_end = utc_calendar.get(Calendar.MINUTE);
+            if(all_day_boolean) {
+                DAY_end = utc_calendar.get(Calendar.DAY_OF_MONTH) - 1;
+            }else {
+                DAY_end = utc_calendar.get(Calendar.DAY_OF_MONTH);
+            }
+            Calendar tmp_calendar = Calendar.getInstance();
+            tmp_calendar.set(YEAR_end,MONTH_end-1,DAY_end,HOUR_end,MINUTE_end,0);
+            dtf = new DateTimeFormatter(tmp_calendar.getTimeInMillis());
             date_end.setText(dtf.getDate());
             time_end.setText(dtf.getTime());
-            YEAR_end = dtf.getCalendar().get(Calendar.YEAR);
-            MONTH_end = dtf.getCalendar().get(Calendar.MONTH)+1;
-            DAY_end = dtf.getCalendar().get(Calendar.DAY_OF_MONTH);
-            HOUR_end = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
-            MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
         }
 
-        if(sStartDate != null)
-            date_start.setText(sStartDate);
-        if(sEndDate != null)
-            date_end.setText(sEndDate);
-        if(sStartTime != null)
-            time_start.setText(sStartTime);
-        if(sEndTime != null)
-            time_end.setText(sEndTime);
+//        if(sStartDate != null)
+//            date_start.setText(sStartDate);
+//        if(sEndDate != null)
+//            date_end.setText(sEndDate);
+//        if(sStartTime != null)
+//            time_start.setText(sStartTime);
+//        if(sEndTime != null)
+//            time_end.setText(sEndTime);
         if(sLocation != null)
             location.setText(sLocation);
         if(sContent != null)
             title.setText(sContent);
-
+        if(sMemo != null)
+            memo.setText(sMemo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
         toolbar.setTitle("");
         TextView toolbartext = (TextView) findViewById(R.id.toolbar_textview);
@@ -219,24 +273,43 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                     time_start_visiblelayout.setVisibility(View.INVISIBLE);
                     View time_end_visiblelayout = findViewById(R.id.time_end_visiblelayout);
                     time_end_visiblelayout.setVisibility(View.INVISIBLE);
+
+                    Calendar utc_calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                    Calendar local_calendar = Calendar.getInstance(TimeZone.getDefault());
+                    utc_calendar.set(YEAR_start,MONTH_start,DAY_start,0,0,0);
+                    local_calendar.setTimeInMillis(utc_calendar.getTimeInMillis());
                     all_day_boolean = true;
-                    HOUR_start = 9;
-                    MINUTE_start = 0;
-                    HOUR_end = 9;
-                    MINUTE_end = 0;
+                    YEAR_start = utc_calendar.get(utc_calendar.YEAR);
+                    MONTH_start = utc_calendar.get(utc_calendar.MONTH);
+                    DAY_start = utc_calendar.get(utc_calendar.DAY_OF_MONTH); // 이것도 왜이런지 모르겠음
+
+                    HOUR_start = utc_calendar.get(local_calendar.HOUR_OF_DAY);
+                    MINUTE_start = utc_calendar.get(local_calendar.MINUTE);
+                    Log.d("calendar_HOUR_START",HOUR_start+"");
+                    HOUR_end = utc_calendar.get(local_calendar.HOUR_OF_DAY);
+                    MINUTE_end = utc_calendar.get(local_calendar.MINUTE);
 
                 }else {
                     View time_start_visiblelayout = findViewById(R.id.time_start_visiblelayout);
                     time_start_visiblelayout.setVisibility(View.VISIBLE);
                     View time_end_visiblelayout = findViewById(R.id.time_end_visiblelayout);
                     time_end_visiblelayout.setVisibility(View.VISIBLE);
+
+                    Calendar utc_calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                    Calendar local_calendar = Calendar.getInstance(TimeZone.getDefault());
+                    utc_calendar.set(YEAR_start, MONTH_start,DAY_start,0,0,0);
+                    local_calendar.setTimeInMillis(utc_calendar.getTimeInMillis());
+
                     all_day_boolean = false;
 
-                    DateTimeFormatter dtf = new DateTimeFormatter();
-                    HOUR_start = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
-                    MINUTE_start = dtf.getCalendar().get(Calendar.MINUTE);
-                    HOUR_end = dtf.getCalendar().get(Calendar.HOUR_OF_DAY);
-                    MINUTE_end = dtf.getCalendar().get(Calendar.MINUTE);
+                    DateTimeFormatter dtf = new DateTimeFormatter(utc_calendar.getTimeInMillis());
+                    HOUR_start = utc_calendar.get(Calendar.HOUR_OF_DAY);
+                    MINUTE_start = utc_calendar.get(Calendar.MINUTE);
+                    Log.d("calendar_HOUR_start",HOUR_start+"");
+                    HOUR_end = utc_calendar.get(Calendar.HOUR_OF_DAY);
+                    MINUTE_end = utc_calendar.get(Calendar.MINUTE);
+                    time_start.setText(dtf.getTime());
+                    time_end.setText(dtf.getTime());
                 }
             }
         });
@@ -941,6 +1014,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                             inputBundle_forRequest.putIntegerArrayList("hashtag",hashtags_id);
                         }
                         Calendar cal = Calendar.getInstance();
+                        cal.setTimeZone(TimeZone.getDefault());
                         cal.setTimeInMillis(0);
                         if(all_day_boolean==false)
                             cal.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start,0);
@@ -999,9 +1073,19 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-            int year = YEAR_start;
-            int month = MONTH_start-1;
-            int day = DAY_start;
+            Calendar tmpCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            tmpCalendar.set(YEAR_start, MONTH_start-1, DAY_start, HOUR_start, MINUTE_start);
+            Log.d("tmp_calendar",tmpCalendar.getTime().toString());
+            Calendar tmpCalendar2 = Calendar.getInstance(TimeZone.getDefault());
+            tmpCalendar2.setTimeInMillis(tmpCalendar.getTimeInMillis());
+            int year = tmpCalendar2.get(tmpCalendar2.YEAR);
+            int month = tmpCalendar2.get(tmpCalendar2.MONTH);
+            int day = tmpCalendar2.get(tmpCalendar2.DAY_OF_MONTH);
+
+ //           int year = YEAR_start;
+ //           int month = MONTH_start-1;
+ //           int day = DAY_start;
+
 
             // Create a new instance of DatePickerDialog and return it
             return new DatePickerDialog(getActivity(), this, year, month, day);
@@ -1013,12 +1097,26 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             this.YEAR = year;
             this.MONTH = monthOfYear+1;
             this.DAY = dayOfMonth;
-            YEAR_start = YEAR;
-            MONTH_start = MONTH;
-            DAY_start = DAY;
-            date_start.setText(MONTH_start + "월" + DAY_start + "일");
+
+            Calendar tmpCalendar = Calendar.getInstance(TimeZone.getDefault());
+            tmpCalendar.set(this.YEAR, this.MONTH, this.DAY, HOUR_start, MINUTE_start);
+            Calendar tmpCalendar2 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            tmpCalendar2.setTimeInMillis(tmpCalendar.getTimeInMillis());
+            YEAR_start = tmpCalendar2.get(tmpCalendar2.YEAR);
+            MONTH_start = tmpCalendar2.get(tmpCalendar2.MONTH);
+            if(all_day_boolean)
+                DAY_start = tmpCalendar2.get(tmpCalendar2.DAY_OF_MONTH)+1;//이건 왜이런지 도저히 모르겠지만 이렇게 하면 잘됨.. ;;
+            else
+                DAY_start = tmpCalendar2.get(tmpCalendar2.DAY_OF_MONTH)+1;//이건 왜이런지 도저히 모르겠지만 이렇게 하면 잘됨.. ;;
+
+            Log.d("calendar_set",YEAR_start + " / " + MONTH_start + " / " + DAY_start );
+//            YEAR_start = YEAR;
+//            MONTH_start = MONTH;
+//            DAY_start = DAY;
+
+            date_start.setText(this.MONTH + "월" + this.DAY+ "일");
             // 끝 시간도 자동설정
-            date_end.setText(MONTH_start + "월" + DAY_start + "일");
+            date_end.setText(this.MONTH + "월" + this.DAY + "일");
             YEAR_end = YEAR_start;
             MONTH_end = MONTH_start;
             DAY_end = DAY_start;
@@ -1031,8 +1129,15 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current time as the default values for the picker
 
-            int hour = HOUR_start;
-            int minute = MINUTE_start;
+            Calendar tmpCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            tmpCalendar.set(YEAR_start, MONTH_start, DAY_start, HOUR_start, MINUTE_start);
+            Calendar tmpCalendar2 = Calendar.getInstance(TimeZone.getDefault());
+            tmpCalendar2.setTimeInMillis(tmpCalendar.getTimeInMillis());
+            int hour = tmpCalendar2.get(tmpCalendar2.HOUR_OF_DAY);
+            int minute = tmpCalendar2.get(tmpCalendar2.MINUTE);
+
+           // int hour = HOUR_start;
+           // int minute = MINUTE_start;
 
             // Create a new instance of TimePickerDialog and return it
             return new TimePickerDialog(getActivity(), this, hour, minute,true);
@@ -1045,11 +1150,22 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
             this.HOUR = hourOfDay;
             this.MINUTE = minute;
-            HOUR_start =HOUR;
-            MINUTE_start = MINUTE;
-            time_start.setText(String.format("%02d", HOUR_start)+":" +String.format("%02d", MINUTE_start));
+
+            Calendar tmpCalendar = Calendar.getInstance(TimeZone.getDefault());
+            tmpCalendar.set(YEAR_start, MONTH_start, DAY_start, this.HOUR, this.MINUTE);
+            Calendar tmpCalendar2 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            tmpCalendar2.setTimeInMillis(tmpCalendar.getTimeInMillis());
+            HOUR_start = tmpCalendar2.get(tmpCalendar2.HOUR_OF_DAY);
+            MINUTE_start = tmpCalendar2.get(tmpCalendar2.MINUTE);
+
+//            time_start.setText(String.format("%02d", HOUR_start)+":" +String.format("%02d", MINUTE_start));
             // 끝시간 자동설정
-            time_end.setText(String.format("%02d", HOUR_start+1)+":" +String.format("%02d", MINUTE_start));
+//            time_end.setText(String.format("%02d", HOUR_start+1)+":" +String.format("%02d", MINUTE_start));
+
+            time_start.setText(String.format("%02d", this.HOUR)+":" +String.format("%02d", this.MINUTE));
+            // 끝시간 자동설정
+            time_end.setText(String.format("%02d", this.HOUR+1)+":" +String.format("%02d", this.MINUTE));
+
             HOUR_end = HOUR_start+1;
             MINUTE_end = MINUTE_start;
         }
@@ -1059,9 +1175,17 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-            int year = YEAR_end;
-            int month = MONTH_end-1;
-            int day = DAY_end;
+            Calendar tmpCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            tmpCalendar.set(YEAR_end, MONTH_end-1, DAY_end, HOUR_end, MINUTE_end);
+            Calendar tmpCalendar2 = Calendar.getInstance(TimeZone.getDefault());
+            tmpCalendar2.setTimeInMillis(tmpCalendar.getTimeInMillis());
+            int year = tmpCalendar2.get(tmpCalendar2.YEAR);
+            int month = tmpCalendar2.get(tmpCalendar2.MONTH);
+            int day = tmpCalendar2.get(tmpCalendar2.DAY_OF_MONTH);
+
+//            int year = YEAR_end;
+//            int month = MONTH_end-1;
+//            int day = DAY_end;
 
             // Create a new instance of DatePickerDialog and return it
             return new DatePickerDialog(getActivity(), this, year, month, day);
@@ -1072,10 +1196,23 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
             this.YEAR = year;
             this.MONTH = monthOfYear+1;
             this.DAY = dayOfMonth;
-            YEAR_end = YEAR;
-            MONTH_end = MONTH;
-            DAY_end = DAY;
-            date_end.setText(MONTH_end + "월" + DAY_end + "일");
+       //     YEAR_end = YEAR;
+       //     MONTH_end = MONTH;
+       //     DAY_end = DAY;
+        //    date_end.setText(MONTH_end + "월" + DAY_end + "일");
+
+            Calendar tmpCalendar = Calendar.getInstance(TimeZone.getDefault());
+            tmpCalendar.set(this.YEAR, this.MONTH, this.DAY, HOUR_end, MINUTE_end);
+            Calendar tmpCalendar2 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            tmpCalendar2.setTimeInMillis(tmpCalendar.getTimeInMillis());
+            YEAR_end = tmpCalendar2.get(tmpCalendar2.YEAR);
+            MONTH_end = tmpCalendar2.get(tmpCalendar2.MONTH);
+            if(all_day_boolean)
+                DAY_end = tmpCalendar2.get(tmpCalendar2.DAY_OF_MONTH)+1;
+            else
+                DAY_end = tmpCalendar2.get(tmpCalendar2.DAY_OF_MONTH)+1;
+
+            date_end.setText(this.MONTH + "월" + this.DAY + "일");
 
         }
     }
@@ -1085,11 +1222,18 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current time as the default values for the picker
 
-            int hour = HOUR_end;
-            int minute = MINUTE_end;
+            Calendar tmpCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            tmpCalendar.set(YEAR_end, MONTH_end, DAY_end, HOUR_end, MINUTE_end);
+            Calendar tmpCalendar2 = Calendar.getInstance(TimeZone.getDefault());
+            tmpCalendar2.setTimeInMillis(tmpCalendar.getTimeInMillis());
+            int hour = tmpCalendar2.get(tmpCalendar2.HOUR_OF_DAY);
+            int minute = tmpCalendar2.get(tmpCalendar2.MINUTE);
 
+            //int hour = HOUR_end;
+            //int minute = MINUTE_end;
             // Create a new instance of TimePickerDialog and return it
             return new TimePickerDialog(getActivity(), this, hour, minute, true);
+
         }
 
         @Override
@@ -1098,10 +1242,15 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
             this.HOUR = hourOfDay;
             this.MINUTE = minute;
-            HOUR_end =HOUR;
-            MINUTE_end = MINUTE;
-            time_end.setText(String.format("%02d", HOUR_end)+":" +String.format("%02d", MINUTE_end));
 
+            Calendar tmpCalendar = Calendar.getInstance(TimeZone.getDefault());
+            tmpCalendar.set(YEAR_end, MONTH_end, DAY_end, this.HOUR, this.MINUTE);
+            Calendar tmpCalendar2 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            tmpCalendar2.setTimeInMillis(tmpCalendar.getTimeInMillis());
+            HOUR_end = tmpCalendar2.get(tmpCalendar2.HOUR_OF_DAY);
+            MINUTE_end = tmpCalendar2.get(tmpCalendar2.MINUTE);
+
+            time_end.setText(String.format("%02d", this.HOUR)+":" +String.format("%02d", this.MINUTE));
 
         }
     }
