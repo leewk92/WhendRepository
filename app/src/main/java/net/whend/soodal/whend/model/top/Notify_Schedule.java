@@ -70,12 +70,21 @@ public class Notify_Schedule {
 */
     int user_id, target_id;
     String actor_name, verb, description;
+    String actor_type;
     String target_type;
     String timestamp;
     String date,time;
     boolean unread;
     long timestamp_ms;
 
+
+    public String getActor_type() {
+        return actor_type;
+    }
+
+    public void setActor_type(String actor_type) {
+        this.actor_type = actor_type;
+    }
 
     public boolean isUnread() {
         return unread;

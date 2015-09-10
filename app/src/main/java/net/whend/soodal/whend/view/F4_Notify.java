@@ -57,6 +57,7 @@ public class F4_Notify extends Fragment {
     public void onResume() {
         super.onResume();
         arrayNTchedule.clear();
+        notify_schedule_adapter.notifyDataSetChanged();
         String url = "http://119.81.176.245/notifications/";
         nextURL = null;
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
@@ -67,11 +68,11 @@ public class F4_Notify extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*arrayNTchedule.clear();
         String url = "http://119.81.176.245/notifications/";
-
-
+        nextURL = null;
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
-        a.doExecution();
+        a.doExecution();*/
     }
 
     @Override
@@ -100,18 +101,12 @@ public class F4_Notify extends Fragment {
         notify_listview.setAdapter(notify_schedule_adapter);
 
 
-
-
         notify_listview.setOnScrollListener(new EndlessScrollListener());
 
 
         back_btn.setVisibility(View.GONE);
         search_layout.setVisibility(View.GONE);
         setting_layout.setVisibility(View.GONE);
-
-
-
-
 
 
         return rootView;
@@ -219,7 +214,8 @@ public class F4_Notify extends Fragment {
 
 
                         ns.setUser_id(tmp_ith.getInt("actor_id"));
-                        if(tmp_ith.getString("actor_type").equals("hash tag")){
+                        ns.setActor_type(tmp_ith.getString("actor_type"));
+                        if(ns.getActor_type().equals("hash tag")){
                             ns.setActor_name(tmp_ith.getString("actor_name2"));
                         }else{
                             ns.setActor_name(tmp_ith.getString("actor_name"));
@@ -313,6 +309,7 @@ public class F4_Notify extends Fragment {
                 super.onPostExecute(result);
 
                 try{
+                    Log.d("loadmore","loadmore called");
                     outputSchedulesJson = getOutputJsonObject();
 
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
@@ -323,7 +320,8 @@ public class F4_Notify extends Fragment {
                         tmp_ith = results.getJSONObject(i);
 
                         ns.setUser_id(tmp_ith.getInt("actor_id"));
-                        if(tmp_ith.getString("actor_type").equals("hash tag")){
+                        ns.setActor_type(tmp_ith.getString("actor_type"));
+                        if(ns.getActor_type().equals("hash tag")){
                             ns.setActor_name(tmp_ith.getString("actor_name2"));
                         }else{
                             ns.setActor_name(tmp_ith.getString("actor_name"));
