@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textStyle="bold"
+
                     android:textSize="12dp"
                     android:layout_marginLeft="10dp"
                     android:layout_gravity="center"
@@ -65,7 +65,6 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textSize="12dp"
-
             android:layout_marginTop="5dp"
             android:textStyle="bold" />
 
@@ -245,12 +244,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:layout_marginTop="12dp"
-            android:background="#c8c8c8"></LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -387,5 +381,13 @@
                 android:textColor="#727272" />
 
         </LinearLayout>-->
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_marginTop="0dp"
+        android:background="#727272">
+
     </LinearLayout>
 </LinearLayout>

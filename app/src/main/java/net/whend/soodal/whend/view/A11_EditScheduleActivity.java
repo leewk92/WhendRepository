@@ -72,7 +72,7 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
     int completed_num=0;
     static boolean all_day_boolean=false;
     boolean cancelable = true;
-    int all_day_int;
+    int all_day_int, sID;
     Boolean sAllday;
     EditText title,location,memo;
     CheckBox all_day;
@@ -114,7 +114,7 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
         schedule_photo_add = (ImageView) findViewById(R.id.schedule_photo_add);
 
         Intent intent = new Intent(this.getIntent());
-
+        sID = intent.getIntExtra("id",0);
         sStartDate = intent.getStringExtra("date_start");
         sEndDate = intent.getStringExtra("date_end");
         sStartTime = intent.getStringExtra("time_start");
@@ -239,10 +239,12 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
 //            time_start.setText(sStartTime);
 //        if(sEndTime != null)
 //            time_end.setText(sEndTime);
+
         if(sLocation != null)
             location.setText(sLocation);
         if(sContent != null)
             title.setText(sContent);
+        Log.d("title_edit",sContent);
         if(sMemo != null)
             memo.setText(sMemo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_upload);
@@ -711,7 +713,7 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
                 String sHTTPRestType = strings[1];
 
 
-                setOutputString(POST(url, getInputBundle()));
+                setOutputString(PUT(url, getInputBundle()));
 
 
 
@@ -867,7 +869,7 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
 
                 if(progress.isShowing()==false)
                     progress = ProgressDialog.show(getmContext(), "",
-                            "일정을 올리는 중입니다.", true);
+                            "일정을 수정하는 중입니다.", true);
 
             }
 
@@ -1369,7 +1371,7 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
                 canUpdate = true;
                 if(progress.isShowing()==false)
                     progress = ProgressDialog.show(getmContext(), "",
-                            "일정을 올리는 중입니다.", true);
+                            "일정을 수정하는 중입니다.", true);
 
             }
 
@@ -1443,8 +1445,8 @@ public class A11_EditScheduleActivity extends AppCompatActivity {
                     Log.d("getTimeinString", dtf.getOutputString());
 
 
-                    String url = "http://119.81.176.245/schedules/";
-                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"POST",inputBundle_forRequest, ImageAbsolutePath);
+                    String url = "http://119.81.176.245/schedules/"+sID+"/";
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getmContext(),url,"PUT",inputBundle_forRequest, ImageAbsolutePath);
                     a.doExecution();
 
 

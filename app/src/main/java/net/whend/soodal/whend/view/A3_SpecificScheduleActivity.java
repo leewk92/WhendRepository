@@ -114,7 +114,7 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         adapter = new Comment_Adapter(this,R.layout.item_comments,Comment_list);
         listview = (ListView) findViewById(R.id.listview_comments);
         listview.setAdapter(adapter);
-        listview.setOnScrollListener(new EndlessScrollListener());
+        //listview.setOnScrollListener(new EndlessScrollListener());
         ImageView edit = (ImageView)findViewById(R.id.edit);
 
         // 리스너 함수들
@@ -130,6 +130,8 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         follow_count = (TextView)findViewById(R.id.follow_count);
         memo_photo = (ImageView)findViewById(R.id.memo_photo);
         user_photo = (ImageView)findViewById(R.id.user_photo);
+        View loadmore_clickablelayout = findViewById(R.id.loadmore_clickablelayout);
+        loadmore_clickablelayout(this, loadmore_clickablelayout);
 
         full_screen.setOnClickListener(new View.OnClickListener(){
 
@@ -212,6 +214,29 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
         public void onScrollStateChanged(AbsListView view, int scrollState) {
         }
     }
+
+    // 더보기 버튼 리스너
+    public void loadmore_clickablelayout(final Context context, View loadmore_clickablelayout) {
+
+        try {
+
+            loadmore_clickablelayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("nextURL",nextURL);
+                    if(nextURL != "null") {
+                        HTTPRestfulUtilizerExtender_comment b = new HTTPRestfulUtilizerExtender_comment(context, nextURL, "GET");
+                        b.doExecution();
+                    }else{
+                        Log.d("nextURL_null","");
+                    }
+                }
+            });
+
+        }catch (Exception e){}
+
+    }
+
     // edit 버튼 리스너
     public void EditClieckListener(ImageView edit){
         edit.setOnClickListener(new View.OnClickListener() {
@@ -604,28 +629,70 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
+                ArrayList<Comment> tmpComment_list = new ArrayList<Comment>();
+                ArrayList<Comment> forsortingComment_list = new ArrayList<Comment>();
+                for(int i=0; i<Comment_list.size(); i++){
+                    forsortingComment_list.add(Comment_list.get(i));
+                }
+                Comment_list.clear();
                 try{
                     outputSchedulesJson = getOutputJsonObject();
                     JSONArray results = outputSchedulesJson.getJSONArray("results");
-                    nextURL = outputSchedulesJson.getString("next");
                     JSONObject tmp_ith;
+                    nextURL = outputSchedulesJson.getString("next");
 
-
-                    for (int i = 0; i < results.length() ;i++){
+                    for(int i=0; i<results.length() ;i++){
                         Comment s = new Comment();
                         tmp_ith = results.getJSONObject(i);
                         s.setContents(tmp_ith.getString("content"));
                         s.setWrite_username(tmp_ith.getString("user_name"));
                         s.setWrite_userid(tmp_ith.getInt("user_id"));
+                        //s.setUser_photo(tmp_ith.getString("user_photo")  == "null" ? "" : tmp_ith.getString("user_photo").substring(0, tmp_ith.getString("user_photo").length() - 4) + ".100x100.jpg");
+                        tmpComment_list.add(s);
 
-                        Comment_list.add(s);
-                        adapter.notifyDataSetChanged();
                     }
+
+                    for(int i=0; i<tmpComment_list.size(); i++){
+                        Comment_list.add(tmpComment_list.get(tmpComment_list.size()-1-i));
+                        //Comment_list.add(tmpComment_list.get(i));
+                        adapter.notifyDataSetChanged();
+
+                    }
+
+                    for(int i=0; i<forsortingComment_list.size(); i++){
+                        Comment_list.add(forsortingComment_list.get(i));
+                        adapter.notifyDataSetChanged();
+
+                    }
+
+
 
                 }catch(Exception e){
 
                 }
-
+//
+//                try{
+//                    outputSchedulesJson = getOutputJsonObject();
+//                    JSONArray results = outputSchedulesJson.getJSONArray("results");
+//                    nextURL = outputSchedulesJson.getString("next");
+//                    JSONObject tmp_ith;
+//
+//
+//                    for (int i = 0; i < results.length() ;i++){
+//                        Comment s = new Comment();
+//                        tmp_ith = results.getJSONObject(i);
+//                        s.setContents(tmp_ith.getString("content"));
+//                        s.setWrite_username(tmp_ith.getString("user_name"));
+//                        s.setWrite_userid(tmp_ith.getInt("user_id"));
+//
+//                        Comment_list.add(s);
+//                        adapter.notifyDataSetChanged();
+//                    }
+//
+//                }catch(Exception e){
+//
+//                }
+//
             }
         }
     }
