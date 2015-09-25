@@ -32,6 +32,9 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
                     e.printStackTrace();
                 } finally {
                     AppPrefs appPrefs = new AppPrefs(mContext);
+                    // creating account
+                    CalendarProviderUtil cpu = new CalendarProviderUtil(mContext);
+                    cpu.addAccountOfCalendar();
                     if(appPrefs.getToken()== "" ) {       //로그인창으로 이동
 
                         Intent i = new Intent(A0_0_OpenAcitivity.this, A0_1_LoginActivity.class);
@@ -137,8 +140,22 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
                             finish();
                         }
                     }
-
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
+
+//                try{
+//                    String tmp_non_field_errors = getOutputJsonObject().getString("non_field_errors");
+//                    if(tmp_non_field_errors.contentEquals("[\"Unable to log in with provided credentials.\"]")){
+//                        Intent i = new Intent(A0_0_OpenAcitivity.this, A0_1_LoginActivity.class);
+//                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(i);
+//                        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+//                        finish();
+//                    }
+//
+//                }catch(Exception e){
+//
+//                }
 
                 try{
 
@@ -205,6 +222,20 @@ public class A0_0_OpenAcitivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
+//                try{
+//                    String tmp_non_field_errors = getOutputJsonObject().getString("non_field_errors");
+//                    if(tmp_non_field_errors.contentEquals("[\"Unable to log in with provided credentials.\"]")){
+//                        Intent i = new Intent(A0_0_OpenAcitivity.this, A0_1_LoginActivity.class);
+//                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(i);
+//                        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+//                        finish();
+//                    }
+//
+//                }catch(Exception e){
+//
+//                }
 
                 try{
                     int user_id = getOutputJsonObject().getInt("user_id");

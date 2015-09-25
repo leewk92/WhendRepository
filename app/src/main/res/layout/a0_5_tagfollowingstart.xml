@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/title2"
                     android:textSize="10sp"
-                    android:text="(최소 3개의 태그를 팔로우하세요)"
+                    android:text="(최소 4개의 태그를 팔로우하세요)"
                     android:textColor="@android:color/white" />
             </LinearLayout>
 
