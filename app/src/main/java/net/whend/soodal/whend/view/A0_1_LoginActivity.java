@@ -64,7 +64,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
     private Context mContext;
     private LoginButton loginButton;
     CallbackManager callbackManager;
-    String fb_id, fb_email, fb_name, fb_picture;
+    String fb_id, fb_keyid, fb_name, fb_picture;
     public JSONArray facebookfriend_jsonarray;
     // 핸들러, 플래그 선언 for back key로 종료
     private Handler mHandler;
@@ -150,6 +150,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
             public void onSuccess(final LoginResult loginResult) {
                 // App code
                 Log.d("FBToken", loginResult.getAccessToken().getToken());
+                fb_keyid = loginResult.getAccessToken().getUserId();
                 Log.d("FBUserId", loginResult.getAccessToken().getUserId());
                 Log.d("FBSources", loginResult.getAccessToken().getSource().toString());
 
@@ -169,6 +170,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                             fb_name = (String) response.getJSONObject().get("name").toString();//페이스북 이름
                             fb_picture = (String) response.getJSONObject().getJSONObject("picture").getJSONObject("data").getString("url").toString();
                            // email = (String) response.getJSONObject().get("email");//이메일
+                            Log.d("FB id",fb_id);
                             Log.d("FB_name",fb_name);
                             Log.d("Fb_picture",fb_picture);
 
@@ -717,6 +719,7 @@ public class A0_1_LoginActivity extends AppCompatActivity {
                     //Intent intent = new Intent(mContext, A0_4_FacebookFriendActivity.class);
                     intent.putExtra("facebookfriend", facebookfriend_jsonarray.toString());          //bundle data.
                     intent.putExtra("fb_name",fb_name);
+                    intent.putExtra("fb_keyid",fb_keyid);
                     intent.putExtra("fb_picture",fb_picture);
                     Log.d("facebookfriend_putExtra",facebookfriend_jsonarray.toString());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

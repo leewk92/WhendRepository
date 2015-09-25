@@ -2,6 +2,8 @@ package net.whend.soodal.whend.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -28,11 +30,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class A0_3_SignUpFromFacebook extends AppCompatActivity {
 
     private String data;
+    private String fb_keyid;
     private String fb_name_string;
     private String fb_picture;
+    private String ImageAbsolutePath;
     JSONArray facebookfriends;
     JSONArray picture_parser;
     JSONObject picture;
@@ -45,6 +57,23 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
     public boolean canResistor = true;
     private Context mContext;
 
+    public Bitmap getFacebookProfilePicture(String fb_keyid){
+        URL imageURL = null;
+        try {
+            imageURL = new URL("https://graph.facebook.com/" + fb_keyid + "/picture?type=large");
+            Bitmap bitmap = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
+            Log.d("createdBitmapfromFacebook","success");
+            return bitmap;
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +85,8 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
             facebookfriends = new JSONArray(intent.getStringExtra("facebookfriend"));
             fb_name_string = intent.getStringExtra("fb_name");
             fb_picture = intent.getStringExtra("fb_picture");
-            Log.d("fb",fb_picture+"");
+            fb_keyid = intent.getStringExtra("fb_keyid");
+            //Log.d("fb",fb_picture+"");
         }catch(Exception e){}
 
         user_photo = (ImageView) findViewById(R.id.a03_fb_pic);
@@ -66,14 +96,13 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
 
         fb_name.setText(fb_name_string);
 
-
-         Picasso.with(mContext).load(fb_picture).transform(new CircleTransform()).into(user_photo);
+        Picasso.with(mContext).load("https://graph.facebook.com/" + fb_keyid + "/picture?type=large").transform(new CircleTransform()).into(user_photo);
 
 
         //String getUserIdUrl = "http://119.81.176.245/userinfos/";
         // save user id
         //HTTPRestfulUtilizerExtender_facebookLogin0 a = new HTTPRestfulUtilizerExtender_facebookLogin0(mContext,getUserIdUrl,"GET");
-       // a.doExecution();
+        // a.doExecution();
 
 
         sign_up.setOnClickListener(new View.OnClickListener() {
@@ -159,8 +188,8 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
                         canResistor = false;
                     }
                     //signupButton_view.setClickable(true);
-                  //  if(progress.isShowing())
-                  //      progress.dismiss();
+                    //  if(progress.isShowing())
+                    //      progress.dismiss();
                 }catch(Exception e){Log.d("Catch Exception",e+"");}
 
                 if(canResistor == true) {
@@ -228,15 +257,24 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
                     cpu.addAccountOfCalendar();
 
 
-                    //Intent intent = new Intent(mContext, A0_3_SignUpFromFacebook.class);
-                    Intent intent = new Intent(mContext, A0_4_FacebookFriendActivity.class);
-                    intent.putExtra("facebookfriend", facebookfriends.toString());          //bundle data.
-                    intent.putExtra("goto",1);
-                    Log.d("facebookfriend_putExtra",facebookfriends.toString());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    String url = "http://119.81.176.245/userinfos/"+appPrefs.getUser_id()+"/";
+                    Bundle inputBundle = new Bundle();
+//                    inputBundle.putIntegerArrayList("following_hashtag", u.getFollowing_hashtag_AL());
+//                    inputBundle.putIntegerArrayList("following_schedule",u.getFollowing_schedule_AL());
+//                    inputBundle.putIntegerArrayList("following_user", u.getFollowing_user_AL());
+//                    inputBundle.putIntegerArrayList("like_schedule", u.getLike_schedule_AL());
 
-                    mContext.startActivity(intent);
-                    finish();
+
+                    URL fbpicture_url = new URL(fb_picture);
+                    Bitmap profile_image = BitmapFactory.decodeStream(fbpicture_url.openConnection().getInputStream());
+                    ImageAbsolutePath = createImageFromBitmap(profile_image);
+
+                    HTTPRestfulUtilizerExtender4 a = new HTTPRestfulUtilizerExtender4(mContext,url,"PUT",inputBundle,ImageAbsolutePath);
+                    a.doExecution();
+
+
+                    //Intent intent = new Intent(mContext, A0_3_SignUpFromFacebook.class);
+
 
 
                 }catch(Exception e){
@@ -249,36 +287,39 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
         }
     }
 
-    class HTTPRestfulUtilizerExtender_facebookLogin0 extends HTTPRestfulUtilizer{
 
-        // Constructor for GET
-        public HTTPRestfulUtilizerExtender_facebookLogin0(Context mContext, String url, String HTTPRestType) {
+
+    //프로필올리기
+    class HTTPRestfulUtilizerExtender4 extends HTTPRestfulUtilizer {
+
+        //Constructor
+        HTTPRestfulUtilizerExtender4(Context mContext, String url, String HTTPRestType, Bundle inputBundle, String photo){
+
+            setInputBundle(inputBundle);
             setmContext(mContext);
             setUrl(url);
             setHTTPRestType(HTTPRestType);
+            setPhoto(photo);
+
             task = new HttpAsyncTaskExtenders();
-            Log.d("HTTP Constructor url", url);
-            // new HttpAsyncTask().execute(url,HTTPRestType);
+            Log.d("HTTP Constructor2 url", url);
         }
 
-        @Override
         public void doExecution(){
             task.execute(getUrl(), getHTTPRestType());
         }
-        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
-
-            @Override
+        private class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask {
             protected void onPreExecute() {
-
                 super.onPreExecute();
             }
-
 
             @Override
             protected String doInBackground(String... strings) {
                 String url = strings[0];
                 String sHTTPRestType = strings[1];
-                setOutputString(GET(url));
+
+                setOutputString(PUT(url, getInputBundle()));
+
 
                 return getOutputString();
 
@@ -287,24 +328,17 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
-                try{
-                    JSONObject tmp = getOutputJsonObject();
-                    String user_photo_url = tmp.getString("photo") == "null" ? "" : tmp.getString("photo").substring(0, tmp.getString("photo").length() - 4) + ".100x100.jpg";
+                Intent intent = new Intent(mContext, A0_4_FacebookFriendActivity.class);
+                intent.putExtra("facebookfriend", facebookfriends.toString());          //bundle data.
+                intent.putExtra("goto",1);
+                Log.d("facebookfriend_putExtra",facebookfriends.toString());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                    if(user_photo_url!="") {
-                        Picasso.with(mContext).load(fb_picture).transform(new CircleTransform()).into((ImageView) findViewById(R.id.a03_fb_pic));
-
-                    }else{
-                        // 기본이미지 로드.
-                        user_photo.setImageResource(R.drawable.userimage_default);
-                    }
-                }catch(Exception e){
-                    Log.d("login exception", e.toString());
-
-
-                }
+                mContext.startActivity(intent);
+                finish();
 
             }
+
         }
     }
 
@@ -328,5 +362,50 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    public String createImageFromBitmap(Bitmap bmp) {
+
+        long currentTime = 0;
+        FileOutputStream fileOutputStream = null;
+
+        try {
+
+            // create a File object for the parent directory
+            File wallpaperDirectory = new File(this.getCacheDir().getPath());
+
+            // have the object build the directory structure, if needed.
+            wallpaperDirectory.mkdirs();
+
+            //Capture is folder name and file name with date and time
+            fileOutputStream = new FileOutputStream(String.format(
+                    this.getCacheDir().getPath()+"/whend%d.jpg",
+
+                    currentTime = System.currentTimeMillis()));
+
+            // Here we Resize the Image ...
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100,
+                    byteArrayOutputStream); // bm is the bitmap object
+            byte[] bsResized = byteArrayOutputStream.toByteArray();
+
+
+            try {
+                fileOutputStream.write(bsResized);
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+        }
+
+        return this.getCacheDir().getPath()+"/whend"+ currentTime + ".jpg";
     }
 }

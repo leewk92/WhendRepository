@@ -59,7 +59,7 @@ public class Grid_Search_For_Start_Adapter extends ArrayAdapter<Search_HashTag> 
         following_hashtag_count = user.getCount_following_hashtag();
 
 
-        if (following_hashtag_count>=3)
+        if (following_hashtag_count>=2)
             ((A0_5_TagFollowingStart)context).findViewById(R.id.a0_5_toolbar_next).setVisibility(View.VISIBLE);
         else
             ((A0_5_TagFollowingStart)context).findViewById(R.id.a0_5_toolbar_next).setVisibility(View.GONE);
@@ -98,7 +98,7 @@ public class Grid_Search_For_Start_Adapter extends ArrayAdapter<Search_HashTag> 
 
                     following_hashtag_count++;
 
-                    if(following_hashtag_count>=3 && next.getVisibility() != View.VISIBLE) {
+                    if(following_hashtag_count>=2 && next.getVisibility() != View.VISIBLE) {
                        next.setVisibility(View.VISIBLE);
                        next.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_popup_enter));
                     }
