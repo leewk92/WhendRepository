@@ -96,7 +96,7 @@ public class FacebookFriend_Adapter extends ArrayAdapter<FacebookFriend> {
             ((ImageView)v.findViewById(R.id.follow_button)).setImageResource(R.drawable.like_on);
 
         if(SUser_list.get(position).getFacebook_photo()!="null") {
-            Picasso.with(context).load(SUser_list.get(position).getFacebook_photo()).transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
+            Picasso.with(context).load("https://graph.facebook.com/"+SUser_list.get(position).getUser_keyid()+"/picture?type=large").transform(new CircleTransform()).into((ImageView) v.findViewById(R.id.user_photo));
 
         }else{
             // 기본이미지 로드.

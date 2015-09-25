@@ -57,23 +57,6 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
     public boolean canResistor = true;
     private Context mContext;
 
-    public Bitmap getFacebookProfilePicture(String fb_keyid){
-        URL imageURL = null;
-        try {
-            imageURL = new URL("https://graph.facebook.com/" + fb_keyid + "/picture?type=large");
-            Bitmap bitmap = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
-            Log.d("createdBitmapfromFacebook","success");
-            return bitmap;
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

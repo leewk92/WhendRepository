@@ -32,22 +32,21 @@
 
             <TextView
                 android:id="@+id/facebook_username"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="WonkyungLee"
                 android:textSize="12dp"
                 android:textColor="#212121"
-                android:gravity="center"
-                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical|center"
+                android:layout_marginLeft="10dp"
 
-                />
+                android:layout_gravity="center_vertical" />
 
         </LinearLayout>
 
 
         <LinearLayout
-            android:gravity="right"
-            android:layout_gravity="center_vertical|right"
+            android:layout_gravity="center_vertical"
             android:layout_weight="4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -56,34 +55,37 @@
 
             <TextView
                 android:gravity="center"
+                android:id="@+id/textView34"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text=" 의 WhenD 계정은 "
+                android:layout_height="wrap_content"
+                android:text="("
                 android:textStyle="bold"
                 android:textColor="#727272"
                 android:textSize="12dp"
-                android:layout_marginRight="10dp"
-                />
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp" />
+
             <TextView
                 android:gravity="center"
                 android:id="@+id/whend_username"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="wonkyunglee"
                 android:textStyle="bold"
                 android:textColor="#727272"
                 android:textSize="12dp"
-                />
+                android:layout_gravity="center_vertical" />
+
             <TextView
                 android:gravity="center"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:text="입니다."
+                android:id="@+id/textView36"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=")"
                 android:textStyle="bold"
                 android:textColor="#727272"
                 android:textSize="12dp"
-                />
-
+                android:layout_gravity="center_vertical" />
 
 
         </LinearLayout>

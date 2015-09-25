@@ -9,6 +9,7 @@ public class FacebookFriend {
     private String whend_username;
     private int user_id;
     private String facebook_photo;
+    private String user_keyid;
     private boolean isFollow;
 
     public FacebookFriend() {
@@ -31,6 +32,7 @@ public class FacebookFriend {
     public void setWhend_username(String whend_username) {
         this.whend_username = whend_username;
     }
+
 
     public int getUser_id() {
         return user_id;
@@ -68,4 +70,11 @@ public class FacebookFriend {
         }
     }
 
+    public String getUser_keyid() {
+        return user_keyid;
+    }
+
+    public void setUser_keyid(String user_keyid) {
+        this.user_keyid = user_keyid;
+    }
 }

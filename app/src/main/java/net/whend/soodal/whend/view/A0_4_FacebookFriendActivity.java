@@ -332,12 +332,14 @@ public class A0_4_FacebookFriendActivity extends AppCompatActivity {
                     // outputSchedulesJson = getOutputJsonObject();
                     //JSONArray results = outputSchedulesJson.getJSONArray("results");
                     JSONArray results = outputJsonArray;
+                    Log.d("outputJsonAray",result);
                     JSONObject tmp_ith;
                     //nextURL = outputSchedulesJson.getString("next");
                     for(int i=0; i<results.length() ;i++){
                         tmp_ith = results.getJSONObject(i);
                         FacebookFriend u = new FacebookFriend();
                         u.setUser_id(tmp_ith.getInt("user_id"));
+                        u.setUser_keyid(uid_inner[i]+"");
                         u.setWhend_username(tmp_ith.getString("user_name"));
                         u.setFacebook_username(facebookfriends.getJSONObject(i).getString("name"));
                         u.setIsFollow(tmp_ith.getInt("is_follow")==1?true:false);
