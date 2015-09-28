@@ -42,6 +42,7 @@ public class F4_Notify extends Fragment {
     ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
     ListView notify_listview;
+    private boolean loading = true;
     private static JSONObject outputSchedulesJson;
     private ArrayList<Notify_Schedule> arrayNTchedule = new ArrayList<Notify_Schedule>();
 
@@ -60,6 +61,7 @@ public class F4_Notify extends Fragment {
         notify_schedule_adapter.notifyDataSetChanged();
         String url = "http://119.81.176.245/notifications/";
         nextURL = null;
+        Log.d("ResumeCalled","nextURL = "+nextURL);
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();
     }
@@ -132,10 +134,10 @@ public class F4_Notify extends Fragment {
     // 끝없이 로딩 하는거
     public class EndlessScrollListener implements AbsListView.OnScrollListener {
 
-        private int visibleThreshold = 2;
+        private int visibleThreshold = 0;
         private int currentPage = 0;
         private int previousTotal = 0;
-        private boolean loading = true;
+
 
         public EndlessScrollListener() {
         }
@@ -146,6 +148,9 @@ public class F4_Notify extends Fragment {
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem,
                              int visibleItemCount, int totalItemCount) {
+
+            Log.e("currentPage",currentPage+"");
+
             if (loading) {
                 if (totalItemCount > previousTotal) {
                     loading = false;
@@ -154,16 +159,18 @@ public class F4_Notify extends Fragment {
                 }
             }
             if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                nextURL = "http://119.81.176.245/notifications/?page="+(currentPage+1);
                 // I load the next page of gigs using a background task,
                 // but you can call any function here.
-                Log.d("lastItemScrolled", "true");
-                try{
-                    HTTPRestfulUtilizerExtender_loadmore b = new HTTPRestfulUtilizerExtender_loadmore(getActivity(),nextURL,"POST");
-                    b.doExecution();
+
+                try {
+                        HTTPRestfulUtilizerExtender_loadmore b = new HTTPRestfulUtilizerExtender_loadmore(getActivity(),nextURL,"POST");
+                        b.doExecution();
                 }catch(Exception e){
 
                 }
                 loading = true;
+
             }
         }
         @Override
@@ -197,15 +204,15 @@ public class F4_Notify extends Fragment {
 
                 return getOutputString();
             }
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-                arrayNTchedule.clear();
-                try{
-                    outputSchedulesJson = getOutputJsonObject();
+                    @Override
+                    protected void onPostExecute(String result) {
+                        super.onPostExecute(result);
+                        arrayNTchedule.clear();
+                        try{
+                            outputSchedulesJson = getOutputJsonObject();
 
-                    JSONArray results = outputSchedulesJson.getJSONArray("results");
-                    JSONObject tmp_ith;
+                            JSONArray results = outputSchedulesJson.getJSONArray("results");
+                            JSONObject tmp_ith;
                     nextURL = outputSchedulesJson.getString("next");
 
                     for(int i=0; i<results.length() ;i++){
@@ -226,11 +233,10 @@ public class F4_Notify extends Fragment {
                         ns.setTimestamp(tmp_ith.getString("timestamp"));
                         ns.setTarget_type(tmp_ith.getString("target_type"));
                         ns.setTarget_id((tmp_ith.getString("target_id")) == "null" ? -1 : tmp_ith.getInt("target_id"));
-
-
                         ns.setUnread(tmp_ith.getBoolean("unread"));
 
                         AppPrefs appPrefs = new AppPrefs(getActivity());
+
 
                         if(ns.getActor_name().equals(appPrefs.getUsername())){
                             notify_schedule_adapter.notifyDataSetChanged();
@@ -337,6 +343,7 @@ public class F4_Notify extends Fragment {
                         AppPrefs appPrefs = new AppPrefs(getActivity());
 
 
+
                         if(ns.getActor_name().equals(appPrefs.getUsername())){
                             notify_schedule_adapter.notifyDataSetChanged();
 
@@ -374,7 +381,7 @@ public class F4_Notify extends Fragment {
                 }catch(Exception e){
 
                 }
-
+                loading = true;
             }
         }
     }

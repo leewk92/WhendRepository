@@ -364,7 +364,7 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
 
     // 레이아웃에 데이터 적용
-    public void AdjustDataToLayout(final View v, final int position, ViewHolder holder){
+    public void AdjustDataToLayout(final View v, final int position, final ViewHolder holder){
         Log.d("position_adjust", position + "");
 
         if(CSchedule_list.get(position).getSchedule().isMaster() == true){

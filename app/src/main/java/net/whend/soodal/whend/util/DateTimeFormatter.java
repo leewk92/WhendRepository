@@ -19,6 +19,8 @@ public class DateTimeFormatter {
     private String year;
     private String date;
     private String time;
+
+
     private long datetime_ms, datetime_ms_utc;
     Calendar cal;
     SimpleDateFormat odf = new SimpleDateFormat(parsePattern, Locale.KOREA);

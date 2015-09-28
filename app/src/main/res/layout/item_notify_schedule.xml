@@ -5,116 +5,133 @@
     android:layout_height="60dp"
     >
 
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:weightSum="1">
-
-<!--        <ImageView
-            android:id="@+id/userphoto"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/userimage_default"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="5dp"
-            android:focusableInTouchMode="false" />
--->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:text="actor_name"
-                android:id="@+id/actor_name"
-                android:layout_gravity="center_vertical"
-                android:textColor="#0288D1"
-                android:textSize="12dp"
-                android:textStyle="bold"
-                android:clickable="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="verb"
-                android:id="@+id/verb"
-                android:layout_gravity="center_vertical"
-                android:textColor="#000000"
-                android:textSize="12dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:layout_gravity="center_vertical"
-                android:textSize="12dp"
-                />
-
-        </LinearLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/background">
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp">
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:weightSum="1">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/description"
+    <!--        <ImageView
+                android:id="@+id/userphoto"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/userimage_default"
                 android:layout_gravity="center_vertical"
-                android:textColor="#b6b6b6"
-                android:textSize="12dp"
-                />
+                android:layout_marginRight="5dp"
+                android:focusableInTouchMode="false" />
+    -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="actor_name"
+                    android:id="@+id/actor_name"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#0288D1"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:clickable="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="verb"
+                    android:id="@+id/verb"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#000000"
+                    android:textSize="12dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+                    android:layout_gravity="center_vertical"
+                    android:textSize="12dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/description"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#b6b6b6"
+                    android:textSize="12dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/time"
+                    android:textSize="12dp"
+                    android:textColor="#b6b6b6"
+                    android:gravity="right"
+                    android:layout_gravity="right" />
+
+            </LinearLayout>
+
+
+
+            <!--   <LinearLayout
+                 android:orientation="horizontal"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:gravity="right">
+                         <TextView
+                                android:id="@+id/datetime"
+                                android:layout_width="150dp"
+                                android:layout_height="40dp"
+                                android:text="4월 4일 19:00"/>
+
+
+                            <ImageView
+                                android:id="@+id/targetphoto"
+                                android:layout_width="37dp"
+                                android:layout_height="37dp"
+                                android:src="@drawable/exo"
+                                android:layout_gravity="center_vertical|right"
+                                android:layout_marginRight="5dp"
+                                android:focusableInTouchMode="false"
+                                android:scaleType="center" />
+            </LinearLayout>-->
 
         </LinearLayout>
 
-
-
-        <!--   <LinearLayout
-             android:orientation="horizontal"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:gravity="right">
-                     <TextView
-                            android:id="@+id/datetime"
-                            android:layout_width="150dp"
-                            android:layout_height="40dp"
-                            android:text="4월 4일 19:00"/>
-
-
-                        <ImageView
-                            android:id="@+id/targetphoto"
-                            android:layout_width="37dp"
-                            android:layout_height="37dp"
-                            android:src="@drawable/exo"
-                            android:layout_gravity="center_vertical|right"
-                            android:layout_marginRight="5dp"
-                            android:focusableInTouchMode="false"
-                            android:scaleType="center" />
-        </LinearLayout>-->
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0.3dp"
-        android:background="#b6b6b6">
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#b6b6b6">
 
 
 
+        </LinearLayout>
     </LinearLayout>
 
 

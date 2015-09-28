@@ -3,16 +3,21 @@ package net.whend.soodal.whend.form;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.model.top.Notify_Schedule;
+import net.whend.soodal.whend.util.DateTimeFormatter;
 import net.whend.soodal.whend.util.HTTPRestfulUtilizer;
 import net.whend.soodal.whend.view.A2_UserProfileActivity;
 import net.whend.soodal.whend.view.A7_SpecificHashTagActivity;
@@ -40,37 +45,47 @@ public class Notify_Schedule_Adapter extends ArrayAdapter<Notify_Schedule> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
+       View v = convertView;
+       ViewHolder holder = null;
+
+
+
         if (v == null) {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(R.layout.item_notify_schedule, null);
-        }
-        Notify_Schedule notify_schedule = NT_Schedule_list.get(position);
-        TextView actor_name = (TextView) v.findViewById(R.id.actor_name);
-        TextView verb = (TextView) v.findViewById(R.id.verb);
-        TextView description = (TextView) v.findViewById(R.id.description);
-        //TextView datetime = (TextView)v.findViewById(R.id.datetime);
-        AdjustDataToLayout(v, position);
+            holder = new ViewHolder();
 
+            holder.actor_name_vh = (TextView) v.findViewById(R.id.actor_name);
+            holder.description_vh =  (TextView) v.findViewById(R.id.description);
+            holder.time_vh = (TextView) v.findViewById(R.id.time);
+            holder.verb_vh =  (TextView) v.findViewById(R.id.verb);
+            holder.background_vh = (LinearLayout) v.findViewById(R.id.background);
+            v.setTag(holder);
+        }else{
+            holder = (ViewHolder) v.getTag();
+        }
+
+        v.setTag(holder);
+        AdjustDataToLayout(v, position, holder);
 
         return v;
     }
 
 
-    public void AdjustDataToLayout(View v, final int position) {
-        ((TextView)v.findViewById(R.id.actor_name)).setText(NT_Schedule_list.get(position).getActor_name());
+    public void AdjustDataToLayout(View v, final int position, ViewHolder holder) {
+        holder.actor_name_vh.setText(NT_Schedule_list.get(position).getActor_name());
 
 
-        ((TextView)v.findViewById(R.id.actor_name)).setOnClickListener(new View.OnClickListener(){
+        holder.actor_name_vh.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                if(NT_Schedule_list.get(position).getActor_type().equals("hash tag")){
-                    String url = "http://119.81.176.245/hashtags/all/exact/?search="+NT_Schedule_list.get(position).getActor_name();
-                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context,url,"GET",NT_Schedule_list.get(position).getActor_name() );
+                if (NT_Schedule_list.get(position).getActor_type().equals("hash tag")) {
+                    String url = "http://119.81.176.245/hashtags/all/exact/?search=" + NT_Schedule_list.get(position).getActor_name();
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url, "GET", NT_Schedule_list.get(position).getActor_name());
                     a.doExecution();
-                }else{
+                } else {
                     Intent intent = new Intent(context, A2_UserProfileActivity.class);
                     intent.putExtra("id", NT_Schedule_list.get(position).getUser_id());
                     Activity activity = (Activity) context;
@@ -84,10 +99,25 @@ public class Notify_Schedule_Adapter extends ArrayAdapter<Notify_Schedule> {
         });
 
 
-        ((TextView)v.findViewById(R.id.verb)).setText(NT_Schedule_list.get(position).getVerb());
-        ((TextView)v.findViewById(R.id.description)).setText(NT_Schedule_list.get(position).getDescription()=="null"?"":NT_Schedule_list.get(position).getDescription());
-        //((TextView)v.findViewById(R.id.datetime)).setText(NT_Schedule_list.get(position).getDate() +NT_Schedule_list.get(position).getTime() );
+        holder.verb_vh.setText(NT_Schedule_list.get(position).getVerb());
+        holder.description_vh.setText(NT_Schedule_list.get(position).getDescription() == "null" ? "" : NT_Schedule_list.get(position).getDescription());
 
+
+        DateTimeFormatter current_time = new DateTimeFormatter();
+        long timepassed = current_time.getDatetime_ms() - NT_Schedule_list.get(position).getTimestamp_ms();
+
+        holder.time_vh.setText(calculate_timepassed(timepassed));
+
+        if(NT_Schedule_list.get(position).isUnread())
+            holder.background_vh.setBackgroundColor(Color.parseColor("#B3E5FC"));
+
+
+
+        holder.actor_name_vh.setTag(position);
+        holder.background_vh.setTag(position);
+        holder.description_vh.setTag(position);
+        holder.verb_vh.setTag(position);
+        holder.time_vh.setTag(position);
 
     }
 
@@ -153,6 +183,45 @@ public class Notify_Schedule_Adapter extends ArrayAdapter<Notify_Schedule> {
                 }
             }
         }
+
+    }
+
+    static class ViewHolder {
+
+
+        TextView actor_name_vh;
+        TextView verb_vh;
+        TextView description_vh;
+        TextView time_vh;
+        LinearLayout background_vh;
+
+        int position;
+    }
+
+    public String calculate_timepassed(long time_ms){
+        String temp = null;
+        int time_second = (int) time_ms/1000 + 150; // 150초 차이가 남 그 이유는 아무도 모름
+        int time_day;
+        int time_hour;
+        int time_minute;
+
+
+
+        if(time_second > 60)
+            if((time_minute = time_second/60) > 60)
+               if((time_hour = time_minute/60) > 24) {
+                   time_day = time_hour / 24;
+                   temp = time_day + "일";
+               }
+               else
+                   temp = time_hour + "시간";
+            else
+                temp = time_minute + "분";
+        else
+            temp = time_second + "초";
+
+
+        return temp + " 전";
     }
 }
 
