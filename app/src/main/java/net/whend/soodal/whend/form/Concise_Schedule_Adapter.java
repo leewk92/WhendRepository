@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnItemClickListener;
 import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
@@ -131,49 +133,54 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-                builder1.setMessage("이 일정을 수정 또는 삭제할 수 있습니다.");
-                builder1.setCancelable(true);
-                builder1.setNegativeButton("수정하기",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Concise_Schedule cs = CSchedule_list.get(position);
-                                Intent intent = new Intent(context, A11_EditScheduleActivity.class);
-                                intent.putExtra("id", cs.getId());
-                                intent.putExtra("date_start", cs.getDate_start());
-                                intent.putExtra("date_end", cs.getDate_end());
-                                intent.putExtra("time_start", cs.getTime_start());
-                                intent.putExtra("time_end", cs.getTime_end());
-                                intent.putExtra("content", cs.getTitle());
-                                intent.putExtra("location", cs.getLocation());
-                                intent.putExtra("datetime_start", cs.getSchedule().getStarttime_ms());
-                                intent.putExtra("datetime_end", cs.getSchedule().getEndtime_ms());
-                                intent.putExtra("allday", cs.getSchedule().getAllday());
-                                intent.putExtra("memo", cs.getMemo());
+                DialogPlus dialog = DialogPlus.newDialog(context)
+                        .setAdapter(new Popup_Menu_Adapter(context, false))
+                        .setOnItemClickListener(new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
 
-                                Activity activity = (Activity) context;
-                                activity.startActivity(intent);
-                                activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
-                                dialog.cancel();
+                                switch (position) {
+                                    case 0:
+                                        Concise_Schedule cs = CSchedule_list.get(position);
+                                        Intent intent = new Intent(context, A11_EditScheduleActivity.class);
+                                        intent.putExtra("id", cs.getId());
+                                        intent.putExtra("date_start", cs.getDate_start());
+                                        intent.putExtra("date_end", cs.getDate_end());
+                                        intent.putExtra("time_start", cs.getTime_start());
+                                        intent.putExtra("time_end", cs.getTime_end());
+                                        intent.putExtra("content", cs.getTitle());
+                                        intent.putExtra("location", cs.getLocation());
+                                        intent.putExtra("datetime_start", cs.getSchedule().getStarttime_ms());
+                                        intent.putExtra("datetime_end", cs.getSchedule().getEndtime_ms());
+                                        intent.putExtra("allday", cs.getSchedule().getAllday());
+                                        intent.putExtra("memo", cs.getMemo());
+
+                                        Activity activity = (Activity) context;
+                                        activity.startActivity(intent);
+                                        activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
+                                        dialog.dismiss();
+                                        break;
+                                    case 1:
+                                        String url_delete = "http://119.81.176.245/schedules/" + CSchedule_list.get(position).getId() + "/";
+                                        HTTPRestfulUtilizerExtender_delete hd = new HTTPRestfulUtilizerExtender_delete(context, url_delete, "DELETE");
+                                        hd.doExecution();
+                                        dialog.dismiss();
+                                        Intent intent2 = new Intent(context, MainActivity.class);
+                                        intent2.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        context.startActivity(intent2);
+                                        break;
+                                    case 2:
+                                        dialog.dismiss();
+                                        break;
+
+                                }
                             }
-                        });
-                builder1.setPositiveButton("삭제하기",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                String url_delete = "http://119.81.176.245/schedules/" + CSchedule_list.get(position).getId() + "/";
-                                HTTPRestfulUtilizerExtender_delete hd = new HTTPRestfulUtilizerExtender_delete(context, url_delete, "DELETE");
-                                hd.doExecution();
-                                dialog.cancel();
-                                Intent intent = new Intent(context, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                context.startActivity(intent);
-
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-
+                        })
+                        .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+                        .setCancelable(true)
+                        .setExpanded(false, 450)
+                        .create();
+                dialog.show();
             }
         });
     }

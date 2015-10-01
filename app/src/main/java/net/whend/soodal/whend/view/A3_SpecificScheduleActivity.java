@@ -16,16 +16,20 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnItemClickListener;
 import com.squareup.picasso.Picasso;
 
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Comment_Adapter;
+import net.whend.soodal.whend.form.Popup_Menu_Adapter;
 import net.whend.soodal.whend.model.base.Comment;
 import net.whend.soodal.whend.model.base.Schedule;
 import net.whend.soodal.whend.model.top.Concise_Schedule;
@@ -243,49 +247,53 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
-                builder1.setMessage("이 일정을 수정 또는 삭제할 수 있습니다.");
-                builder1.setCancelable(true);
-                builder1.setNegativeButton("수정하기",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                DialogPlus dialog = DialogPlus.newDialog(mContext)
+                        .setAdapter(new Popup_Menu_Adapter(mContext, false))
+                        .setOnItemClickListener(new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
 
-                                Intent intent = new Intent(mContext, A11_EditScheduleActivity.class);
-                                intent.putExtra("id", cs.getId());
-                                intent.putExtra("date_start", cs.getDate_start());
-                                intent.putExtra("date_end", cs.getDate_end());
-                                intent.putExtra("time_start", cs.getTime_start());
-                                intent.putExtra("time_end", cs.getTime_end());
-                                intent.putExtra("title", cs.getTitle());
-                                intent.putExtra("location", cs.getLocation());
-                                intent.putExtra("datetime_start", cs.getSchedule().getStarttime_ms());
-                                intent.putExtra("datetime_end", cs.getSchedule().getEndtime_ms());
-                                intent.putExtra("allday", cs.getSchedule().getAllday());
-                                intent.putExtra("memo", cs.getMemo());
+                                switch (position) {
+                                    case 0:
+                                        Intent intent = new Intent(mContext, A11_EditScheduleActivity.class);
+                                        intent.putExtra("id", cs.getId());
+                                        intent.putExtra("date_start", cs.getDate_start());
+                                        intent.putExtra("date_end", cs.getDate_end());
+                                        intent.putExtra("time_start", cs.getTime_start());
+                                        intent.putExtra("time_end", cs.getTime_end());
+                                        intent.putExtra("content", cs.getTitle());
+                                        intent.putExtra("location", cs.getLocation());
+                                        intent.putExtra("datetime_start", cs.getSchedule().getStarttime_ms());
+                                        intent.putExtra("datetime_end", cs.getSchedule().getEndtime_ms());
+                                        intent.putExtra("allday", cs.getSchedule().getAllday());
+                                        intent.putExtra("memo", cs.getMemo());
 
-                                Activity activity = (Activity) mContext;
-                                activity.startActivity(intent);
-                                activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
-                                dialog.cancel();
+                                        Activity activity = (Activity) mContext;
+                                        activity.startActivity(intent);
+                                        activity.overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
+                                        dialog.dismiss();
+                                        break;
+                                    case 1:
+                                        String url_delete = "http://119.81.176.245/schedules/" + cs.getId() + "/";
+                                        HTTPRestfulUtilizerExtender_delete hd = new HTTPRestfulUtilizerExtender_delete(mContext, url_delete, "DELETE");
+                                        hd.doExecution();
+                                        dialog.dismiss();
+                                        Intent intent2 = new Intent(mContext, MainActivity.class);
+                                        intent2.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        mContext.startActivity(intent2);
+                                        break;
+                                    case 2:
+                                        dialog.dismiss();
+                                        break;
+
+                                }
                             }
-                        });
-                builder1.setPositiveButton("삭제하기",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                String url_delete = "http://119.81.176.245/schedules/" + cs.getId() + "/";
-                                HTTPRestfulUtilizerExtender_delete hd = new HTTPRestfulUtilizerExtender_delete(mContext, url_delete, "DELETE");
-                                hd.doExecution();
-                                dialog.cancel();
-
-                                Intent intent = new Intent(mContext, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                mContext.startActivity(intent);
-                                finish();
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
+                        })
+                        .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+                        .setCancelable(true)
+                        .setExpanded(false, 450)
+                        .create();
+                dialog.show();
 
             }
         });
