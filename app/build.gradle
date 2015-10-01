@@ -32,6 +32,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     compile 'com.google.android.gms:play-services-analytics:7.3.0'
     compile 'com.orhanobut:dialogplus:1.10@aar'
+    compile 'com.baoyz.pullrefreshlayout:library:1.2.0'
     compile files('lib/android-viewbadger.jar')
 }
 
