@@ -176,9 +176,11 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                                 }
                             }
                         })
-                        .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
                         .setCancelable(true)
-                        .setExpanded(false, 450)
+                        .setExpanded(false, 400)
+                        .setMargin(0, 0, 0, -15)
+                        .setInAnimation(R.anim.push_up_in_menu)
+                        .setOutAnimation(R.anim.push_down_out_menu)
                         .create();
                 dialog.show();
             }

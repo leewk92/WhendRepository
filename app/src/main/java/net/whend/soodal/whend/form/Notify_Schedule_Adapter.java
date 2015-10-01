@@ -106,7 +106,7 @@ public class Notify_Schedule_Adapter extends ArrayAdapter<Notify_Schedule> {
         DateTimeFormatter current_time = new DateTimeFormatter();
         long timepassed = current_time.getDatetime_ms() - NT_Schedule_list.get(position).getTimestamp_ms();
 
-        holder.time_vh.setText(calculate_timepassed(timepassed));
+        holder.time_vh.setText(calculate_timepassed(timepassed, NT_Schedule_list.get(position).getDate()));
 
         /*if(NT_Schedule_list.get(position).isUnread())
             holder.background_vh.setBackgroundColor(Color.parseColor("#B3E5FC"));*/
@@ -198,8 +198,7 @@ public class Notify_Schedule_Adapter extends ArrayAdapter<Notify_Schedule> {
         int position;
     }
 
-    public String calculate_timepassed(long time_ms){
-        String temp = null;
+    public String calculate_timepassed(long time_ms, String date){
         int time_second = (int) time_ms/1000 + 150; // 150초 차이가 남 그 이유는 아무도 모름
         int time_day;
         int time_hour;
@@ -211,17 +210,16 @@ public class Notify_Schedule_Adapter extends ArrayAdapter<Notify_Schedule> {
             if((time_minute = time_second/60) > 60)
                if((time_hour = time_minute/60) > 24) {
                    time_day = time_hour / 24;
-                   temp = time_day + "일";
+                        if(time_day > 10)
+                            return date;
+                  return time_day + "일 전";
                }
                else
-                   temp = time_hour + "시간";
+                   return time_hour + "시간 전";
             else
-                temp = time_minute + "분";
+                return time_minute + "분 전";
         else
-            temp = time_second + "초";
-
-
-        return temp + " 전";
+           return time_second + "초 전";
     }
 }
 

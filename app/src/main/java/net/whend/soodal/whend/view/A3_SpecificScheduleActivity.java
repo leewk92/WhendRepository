@@ -289,9 +289,10 @@ public class A3_SpecificScheduleActivity extends AppCompatActivity {
                                 }
                             }
                         })
-                        .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
                         .setCancelable(true)
-                        .setExpanded(false, 450)
+                        .setMargin(0, 0, 0, -20)
+                        .setInAnimation(R.anim.push_up_in_menu)
+                        .setOutAnimation(R.anim.push_down_out_menu)
                         .create();
                 dialog.show();
 

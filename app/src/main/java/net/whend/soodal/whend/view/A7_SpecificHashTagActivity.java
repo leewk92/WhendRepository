@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 /**
  * Created by wonkyung on 15. 7. 14.
  */
-public class A7_SpecificHashTagActivity extends Activity {
+public class A7_SpecificHashTagActivity extends AppCompatActivity {
 
     ArrayList<Concise_Schedule> CSchedule_list= new ArrayList<Concise_Schedule>();
     ListView listview;

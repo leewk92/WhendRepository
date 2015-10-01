@@ -69,7 +69,7 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
             fb_name_string = intent.getStringExtra("fb_name");
             fb_picture = intent.getStringExtra("fb_picture");
             fb_keyid = intent.getStringExtra("fb_keyid");
-            //Log.d("fb",fb_picture+"");
+            Log.d("fb",fb_picture+"");
         }catch(Exception e){}
 
         user_photo = (ImageView) findViewById(R.id.a03_fb_pic);
@@ -247,13 +247,21 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
 //                    inputBundle.putIntegerArrayList("following_user", u.getFollowing_user_AL());
 //                    inputBundle.putIntegerArrayList("like_schedule", u.getLike_schedule_AL());
 
+                    Intent intent = new Intent(mContext, A0_4_FacebookFriendActivity.class);
+                    intent.putExtra("facebookfriend", facebookfriends.toString());          //bundle data.
+                    intent.putExtra("goto",1);
+                    Log.d("facebookfriend_putExtra",facebookfriends.toString());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                    URL fbpicture_url = new URL(fb_picture);
-                    Bitmap profile_image = BitmapFactory.decodeStream(fbpicture_url.openConnection().getInputStream());
-                    ImageAbsolutePath = createImageFromBitmap(profile_image);
+                    mContext.startActivity(intent);
+                    finish();
 
-                    HTTPRestfulUtilizerExtender4 a = new HTTPRestfulUtilizerExtender4(mContext,url,"PUT",inputBundle,ImageAbsolutePath);
+
+                    HTTPRestfulUtilizerExtender4 a = new HTTPRestfulUtilizerExtender4(mContext,url,"PUT",inputBundle,fb_picture);
                     a.doExecution();
+
+
+
 
 
                     //Intent intent = new Intent(mContext, A0_3_SignUpFromFacebook.class);
@@ -282,7 +290,7 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
             setmContext(mContext);
             setUrl(url);
             setHTTPRestType(HTTPRestType);
-            setPhoto(photo);
+            //setPhoto(photo);
 
             task = new HttpAsyncTaskExtenders();
             Log.d("HTTP Constructor2 url", url);
@@ -294,6 +302,20 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
         private class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask {
             protected void onPreExecute() {
                 super.onPreExecute();
+
+
+                Bitmap profile_image = null;
+
+                try {
+
+                    URL fbpicture_url = new URL(fb_picture);
+                    profile_image = BitmapFactory.decodeStream(fbpicture_url.openConnection().getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ImageAbsolutePath = createImageFromBitmap(profile_image);
+                setPhoto(ImageAbsolutePath);
+
             }
 
             @Override
@@ -311,14 +333,7 @@ public class A0_3_SignUpFromFacebook extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 
-                Intent intent = new Intent(mContext, A0_4_FacebookFriendActivity.class);
-                intent.putExtra("facebookfriend", facebookfriends.toString());          //bundle data.
-                intent.putExtra("goto",1);
-                Log.d("facebookfriend_putExtra",facebookfriends.toString());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                mContext.startActivity(intent);
-                finish();
 
             }
 
