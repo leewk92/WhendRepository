@@ -108,8 +108,8 @@ public class Notify_Schedule_Adapter extends ArrayAdapter<Notify_Schedule> {
 
         holder.time_vh.setText(calculate_timepassed(timepassed));
 
-        if(NT_Schedule_list.get(position).isUnread())
-            holder.background_vh.setBackgroundColor(Color.parseColor("#B3E5FC"));
+        /*if(NT_Schedule_list.get(position).isUnread())
+            holder.background_vh.setBackgroundColor(Color.parseColor("#B3E5FC"));*/
 
 
 
