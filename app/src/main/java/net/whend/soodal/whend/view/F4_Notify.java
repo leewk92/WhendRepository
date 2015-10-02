@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.baoyz.widget.PullRefreshLayout;
+
 import net.whend.soodal.whend.R;
 import net.whend.soodal.whend.form.Notify_Schedule_Adapter;
 import net.whend.soodal.whend.model.base.Schedule;
@@ -39,16 +41,26 @@ public class F4_Notify extends Fragment {
 
     TextView mainactivity_title;
     LinearLayout search_layout, setting_layout;
+
+    private PullRefreshLayout layout;
+    public boolean dialog_running;
+
     ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
     ListView notify_listview;
+
+
     private boolean loading = true;
+    private int currentPage = 0;
+    private int previousTotal = 0;
+
     private static JSONObject outputSchedulesJson;
     private ArrayList<Notify_Schedule> arrayNTchedule = new ArrayList<Notify_Schedule>();
 
     private View rootView;
     Notify_Schedule_Adapter notify_schedule_adapter;
     static String nextURL;
+    private Boolean page_reloaded = false;                                   // Fragment를 처음 불러올 때만 false, 그 다음부터는 true.
 
     public F4_Notify() {
         // Required empty public constructor
@@ -57,24 +69,37 @@ public class F4_Notify extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        arrayNTchedule.clear();
-        notify_schedule_adapter.notifyDataSetChanged();
-        String url = "http://119.81.176.245/notifications/";
-        nextURL = null;
-        Log.d("ResumeCalled","nextURL = "+nextURL);
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
-        a.doExecution();
+
+    }
+
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        page_reloaded = true;
+        //arrayCSchedule.clear();
+        //concise_schedule_adapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        page_reloaded = false;
         /*arrayNTchedule.clear();
         String url = "http://119.81.176.245/notifications/";
         nextURL = null;
         HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
         a.doExecution();*/
+
+
+        currentPage = 1;
+        previousTotal = 0;
+
+        String url = "http://119.81.176.245/notifications/";
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
+        a.doExecution();
+
+        notify_schedule_adapter = new Notify_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayNTchedule);
     }
 
     @Override
@@ -94,21 +119,65 @@ public class F4_Notify extends Fragment {
         back_btn = (ImageView) getActivity().findViewById(R.id.back_btn);
         setting_btn = (ImageView) getActivity().findViewById(R.id.setting_btn);
 
-        search_layout = (LinearLayout) getActivity().findViewById(R.id.search_layout);
-        setting_layout = (LinearLayout) getActivity().findViewById(R.id.setting_layout);
-
         notify_listview = (ListView) rootView.findViewById(R.id.listview_notify_schedule);
 
-        notify_schedule_adapter = new Notify_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayNTchedule);
-        notify_listview.setAdapter(notify_schedule_adapter);
-
-
-        notify_listview.setOnScrollListener(new EndlessScrollListener());
-
+        search_layout = (LinearLayout) getActivity().findViewById(R.id.search_layout);
+        setting_layout = (LinearLayout) getActivity().findViewById(R.id.setting_layout);
 
         back_btn.setVisibility(View.GONE);
         search_layout.setVisibility(View.GONE);
         setting_layout.setVisibility(View.GONE);
+
+        layout = (PullRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                dialog_running = true;
+
+                arrayNTchedule.clear();
+                notify_schedule_adapter.notifyDataSetChanged();
+                currentPage = 1;
+                previousTotal = 0;
+
+                String url = "http://119.81.176.245/notifications/";
+                nextURL = null;
+                Log.d("ResumeCalled", "nextURL = " + nextURL);
+                HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url, "GET");
+                a.doExecution();
+            }
+        });
+
+
+        notify_listview.setAdapter(notify_schedule_adapter);
+        notify_listview.setOnScrollListener(new EndlessScrollListener());
+
+        if(page_reloaded){
+            notify_listview.setClickable(true);
+            notify_schedule_adapter.notifyDataSetChanged();
+            notify_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (arrayNTchedule.get(position).getTarget_type().equals("schedule")) {
+                        Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
+                        intent.putExtra("id", arrayNTchedule.get(position).getTarget_id());
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
+                    } else if (arrayNTchedule.get(position).getTarget_id() == -1 || arrayNTchedule.get(position).getTarget_type().equals("user info")) {
+                        Intent intent = new Intent(getActivity(), A2_UserProfileActivity.class);
+                        intent.putExtra("id", arrayNTchedule.get(position).getUser_id());
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_exit);
+                    }
+
+                }
+            });
+
+        }else{
+            notify_listview.setClickable(false);
+        }
+
 
 
         return rootView;
@@ -135,9 +204,6 @@ public class F4_Notify extends Fragment {
     public class EndlessScrollListener implements AbsListView.OnScrollListener {
 
         private int visibleThreshold = 0;
-        private int currentPage = 0;
-        private int previousTotal = 0;
-
 
         public EndlessScrollListener() {
         }
@@ -149,7 +215,6 @@ public class F4_Notify extends Fragment {
         public void onScroll(AbsListView view, int firstVisibleItem,
                              int visibleItemCount, int totalItemCount) {
 
-            Log.e("currentPage",currentPage+"");
 
             if (loading) {
                 if (totalItemCount > previousTotal) {
@@ -280,6 +345,10 @@ public class F4_Notify extends Fragment {
 
                 }
 
+                        if(dialog_running){
+                            dialog_running = false;
+                            layout.setRefreshing(false);
+                        }
             }
         }
     }

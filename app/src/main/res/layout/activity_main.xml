@@ -84,7 +84,7 @@
                 android:id="@+id/setting_btn"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/menu_setting_s"
+                android:src="@drawable/setting_mtrl"
                 android:focusable="true"/>
 
          </LinearLayout>

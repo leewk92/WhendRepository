@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
@@ -48,7 +49,7 @@ import java.util.ArrayList;
  * to handle interaction events.
 
 
->>>>>>> origin/JB:app/src/main/java/net/whend/soodal/whend/view/Fragment2.java
+ >>>>>>> origin/JB:app/src/main/java/net/whend/soodal/whend/view/Fragment2.java
  * create an instance of this fragment.
  */
 public class F2_Search extends Fragment implements ScrollViewListener {
@@ -65,89 +66,60 @@ public class F2_Search extends Fragment implements ScrollViewListener {
     private ImageView search_btn, back_btn, setting_btn;
     private GridView search_gridview;
     private EditText search_text;
-    private LinearLayout search_grid;
+    private PullRefreshLayout search_grid;
     private FrameLayout search_linear;
     private FrameLayout root_layout;
     private Toolbar toolbar;
     static String nextURL;
     public QuiltView quiltView;
     private JSONObject outputSchedulesJson;
-//    private JSONArray outputSchedulesJson;
+    //    private JSONArray outputSchedulesJson;
     Grid_Search_Adapter mgrid_search_adapter;
     boolean loading=true;
+    boolean dialog_running=true;
     int threshold=250;
     int page=0;
     private View rootView;
 
-        public F2_Search() {
+    public F2_Search() {
         // Required empty public constructor
     }
-/*
-    @Override
-    public void onPause() {
-        super.onPause();
-        arrayGSchedule.clear();
-        // quiltView.removeAllViews();
-        try{
-            quiltView.refresh();
-        }catch(Exception e){}
-        quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
-        quiltView.setChildPadding(-3);
+    /*
+        @Override
+        public void onPause() {
+            super.onPause();
+            arrayGSchedule.clear();
+            // quiltView.removeAllViews();
+            try{
+                quiltView.refresh();
+            }catch(Exception e){}
+            quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
+            quiltView.setChildPadding(-3);
 
-        String url = "http://119.81.176.245/hashtags/";
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
-        a.doExecution();
-    }
-*/
+            String url = "http://119.81.176.245/hashtags/";
+            HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
+            a.doExecution();
+        }
+    */
     @Override
     public void onResume(){
         super.onResume();
-        loading=true;
-        page=0;
-        threshold=250;
-        //threshold
-
-        arrayGSchedule.clear();
-        mgrid_search_adapter.notifyDataSetChanged();
-
-
-        for(int i=0; i< mgrid_search_adapter.getCount(); i++)
-            quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
-        //첫번째 뜨는거 지우기 -> 실패
-        try{
-            if(quiltView.views.get(0) != null)
-                quiltView.removeQuilt(quiltView.views.get(0));
-        }catch(Exception e){}
-
-        //quiltView.removeViewAt(0);
-        Log.d("count",mgrid_search_adapter.getCount()+"");
-        //quiltView.removeAllViews();
-        try{
-            quiltView.refresh();
-        }catch(Exception e){}
-
-
-        quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
-        quiltView.setChildPadding(-3);
-
-        String url = "http://119.81.176.245/hashtags/";
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
-        a.doExecution();
-
-   //     mTracker.setScreenName("Image~" + "F2_Search");
-  //      mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-   //     AnalyticsApplication application = (AnalyticsApplication)getActivity().getApplication();
-  //      mTracker= application.getDefaultTracker();
-  }
+        //     AnalyticsApplication application = (AnalyticsApplication)getActivity().getApplication();
+        //      mTracker= application.getDefaultTracker();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        loading=true;
+        page=0;
+        threshold=250;
 
         // search_linear 에 F2_1_SearchOnFocus 프래그먼트 심기
         final Fragment temp = new F2_1_SearchOnFocus();
@@ -166,12 +138,55 @@ public class F2_Search extends Fragment implements ScrollViewListener {
 
         rootView = inflater.inflate(R.layout.f2_search_layout, container, false);
 
-        search_grid = (LinearLayout) rootView.findViewById(R.id.search_grid);
+        search_grid = (PullRefreshLayout) rootView.findViewById(R.id.search_grid);
         search_linear = (FrameLayout) rootView.findViewById(R.id.search_linear);
         root_layout = (FrameLayout) rootView.findViewById(R.id.search_rootlayout);
 
-      //  quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
-      //  quiltView.setChildPadding(-3);
+
+
+        search_grid.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                dialog_running = true;
+                loading=true;
+                page=0;
+                threshold=250;
+
+                arrayGSchedule.clear();
+                mgrid_search_adapter.notifyDataSetChanged();
+
+
+
+               /* for(int i=0; i< mgrid_search_adapter.getCount(); i++)
+                    quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
+                //첫번째 뜨는거 지우기 -> 실패*/
+
+                try{
+                    if(quiltView.views.get(0) != null)
+                        quiltView.removeQuilt(quiltView.views.get(0));
+                }catch(Exception e){}
+
+
+                Log.d("count",mgrid_search_adapter.getCount()+"");
+
+                try{
+                    quiltView.refresh();
+                }catch(Exception e){}
+
+
+                quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
+                quiltView.setChildPadding(-3);
+
+
+                String url = "http://119.81.176.245/hashtags/";
+                HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
+                a.doExecution();
+                arrayGSchedule.clear();
+                mgrid_search_adapter.notifyDataSetChanged();
+
+            }
+        });
 
 
 
@@ -206,6 +221,12 @@ public class F2_Search extends Fragment implements ScrollViewListener {
         */
 
         mgrid_search_adapter = new Grid_Search_Adapter(getActivity(), R.layout.item_gridsearch_schedule, arrayGSchedule);
+        quiltView = (QuiltView) rootView.findViewById(R.id.quilt);
+        quiltView.setChildPadding(-3);
+
+        String url = "http://119.81.176.245/hashtags/";
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(),url,"GET");
+        a.doExecution();
 
 //        for(int i=0; i< mgrid_search_adapter.getCount(); i++)
 //            quiltView.addPatchView(mgrid_search_adapter.getView(i,null,null));
@@ -264,9 +285,6 @@ public class F2_Search extends Fragment implements ScrollViewListener {
 
             }
         });
-
-
-
 
         return rootView;
     }
@@ -380,6 +398,11 @@ public class F2_Search extends Fragment implements ScrollViewListener {
                 }
                 loading = true;
                 page++;
+
+                if(dialog_running){
+                    dialog_running =false;
+                    search_grid.setRefreshing(false);
+                }
             }
         }
     }

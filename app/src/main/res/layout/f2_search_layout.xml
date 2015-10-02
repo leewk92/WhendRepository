@@ -8,11 +8,12 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
+    <com.baoyz.widget.PullRefreshLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/search_grid">
+        android:id="@+id/search_grid"
+        app:refreshType="material">
 
         <net.whend.soodal.whend.util.observablescrollview.ObservableScrollView
             android:layout_width="wrap_content"
@@ -29,7 +30,7 @@
             </net.whend.soodal.whend.util.quitview.QuiltView>
         </net.whend.soodal.whend.util.observablescrollview.ObservableScrollView>
 
-    </LinearLayout>
+    </com.baoyz.widget.PullRefreshLayout>
 
     <FrameLayout
         android:orientation="vertical"

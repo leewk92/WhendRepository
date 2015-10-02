@@ -51,7 +51,10 @@ public class F1_Wall extends Fragment {
 
 
     private PullRefreshLayout layout;
+    public boolean dialog_running;
+
     private ListView listview;
+
     private ArrayList<Concise_Schedule> arrayCSchedule = new ArrayList<Concise_Schedule>();
     private Concise_Schedule_Adapter concise_schedule_adapter;
     private TextView mainactivity_title, f1_text;
@@ -59,8 +62,9 @@ public class F1_Wall extends Fragment {
     ImageView search_btn, back_btn, setting_btn;
     EditText search_text;
     static String nextURL;
-    public int index;
-    public boolean dialog_running;
+
+    private Boolean page_reloaded = false;                                   // Fragment를 처음 불러올 때만 false, 그 다음부터는 true.
+
     private static JSONObject outputSchedulesJson;
 
     public F1_Wall() {
@@ -75,12 +79,13 @@ public class F1_Wall extends Fragment {
 
       //  mTracker.setScreenName("Image~" + "F1_WALL");
       //  mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-///
+    listview.setClickable(true);
     }
 
     @Override
     public void onDestroyView(){
         super.onDestroyView();
+        page_reloaded = true;
         //arrayCSchedule.clear();
         //concise_schedule_adapter.notifyDataSetChanged();
 
@@ -95,21 +100,32 @@ public class F1_Wall extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        page_reloaded = false;
         //AnalyticsApplication application = (AnalyticsApplication).getApplicationContext().getTracker();
         //mTracker= ((AnalyticsApplication) getActivity().getApplication()).getDefaultTracker();
 
 
-    //    String url = "http://119.81.176.245/schedules/";
-    //    arrayCSchedule.clear();
-    //    concise_schedule_adapter.notifyDataSetChanged();
-    //    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
-    //    a.doExecution();
+//        String url = "http://119.81.176.245/schedules/";
+//        arrayCSchedule.clear();
+//        concise_schedule_adapter.notifyDataSetChanged();
+//        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url,"GET");
+//        a.doExecution();
 
 
         //Concise_Schedule cs = new Concise_Schedule();
         //arrayCSchedule.add(cs);
         //arrayCSchedule.add(cs);
         //arrayCSchedule.add(cs);
+
+        // if(is_updating)
+
+        String url = "http://119.81.176.245/schedules/";
+        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url, "GET");
+        a.doExecution();
+
+        concise_schedule_adapter = new Concise_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayCSchedule);
+
     }
 
     @Override
@@ -122,6 +138,7 @@ public class F1_Wall extends Fragment {
 
         // 로고 사이즈 조정 및 로고 삽입
         //arrayCSchedule.clear();
+
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.whend_actionbar);
         Toolbar toolbar = (Toolbar) container.findViewById(R.id.toolbar);
 
@@ -171,8 +188,7 @@ public class F1_Wall extends Fragment {
         listview = (ListView)rootview.findViewById(R.id.listview_concise_schedule);
         f1_text = (TextView) rootview.findViewById(R.id.f1_text);
         f1_text.setVisibility(View.INVISIBLE);
-       // listview.setOnScrollListener(new EndlessScrollListener());
-
+        // listview.setOnScrollListener(new EndlessScrollListener());
 
 
         layout = (PullRefreshLayout) rootview.findViewById(R.id.swipeRefreshLayout);
@@ -187,6 +203,7 @@ public class F1_Wall extends Fragment {
                 } catch (Exception e) {
                 }
 
+
                 String url = "http://119.81.176.245/schedules/";
                 HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url, "GET");
                 a.doExecution();
@@ -195,18 +212,27 @@ public class F1_Wall extends Fragment {
             }
         });
 
-
-        String url = "http://119.81.176.245/schedules/";
-        HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(getActivity(), url, "GET");
-        a.doExecution();
         listview.setOnScrollListener(new EndlessScrollListener());
 
-
-        concise_schedule_adapter = new Concise_Schedule_Adapter(getActivity(), R.layout.item_concise_schedule, arrayCSchedule);
         listview.setAdapter(concise_schedule_adapter);
-        listview.setClickable(false);
 
+        if(page_reloaded) {
+            concise_schedule_adapter.notifyDataSetChanged();
+            listview.setClickable(true);
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1,
+                                        int position, long arg3) {
+                    // TODO Auto-generated method stub
 
+                    Intent intent = new Intent(getActivity(), A3_SpecificScheduleActivity.class);
+                    intent.putExtra("id", arrayCSchedule.get(position).getId());
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.abc_popup_exit);
+                }
+            });
+        }else
+            listview.setClickable(false);
 
         return rootview;
     }
@@ -458,6 +484,8 @@ public class F1_Wall extends Fragment {
                         f1_text.setVisibility(View.VISIBLE);
                     else
                         f1_text.setVisibility(View.INVISIBLE);
+
+
                     listview.setClickable(true);
                     listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         /*
@@ -503,6 +531,7 @@ public class F1_Wall extends Fragment {
                 }catch(Exception e){
 
                 }
+
 
             }
         }
