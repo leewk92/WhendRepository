@@ -115,6 +115,17 @@ public class F2_Search extends Fragment implements ScrollViewListener {
     }
 
     @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        arrayGSchedule.clear();
+        mgrid_search_adapter.notifyDataSetChanged();
+
+        try{
+            quiltView.refresh();
+        }catch(Exception e){}
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         loading=true;

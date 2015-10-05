@@ -207,19 +207,38 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/schedulelike_user_clickablelayout"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <ImageView
-                    android:id="@+id/like_button"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/like"
-                    android:clickable="true"/>
+                    <ImageView
+                        android:id="@+id/like_button"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/like"
+                        android:clickable="true"
+                        />
+                    <TextView
+                        android:gravity="center"
+                        android:layout_marginLeft="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="+"
+                        android:textSize="12dp" />
+                    <TextView
+                        android:gravity="center"
+                        android:id="@+id/like_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2dp"
+                        android:textSize="12dp" />
+
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/schedulefollow_user_clickablelayout"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
                 <ImageView
@@ -228,11 +247,27 @@
                     android:layout_height="25dp"
                     android:src="@drawable/exporttocalendar"
                     android:clickable="true"/>
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="+"
+                    android:layout_marginLeft="4dp"
+                    android:textSize="12dp" />
+                <TextView
+                    android:id="@+id/follow_count"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:textSize="12dp" />
+
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/schedule_comment_clickablelayout"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
                 <ImageView
@@ -241,124 +276,26 @@
                     android:layout_height="25dp"
                     android:src="@drawable/comment"
                     android:clickable="true"/>
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="4dp"
+                    android:text="+"
+                    android:textSize="12dp" />
+                <TextView
+                    android:id="@+id/comment_count"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:textSize="12dp" />
+
             </LinearLayout>
         </LinearLayout>
 
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom ="24dp">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                >
-                <LinearLayout
-                    android:id="@+id/schedulelike_user_clickablelayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:text="관심 "
-                        android:textSize="12dp"
-                        />
-                    <TextView
-                        android:id="@+id/like_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:layout_weight="1"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:text="명"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                >
-                <LinearLayout
-                    android:id="@+id/schedulefollow_user_clickablelayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:text="캘린더 추가 "
-                        android:textSize="12dp"
-                        />
-                    <TextView
-                        android:id="@+id/follow_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:text="명"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        />
-                </LinearLayout>
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                >
-                <LinearLayout
-                    android:id="@+id/schedule_comment_clickablelayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:text="댓글 "
-                        android:textSize="12dp"
-                        />
-                    <TextView
-                        android:id="@+id/comment_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:layout_weight="1"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:text="개"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-<!--
+        <!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -385,8 +322,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0.3dp"
-        android:layout_marginTop="0dp"
+        android:layout_height="0.2dp"
+        android:layout_marginTop="10dp"
         android:background="#727272">
 
     </LinearLayout>

@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:foregroundGravity="center">
 
-    <ImageView
+    <net.whend.soodal.whend.util.TouchZoomImageView
         android:id ="@+id/image"
         android:src="@drawable/whend_actionbar"
         android:scaleType="centerInside"
