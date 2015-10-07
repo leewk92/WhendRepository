@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -54,7 +53,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class A4_MakeScheduleActivity extends AppCompatActivity {
+public class A4_MakeScheduleActivity_temp extends AppCompatActivity {
 
     private int TAKE_FROM_CAMERA = 1;
     private int TAKE_FROM_GALLERY = 2;
@@ -66,6 +65,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
     private ArrayList<Integer> hashtags_id = new ArrayList<Integer>();
     private ImageView schedule_photo;
     private ImageView schedule_photo_add;
+
+
     static int YEAR_start,MONTH_start,DAY_start,HOUR_start,MINUTE_start;
     static int YEAR_end,MONTH_end,DAY_end,HOUR_end,MINUTE_end;
     static TextView date_start,time_start,date_end,time_end;
@@ -323,7 +324,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
 
                 final CharSequence[] items = {"카메라로 찍기", "갤러리에서 불러오기"};
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(A4_MakeScheduleActivity.this, R.style.AppCompatAlertDialogStyle);
+                AlertDialog.Builder builder = new AlertDialog.Builder(A4_MakeScheduleActivity_temp.this, R.style.AppCompatAlertDialogStyle);
                         // 각 항목을 설정하고 클릭했을 때 동작을 지정함
 
                 builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -369,8 +370,8 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
                         } else if (item == 1) { //갤러리에서 가져오기
 
                             Intent intent = new Intent(Intent.ACTION_PICK);
-                            intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                            intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             startActivityForResult(intent, TAKE_FROM_GALLERY);
 
                             // 잘라내기 셋팅
@@ -701,7 +702,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         public void doExecution(){
             task.execute(getUrl(), getHTTPRestType());
         }
-        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+        class HttpAsyncTaskExtenders extends HttpAsyncTask{
 
             @Override
             protected void onPreExecute() {
@@ -820,7 +821,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         public void doExecution(){
             task.execute(getUrl(), getHTTPRestType());
         }
-        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+        class HttpAsyncTaskExtenders extends HttpAsyncTask{
             @Override
             protected String doInBackground(String... strings) {
                 String url = strings[0];
@@ -863,7 +864,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         public void doExecution(){
             task.execute(getUrl(), getHTTPRestType());
         }
-        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+        class HttpAsyncTaskExtenders extends HttpAsyncTask{
 
             @Override
             protected void onPreExecute() {
@@ -977,7 +978,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         public void doExecution(){
             task.execute(getUrl(), getHTTPRestType());
         }
-        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+        class HttpAsyncTaskExtenders extends HttpAsyncTask{
             @Override
             protected void onProgressUpdate(Void... values) {
                 super.onProgressUpdate(values);
@@ -1365,7 +1366,7 @@ public class A4_MakeScheduleActivity extends AppCompatActivity {
         }
 
 
-        class HttpAsyncTaskExtenders extends HTTPRestfulUtilizer.HttpAsyncTask{
+        class HttpAsyncTaskExtenders extends HttpAsyncTask{
 
             @Override
             protected void onPreExecute() {
