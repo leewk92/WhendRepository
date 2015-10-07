@@ -14,8 +14,10 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,11 +58,18 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
     ImageView follow_button;
     ImageView comment_button;
     ImageView full_screen;
+    ImageView edit;
     View schedulefollow_user_clickablelayout;
     View schedulelike_user_clickablelayout;
     TextView like_count ;
     TextView follow_count;
-    ImageView edit;
+
+
+
+    final float scale = getContext().getResources().getDisplayMetrics().density;
+    final int dp25_in_pixels = (int) (25 * scale + 0.5f);
+    final int dp75_in_pixels = (int) (75 * scale + 0.5f);
+
 
 
     public Concise_Schedule_Adapter(Context context, int textViewResourceId, ArrayList<Concise_Schedule> lists){
@@ -240,6 +249,8 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
         final int pos = position;
         final ImageView iv = likebutton;
         final TextView lcv = like_count;
+
+
         likebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -252,19 +263,35 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     a.doExecution();
                     getItem(pos).clickLike();
                     lcv.setText(String.valueOf(getItem(pos).getLike_count()));
+                    lcv.startAnimation(AnimationUtils.loadAnimation(context, R.anim.grow_from_middle));
                     iv.setImageResource(R.drawable.like_on);
+                    iv.getLayoutParams().height = dp25_in_pixels;
+                    iv.getLayoutParams().width = dp25_in_pixels;
+
+                    iv.startAnimation(AnimationUtils.loadAnimation(context,R.anim.grow_from_middle));
     //                notifyDataSetChanged();
                 }
                 else if(CSchedule_list.get(pos).getIsLike() == true){
                 //    Toast toast2 = Toast.makeText(context, "Like Button Unclicked", Toast.LENGTH_SHORT);
                 //    toast2.show();
                     String url = "http://119.81.176.245/schedules/"+CSchedule_list.get(pos).getId()+"/like/";
-                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url,"PUT");
+                    HTTPRestfulUtilizerExtender a = new HTTPRestfulUtilizerExtender(context, url, "PUT");
                     a.doExecution();
                     CSchedule_list.get(pos).clickLike();
                     lcv.setText(String.valueOf(CSchedule_list.get(pos).getLike_count()));
-                    iv.setImageResource(R.drawable.like);
-  //                  notifyDataSetChanged();
+                    lcv.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_fade_in));
+                    iv.setImageResource(R.drawable.interest);
+
+                    LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams(
+                            dp75_in_pixels,
+                            dp25_in_pixels);
+
+
+                    iv.setLayoutParams(imageViewParams);
+
+                    iv.startAnimation(AnimationUtils.loadAnimation(context, R.anim.grow_from_middle));
+
+                    //                  notifyDataSetChanged();
                 }
 
             }
@@ -294,11 +321,22 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     a.doExecution();
                     CSchedule_list.get(pos).clickFollow();
                     fcv.setText(String.valueOf(CSchedule_list.get(pos).getFollow_count()));
+                    fcv.startAnimation(AnimationUtils.loadAnimation(context, R.anim.grow_from_middle));
+
                     iv.setImageResource(R.drawable.export_to_calendar_onclick);
                     Log.d("follow_start_time", CSchedule_list.get(pos).getSchedule().getStarttime_ms() + "");
-                    Log.d("follow_end_time",CSchedule_list.get(pos).getSchedule().getEndtime_ms()+"");
+                    Log.d("follow_end_time", CSchedule_list.get(pos).getSchedule().getEndtime_ms() + "");
                     Log.d("follow_allday", CSchedule_list.get(pos).getSchedule().getAllday() + "");
                     cpu.addScheduleToInnerCalendar(CSchedule_list.get(pos));
+                    iv.getLayoutParams().height = dp25_in_pixels;
+                    iv.getLayoutParams().width = dp25_in_pixels;
+
+                    LinearLayout.LayoutParams margin = new LinearLayout.LayoutParams(iv.getLayoutParams());
+                    margin.leftMargin = 10;
+                    iv.setLayoutParams(margin);
+
+                    iv.startAnimation(AnimationUtils.loadAnimation(context, R.anim.grow_from_middle));
+
 
                     AppPrefs appPrefs = new AppPrefs(context);
                     if (appPrefs.getAlarm_setting())
@@ -315,7 +353,16 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
                     a.doExecution();
                     CSchedule_list.get(pos).clickFollow();
                     fcv.setText(String.valueOf(CSchedule_list.get(pos).getFollow_count()));
-                    iv.setImageResource(R.drawable.exporttocalendar);
+                    fcv.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_fade_in));
+                    iv.setImageResource(R.drawable.add_calendar);
+
+                    LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams(
+                            dp75_in_pixels,
+                            dp25_in_pixels);
+
+                    iv.setLayoutParams(imageViewParams);
+
+                    iv.startAnimation(AnimationUtils.loadAnimation(context, R.anim.grow_from_middle));
 
                     cpu.deleteScheduleFromInnerCalendar(CSchedule_list.get(pos));
                     Toast.makeText(context, "캘린더에서 제거되었습니다", Toast.LENGTH_SHORT).show();
@@ -403,19 +450,43 @@ public class Concise_Schedule_Adapter extends ArrayAdapter<Concise_Schedule> {
 
         holder.like_count_vh.setText(String.valueOf(CSchedule_list.get(position).getLike_count()));
         holder.follow_count_vh.setText(String.valueOf(CSchedule_list.get(position).getFollow_count()));
-        holder.location_vh.setText(String.valueOf(CSchedule_list.get(position).getLocation()) == null ? "" : CSchedule_list.get(position).getLocation())        ;
+        holder.location_vh.setText(String.valueOf(CSchedule_list.get(position).getLocation()) == null ? "" : CSchedule_list.get(position).getLocation());
         holder.comment_count_vh.setText(String.valueOf(CSchedule_list.get(position).getComment_count()));
         Log.d("location_view", String.valueOf(CSchedule_list.get(position).getLocation()));
         Log.d("like", String.valueOf(CSchedule_list.get(position).getIsLike()));
-        if(CSchedule_list.get(position).getIsLike() == true)
+        if(CSchedule_list.get(position).getIsLike() == true) {
             holder.like_button_vh.setImageResource(R.drawable.like_on);
-        else
-            holder.like_button_vh.setImageResource(R.drawable.like);
+            holder.like_button_vh.getLayoutParams().height = dp25_in_pixels;
+            holder.like_button_vh.getLayoutParams().width = dp25_in_pixels;
+        }
+        else{
+            holder.like_button_vh.setImageResource(R.drawable.interest);
+            LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams(
+                    dp75_in_pixels,
+                    dp25_in_pixels);
 
-        if(CSchedule_list.get(position).getIsFollow() == true)
+            holder.like_button_vh.setLayoutParams(imageViewParams);
+        }
+
+
+        if(CSchedule_list.get(position).getIsFollow() == true) {
             holder.follow_button_vh.setImageResource(R.drawable.export_to_calendar_onclick);
-        else
-            holder.follow_button_vh.setImageResource(R.drawable.exporttocalendar);
+            holder.follow_button_vh.getLayoutParams().height = dp25_in_pixels;
+            holder.follow_button_vh.getLayoutParams().width = dp25_in_pixels;
+
+            LinearLayout.LayoutParams margin = new LinearLayout.LayoutParams(holder.follow_button_vh.getLayoutParams());
+            margin.leftMargin = 10;
+            holder.follow_button_vh.setLayoutParams(margin);
+        }
+        else {
+            holder.follow_button_vh.setImageResource(R.drawable.add_calendar);
+            LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams(
+                    dp75_in_pixels,
+                    dp25_in_pixels);
+
+            holder.follow_button_vh.setLayoutParams(imageViewParams);
+
+        }
 
 
         if(CSchedule_list.get(position).getPhoto_dir_fromweb()!="") {

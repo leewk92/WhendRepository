@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WhendRepository_1001.iml" filepath="$PROJECT_DIR$/WhendRepository_1001.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/whendRepository1005.iml" filepath="$PROJECT_DIR$/whendRepository1005.iml" />
     </modules>
   </component>
 </project>
